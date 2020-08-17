@@ -1,0 +1,345 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Firsttermresult;
+use App\Form;
+use App\Permission;
+use App\Secondtermresult;
+use App\Studentinfo;
+use App\Subject;
+use App\Term;
+use App\Thirdtermresult;
+use Illuminate\Http\Request;
+
+class RecordController extends Controller
+{
+    //
+    public function __construct()
+    {
+        return $this->middleware('auth:admin');
+    }
+    public function index(){
+        $this->authorize('record_mark', Permission::class);
+
+        $data['terms'] = [];
+        $data['students'] = [];
+        $data['sub_students'] = [];
+        $data['subjects'] = [];
+        $data['first'] = false;
+        $data['second'] = false;
+        $data['third'] = false;
+        $data['class'] = [];
+        return view('admin.student_marks.record_marks')->with($data);
+    }
+
+    public function getStudents(Request $req){
+        $this->authorize('record_mark', Permission::class);
+        $this->validate($req, [
+            'class' => 'required'
+        ]);
+
+        $formId = $req['class'];
+        $data['class'] = Form::where('id', $formId)->first();
+        $data['subjects'] = Subject::where('form_id', $formId)->get();
+        $terms = Term::where('active', 1)->first();
+        $data['terms'] = Term::where('active', 1)->first();
+        if($terms->name == 'First Term'){
+            $data['first'] = true;
+            $data['second'] = false;
+            $data['third'] = false;
+        }
+        if($terms->name == 'Second Term'){
+            $data['first'] = false;
+            $data['second'] = true;
+            $data['third'] = false;
+        }
+        if($terms->name == 'Third Term'){
+            $data['first'] = false;
+            $data['second'] = false;
+            $data['third'] = true;
+        }
+        $data['students'] = Studentinfo::where('form_id', $formId)->where('subform_id', null)->get();
+        $data['sub_students'] = Studentinfo::where('form_id', $formId)->where('subform_id', '!=', null)->orderBy('subform_id', 'ASC')->get();
+        return view('admin.student_marks.record_marks')->with($data);
+    }
+
+    public function savefirstSequence(Request $req){
+        $seq = $req['seq1'];
+        $studentId = (int)$req['student'];
+        $sub = (int)$req['subject'];
+        $yearid = (int)$req['year'];
+
+        if(Firsttermresult::where('year_id', $yearid)
+            ->where('student_id', $studentId)
+            ->where('subject_id', $sub)->exists()){
+                if($seq == "0"){
+                    Firsttermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq1' => 0]);
+                    $message = array('message' => 'SEQ 1 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else if($seq == null){
+                    Firsttermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq1' => null]);
+                    $message = array('message' => 'SEQ 1 Mark deleted', 'type' => 'warning', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else {
+                    Firsttermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update([
+                        'seq1' => $seq
+                    ]);
+                    $message = array('message' => 'SEQ 1 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+            }
+        else {
+            $firstseq = new Firsttermresult();
+            $firstseq->year_id = $yearid;
+            $firstseq->student_id = $studentId;
+            $firstseq->subject_id = $sub;
+            $firstseq->seq1 = $seq;
+
+            $firstseq->save();
+            $message = array('message' => 'SEQ 1 Mark saved', 'type' => 'success');
+            return response()->json($message);
+        }
+    }
+
+// second sequence
+    public function saveSecondSequence(Request $req){
+        $seq = $req['seq2'];
+        $studentId = (int)$req['student'];
+        $sub = (int)$req['subject'];
+        $yearid = (int)$req['year'];
+
+        if(Firsttermresult::where('year_id', $yearid)
+            ->where('student_id', $studentId)
+            ->where('subject_id', $sub)->exists()){
+                if($seq == "0"){
+                    Firsttermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq2' => 0]);
+                    $message = array('message' => 'SEQ 2 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else if($seq == null){
+                    Firsttermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq2' => null]);
+                    $message = array('message' => 'SEQ 2 Mark deleted', 'type' => 'warning', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else {
+                    Firsttermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update([
+                        'seq2' => $seq
+                    ]);
+                    $message = array('message' => 'SEQ 2 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+            }
+        else {
+            $second = new Firsttermresult();
+            $second->year_id = $yearid;
+            $second->student_id = $studentId;
+            $second->subject_id = $sub;
+            $second->seq2 = $seq;
+
+            $second->save();
+            $message = array('message' => 'SEQ 2 Mark saved', 'type' => 'success');
+            return response()->json($message);
+        }
+    }
+
+    // third sequence
+    public function saveThirdSequence(Request $req){
+        $seq = $req['seq3'];
+        $studentId = (int)$req['student'];
+        $sub = (int)$req['subject'];
+        $yearid = (int)$req['year'];
+
+        if(Secondtermresult::where('year_id', $yearid)
+            ->where('student_id', $studentId)
+            ->where('subject_id', $sub)->exists()){
+                if($seq == "0"){
+                    Secondtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq3' => 0]);
+                    $message = array('message' => 'SEQ 3 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else if($seq == null){
+                    Secondtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq3' => null]);
+                    $message = array('message' => 'SEQ 3 Mark deleted', 'type' => 'warning', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else {
+                    Secondtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update([
+                        'seq3' => $seq
+                    ]);
+                    $message = array('message' => 'SEQ 3 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+            }
+        else {
+            $third = new Secondtermresult();
+            $third->year_id = $yearid;
+            $third->student_id = $studentId;
+            $third->subject_id = $sub;
+            $third->seq3 = $seq;
+
+            $third->save();
+            $message = array('message' => 'SEQ 3 Mark saved', 'type' => 'success');
+            return response()->json($message);
+        }
+    }
+
+    public function savefourthSequence(Request $req){
+        $seq = $req['seq4'];
+        $studentId = (int)$req['student'];
+        $sub = (int)$req['subject'];
+        $yearid = (int)$req['year'];
+
+        if(Secondtermresult::where('year_id', $yearid)
+            ->where('student_id', $studentId)
+            ->where('subject_id', $sub)->exists()){
+                if($seq == "0"){
+                    Secondtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq4' => 0]);
+                    $message = array('message' => 'SEQ 4 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else if($seq == null){
+                    Secondtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq4' => null]);
+                    $message = array('message' => 'SEQ 4 Mark deleted', 'type' => 'warning', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else {
+                    Secondtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update([
+                        'seq4' => $seq
+                    ]);
+                    $message = array('message' => 'SEQ 4 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+            }
+        else {
+            $fourth = new Secondtermresult();
+            $fourth->year_id = $yearid;
+            $fourth->student_id = $studentId;
+            $fourth->subject_id = $sub;
+            $fourth->seq4 = $seq;
+
+            $fourth->save();
+            $message = array('message' => 'SEQ 4 Mark saved', 'type' => 'success');
+            return response()->json($message);
+        }
+    }
+
+    public function savefirthSequence(Request $req){
+        $seq = $req['seq5'];
+        $studentId = (int)$req['student'];
+        $sub = (int)$req['subject'];
+        $yearid = (int)$req['year'];
+
+        if(Thirdtermresult::where('year_id', $yearid)
+            ->where('student_id', $studentId)
+            ->where('subject_id', $sub)->exists()){
+                if($seq == "0"){
+                    Thirdtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq5' => 0]);
+                    $message = array('message' => 'SEQ 5 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else if($seq == null){
+                    Thirdtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq5' => null]);
+                    $message = array('message' => 'SEQ 5 Mark deleted', 'type' => 'warning', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else {
+                    Thirdtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update([
+                        'seq5' => $seq
+                    ]);
+                    $message = array('message' => 'SEQ 5 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+            }
+        else {
+            $firth = new Thirdtermresult();
+            $firth->year_id = $yearid;
+            $firth->student_id = $studentId;
+            $firth->subject_id = $sub;
+            $firth->seq5 = $seq;
+
+            $firth->save();
+            $message = array('message' => 'SEQ 5 Mark saved', 'type' => 'success');
+            return response()->json($message);
+        }
+    }
+
+    // sith sequence
+    public function saveSithSequence(Request $req){
+        $seq = $req['seq6'];
+        $studentId = (int)$req['student'];
+        $sub = (int)$req['subject'];
+        $yearid = (int)$req['year'];
+
+        if(Thirdtermresult::where('year_id', $yearid)
+            ->where('student_id', $studentId)
+            ->where('subject_id', $sub)->exists()){
+                if($seq == "0"){
+                    Thirdtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq6' => 0]);
+                    $message = array('message' => 'SEQ 6 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else if($seq == null){
+                    Thirdtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update(['seq6' => null]);
+                    $message = array('message' => 'SEQ 6 Mark deleted', 'type' => 'warning', 'seq' => $seq);
+                return response()->json($message);
+                }
+                else {
+                    Thirdtermresult::where('year_id', $yearid)
+                    ->where('student_id', $studentId)
+                    ->where('subject_id', $sub)->update([
+                        'seq6' => $seq
+                    ]);
+                    $message = array('message' => 'SEQ 6 Mark updated', 'type' => 'update', 'seq' => $seq);
+                return response()->json($message);
+                }
+            }
+        else {
+            $sith = new Thirdtermresult();
+            $sith->year_id = $yearid;
+            $sith->student_id = $studentId;
+            $sith->subject_id = $sub;
+            $sith->seq6 = $seq;
+
+            $sith->save();
+            $message = array('message' => 'SEQ 6 Mark saved', 'type' => 'success');
+            return response()->json($message);
+        }
+    }
+}

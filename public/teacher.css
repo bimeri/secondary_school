@@ -1,0 +1,153 @@
+body{
+    background: url('image/bg.png') repeat 0 0;
+  background-attachment: fixed;
+  display:flex;
+  flex-direction:column;
+
+}
+.footer_one{
+    position: relative;
+    width: 100%;
+    height: 95px;
+    color: #fff;
+    background-color: #669900  !important;
+    right: 0px;
+    left: 0px;
+    margin:0px;
+    padding: 0px;
+  }
+.logo-icon{
+    margin-top: 8px !important; margin-right:30px !important; cursor: pointer;
+}
+.t-teal{
+    background-color:#669900 !important ;
+}
+.t-teal-text{
+    color: #669900 !important;
+}
+.coc{
+    border-top: .5px solid #009688;
+}
+.activ{
+    background-color: rgb(173, 231, 217) !important;
+    font-weight: bold;
+}
+.act{
+    color: teal;
+    font-size: 12px;
+}
+#span-in{
+    font-size: 12px !important;
+    margin-top: -20px !important;
+}
+.name{
+    font-weight: bold;
+    font-size: 22px;
+    font-family: 'Times New Roman';
+    text-transform: capitalize;
+}
+.term{
+    text-transform: uppercase;
+}
+.dropdownc{
+    display: none;
+    right: 0px;
+    position:fixed;
+    z-index: 3000;
+    background-color: #e6e6e6;
+    margin-right: 5px;
+    margin-top: 50px;
+    float: right;
+    text-align: center;
+    box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.2);
+  }
+  @media screen and (min-width: 60%) and (max-width: 60%) {
+    .dropdownc{ width: 60% !important; }  /* show it on large screen */
+  }
+  @media screen and (min-width: 15%) and (max-width: 15%) {
+    .dropdownc{ width: 15% !important; }   /* hide it small screens */
+  }
+#span-in{
+    font-size: 12px !important;
+    margin-top: -20px !important;
+}
+  .dropdownc a{
+    color: black;
+    padding: 0px 20px;
+    text-decoration: none;
+    display: block;
+  }
+  .dropdownc ul a:hover{
+    background-color: #ddd;
+    text-shadow: 1px 2px 1px #669900;
+    text-decoration: none;
+  }
+  #dropdown-logout{
+    color:  #F44336 !important; font-size: 18px;
+    font-size: 12px !important;
+  }
+  .cal{
+    min-height: calc(84vh - 40px);
+  }
+
+  .containeradmin {
+    position: relative;
+    width: 100%;
+    height: 150px;
+  }
+
+  .image {
+    display: block;
+    width: 100%;
+    height:150px;
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #669900;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    transition: .5s ease;
+  }
+
+  .containeradmin:hover .overlay {
+    width: 100%;
+    height:170px;
+  }
+
+  .textadmin {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #669900;
+    border-radius: 6px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #669900;
+  }
+.coc{
+    border-top: .5px solid #669900;
+}

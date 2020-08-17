@@ -1,0 +1,49 @@
+html,
+body{
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+    background-image: url('https://image.shutterstock.com/image-photo/back-school-background-600w-700991644.jpg');
+    background-color: #ccc;
+    background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+.footer_one{
+
+    position: relative;
+    width: 108%;
+    height: 100px;
+    color: #fff;
+    background-color: #1f77c0 !important;
+    right: 0px;
+    left: 0px;
+    margin:0px;
+    padding: 0px;
+  }
+
+  .moda {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 5px;
+    color: #333;
+    font-family: sans-serif;
+    line-height: 1.5;
+  }
+
+  @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .moda {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .cont {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
