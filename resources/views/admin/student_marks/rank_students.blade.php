@@ -34,7 +34,7 @@
         </form>
     </div>
     <div class="col s11 m10 w3-border-t offset-m1 radius white w3-margin-left">
-        <div class="alert alert-warning center w3-margin-top">there is no class result generated already</div>
+        <div class="alert alert-info center w3-margin-top" role="alert">there is no class result generated already</div>
     </div>
 </div>
 

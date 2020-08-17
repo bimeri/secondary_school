@@ -476,7 +476,7 @@ tr td{
 
 /* Section with links */
 
-.links {
+/* .links {
 	text-align: center;
 	margin-top: 40px;
 }
@@ -493,7 +493,7 @@ tr td{
 .links .link:active {
 	background: #fff;
 	color: #1FDA9A;
-}
+} */
 
 .alert {
     padding: 15px;
