@@ -48,4 +48,14 @@ class Student extends Authenticatable
     public function feecontrols(){
         return $this->hasMany('App\Feecontrol');
     }
+    public function firsttermresults(){
+        return $this->hasMany('App\Firsttermresult');
+    }
+    public function secondtermresults(){
+        return $this->hasMany('App\Secondtermresult');
+    }
+
+    public function thirdtermresults(){
+        return $this->hasMany('App\Thirdtermresult');
+    }
 }

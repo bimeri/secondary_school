@@ -36,5 +36,6 @@ return [
     'view_subject' => 'All available Subjects for yor School',
     'discipline_type' => 'Fill the form below to add a new Type or form of discipline',
     'record_marks_header' => 'You are Entrying students result only for the current Academic Year and Term',
-    'rank_student' => 'Select the Term you wish to generate the report sheet',
+    'rank_student' => 'Select the class you wish to generate the report sheet',
+    'record_grading' => 'All Grading folows the General Standard mark',
 ];

@@ -19,4 +19,14 @@ class Subject extends Model
     public function teachers(){
         return $this->belongsToMany('App\Teacher', 'subject_teacher','subject_id', 'teacher_id');
     }
+    public function firsttermresults(){
+        return $this->hasMany('App\Firsttermresult');
+    }
+    public function secondtermresults(){
+        return $this->hasMany('App\Secondtermresult');
+    }
+
+    public function thirdtermresults(){
+        return $this->hasMany('App\Thirdtermresult');
+    }
 }

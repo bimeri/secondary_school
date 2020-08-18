@@ -171,7 +171,7 @@ Route::get('student/fourth_sequence', 'RecordController@savefourthSequence')->na
 Route::get('student/firth_sequence', 'RecordController@savefirthSequence')->name('firth.sequence.save');
 Route::get('student/sith_sequence', 'RecordController@saveSithSequence')->name('sith.sequence.save');
 Route::get('student/rank', 'RankStudentController@index')->name('student.rank.result');
-
+Route::get('class/result', 'RankStudentController@classResult')->name('rank.result');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');

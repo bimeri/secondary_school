@@ -4,34 +4,42 @@
 <style>
     table{
         border: 1px solid bloack !important;
+        box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138);
+    }
+    .refl{
+
+        /* -webkit-box-reflect: right 10px linear-gradient(transparent, #cc00ff, #0002); */
     }
     td, th, tr{
         border: 1px solid black !important;
         font-size: 11px !important
+    }
+    td:nth-child(2){
+        border-left: 2px solid black !important;
     }
     th>div#stud{
         margin-top: 10px !important;
         transform: rotate(-23deg) !important;
     }
     input[type='number'].sp{
-        position: absolute !important;
+        position: absolute ;
         outline: none !important;
         border: 1px solid transparent !important;
         border-bottom: 1px solid white !important;
         width: 60px !important;
         height: 30px !important;
-        margin-top: -8px !important;
-        margin-left: -31px !important;
+        margin-top: -8px;
+        margin-left: -31px;
     }
     input[type='number'].ss{
-        position: absolute !important;
+        position: absolute;
         outline: none !important;
         border: 1px solid transparent !important;
         border-bottom: 1px solid white !important;
         width: 60px !important;
         height: 30px !important;
-        margin-top: -8px !important;
-        margin-left: -31px !important;
+        margin-top: -8px;
+        margin-left: -31px ;
     }
     input[type = 'number'].sp{
         color:#2196F3 !important;
@@ -61,6 +69,11 @@
     }
 </style>
 @endsection
+<style>
+     @media only screen and (max-width: 600px) {
+
+}
+</style>
 @section('content')
 <div class="row">
     <h5 class="right w3-padding w3-center" style="position: absolute; float: right !important"><b>{{ $current_year->name }}</b> Academic year<br>{{ $current_term->name }}</h5>
@@ -80,7 +93,7 @@
                         @else
                         <option value="" selected>form / background / sector</option>
                         @endif
-                      @foreach (App\Form::all() as $form)
+                      @foreach (App\Form::where('id', '!=', $class->id ?? '')->get() as $form)
                         <option value="{{ $form->id }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
                       @endforeach
                     </select>
@@ -94,7 +107,8 @@
     </div>
 
     <div class="col s11 m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">
-        <div class="col s12 m12" style="overflow-x:scroll !important;">
+        <div class="col s12 m12 refl" style="overflow-x:scroll !important;">
+            <h5 class="center teal-text">{{ __('messages.record_grading') }}. <b>(/20)</b></h5>
             <table id="myTable" class="w3-table w3-border-t" style="font-size: 13px !important;">
                 <tr class="teal">
                         <th rowspan="2" class="w3-xlarge blue"><div id="stud">Students</div></th>
@@ -134,6 +148,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $sub->id }}">
+                                    <input type="hidden" name="form" value="{{ $sub->form->id }}">
                                     <?php $fseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                      $arr = array();
@@ -148,12 +163,13 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $sub->id }}">
+                                    <input type="hidden" name="form" value="{{ $sub->form->id }}">
                                     <?php $fseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                      $arr2 = array();
-                                     foreach ($fseq as $val) { array_push($arr2, $val->seq2);} $seq2 = current($arr2);
+                                     foreach ($fseq as $valsa) { array_push($arr2, $valsa->seq2);} $seqsa = current($arr2);
                                       ?>
-                                    <input type="number" name="seq2" value="{{ $seq2 }}" id="s{{$student->id }}{{$sub->id }}" class="{{ (int)$seq2 < 10 ? 'ss':'sp' }}" onchange="checks{{$student->id }}{{$sub->id }}(event)">
+                                    <input type="number" name="seq2" value="{{ $seqsa }}" id="s{{$student->id }}{{$sub->id }}" class="{{ (int)$seqsa < 10 ? 'ss':'sp' }}" onchange="checks{{$student->id }}{{$sub->id }}(event)">
                                 </form>
                             </td>
                         @endif
@@ -166,30 +182,28 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
+                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
                                 <?php $tseq = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
-                                 $tsa = array();
-                                 foreach ($tseq as $ts) { array_push($tsa, $ts->seq3);} $ts1 = current($tsa);
+                                 $arr3 = array();
+                                 foreach ($tseq as $ts) { array_push($arr3, $ts->seq3);} $ts1 = current($arr3);
                                   ?>
                                 <input type="number" name="seq3" value="{{ $ts1 }}" id="ts{{$student->id }}{{$sub->id }}" class="{{ (int)$ts1 < 10 ? 'ss':'sp' }}" onchange="checkts{{ $student->id }}{{ $sub->id }}(event)"></td>
                             </form>
                         <td>
-                            <form action="" method="POST">
-                                @csrf
-                            <input type="number" name="seq4" id="s{{$student->id }}{{$sub->id }}" class="sp" onchange="checks{{$student->id }}{{$sub->id }}(event)">
-                            </form>
                              {{-- fourth sequence --}}
                             <form action="" method="get" id="fsm{{$student->id }}{{$sub->id }}">
                                 @csrf
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
+                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
                                 <?php $fseq = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $fsa = array();
-                                 foreach ($tseq as $fs) { array_push($fsa, $fs->seq4);} $fs1 = current($fsa);
+                                 foreach ($tseq as $fs) { array_push($fsa, $fs->seq4);} $fseqsa1 = current($fsa);
                                   ?>
-                                <input type="number" name="seq4" value="{{ $fs1 }}" id="fs{{$student->id }}{{$sub->id }}" class="{{ (int)$fs1 < 10 ? 'ss':'sp' }}" onchange="checkfs{{ $student->id }}{{ $sub->id }}(event)"></td>
+                                <input type="number" name="seq4" value="{{ $fseqsa1 }}" id="fs{{$student->id }}{{$sub->id }}" class="{{ (int)$fseqsa1 < 10 ? 'ss':'sp' }}" onchange="checkfs{{ $student->id }}{{ $sub->id }}(event)"></td>
                             </form>
                         </td>
                         @endif
@@ -202,6 +216,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
+                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
                                 <?php $seq5 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $fseq5 = array();
@@ -216,6 +231,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
+                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
                                 <?php $noel6 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $noell = array();
@@ -548,6 +564,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $subs->id }}">
+                                    <input type="hidden" name="form" value="{{ $subs->form->id }}">
                                     <?php $sfseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                      $sarr1 = array();
@@ -562,6 +579,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $subs->id }}">
+                                    <input type="hidden" name="form" value="{{ $subs->form->id }}">
                                     <?php $sfseq2 = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                      $sarr2 = array();
@@ -580,6 +598,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
+                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
                                 <?php $tseqs = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $tsa1 = array();
@@ -598,6 +617,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
+                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
                                 <?php $fseqs4 = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $fsa4 = array();
@@ -616,6 +636,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
+                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
                                 <?php $fff = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $ffseq5 = array();
@@ -630,6 +651,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
+                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
                                 <?php $noel6 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $noell = array();

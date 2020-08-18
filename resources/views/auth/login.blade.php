@@ -51,7 +51,7 @@
                         {{ csrf_field() }}
                         <div class="card-action blue lighten-1 white-text" style="height: 150px">
                             <center>
-                                <img src="{{ URL::asset('image/2.png') }}" class="w3-center w3-margin-top" alt="logo" height="80" width="80">
+                                <img src="{{ URL::asset('image/logo/'.$setting->logo.' ') }}" class="w3-center w3-margin-top" alt="logo" height="80" width="80">
                             </center>
                             <h5 class="center">Enter your credentials to login</h5>
                         </div>

@@ -69,28 +69,37 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
+        $formid = (int)$req['form'];
 
         if(Firsttermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
-            ->where('subject_id', $sub)->exists()){
+            ->where('subject_id', $sub)
+            ->where('form_id', $formid)
+            ->exists()){
                 if($seq == "0"){
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
-                    ->where('subject_id', $sub)->update(['seq1' => 0]);
+                    ->where('subject_id', $sub)
+                    ->where('form_id', $formid)
+                    ->update(['seq1' => 0]);
                     $message = array('message' => 'SEQ 1 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
                 else if($seq == null){
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
-                    ->where('subject_id', $sub)->update(['seq1' => null]);
+                    ->where('subject_id', $sub)
+                    ->where('form_id', $formid)
+                    ->update(['seq1' => null]);
                     $message = array('message' => 'SEQ 1 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
                 else {
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
-                    ->where('subject_id', $sub)->update([
+                    ->where('subject_id', $sub)
+                    ->where('form_id', $formid)
+                    ->update([
                         'seq1' => $seq
                     ]);
                     $message = array('message' => 'SEQ 1 Mark updated', 'type' => 'update', 'seq' => $seq);
@@ -101,6 +110,7 @@ class RecordController extends Controller
             $firstseq = new Firsttermresult();
             $firstseq->year_id = $yearid;
             $firstseq->student_id = $studentId;
+            $firstseq->form_id = $formid;
             $firstseq->subject_id = $sub;
             $firstseq->seq1 = $seq;
 
@@ -116,27 +126,32 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
+        $formid = (int)$req['form'];
 
         if(Firsttermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
-            ->where('subject_id', $sub)->exists()){
+            ->where('subject_id', $sub)
+            ->where('form_id', $formid)->exists()){
                 if($seq == "0"){
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
-                    ->where('subject_id', $sub)->update(['seq2' => 0]);
+                    ->where('subject_id', $sub)
+                    ->where('form_id', $formid)->update(['seq2' => 0]);
                     $message = array('message' => 'SEQ 2 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
                 else if($seq == null){
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
-                    ->where('subject_id', $sub)->update(['seq2' => null]);
+                    ->where('subject_id', $sub)
+                    ->where('form_id', $formid)->update(['seq2' => null]);
                     $message = array('message' => 'SEQ 2 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
                 else {
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
                         'seq2' => $seq
                     ]);
@@ -148,6 +163,7 @@ class RecordController extends Controller
             $second = new Firsttermresult();
             $second->year_id = $yearid;
             $second->student_id = $studentId;
+            $second->form_id = $formid;
             $second->subject_id = $sub;
             $second->seq2 = $seq;
 
@@ -163,13 +179,16 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
+        $formid = (int)$req['form'];
 
         if(Secondtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
+            ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
                 if($seq == "0"){
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq3' => 0]);
                     $message = array('message' => 'SEQ 3 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -177,6 +196,7 @@ class RecordController extends Controller
                 else if($seq == null){
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq3' => null]);
                     $message = array('message' => 'SEQ 3 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
@@ -184,6 +204,7 @@ class RecordController extends Controller
                 else {
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
                         'seq3' => $seq
                     ]);
@@ -195,6 +216,7 @@ class RecordController extends Controller
             $third = new Secondtermresult();
             $third->year_id = $yearid;
             $third->student_id = $studentId;
+            $third->form_id = $formid;
             $third->subject_id = $sub;
             $third->seq3 = $seq;
 
@@ -209,13 +231,16 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
+        $formid = (int)$req['form'];
 
         if(Secondtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
+            ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
                 if($seq == "0"){
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq4' => 0]);
                     $message = array('message' => 'SEQ 4 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -223,6 +248,7 @@ class RecordController extends Controller
                 else if($seq == null){
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq4' => null]);
                     $message = array('message' => 'SEQ 4 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
@@ -230,6 +256,7 @@ class RecordController extends Controller
                 else {
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
                         'seq4' => $seq
                     ]);
@@ -241,6 +268,7 @@ class RecordController extends Controller
             $fourth = new Secondtermresult();
             $fourth->year_id = $yearid;
             $fourth->student_id = $studentId;
+            $fourth->form_id = $formid;
             $fourth->subject_id = $sub;
             $fourth->seq4 = $seq;
 
@@ -255,13 +283,16 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
+        $formid = (int)$req['form'];
 
         if(Thirdtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
+            ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
                 if($seq == "0"){
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq5' => 0]);
                     $message = array('message' => 'SEQ 5 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -269,6 +300,7 @@ class RecordController extends Controller
                 else if($seq == null){
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq5' => null]);
                     $message = array('message' => 'SEQ 5 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
@@ -276,6 +308,7 @@ class RecordController extends Controller
                 else {
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
                         'seq5' => $seq
                     ]);
@@ -287,6 +320,7 @@ class RecordController extends Controller
             $firth = new Thirdtermresult();
             $firth->year_id = $yearid;
             $firth->student_id = $studentId;
+            $firth->form_id = $formid;
             $firth->subject_id = $sub;
             $firth->seq5 = $seq;
 
@@ -302,13 +336,16 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
+        $formid = (int)$req['form'];
 
         if(Thirdtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
+            ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
                 if($seq == "0"){
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq6' => 0]);
                     $message = array('message' => 'SEQ 6 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -316,6 +353,7 @@ class RecordController extends Controller
                 else if($seq == null){
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update(['seq6' => null]);
                     $message = array('message' => 'SEQ 6 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
@@ -323,6 +361,7 @@ class RecordController extends Controller
                 else {
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
+                    ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
                         'seq6' => $seq
                     ]);
@@ -334,6 +373,7 @@ class RecordController extends Controller
             $sith = new Thirdtermresult();
             $sith->year_id = $yearid;
             $sith->student_id = $studentId;
+            $sith->form_id = $formid;
             $sith->subject_id = $sub;
             $sith->seq6 = $seq;
 

@@ -19,10 +19,12 @@ class CreateFirsttermresultsTable extends Migration
             $table->foreign('year_id')->references('id')->on('years')->onDelete('cascade');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->integer('form_id')->unsigned();
+            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $table->smallInteger('seq1')->nullable();
-            $table->smallInteger('seq2')->nullable();
+            $table->decimal('seq1', 6,2)->nullable();
+            $table->decimal('seq2',6,2)->nullable();
             $table->timestamps();
         });
     }
