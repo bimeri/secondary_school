@@ -11,6 +11,7 @@ use App\Subject;
 use App\Term;
 use App\Thirdtermresult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class RecordController extends Controller
 {
@@ -35,11 +36,16 @@ class RecordController extends Controller
 
     public function getStudents(Request $req){
         $this->authorize('record_mark', Permission::class);
-        $this->validate($req, [
-            'class' => 'required'
-        ]);
 
-        $formId = $req['class'];
+
+        try {
+            $classId = Crypt::decrypt($req['class']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+
+        $formId =(int)$classId;
         $data['class'] = Form::where('id', $formId)->first();
         $data['subjects'] = Subject::where('form_id', $formId)->get();
         $terms = Term::where('active', 1)->first();
@@ -69,7 +75,13 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        $formid = (int)$req['form'];
+        try {
+            $decrypted_id = Crypt::decrypt($req['form']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+        $formid = (int)$decrypted_id;
 
         if(Firsttermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
@@ -126,7 +138,13 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        $formid = (int)$req['form'];
+        try {
+            $decrypted_id = Crypt::decrypt($req['form']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+        $formid = (int)$decrypted_id;
 
         if(Firsttermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
@@ -179,7 +197,13 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        $formid = (int)$req['form'];
+        try {
+            $decrypted_id = Crypt::decrypt($req['form']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+        $formid = (int)$decrypted_id;
 
         if(Secondtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
@@ -231,7 +255,13 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        $formid = (int)$req['form'];
+        try {
+            $decrypted_id = Crypt::decrypt($req['form']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+        $formid = (int)$decrypted_id;
 
         if(Secondtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
@@ -283,7 +313,13 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        $formid = (int)$req['form'];
+        try {
+            $decrypted_id = Crypt::decrypt($req['form']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+        $formid = (int)$decrypted_id;
 
         if(Thirdtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
@@ -336,7 +372,13 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        $formid = (int)$req['form'];
+        try {
+            $decrypted_id = Crypt::decrypt($req['form']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+        $formid = (int)$decrypted_id;
 
         if(Thirdtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)

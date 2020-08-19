@@ -93,7 +93,8 @@ class RankStudentController extends Controller
         // first test
         $arr_first = array();
        // $all_student_mark = array();
-        $sum_coff = array();
+        $sum_ave = array();
+        $number_of_subject = $subjects->count();
         foreach ($subjects as $sb) {
             $first_test_student = $term->where('subject_id', $sb->id)->count();
             $total_wrote = $term->where('seq'.$nu1.'', '!=', null)->where('subject_id', $sb->id)->count();
@@ -107,10 +108,12 @@ class RankStudentController extends Controller
             else {
                 $all_students = $first_test_student;
             }
-            $subject_percentage_pass = $sum_marks*100/(20*$all_students);
+            $subject_percentage_pass = $sum_marks*100/(20*$first_test_student);
             $average = 20*$subject_percentage_pass/100;
              //sum student marks multiply by sum of class coefficient
            // $sum_point =  20*(int)$sb->coefficient*$first_test_student;
+           array_push($sum_ave, $average);
+
 
             $farr = [
                 'sub_name' => $sb->name.' '.$sb->code,
@@ -119,12 +122,18 @@ class RankStudentController extends Controller
                 'total_pass' => $total_pass,
                 'highest_mark' => $highest_mark,
                 'percentage' => number_format((float)$subject_percentage_pass, 2, '.', ' '),
-                'average' => $average
+                'average' =>  number_format((float)$average, 2, '.', ' '),
+                // 'total_percent' => $over_all_percent,
+                // 'total_average' => $over_all_ave,
             ];
+
             array_push($arr_first, $farr);
            // array_push($all_student_mark, $sum_marks);
         }
-      //  return $arr_first;
+        $over_all_percent = array_sum($sum_ave)/($number_of_subject);
+        $over_all_ave = 20*$over_all_percent/100;
+
+      //return $over_all_ave;
 
 
         $data['avg'] = array_sum($arr_sum)/$subjects_coefficient;

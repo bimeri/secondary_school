@@ -21,6 +21,9 @@
         margin-top: 10px !important;
         transform: rotate(-23deg) !important;
     }
+    th>div#studs{
+        margin-top: 10px !important;
+    }
     input[type='number'].sp{
         position: absolute ;
         outline: none !important;
@@ -89,12 +92,12 @@
                 <div class="input-field col m5 s12">
                     <select name="class" id="class">
                         @if($class != [])
-                        <option value="{{ $class->id }}" selected> {{ $class->name }} / {{ $class->background->name }} / {{ $class->background->sector->name }}</option>
+                        <option value="{{ \Crypt::encrypt($class->id) }}" selected> {{ $class->name }} / {{ $class->background->name }} / {{ $class->background->sector->name }}</option>
                         @else
                         <option value="" selected>form / background / sector</option>
                         @endif
                       @foreach (App\Form::where('id', '!=', $class->id ?? '')->get() as $form)
-                        <option value="{{ $form->id }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
+                        <option value="{{\Crypt::encrypt($form->id) }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
                       @endforeach
                     </select>
                     <label for="class">Select the class</label>
@@ -111,7 +114,7 @@
             <h5 class="center teal-text">{{ __('messages.record_grading') }}. <b>(/20)</b></h5>
             <table id="myTable" class="w3-table w3-border-t" style="font-size: 13px !important;">
                 <tr class="teal">
-                        <th rowspan="2" class="w3-xlarge blue"><div id="stud">Students</div></th>
+                        <th rowspan="2" class="w3-xlarge blue">@if(!Empty($students))<div id="stud">Students</div>@else<div id="studs">Students</div>@endif</th>
                         @foreach ($subjects as $sub)
                             <th class="black-text tooltip-wrapper" colspan="2"  id="subjects">
                                 <a class="tooltip tooltip-left" data-tooltip="{{ $sub->code }}">{{ $sub->name }}</a>
@@ -148,7 +151,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                    <input type="hidden" name="form" value="{{ $sub->form->id }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
                                     <?php $fseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                      $arr = array();
@@ -163,7 +166,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                    <input type="hidden" name="form" value="{{ $sub->form->id }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
                                     <?php $fseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                      $arr2 = array();
@@ -182,7 +185,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
                                 <?php $tseq = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $arr3 = array();
@@ -197,7 +200,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
                                 <?php $fseq = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $fsa = array();
@@ -216,7 +219,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
                                 <?php $seq5 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $fseq5 = array();
@@ -231,7 +234,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ $sub->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
                                 <?php $noel6 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $noell = array();
@@ -564,7 +567,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                    <input type="hidden" name="form" value="{{ $subs->form->id }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
                                     <?php $sfseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                      $sarr1 = array();
@@ -579,7 +582,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                    <input type="hidden" name="form" value="{{ $subs->form->id }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
                                     <?php $sfseq2 = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                      $sarr2 = array();
@@ -598,7 +601,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
                                 <?php $tseqs = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $tsa1 = array();
@@ -617,7 +620,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
                                 <?php $fseqs4 = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $fsa4 = array();
@@ -636,7 +639,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
                                 <?php $fff = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $ffseq5 = array();
@@ -651,7 +654,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ $subs->form->id }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
                                 <?php $noel6 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $noell = array();
