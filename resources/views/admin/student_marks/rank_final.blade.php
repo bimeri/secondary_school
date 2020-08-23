@@ -3,7 +3,8 @@
 @section('style')
 <style>
     table{
-        border: 1px solid bloack !important;
+        border: 1px solid black !important;
+        box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138);
     }
     td, th, tr{
         border: 1px solid black !important;
@@ -71,6 +72,35 @@
     left: auto;
     right: auto;
   }
+  .hover{
+      cursor: pointer;
+  }
+  .st{
+    -webkit-box-reflect: right 10px linear-gradient(transparent, #cc00ff, #0002);
+    box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138);
+    animation: rot 3s linear infinite;
+  }
+  @keyframes rot{
+    0%{
+        box-shadow: 0 0 10px rgb(130, 243, 130), inset 0 0 10px rgb(138, 224, 138);
+      }
+    20%{
+        box-shadow: 0 0 20px rgb(130, 243, 130), inset 0 0 20px rgb(138, 224, 138);
+      }
+    40%{
+        box-shadow: 0 0 10px rgb(207, 50, 44), inset 0 0 10px rgb(207, 50, 44);
+      }
+    60%{
+        box-shadow: 0 0 20px rgb(207, 50, 44), inset 0 0 20px rgb(207, 50, 44);
+      }
+    80%{
+        box-shadow: 0 0 10px rgb(204, 193, 36), inset 0 0 10px rgb(204, 193, 36);
+      }
+    100%{
+        box-shadow: 0 0 20px rgb(204, 193, 36), inset 0 0 20px rgb(204, 193, 36);
+      }
+  }
+
 </style>
 @endsection
 @section('content')
@@ -93,7 +123,7 @@
             <div class="row">
                 <div class="input-field col m5 s12">
                     <select name="class" id="class">
-                        <option value="{{ $form->id }}" selected>{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
+                        <option value="{{\Crypt::encrypt( $form->id) }}" selected>{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
                       @foreach (App\Form::where('id', '!=', $form->id)->get() as $fm)
                         <option value="{{\Crypt::encrypt($fm->id) }}">{{ $fm->name }}  / {{ $fm->background->name }} / {{ $fm->background->sector->name }}</option>
                       @endforeach
@@ -108,7 +138,7 @@
     </div>
     @if(Session::has('message'))
     <div class="row">
-        <div class="col s12 m6 offset-m3 w3-center alert alert-danger w3-padding" role="alert" style="height: 70px">
+        <div class="col s12 m6 offset-m3 w3-center alert alert-info w3-padding" role="alert" style="height: 70px">
             {{ Session::get('message') }}
         </div>
     </div>
@@ -116,6 +146,34 @@
     @else
     <div class="col s11 m11 w3-border-t radius white w3-margin-left">
         <div class="row">
+            <div class="col m10 offset-m2 s12 w3-margin-top">
+                @if($check->count() == 0)
+                <div class="alert alert-warning center w3-padding w3-small" role="alert">
+                    <b>Class Result available. Student Rank Sheet have not yet been generated, please click the button on your right to generate student rank</b>
+                <i onclick="this.parentElement.style.display='none'" class="close right hover" style="color: green">&times;</i>
+                </div>
+
+                @else
+                <div class="alert green-text waves-effect waves-green green lighten-4 center w3-padding w3-small" role="alert">
+                    <b>Student Result and Ranking has been Successfully Generated for {{ $term_name }} and the academic year {{ $year_name }}</b>
+                <i onclick="this.parentElement.style.display='none'" class="close right hover" style="color: green;">&times;</i>
+                </div>
+                @endif
+            </div>
+
+            @if($check->count() == 0)
+            <form method="post" action="{{ route('sutdent.result.generate') }}">
+                @csrf
+                <input type="hidden" name="year_id" value="{{ $year->id }}"/>
+                <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
+                <input type="hidden" name="class_id" value="{{ $class }}"/>
+                <button type="submit"
+                        class="btn blue waves-effect waves-light right st"
+                        style="position: fixed; right:10px;top:180px; border-radius:10px"
+                        onclick="load()">Generate</button>
+            </form>
+             @endif
+
             <div class="row">
                 <div class="col s12 m10 offset-m1">
                     <table id="myTable" class="w3-table" style="font-size: 13px !important; margin:5px">
@@ -170,7 +228,7 @@
 
                         @foreach ($term as $key => $item)
                         <tr>
-                            <td>{{ $term[$key]['sub_name'] }}</td>
+                            <td>{!! $term[$key]['sub_name'] !!}</td>
 
                             <td>{{ $term[$key]['first_test_student'] }}</td>
                             <td>{{ $term[$key]['total_wrote'] }}</td>
@@ -185,7 +243,7 @@
                             <td>{{ $terms[$key]['total_pass_two'] }}</td>
                             <td>{{ $terms[$key]['highest_mark_two'] }}</td>
                             <td @if($terms[$key]['percentage_two']  < 50) style="color:#F44336" @else  style="color:#2196F3"  @endif>{{ $terms[$key]['percentage_two'] }}</td>
-                            <td @if($terms[$key]['average_two']  < 50) style="color:#F44336" @else  style="color:#2196F3"  @endif>{{ $terms[$key]['average_two'] }}</td>
+                            <td @if($terms[$key]['average_two']  < 10) style="color:#F44336" @else  style="color:#2196F3"  @endif>{{ $terms[$key]['average_two'] }}</td>
                         </tr>
                         @endforeach
 
@@ -196,18 +254,21 @@
                             <td class="bold"></td>
                             <td class="bold"></td>
                             <td class="bold"></td>
-                            <td class="bold" @if($term[$key]['total_percent']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $term[$key]['total_percent'] }}</td>
+                            <td class="bold" @if($term[$key]['total_percent']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $term[$key]['total_percent'] }} &percnt;</td>
                             <td class="bold" @if($term[$key]['total_average']  < 10) style="color:red" @else  style="color:blue"  @endif>{{ $term[$key]['total_average'] }}</td>
 
                             <td class="bold">{{ $terms[$key]['total_student_two'] }}</td>
                             <td class="bold"></td>
                             <td class="bold"></td>
                             <td class="bold"></td>
-                            <td class="bold" @if($terms[$key]['total_percent_two']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $terms[$key]['total_percent_two'] }}</td>
+                            <td class="bold" @if($terms[$key]['total_percent_two']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $terms[$key]['total_percent_two'] }} &percnt;</td>
                             <td class="bold" @if($terms[$key]['total_average_two']  < 10) style="color:red" @else  style="color:blue"  @endif>{{ $terms[$key]['total_average_two'] }}</td>
                         </tr>
                     </table>
                 </div>
+            </div>
+            <div class="alert alert-info center" role="alert">
+             Subjects Passed Average: <b class="{{ $class_average < 10 ? 'red-text':'blue-text' }}">{{ $class_average }}, </b> Subjects Percentage passed: <b class="{{ $class_percentage < 50 ? 'red-text':'blue-text' }}">{{ $class_percentage }} %</b>
             </div>
         </div>
     </div>

@@ -18,12 +18,18 @@ class Studentinfo extends Authenticatable
         return $this->belongsTo('App\Student');
     }
 
+    public function studentresult(){
+        return $this->belongsTo('App\Studentresult');
+    }
+
     public function form(){
         return $this->belongsTo('App\Form');
     }
+
     public function year(){
         return $this->belongsTo('App\Year');
     }
+
     public function subclasses(){
         return $this->hasMany('App\Subclass');
     }

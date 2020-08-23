@@ -3,7 +3,7 @@
 @section('style')
 <style>
     table{
-        border: 1px solid bloack !important;
+        border: 1px solid black !important;
     }
     td, th, tr{
         border: 1px solid black !important;
@@ -68,12 +68,6 @@
         @lang('messages.rank_student')
     </div>
 </div>
-{{-- <ul class="tooltip-wrapper">
-    <li><a href="#" class="tooltip tooltip-top" data-tooltip="Hey, I'm at the top!">Tooltip top</a></li>
-    <li><a href="#" class="tooltip tooltip-bottom" data-tooltip="And I'm at the bottom">Tooltip bottom</a></li>
-    <li><a href="#" class="tooltip tooltip-left" data-tooltip="I'm left all alone">Tooltip left</a></li>
-    <li><a href="#" class="tooltip tooltip-right" data-tooltip="You're wrong and I'm right">Tooltip right</a></li>
-</ul> --}}
 <div class="row">
     <div class="col s12 m8 offset-m4">
         <form method="get" action="{{ route('rank.result') }}">
@@ -102,6 +96,9 @@
                 {{ Session::get('message') }}
             </div>
             @endif
+
+            {{-- get all students from class and theri results --}}
+            {{-- dissplay classes that have been published already --}}
 
         @else
         @if(Session::has('message'))

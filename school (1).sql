@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2020 at 10:22 AM
+-- Generation Time: Aug 23, 2020 at 08:25 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -295,6 +295,7 @@ CREATE TABLE `firsttermresults` (
   `subject_id` int(10) UNSIGNED NOT NULL,
   `seq1` decimal(6,1) DEFAULT NULL,
   `seq2` decimal(6,1) DEFAULT NULL,
+  `ave_point` decimal(6,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -303,55 +304,55 @@ CREATE TABLE `firsttermresults` (
 -- Dumping data for table `firsttermresults`
 --
 
-INSERT INTO `firsttermresults` (`id`, `year_id`, `student_id`, `form_id`, `subject_id`, `seq1`, `seq2`, `created_at`, `updated_at`) VALUES
-(1, 1, 6, 3, 13, '12.0', '21.0', '2020-08-17 22:12:07', '2020-08-17 22:12:11'),
-(2, 1, 7, 3, 13, '11.0', '9.0', '2020-08-17 22:12:13', '2020-08-17 22:12:15'),
-(3, 1, 8, 3, 13, '6.0', '7.0', '2020-08-17 22:12:16', '2020-08-17 22:12:18'),
-(4, 1, 9, 3, 13, '12.0', '17.0', '2020-08-17 22:12:20', '2020-08-17 22:12:29'),
-(5, 1, 23, 3, 13, '3.0', '19.0', '2020-08-17 22:12:22', '2020-08-17 22:12:24'),
-(6, 1, 24, 3, 13, '10.0', NULL, '2020-08-17 22:12:31', '2020-08-17 22:12:31'),
-(7, 1, 25, 3, 13, '6.0', '11.0', '2020-08-17 22:12:35', '2020-08-17 22:12:37'),
-(8, 1, 6, 3, 12, '9.0', '16.0', '2020-08-17 22:13:19', '2020-08-19 01:31:19'),
-(9, 1, 7, 3, 12, '9.0', '11.5', '2020-08-17 22:13:23', '2020-08-19 01:31:19'),
-(10, 1, 8, 3, 12, '10.0', NULL, '2020-08-17 22:13:28', '2020-08-17 22:13:28'),
-(11, 1, 9, 3, 12, '11.0', '7.0', '2020-08-17 22:13:30', '2020-08-17 22:13:31'),
-(12, 1, 23, 3, 12, NULL, '12.0', '2020-08-17 22:13:33', '2020-08-19 01:31:17'),
-(13, 1, 25, 3, 12, '9.5', '14.0', '2020-08-17 22:13:36', '2020-08-17 22:13:45'),
-(14, 1, 24, 3, 12, '12.5', NULL, '2020-08-17 22:13:48', '2020-08-18 14:21:49'),
-(15, 1, 6, 3, 15, '4.0', '6.0', '2020-08-17 22:14:17', '2020-08-19 01:31:08'),
-(16, 1, 6, 3, 5, '2.0', '4.0', '2020-08-17 22:14:24', '2020-08-19 01:31:10'),
-(17, 1, 7, 3, 5, '11.0', '13.0', '2020-08-17 22:14:36', '2020-08-17 22:14:38'),
-(18, 1, 9, 3, 5, '4.5', '15.0', '2020-08-17 22:15:02', '2020-08-19 01:31:09'),
-(19, 1, 23, 3, 5, '11.5', '10.0', '2020-08-17 22:15:06', '2020-08-17 22:15:40'),
-(20, 1, 25, 3, 5, '12.0', '9.5', '2020-08-17 22:15:23', '2020-08-17 22:16:26'),
-(21, 1, 24, 3, 5, NULL, '7.8', '2020-08-17 22:15:33', '2020-08-19 01:31:10'),
-(22, 1, 23, 3, 11, '12.0', '9.0', '2020-08-17 22:15:43', '2020-08-17 22:16:00'),
-(23, 1, 24, 3, 11, NULL, '13.0', '2020-08-17 22:15:45', '2020-08-19 01:31:16'),
-(24, 1, 25, 3, 11, '18.0', '10.0', '2020-08-17 22:15:48', '2020-08-17 22:15:50'),
-(25, 1, 9, 3, 11, '20.0', '4.0', '2020-08-17 22:15:53', '2020-08-17 22:15:56'),
-(26, 1, 7, 3, 11, NULL, '10.5', '2020-08-17 22:16:03', '2020-08-19 01:31:15'),
-(27, 1, 6, 3, 11, NULL, '12.0', '2020-08-17 22:16:08', '2020-08-19 01:31:12'),
-(28, 1, 8, 3, 11, '7.0', NULL, '2020-08-17 22:16:11', '2020-08-17 22:16:11'),
-(29, 1, 8, 3, 5, NULL, '19.0', '2020-08-17 22:16:17', '2020-08-19 01:31:10'),
-(30, 1, 9, 3, 15, '9.5', '12.0', '2020-08-17 22:16:30', '2020-08-19 01:31:08'),
-(31, 1, 24, 3, 15, '8.5', '10.0', '2020-08-17 22:16:34', '2020-08-19 01:31:08'),
-(32, 1, 25, 3, 15, '16.0', '14.0', '2020-08-17 22:16:40', '2020-08-17 22:16:56'),
-(33, 1, 8, 3, 15, '10.0', '3.0', '2020-08-17 22:16:46', '2020-08-17 22:16:53'),
-(34, 1, 7, 3, 15, '11.0', NULL, '2020-08-17 22:16:50', '2020-08-17 22:16:50'),
-(35, 1, 23, 3, 15, '13.0', '6.0', '2020-08-17 22:16:58', '2020-08-19 01:29:14'),
-(36, 1, 7, 3, 14, NULL, '10.0', '2020-08-17 22:17:03', '2020-08-19 01:31:07'),
-(37, 1, 8, 3, 14, NULL, '17.0', '2020-08-17 22:17:05', '2020-08-19 01:31:07'),
-(38, 1, 9, 3, 14, '10.0', NULL, '2020-08-17 22:17:07', '2020-08-17 22:17:35'),
-(39, 1, 23, 3, 14, NULL, '11.0', '2020-08-17 22:17:10', '2020-08-19 01:31:07'),
-(40, 1, 24, 3, 14, '6.0', '18.0', '2020-08-17 22:17:13', '2020-08-17 22:17:45'),
-(41, 1, 25, 3, 14, NULL, '6.0', '2020-08-17 22:17:18', '2020-08-19 01:31:06'),
-(42, 1, 6, 3, 14, '11.0', '9.0', '2020-08-17 22:17:22', '2020-08-17 22:17:26'),
-(43, 1, 26, 3, 5, '17.0', '10.0', '2020-08-17 22:19:31', '2020-08-17 22:19:32'),
-(44, 1, 26, 3, 11, '4.0', NULL, '2020-08-17 22:19:34', '2020-08-19 01:31:17'),
-(45, 1, 26, 3, 12, '12.0', '9.0', '2020-08-17 22:19:37', '2020-08-17 22:19:43'),
-(46, 1, 26, 3, 13, '8.5', '14.0', '2020-08-17 22:19:45', '2020-08-17 22:19:49'),
-(47, 1, 26, 3, 14, '17.0', NULL, '2020-08-17 22:19:51', '2020-08-17 22:19:51'),
-(48, 1, 26, 3, 15, '12.0', '7.0', '2020-08-17 22:19:54', '2020-08-17 22:19:59');
+INSERT INTO `firsttermresults` (`id`, `year_id`, `student_id`, `form_id`, `subject_id`, `seq1`, `seq2`, `ave_point`, `created_at`, `updated_at`) VALUES
+(1, 1, 6, 3, 13, '13.0', '19.0', '32.00', '2020-08-17 22:12:07', '2020-08-22 22:13:18'),
+(2, 1, 7, 3, 13, '11.0', '9.5', '20.50', '2020-08-17 22:12:13', '2020-08-22 22:13:50'),
+(3, 1, 8, 3, 13, '6.0', '7.3', '13.30', '2020-08-17 22:12:16', '2020-08-22 22:16:15'),
+(4, 1, 9, 3, 13, '12.0', '18.0', '30.00', '2020-08-17 22:12:20', '2020-08-22 22:16:19'),
+(5, 1, 23, 3, 13, '4.0', '19.0', '23.00', '2020-08-17 22:12:22', '2020-08-22 22:16:23'),
+(6, 1, 24, 3, 13, '13.0', NULL, '13.00', '2020-08-17 22:12:31', '2020-08-22 22:16:32'),
+(7, 1, 25, 3, 13, '3.7', '11.0', '14.70', '2020-08-17 22:12:35', '2020-08-22 22:16:38'),
+(8, 1, 6, 3, 12, '8.0', '17.0', '25.00', '2020-08-17 22:13:19', '2020-08-22 22:13:11'),
+(9, 1, 7, 3, 12, '10.0', '11.5', '21.50', '2020-08-17 22:13:23', '2020-08-22 22:13:58'),
+(10, 1, 8, 3, 12, '11.0', NULL, '11.00', '2020-08-17 22:13:28', '2020-08-22 22:17:04'),
+(11, 1, 9, 3, 12, '11.0', '9.0', '20.00', '2020-08-17 22:13:30', '2020-08-22 22:17:09'),
+(12, 1, 23, 3, 12, NULL, '11.0', '11.00', '2020-08-17 22:13:33', '2020-08-22 22:16:26'),
+(13, 1, 25, 3, 12, '9.5', '13.5', '23.00', '2020-08-17 22:13:36', '2020-08-22 22:17:23'),
+(14, 1, 24, 3, 12, '12.0', NULL, '12.00', '2020-08-17 22:13:48', '2020-08-22 22:17:17'),
+(15, 1, 6, 3, 15, '6.0', '6.0', '24.00', '2020-08-17 22:14:17', '2020-08-22 22:13:30'),
+(16, 1, 6, 3, 5, '10.0', '11.6', '32.40', '2020-08-17 22:14:24', '2020-08-23 13:06:41'),
+(17, 1, 7, 3, 5, '11.1', '13.0', '36.15', '2020-08-17 22:14:36', '2020-08-22 22:08:44'),
+(18, 1, 9, 3, 5, '12.0', '14.0', '39.00', '2020-08-17 22:15:02', '2020-08-22 22:14:21'),
+(19, 1, 23, 3, 5, '6.5', '10.0', '24.75', '2020-08-17 22:15:06', '2020-08-22 22:21:39'),
+(20, 1, 25, 3, 5, '12.0', '9.4', '32.10', '2020-08-17 22:15:23', '2020-08-22 22:14:37'),
+(21, 1, 24, 3, 5, NULL, '8.8', '13.20', '2020-08-17 22:15:33', '2020-08-22 22:14:30'),
+(22, 1, 23, 3, 11, '12.0', '11.0', '34.50', '2020-08-17 22:15:43', '2020-08-22 22:18:12'),
+(23, 1, 24, 3, 11, NULL, '12.0', '18.00', '2020-08-17 22:15:45', '2020-08-22 22:18:15'),
+(24, 1, 25, 3, 11, '17.0', '11.0', '42.00', '2020-08-17 22:15:48', '2020-08-22 22:18:18'),
+(25, 1, 9, 3, 11, '20.0', '7.0', '40.50', '2020-08-17 22:15:53', '2020-08-22 22:18:09'),
+(26, 1, 7, 3, 11, NULL, '11.0', '16.50', '2020-08-17 22:16:03', '2020-08-22 22:17:59'),
+(27, 1, 6, 3, 11, NULL, '12.0', '18.00', '2020-08-17 22:16:08', '2020-08-22 22:17:55'),
+(28, 1, 8, 3, 11, '9.0', NULL, '13.50', '2020-08-17 22:16:11', '2020-08-22 22:18:03'),
+(29, 1, 8, 3, 5, NULL, '18.0', '27.00', '2020-08-17 22:16:17', '2020-08-22 22:14:24'),
+(30, 1, 9, 3, 15, '9.5', '14.0', '47.00', '2020-08-17 22:16:30', '2020-08-22 22:15:46'),
+(31, 1, 24, 3, 15, '8.5', '11.0', '39.00', '2020-08-17 22:16:34', '2020-08-22 22:15:32'),
+(32, 1, 25, 3, 15, '16.0', '13.0', '58.00', '2020-08-17 22:16:40', '2020-08-22 22:15:27'),
+(33, 1, 8, 3, 15, '10.0', '16.0', '52.00', '2020-08-17 22:16:46', '2020-08-22 22:15:50'),
+(34, 1, 7, 3, 15, '10.5', NULL, '21.00', '2020-08-17 22:16:50', '2020-08-22 22:13:37'),
+(35, 1, 23, 3, 15, '12.0', '8.0', '40.00', '2020-08-17 22:16:58', '2020-08-22 22:15:39'),
+(36, 1, 7, 3, 14, NULL, '11.0', '11.00', '2020-08-17 22:17:03', '2020-08-22 22:13:46'),
+(37, 1, 8, 3, 14, NULL, '18.0', '18.00', '2020-08-17 22:17:05', '2020-08-22 22:15:58'),
+(38, 1, 9, 3, 14, '11.0', NULL, '11.00', '2020-08-17 22:17:07', '2020-08-22 22:16:07'),
+(39, 1, 23, 3, 14, NULL, '12.0', '12.00', '2020-08-17 22:17:10', '2020-08-22 22:16:02'),
+(40, 1, 24, 3, 14, '6.0', '17.0', '23.00', '2020-08-17 22:17:13', '2020-08-22 22:22:32'),
+(41, 1, 25, 3, 14, NULL, '7.0', '7.00', '2020-08-17 22:17:18', '2020-08-22 22:22:28'),
+(42, 1, 6, 3, 14, '11.0', '9.5', '20.50', '2020-08-17 22:17:22', '2020-08-22 22:13:26'),
+(43, 1, 26, 3, 5, '17.0', '11.0', '42.00', '2020-08-17 22:19:31', '2020-08-22 22:14:53'),
+(44, 1, 26, 3, 11, '8.0', NULL, '12.00', '2020-08-17 22:19:34', '2020-08-22 22:14:49'),
+(45, 1, 26, 3, 12, '11.0', '9.5', '20.50', '2020-08-17 22:19:37', '2020-08-22 22:15:03'),
+(46, 1, 26, 3, 13, '8.5', '15.0', '23.50', '2020-08-17 22:19:45', '2020-08-22 22:15:07'),
+(47, 1, 26, 3, 14, '16.0', NULL, '16.00', '2020-08-17 22:19:51', '2020-08-22 22:15:10'),
+(48, 1, 26, 3, 15, '12.0', '8.0', '40.00', '2020-08-17 22:19:54', '2020-08-22 22:15:21');
 
 -- --------------------------------------------------------
 
@@ -393,13 +394,20 @@ CREATE TABLE `generateresults` (
   `form_id` int(10) UNSIGNED NOT NULL,
   `number_of_student` int(10) UNSIGNED NOT NULL,
   `number_passed` int(10) UNSIGNED NOT NULL,
-  `class_avg` int(10) UNSIGNED NOT NULL,
-  `highest_avg` int(10) UNSIGNED NOT NULL,
-  `lowest_avg` int(10) UNSIGNED NOT NULL,
+  `class_avg` decimal(6,2) UNSIGNED NOT NULL,
+  `highest_avg` decimal(6,2) UNSIGNED NOT NULL,
+  `lowest_avg` decimal(6,2) UNSIGNED NOT NULL,
   `rank_student` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `generateresults`
+--
+
+INSERT INTO `generateresults` (`id`, `year_id`, `term_id`, `form_id`, `number_of_student`, `number_passed`, `class_avg`, `highest_avg`, `lowest_avg`, `rank_student`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 3, 8, 2, '9.34', '11.72', '7.39', 1, '2020-08-23 15:35:53', '2020-08-23 15:50:14');
 
 -- --------------------------------------------------------
 
@@ -473,7 +481,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (55, '2020_08_17_003856_create_generateresults_table', 29),
 (56, '2020_08_17_010447_create_secondtermresults_table', 30),
 (57, '2020_08_17_031822_create_thirdtermresults_table', 30),
-(58, '2020_08_17_121006_create_firsttermresults_table', 30);
+(58, '2020_08_17_121006_create_firsttermresults_table', 30),
+(59, '2020_08_22_182327_create_studentresults_table', 31);
 
 -- --------------------------------------------------------
 
@@ -670,6 +679,7 @@ CREATE TABLE `secondtermresults` (
   `subject_id` int(10) UNSIGNED NOT NULL,
   `seq3` decimal(6,1) DEFAULT NULL,
   `seq4` decimal(6,1) DEFAULT NULL,
+  `ave_point` decimal(6,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -817,6 +827,42 @@ INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `studentresults`
+--
+
+CREATE TABLE `studentresults` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `year_id` int(10) UNSIGNED NOT NULL,
+  `term_id` int(10) UNSIGNED NOT NULL,
+  `form_id` int(10) UNSIGNED NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL,
+  `student_school_id` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `average_point` decimal(6,2) DEFAULT NULL,
+  `sum_coff` decimal(6,2) DEFAULT NULL,
+  `stud_ave` decimal(6,2) DEFAULT NULL,
+  `position` int(5) DEFAULT NULL,
+  `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `studentresults`
+--
+
+INSERT INTO `studentresults` (`id`, `year_id`, `term_id`, `form_id`, `student_id`, `student_school_id`, `average_point`, `sum_coff`, `stud_ave`, `position`, `remark`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 3, 6, 'BG0A03', '151.90', '16.00', '9.49', 4, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
+(2, 1, 1, 3, 7, 'BG0A04', '126.65', '16.00', '7.92', 7, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
+(3, 1, 1, 3, 8, 'BG0A05', '134.80', '16.00', '8.43', 6, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
+(4, 1, 1, 3, 9, 'BG0A06', '187.50', '16.00', '11.72', 1, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
+(5, 1, 1, 3, 23, 'BG0A16', '145.25', '16.00', '9.08', 5, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14'),
+(6, 1, 1, 3, 24, 'BG0A17', '118.20', '16.00', '7.39', 8, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14'),
+(7, 1, 1, 3, 25, 'BG0A18', '176.80', '16.00', '11.05', 2, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14'),
+(8, 1, 1, 3, 26, 'BG0A19', '154.00', '16.00', '9.63', 3, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
@@ -937,7 +983,10 @@ CREATE TABLE `subject_teacher` (
 
 INSERT INTO `subject_teacher` (`id`, `subject_id`, `teacher_id`, `created_at`, `updated_at`) VALUES
 (9, 4, 3, NULL, NULL),
-(10, 5, 3, NULL, NULL);
+(10, 5, 3, NULL, NULL),
+(11, 1, 1, NULL, NULL),
+(12, 2, 1, NULL, NULL),
+(13, 15, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1007,6 +1056,7 @@ CREATE TABLE `thirdtermresults` (
   `subject_id` int(10) UNSIGNED NOT NULL,
   `seq5` decimal(6,1) DEFAULT NULL,
   `seq6` decimal(6,1) DEFAULT NULL,
+  `ave_point` decimal(6,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1268,6 +1318,16 @@ ALTER TABLE `studentinfos`
   ADD KEY `studentinfos_subform_id_foreign` (`subform_id`);
 
 --
+-- Indexes for table `studentresults`
+--
+ALTER TABLE `studentresults`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `studentresults_year_id_foreign` (`year_id`),
+  ADD KEY `studentresults_term_id_foreign` (`term_id`),
+  ADD KEY `studentresults_form_id_foreign` (`form_id`),
+  ADD KEY `studentresults_student_id_foreign` (`student_id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -1402,7 +1462,7 @@ ALTER TABLE `feetypes`
 -- AUTO_INCREMENT for table `firsttermresults`
 --
 ALTER TABLE `firsttermresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `forms`
@@ -1414,7 +1474,7 @@ ALTER TABLE `forms`
 -- AUTO_INCREMENT for table `generateresults`
 --
 ALTER TABLE `generateresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -1426,7 +1486,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1489,6 +1549,12 @@ ALTER TABLE `studentinfos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT for table `studentresults`
+--
+ALTER TABLE `studentresults`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
@@ -1510,7 +1576,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `subject_teacher`
 --
 ALTER TABLE `subject_teacher`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -1675,6 +1741,15 @@ ALTER TABLE `studentinfos`
   ADD CONSTRAINT `studentinfos_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
   ADD CONSTRAINT `studentinfos_subform_id_foreign` FOREIGN KEY (`subform_id`) REFERENCES `subclasses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `studentinfos_year_id_foreign` FOREIGN KEY (`year_id`) REFERENCES `years` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `studentresults`
+--
+ALTER TABLE `studentresults`
+  ADD CONSTRAINT `studentresults_form_id_foreign` FOREIGN KEY (`form_id`) REFERENCES `forms` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `studentresults_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `studentresults_term_id_foreign` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `studentresults_year_id_foreign` FOREIGN KEY (`year_id`) REFERENCES `years` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `subclasses`
