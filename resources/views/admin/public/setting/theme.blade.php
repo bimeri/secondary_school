@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="col s6 m3 offset-m4 offset-s3 w3-center" style="margin-top: 4px !important">
-                <button class="btn teal waves-effect waves-light w3-small lighten-2" type="submit">save theme</button>
+                <button class="btn teal waves-effect waves-light w3-small lighten-2" type="submit" onclick="load()">save theme</button>
             </div>
         </form>
     </div>

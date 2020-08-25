@@ -97,8 +97,18 @@
 
     <div class="col s11 m10 w3-border-t offset-m1 radius white w3-margin-left">
         @if($ranked->count() > 0)
+            @if(Session::has('message'))
+            <div class="w3-center alert alert-danger w3-margin-top" role="alert">
+                {{ Session::get('message') }}
+            </div>
+            @endif
 
         @else
+        @if(Session::has('message'))
+            <div class="w3-center alert alert-danger w3-margin-top" role="alert">
+                {{ Session::get('message') }}
+            </div>
+        @endif
             <div class="alert alert-info center w3-margin-top" role="alert">there is no class result generated already</div>
         @endif
     </div>

@@ -39,4 +39,9 @@ class Year extends Model
     public function feeecontrols(){
         return $this->hasMany('App\Feecontrol');
     }
+
+    public static function getAllYear(){
+        $query = Year::where('active', '!=', 1)->get();
+        return $query;
+    }
 }
