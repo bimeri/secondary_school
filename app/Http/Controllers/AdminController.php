@@ -7,6 +7,7 @@ use App\AdminRole;
 use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -49,8 +50,17 @@ class AdminController extends Controller
         return view('admin.public.role.editRole', compact('roles', 'permissions'));
     }
     public function editUser($id){
+        try{
+            $ids = Crypt::decrypt($id);
+        }
+        catch(\Illuminate\Contracts\Encryption\DecryptException $e){
+            $notification = array('message' => 'fail to decrypt information, please conttact the admin', 'alert-type' => 'info');
+            return redirect()->back()->with($notification);
+        }
+
+       // return $ids;
         $this->authorize('add_user', Permission::class);
-        $user = Admin::where('id', $id)->first();
+        $user = Admin::where('id', $ids)->first();
         return view('admin.public.role.editUser', compact('user'));
     }
 

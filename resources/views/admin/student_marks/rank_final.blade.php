@@ -138,6 +138,7 @@
     </div>
     @if(Session::has('message'))
     <div class="row">
+        <div class="col s12 m6 offset-m3 w3-center alert alert-danger w3-padding" role="alert" style="height: 70px">
         <div class="col s12 m6 offset-m3 w3-center alert alert-info w3-padding" role="alert" style="height: 70px">
             {{ Session::get('message') }}
         </div>
@@ -182,6 +183,22 @@
                             <th>coefficient</th>
                             <th>average points</th>
                             <th>Number of Students</th>
+
+                        </tr>
+                        @foreach ($subjects as $key => $subject)
+                            <tr>
+                                <td>{{ $subjects[$key]['subject_name'] }}</td>
+                                <td>{{ $subjects[$key]['subject_coff'] }}</td>
+                                <td>{{ $subjects[$key]['point'] }}</td>
+                                <td>{{ $subjects[$key]['number_student'] }}</td>
+                            </tr>
+                        @endforeach
+                        <tr class="teal-text center" style="background-color: rgb(169, 238, 238)">
+                            <td>Total</td>
+                            <td class="bold">{{ $sum_coff }}</td>
+                            <td class="bold">{{ $total_point }}</td>
+                            <td class="bold">{{ $total_student}}</td>
+                        </tr>
                         </tr>
                         @foreach ($subjects as $key => $subject)
                             <tr>
@@ -228,6 +245,7 @@
 
                         @foreach ($term as $key => $item)
                         <tr>
+                            <td>{{ $term[$key]['sub_name'] }}</td>
                             <td>{!! $term[$key]['sub_name'] !!}</td>
 
                             <td>{{ $term[$key]['first_test_student'] }}</td>
@@ -243,6 +261,29 @@
                             <td>{{ $terms[$key]['total_pass_two'] }}</td>
                             <td>{{ $terms[$key]['highest_mark_two'] }}</td>
                             <td @if($terms[$key]['percentage_two']  < 50) style="color:#F44336" @else  style="color:#2196F3"  @endif>{{ $terms[$key]['percentage_two'] }}</td>
+                            <td @if($terms[$key]['average_two']  < 50) style="color:#F44336" @else  style="color:#2196F3"  @endif>{{ $terms[$key]['average_two'] }}</td>
+                        </tr>
+                        @endforeach
+
+                        <tr class="teal-text center" style="background-color: rgb(169, 238, 238)">
+                            <td>Total</td>
+
+                            <td class="bold">{{ $term[$key]['total_student'] }}</td>
+                            <td class="bold"></td>
+                            <td class="bold"></td>
+                            <td class="bold"></td>
+                            <td class="bold" @if($term[$key]['total_percent']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $term[$key]['total_percent'] }}</td>
+                            <td class="bold" @if($term[$key]['total_average']  < 10) style="color:red" @else  style="color:blue"  @endif>{{ $term[$key]['total_average'] }}</td>
+
+                            <td class="bold">{{ $terms[$key]['total_student_two'] }}</td>
+                            <td class="bold"></td>
+                            <td class="bold"></td>
+                            <td class="bold"></td>
+                            <td class="bold" @if($terms[$key]['total_percent_two']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $terms[$key]['total_percent_two'] }}</td>
+                            <td class="bold" @if($terms[$key]['total_average_two']  < 10) style="color:red" @else  style="color:blue"  @endif>{{ $terms[$key]['total_average_two'] }}</td>
+                        </tr>
+                    </table>
+                </div>
                             <td @if($terms[$key]['average_two']  < 10) style="color:#F44336" @else  style="color:#2196F3"  @endif>{{ $terms[$key]['average_two'] }}</td>
                         </tr>
                         @endforeach
@@ -269,6 +310,7 @@
             </div>
             <div class="alert alert-info center" role="alert">
              Subjects Passed Average: <b class="{{ $class_average < 10 ? 'red-text':'blue-text' }}">{{ $class_average }}, </b> Subjects Percentage passed: <b class="{{ $class_percentage < 50 ? 'red-text':'blue-text' }}">{{ $class_percentage }} %</b>
+
             </div>
         </div>
     </div>

@@ -45,7 +45,7 @@
                                 }
                             @endphp
                         </td>
-                        <td><a href="{{ route('user.admin.edit', ['id' => $user->id]) }}" class="wave waves-teal waves-effect btn orange lighten-3 orange-text w3-small"> Update <i class="fa fa-pen w3-small"></i></a></td>
+                        <td><a href="{{ route('user.admin.edit', \Crypt::encrypt(['id' => $user->id]) ) }}" class="wave waves-teal waves-effect btn orange lighten-3 orange-text w3-small"> Update <i class="fa fa-pen w3-small"></i></a></td>
                         <td><button class="wave waves-effect waves-light btn red lighten-3 red-text w3-small" disabled> Delete <i class="fa fa-trash-alt w3-small"></i></button></td>
                     </tr>
                     @endforeach
