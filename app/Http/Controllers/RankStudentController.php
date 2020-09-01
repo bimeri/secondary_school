@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classresult;
 use App\Firsttermresult;
 use App\Form;
 use App\Generateresult;
@@ -28,7 +29,13 @@ class RankStudentController extends Controller
     public function index(){
         $this->authorize('rank_student', Permission::class);
 
-        $data['ranked'] = Generateresult::where('rank_student', 1)->get();
+        $year = Year::getCurrentYear();
+        $term = Term::getCurrentTerm();
+        $data['ranked'] = Generateresult::where('rank_student', 1)->where('year_id', $year)->where('term_id', $term)->get();
+        $data['class_results'] = Generateresult::getClassYearlyResult($year);
+        $data['c_year'] = Year::getYear($year);
+        $data['notify'] = '';
+        $data['year_name'] = Year::getYearName($year);
         return view('admin.student_marks.rank_students')->with($data);
     }
 
@@ -100,7 +107,7 @@ class RankStudentController extends Controller
         }elseif($nu2 == 4){
             $data['seq_name2'] = "Fourth Sequence";
         }else {
-            $data['seq_name2'] = "Sith Sequence";
+            $data['seq_name2'] = "Sixth Sequence";
         }
         $total_student = Studentinfo::where('form_id', $class_id)->where('year_id', $current_year->id)->count();
 
@@ -141,6 +148,7 @@ class RankStudentController extends Controller
             array_push($arr, $sub);
             array_push($arr_sum, 20*(int)$subject->coefficient);
         }
+
         // first test
         $arr_first = array();
         $sum_ave = array();
@@ -248,7 +256,7 @@ class RankStudentController extends Controller
 
 
         $data['check'] = Generateresult::getStudentsResult($current_year->id, $current_term->id, $class_id);
-
+        $data['class_ranked'] = Classresult::where('year_id',  $current_year->id)->where('term_id', $current_term->id)->where('form_id', $class_id)->get();
         $data['term_name'] = $current_term->name;
         $data['year_name'] = $current_year->name;
         $data['class_percentage'] = number_format((float)$class_percentage, 2, '.', '');
@@ -266,8 +274,6 @@ class RankStudentController extends Controller
 
         return view('admin.student_marks.rank_final')->with($data);
     }
-
-
 
     /*
     this ranking of students was done
@@ -288,6 +294,9 @@ class RankStudentController extends Controller
         $year = $req['year_id'];
 
         $terms = Term::where('id', $id)->first();
+
+        //first term
+
         if(strcmp($terms->name, 'First Term') == 0){
             $data = Firsttermresult::getStudentClassRecord($year, $class);
         //    return $data;
@@ -299,26 +308,16 @@ class RankStudentController extends Controller
                     $coff = $data->where('stud_id', $dat->stud_id)->sum('subject_coff');
                     $info = [
                         'stud_id' => $dat->stud_id,
-                        'student_card' =>$dat->stud_card,
-                        'point' =>$pnt,
-                        'sum_coff' =>$coff,
-                        'average' =>(float)$pnt/(float)$coff
+                        'student_card' => $dat->stud_card,
+                        'point' => $pnt,
+                        'sum_coff' => $coff,
+                        'average' => (float)$pnt/(float)$coff
                     ];
                     array_push($arr, $info);
                 }
             }
             $newarr = array_unique($arr, $dat->stud_id);
-           // return $newarr;
-           // $empty = array();
             foreach($newarr as $key => $new){
-                // $st = [
-                //     'stud_id' => $new['stud_id'],
-                //     'student_card' => $new['student_card'],
-                //     'points' => $new['point'],
-                //     'sum_coffs' => $new['sum_coff'],
-                //     'stud_ave' => $new['average']
-                // ];
-              //  array_push($empty, $st);
                 $studentresults = new Studentresult();
                 $studentresults->year_id = $year;
                 $studentresults->term_id = $terms->id;
@@ -351,22 +350,20 @@ class RankStudentController extends Controller
             if($studentresults || $updateresult){
 
                 $ranking_student = Studentresult::getStudent($year, $terms->id, $class);
-                //return $ranking_student;
                 foreach( $ranking_student as $key => $rank){
-                    $ranking = Studentresult::where('year_id', $year)
+                    Studentresult::where('year_id', $year)
                     ->where('term_id', $terms->id)
                     ->where('student_id', $rank->student_id)
                     ->where('form_id', $class)
                     ->update(['position' => ($key+1)]);
                 }
-                //get highest ave
+                //get highest ave, lowest_ave, average, number of students, class_ave, number_pass
                 $highest_ave = Studentresult::getHighestAverage($year, $terms->id, $class);
                 $lowest_ave = Studentresult::getLowestAverage($year, $terms->id, $class);
                 $ave = Studentresult::getAverage($year, $terms->id, $class);
                 $student_count = count($newarr);
                 $class_ave =  $ave/$student_count;
                 $number_pass = Studentresult::getPassedStudent($year, $terms->id, $class);
-               // return $number_passed;
 
                 $general_result = new Generateresult();
 
@@ -414,11 +411,259 @@ class RankStudentController extends Controller
 
         //second term result
         elseif(strcmp($terms->name, 'Second Term') == 0){
+            $data = Secondtermresult::getStudentClassRecord($year, $class);
+               $arr = array();
+               foreach($data as $dat){
+                   if(in_array($dat->stud_id, $arr)){}
+                   else{
+                        $pnt = $data->where('stud_id', $dat->stud_id)->sum('points');
+                        $coff = $data->where('stud_id', $dat->stud_id)->sum('subject_coff');
+                        $info = [
+                            'stud_id' => $dat->stud_id,
+                            'student_card' =>$dat->stud_card,
+                            'point' =>$pnt,
+                            'sum_coff' =>$coff,
+                            'average' =>(float)$pnt/(float)$coff
+                        ];
+                        array_push($arr, $info);
+                    }
+                }
+                $newarr = array_unique($arr, $dat->stud_id);
+                foreach($newarr as $key => $new){
+                    $studentresults = new Studentresult();
+                    $studentresults->year_id = $year;
+                    $studentresults->term_id = $terms->id;
+                    $studentresults->form_id = $class;
+                    $studentresults->student_id = $new['stud_id'];
+                    $studentresults->student_school_id = $new['student_card'];
+                    $studentresults->average_point = $new['point'];
+                    $studentresults->sum_coff = $new['sum_coff'];
+                    $studentresults->stud_ave = $new['average'];
 
+                    if(Studentresult::where('year_id', $year)
+                                    ->where('term_id', $terms->id)
+                                    ->where('student_id', $new['stud_id'])
+                                    ->where('form_id', $class)->exists())
+                                    {
+                                       $updateresult = Studentresult::where('year_id', $year)
+                                        ->where('term_id', $terms->id)
+                                        ->where('student_id', $new['stud_id'])
+                                        ->where('form_id', $class)
+                                        ->update([
+                                                    'average_point' =>  $new['point'],
+                                                    'sum_coff' => $new['sum_coff'],
+                                                    'stud_ave' => $new['average']
+                                                ]);
+                                    }
+                                    else {
+                                        $studentresults->save();
+                                    }
+                }
+                if($studentresults || $updateresult){
+
+                    $ranking_student = Studentresult::getStudent($year, $terms->id, $class);
+                    foreach( $ranking_student as $key => $rank){
+                        $ranking = Studentresult::where('year_id', $year)
+                        ->where('term_id', $terms->id)
+                        ->where('student_id', $rank->student_id)
+                        ->where('form_id', $class)
+                        ->update(['position' => ($key+1)]);
+                    }
+                    //get highest ave, lowest_ave, average, number of students, class_ave, number_pass
+                    $highest_ave = Studentresult::getHighestAverage($year, $terms->id, $class);
+                    $lowest_ave = Studentresult::getLowestAverage($year, $terms->id, $class);
+                    $ave = Studentresult::getAverage($year, $terms->id, $class);
+                    $student_count = count($newarr);
+                    $class_ave =  $ave/$student_count;
+                    $number_pass = Studentresult::getPassedStudent($year, $terms->id, $class);
+                   // return $number_passed;
+
+                    $general_result = new Generateresult();
+
+                    $general_result->year_id = $year;
+                    $general_result->term_id = $terms->id;
+                    $general_result->form_id = $class;
+                    $general_result->number_of_student = $student_count;
+                    $general_result->number_passed = $number_pass;
+                    $general_result->class_avg = $class_ave;
+                    $general_result->highest_avg = $highest_ave;
+                    $general_result->lowest_avg = $lowest_ave;
+                    $general_result->rank_student = 1;
+
+
+                    if(Generateresult::where('year_id', $year)
+                                    ->where('form_id', $class)
+                                    ->where('term_id', $terms->id)
+                                    ->exists()){
+                                        Generateresult::where('year_id', $year)
+                                        ->where('form_id', $class)
+                                        ->where('term_id', $terms->id)
+                                        ->update([
+                                            'number_of_student' =>  $student_count,
+                                            'number_passed' =>  $number_pass,
+                                            'class_avg' =>  $class_ave,
+                                            'highest_avg' =>  $highest_ave,
+                                            'lowest_avg' =>  $lowest_ave,
+                                            'rank_student' =>  1
+                                        ]);
+                                    }
+                                    else{
+                                        $general_result->save();
+                                    }
+                    }
+                    if($general_result){
+                        $notification = array('message' => 'Student '. $terms->name.' result has been Generated Successfuly', 'alert-type' => 'success');
+                        return redirect()->back()->with($notification);
+                    }
+                    else {
+                        $notification = array('message' => 'Fail to Generated result, please contact the admin', 'alert-type' => 'error');
+                        return redirect()->back()->with($notification);
+                    }
+        }
+
+        // third term result
+        else {
+            $data = Thirdtermresult::getStudentClassRecord($year, $class);
+            //    return $data;
+               $arr = array();
+               foreach($data as $dat){
+                   if(in_array($dat->stud_id, $arr)){}
+                   else{
+                        $pnt = $data->where('stud_id', $dat->stud_id)->sum('points');
+                        $coff = $data->where('stud_id', $dat->stud_id)->sum('subject_coff');
+                        $info = [
+                            'stud_id' => $dat->stud_id,
+                            'student_card' =>$dat->stud_card,
+                            'point' =>$pnt,
+                            'sum_coff' =>$coff,
+                            'average' =>(float)$pnt/(float)$coff
+                        ];
+                        array_push($arr, $info);
+                    }
+                }
+                $newarr = array_unique($arr, $dat->stud_id);
+                foreach($newarr as $key => $new){
+                    $studentresults = new Studentresult();
+                    $studentresults->year_id = $year;
+                    $studentresults->term_id = $terms->id;
+                    $studentresults->form_id = $class;
+                    $studentresults->student_id = $new['stud_id'];
+                    $studentresults->student_school_id = $new['student_card'];
+                    $studentresults->average_point = $new['point'];
+                    $studentresults->sum_coff = $new['sum_coff'];
+                    $studentresults->stud_ave = $new['average'];
+
+                    if(Studentresult::where('year_id', $year)
+                                    ->where('term_id', $terms->id)
+                                    ->where('student_id', $new['stud_id'])
+                                    ->where('form_id', $class)->exists())
+                                    {
+                                       $updateresult = Studentresult::where('year_id', $year)
+                                        ->where('term_id', $terms->id)
+                                        ->where('student_id', $new['stud_id'])
+                                        ->where('form_id', $class)
+                                        ->update([
+                                                    'average_point' =>  $new['point'],
+                                                    'sum_coff' => $new['sum_coff'],
+                                                    'stud_ave' => $new['average']
+                                                ]);
+                                    }
+                                    else {
+                                        $studentresults->save();
+                                    }
+                }
+                if($studentresults || $updateresult){
+
+                    $ranking_student = Studentresult::getStudent($year, $terms->id, $class);
+                    foreach( $ranking_student as $key => $rank){
+                        $ranking = Studentresult::where('year_id', $year)
+                        ->where('term_id', $terms->id)
+                        ->where('student_id', $rank->student_id)
+                        ->where('form_id', $class)
+                        ->update(['position' => ($key+1)]);
+                    }
+                    //get highest ave, lowest_ave, average, number of students, class_ave, number_pass
+                    $highest_ave = Studentresult::getHighestAverage($year, $terms->id, $class);
+                    $lowest_ave = Studentresult::getLowestAverage($year, $terms->id, $class);
+                    $ave = Studentresult::getAverage($year, $terms->id, $class);
+                    $student_count = count($newarr);
+                    $class_ave =  $ave/$student_count;
+                    $number_pass = Studentresult::getPassedStudent($year, $terms->id, $class);
+                   // return $number_passed;
+
+                    $general_result = new Generateresult();
+
+                    $general_result->year_id = $year;
+                    $general_result->term_id = $terms->id;
+                    $general_result->form_id = $class;
+                    $general_result->number_of_student = $student_count;
+                    $general_result->number_passed = $number_pass;
+                    $general_result->class_avg = $class_ave;
+                    $general_result->highest_avg = $highest_ave;
+                    $general_result->lowest_avg = $lowest_ave;
+                    $general_result->rank_student = 1;
+
+
+                    if(Generateresult::where('year_id', $year)
+                                    ->where('form_id', $class)
+                                    ->where('term_id', $terms->id)
+                                    ->exists()){
+                                        Generateresult::where('year_id', $year)
+                                        ->where('form_id', $class)
+                                        ->where('term_id', $terms->id)
+                                        ->update([
+                                            'number_of_student' =>  $student_count,
+                                            'number_passed' =>  $number_pass,
+                                            'class_avg' =>  $class_ave,
+                                            'highest_avg' =>  $highest_ave,
+                                            'lowest_avg' =>  $lowest_ave,
+                                            'rank_student' =>  1
+                                        ]);
+                                    }
+                                    else{
+                                        $general_result->save();
+                                    }
+                    }
+                    if($general_result){
+                        $notification = array('message' => 'Student '. $terms->name.' result has been Generated Successfuly', 'alert-type' => 'success');
+                        return redirect()->back()->with($notification);
+                    }
+                    else {
+                        $notification = array('message' => 'Fail to Generated result, please contact the admin', 'alert-type' => 'error');
+                        return redirect()->back()->with($notification);
+                    }
+        }
+
+    }
+
+
+    // get class result perv academic year
+    public function getResult(Request $req){
+        $this->authorize('rank_student', Permission::class);
+
+try {
+    $decrypted = Crypt::decrypt($req['year']);
+} catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+    $notification = array('message' => 'Fail to Decrypt Id, please contact the admin', 'alert-type' => 'error');
+    return redirect()->back()->with($notification);
+}
+
+        $dec_year =  $decrypted;
+        $y = Year::getYearName($dec_year);
+        $data['ranked'] = Generateresult::where('rank_student', 1)->where('year_id', 1)->get();
+        $class_results = Generateresult::getClassYearlyResult($dec_year);
+        $data['class_results'] = Generateresult::getClassYearlyResult($dec_year);
+        $data['notify'] = '';
+        $data['c_year'] = Year::getYear($dec_year);
+        $data['year_name'] = Year::getYearName($dec_year);
+
+        if($class_results->count() > 0){
+            $data['notify'] = 'Result avalaible for the Academic year '.$y;
+            return view('admin.student_marks.rank_students')->with($data);
         }
         else {
-
+            $data['notify'] = 'No Result avalaible for the Academic year '.$y;
+            return view('admin.student_marks.rank_students')->with($data);
         }
-
     }
 }

@@ -9,8 +9,8 @@
             <div class="row">
                 <div class="input-field col s12 m2 offset-m1">
                     <select name="year" class="validate" id="year">
-                        <option value=" " selected disabled>2019/2020</option>
-                        @foreach (App\Year::all() as $year)
+                        <option value="{{ $current_year->id }}" selected>{{ $current_year->name }}</option>
+                        @foreach (App\Year::where('active', '!=', 1)->get() as $year)
                             <option value="{{ $year->id }}">{{ $year->name }}</option>
                         @endforeach
                     </select>
@@ -18,8 +18,8 @@
                 </div>
                 <div class="input-field col s12 m3">
                     <select name="term" class="validate" id="class">
-                        <option value="" selected disabled>Select Term</option>
-                        @foreach (App\Term::all() as $term)
+                        <option value="{{ $current_term->id }}" selected>{{ $current_term->name }}</option>
+                        @foreach (App\Term::where('active', '!=', 1)->get() as $term)
                             <option value="{{ $term->id }}">{{ $term->name }}</option>
                         @endforeach
                     </select>

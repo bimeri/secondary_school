@@ -10,11 +10,11 @@
 </div>
 <div class="row">
     <div class="col s11 w3-margin-left m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius" style="margin-top: 5px">
-        <form action="{{ route('subclass.form.submit') }}" method="post">
+        <form action="{{ route('subclass.form.submit') }}" method="post" id="form">
             @csrf
             <div class="row">
                 <div class="input-field col s12 m4">
-                   <select class="" name="classId">
+                   <select class="" name="classId" onchange="getValue(event)">
                        <option value="" disabled selected>select the class you are extending</option>
                        @foreach (App\Form::all() as $class)
                            <option value="{{ $class->id }}">{{ $class->name }} {{ $class->code }}/{{ $class->background->name }}/{{ $class->background->sector->name }}</option>
@@ -26,7 +26,7 @@
                     <label for="max">Maximum extended capacity</label>
                 </div>
                  <div class="input-field col s12 m4">
-                    <input id="type" name="type" type="text" value="{{ old('type') }}" class="validate" placeholder="example B,C,D, etc">
+                    <input id="type" name="type" type="text" value="{{ old('type') }}" class="validate" readonly placeholder="example B,C,D, etc">
                     <label for="type">Class Type </label>
                 </div>
             </div>
@@ -48,10 +48,10 @@
                 <th>Maximum Capacity</th>
                 @can('sub_class', App\Permission::class) <th colspan="2">Action</th> @endcan
             </tr>
-            @foreach (App\Subclass::all(); as $key => $class)
+            @foreach (App\Subclass::orderBy('form_id')->get(); as $key => $class)
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $class->form->name }}</td>
+                <td>{{ $class->form->name }}/{{ $class->form->background->name }}/{{ $class->form->background->sector->name }}</td>
                 <td>{{ $class->form->type }} / {{ $class->form->max_number }}</td>
                 <td>{{ $class->type }}</td>
                 <td>{{ $class->max_number }}</td>
@@ -72,15 +72,15 @@
                   <h4 class="w3-center teal-text">Update Sub-Class Information</h4>
                   <hr style="border-top: 1px solid orange">
                     <div class="row">
-                        <form action="{{ route('admin.edit.subclass') }}" method="post">
+                        <form action="{{ route('admin.edit.subclass') }}" method="post" id="form">
                             @csrf
                             <div class="row">
                                 <input type="hidden" name="id" value="{{ $class->id }}" />
-                                <div class="input-field col s12 m4">
-                                   <select class="browser-default" name="classId">
-                                       <option value="{{ $class->form_id }}" selected> {{ $class->form->name }}</option>
+                                <div class="input-field col s12 m6">
+                                   <select class="browser-default" name="classId" onchange="getValue(event)">
+                                       <option value="{{ $class->form_id }}" selected> {{ $class->form->name }}/{{ $class->form->background->name }}/{{ $class->form->background->sector->name }}</option>
                                        @foreach (App\Form::all() as $form)
-                                           <option value="{{ $form->id }}"> {{ $form->name }}</option>
+                                           <option value="{{ $form->id }}"> {{ $form->name }}/{{ $form->background->name }}/{{ $form->background->sector->name }}</option>
                                        @endforeach
                                    </select>
                                 </div>
@@ -88,8 +88,8 @@
                                     <input id="max" name="maximum_number" type="number" value="{{ $class->max_number }}" class="validate">
                                     <label for="max">Update the Maximum extended capacity</label>
                                 </div>
-                                 <div class="input-field col s12 m4">
-                                    <input id="type" name="type" type="text" value="{{ $class->type }}" class="validate" placeholder="example A,B,C,D, etc">
+                                 <div class="input-field col s12 m2">
+                                    <input id="type" name="type" type="text" value="{{ $class->type }}" class="validate" readonly placeholder="example A,B,C,D, etc">
                                     <label for="type">Update Sub-Class Type </label>
                                 </div>
                             </div>
@@ -127,6 +127,22 @@
                   });
               });
 
+              }
+
+              function getValue(e){
+                //console.log('the value', e.target.value);
+                $.ajax({
+           type:"POST",
+           url:"{{route('class.getType')}}",
+           data:  $('#form').serialize(),
+           success:function(res){
+               console.log('response is:', res);
+               document.getElementById('type').value = res;
+           },
+           error:function(error){
+               console.log('an error occured', error);
+           }
+              });
               }
               </script>
             @endforeach

@@ -165,6 +165,7 @@ class ClassController extends Controller
         $id = $req['formid'];
 
         $delete_class = DB::table('forms')->where('id', $id)->delete();
+        DB::table('subclasses')->where('form_id', $id)->delete();
         if($delete_class){
             $info = array('message'=> 'Class deleted with success', 'alert-type' => 'success');
             return redirect()->back()->with($info);
@@ -186,5 +187,20 @@ class ClassController extends Controller
             $info = array('message'=> 'Fail to delete Sub-Class. Student have enrolled already', 'alert-type' => 'info');
             return redirect()->back()->with($info);
         }
+    }
+    public function getType(Request $req){
+        $class = $req['classId'];
+        $arr1 = array();
+        $arr2 = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+        $subclass = Subclass::where('form_id', $class)->get();
+        foreach($subclass as $sub){
+            if(in_array($sub->type, $arr2)){
+            array_push($arr1, $sub->type);
+            }
+        }
+        $newar = array_diff($arr2, $arr1);
+        $var = $newar;
+
+        return current($var);
     }
 }

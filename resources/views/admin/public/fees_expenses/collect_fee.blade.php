@@ -123,7 +123,7 @@
                     @if (App\Scholarship::where('student_id', $user->student_id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->exists())
                     <?php
                     $fees = App\Feetype::where('form_id', $user->form_id)->where('year_id', $current_year->id)->sum('amount');
-                        echo "<div class='col left'>Total Fee: ".$fees." CFA</div>";
+                        echo "<div class='col left'><b id='fee_change'>Total Fee: ".$fees." CFA </b></div>";
                     $am = App\Scholarship::where('student_id', $user->student_id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->first();
                         echo "<div class='right'><b class='blue-text w3-small capitalize'>Student have scholarship of: </b>".( $am->amount)." CFA</div>";
                     ?>
@@ -188,13 +188,15 @@
            data: $('#form{{$key+1}}').serialize(),
            success:function(res){
                console.log('the response is: ',res);
+               document.getElementById('fee_change').innerHTML = res[0].sum;
             if(res){
                 $("#type{{$key+1}}").empty();
                 $.each(res,function(key, value){
-                    console.log('the id is: ', value.id);
-                    console.log('the name is: ', value.feetype);
-                    console.log('the amount is: ', value.amount);
+                    // console.log('the id is: ', value.id);
+                    // console.log('the name is: ', value.feetype);
+                    // console.log('the amount is: ', value.amount);
                    $("#type{{$key+1}}").append('<option value="'+value.id+'">'+ value.feetype+"/"+value.amount+'</option>');
+
                 });
 
             }else{

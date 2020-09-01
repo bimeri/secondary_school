@@ -196,11 +196,11 @@
                 </li>
 
                 <li>
-            @canany(['record_mark', 'rank_student', 'print_result', 'print_rank', 'print_fee'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="results()" @if(Request::is('student/marks/record', 'student/rank', 'class/result')) style="background-color: rgb(173, 231, 217)" @endif><i class="fa fa-pencil-alt teal-text w3-small"></i> Results &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="result"></i></div>@endcanany
+            @canany(['record_mark', 'rank_student', 'print_result', 'print_rank', 'print_fee'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="results()" @if(Request::is('student/marks/record', 'student/rank', 'class/result', 'class/student/result')) style="background-color: rgb(173, 231, 217)" @endif><i class="fa fa-pencil-alt teal-text w3-small"></i> Results &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="result"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
                         @can('record_mark', App\Permission::class)<li><a href="{{ route('admin.record.marks') }}" class="teal-text" @if(Request::is('student/marks/record'))style="background-color: rgb(229, 233, 232)"@endif  onclick="load()">Record Mark</a></li>@endcan
-                        @can('rank_student', App\Permission::class)<li><a href="{{ route('student.rank.result') }}" class="teal-text" @if(Request::is('student/rank', 'class/result'))style="background-color: rgb(229, 233, 232)"@endif  onclick="load()">Rank Students</a></li>@endcan
+                        @can('rank_student', App\Permission::class)<li><a href="{{ route('student.rank.result') }}" class="teal-text" @if(Request::is('student/rank', 'class/result', 'class/student/result'))style="background-color: rgb(229, 233, 232)"@endif  onclick="load()">Rank Students</a></li>@endcan
                         @can('print_result', App\Permission::class)<li><a href="#!" class="teal-text">Print Result</a></li>@endcan
                         @can('promote_student', App\Permission::class)<li><a href="#!" class="teal-text">Promote Student</a></li>@endcan
                         @can('print_rank', App\Permission::class)<li><a href="#!" class="teal-text">Print Rank Sheets</a></li>@endcan

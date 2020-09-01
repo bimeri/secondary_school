@@ -211,7 +211,7 @@ class AdminstudentController extends Controller
             $studentinfo->gender = $gender;
             $studentinfo->save();
 
-            if($studentinfo){
+            if($studentinfo && $req['profile_image']){
                 $year = Year::where('active', 1)->first();
                 $folder = explode('/', trim($year->name));
                 $destinationPath = '/image/students/'.$folder[1].'';
@@ -226,7 +226,7 @@ class AdminstudentController extends Controller
                 return redirect()->back()->with($notification);
             }
             else {
-                $notify = array('message' => 'Fail to save Value, the Matricule Number Exist already. Please contact the super Admin for Adjustment','alert-type' => 'error');
+                $notify = array('message' => 'All information are saved, but the User profile is not set at this time','alert-type' => 'info');
             return redirect()->back()->with($notify);
             }
         }
@@ -240,7 +240,7 @@ class AdminstudentController extends Controller
     public function viewStudent(){
         $this->authorize('class_list', Permission::class);
         $years = Year::where('active', 1)->first();
-        $students = Studentinfo::where('year_id', $years->id)->paginate(4);
+        $students = Studentinfo::where('year_id', $years->id)->paginate(10);
         $path = 'admin/student/list?_tSlIExxyy3wYsmScPxFP1EiqgXVDr4PJPeWrxxnDdP1EiqgXVDr4PJPeWrxxnDdP1EiqgXVDr4PJPeWrxxnDd';
         return view('admin.public.student.viewStudent', compact('students', 'years'));
     }

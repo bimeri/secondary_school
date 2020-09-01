@@ -13,6 +13,14 @@ class Generateresult extends Model
         'year_id', 'term_id', 'form_id', 'number_of_student','number_passed', 'class_avg', 'highest_avg', 'lowest_avg', 'rank_student'
     ];
 
+    public function form(){
+        return $this->belongsTo('App\Form');
+    }
+
+    public function term(){
+        return $this->belongsTo('App\Term');
+    }
+
     public static function getStudentsResult($year, $term, $class){
         $query = Generateresult::where('year_id', $year)
                 ->where('form_id' , $class)
@@ -20,5 +28,9 @@ class Generateresult extends Model
                 ->where('rank_student', 1)
                 ->get();
         return $query;
+    }
+
+    public static function getClassYearlyResult($year){
+        return Generateresult::where('year_id', $year)->get();
     }
 }

@@ -344,8 +344,10 @@ class Fees_ExpensesController extends Controller
             ->where("form_id", $form_id)
             ->get();
 
+            $sum = Feetype::getAllFeesPerClassAndYear($year_id, $form_id);
+
             foreach ($feetype as $type) {
-                $arr = array('feetype' => $type->fee_type, 'amount' => $type->amount, 'id' => $type->id);
+                $arr = array('feetype' => $type->fee_type, 'amount' => $type->amount, 'id' => $type->id, 'sum' => $sum);
                 array_push($cc, $arr);
             }
             return response()->json($cc);

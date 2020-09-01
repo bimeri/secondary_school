@@ -112,6 +112,7 @@ Route::get('admin/view/class', 'ClassController@index')->name('admin.view.class'
 Route::post('admin/create', 'ClassController@submitClass')->name('class.form.submit');
 Route::post('admin/create/subclass', 'ClassController@subClassSubmit')->name('subclass.form.submit');
 Route::post('admin/edit/subclass', 'ClassController@EditsubClassSubmit')->name('admin.edit.subclass');
+Route::post('class/type', 'ClassController@getType')->name('class.getType');
 //manage student
 Route::get('admin/student/create', 'AdminstudentController@create')->name('amin.create.student');
 Route::get('admin/student/list', 'AdminstudentController@viewStudent')->name('amdin.view.student');
@@ -173,6 +174,8 @@ Route::get('student/sith_sequence', 'RecordController@saveSithSequence')->name('
 Route::get('student/rank', 'RankStudentController@index')->name('student.rank.result');
 Route::get('class/result', 'RankStudentController@classResult')->name('rank.result');
 Route::post('student/result', 'RankStudentController@studentResult')->name('sutdent.result.generate');
+Route::post('student/result', 'ClassResultController@getStudentResultPerclass')->name('generate.class.result');
+Route::get('class/student/result', 'RankStudentController@getResult')->name('student.class.result');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');

@@ -30,7 +30,7 @@
                     <label for="code">Class Code</label>
                 </div>
                  <div class="input-field col s12 m3">
-                    <input id="type" name="type" type="text" value="{{ old('type') }}" class="validate" placeholder="example A,B,C,D, etc">
+                    <input id="type" name="type" type="text" value="A" class="validate" readonly placeholder="example A,B,C,D, etc">
                     <label for="type">Class Type (optional)</label>
                 </div>
                 <div class="input-field col s12 m3">
@@ -59,49 +59,52 @@
             <tr class="teal">
                 <th>S/N</th>
                 <th>Name</th>
+                <th>background/sector</th>
                 <th>Type</th>
                 <th>Code</th>
                 <th>Maximum Capacity</th>
-                <th>background</th>
                 @can('edit_delete_class', App\Permission::class) <th colspan="2">Action</th> @endcan
             </tr>
             @foreach (App\Form::all(); as $key => $form)
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $form->name }}</td>
+                <td>{{ $form->background->name }}/{{ $form->background->sector->name }}</td>
                 <td>{{ $form->type }}</td>
                 <td>{{ $form->code }}</td>
                 <td>{{ $form->max_number }}</td>
-                <td>{{ $form->background->name }}</td>
                 @can('edit_delete_class', App\Permission::class)
                     <td><button class="btn my-orange waves-light waves-effect capitalize modal-trigger"  href="#modal{{ $form->id }}">Edit <i class="fa fa-pencil-alt w3-small"></i></button></td>
                     <td>
                         <form action="{{ route('admin.delete.class') }}" method="post" id="form{{ $form->id }}">
                             @csrf
                             <input type="hidden" name="formid" value="{{ $form->id }}">
+                            <?php $check = App\Studentinfo::where('form_id', $form->id)->count(); ?>
+                            @if($check > 0)
+                            <button class="btn my-red waves-light waves-effect capitalize disabled" style="border: 2px solid #ccc !important">Delete <i class="fa fa-trash w3-small"></i></button>
+                            @else
                             <button class="btn my-red waves-light waves-effect capitalize" onclick="save{{ $form->id }}()" id="btn-submit{{ $form->id }}">Delete <i class="fa fa-trash w3-small"></i></button>
+                            @endif
                         </form>
                     </td>
                 @endcan
             </tr>
 
-            <div id="modal{{ $form->id }}" class="modal modal-fixed-footer">
+            <div id="modal{{ $form->id }}" class="modal modal-fixed-footer" style="width: 70%;">
                 <div class="modal-content">
                   <h4 class="w3-center teal-text">Update class Information</h4>
-                  <hr style="border-top: 1px solid orange">
                     <div class="row">
                         <form action="{{ route('admin.edit.class') }}" method="post">
                             @csrf
                              <div class="row">
                                  <input type="hidden" name="id" value="{{ $form->id }}">
-                                <div class="input-field col s12 m6 offset-m3">
+
+                                <div class="input-field col s12 m3 offset-m1">
                                     <input name="name" id="autocomplete-inputt" type="text" class="autocompletess" value="{{ $form->name }}">
                                     <i class="fa fa-pen teal-text w3-xlarge right" style="margin-top: -40px"></i>
                                     <label for="autocomplete-inputt">Update Class Name</label>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12 m3">
+                                <div class="input-field col s12 m3 offset-m1">
                                     <input id="maxx" name="maximum_number" type="number" value="{{ $form->max_number }}" class="validate">
                                     <label for="maxx">Update Maximum Capacity</label>
                                 </div>
@@ -109,18 +112,22 @@
                                     <input id="codee" name="ClassCode" type="text" value="{{ $form->code }}" class="validate">
                                     <label for="codee">Update Class Code</label>
                                 </div>
-                                <div class="input-field col s12 m2">
-                                    <input id="typee" name="type" type="text" value="{{ $form->type }}" class="validate" placeholder="example A,B,C,D, etc">
-                                    <label for="typee">Update Class Type (optional)</label>
-                                </div>
-                                <div class="col s12 m4">
-                                    <label for="back">Update Class Background</label>
-                                    <select name="background" class="browser-default">
-                                        <option value="{{ $form->background_id }}" selected>{{ $form->background->name }}</option>
-                                        @foreach (App\Background::all() as $bg)
-                                            <option value="{{ $bg->id }}">{{ $bg->name }}</option>
-                                        @endforeach
-                                    </select>
+
+                                <div class="row">
+                                    <div class="input-field col s12 m3 offset-m1">
+                                        <input id="typee" name="type" type="text" value="A" readonly class="validate" placeholder="example A,B,C,D, etc">
+                                        <label for="typee">Update Class Type (optional)</label>
+                                    </div>
+
+                                    <div class="col s12 m5">
+                                        <label for="back">Update Class Background</label>
+                                        <select name="background" class="browser-default">
+                                            <option value="{{ $form->background_id }}" selected>{{ $form->background->name }}/ {{ $form->background->sector->name }}</option>
+                                            @foreach (App\Background::all() as $bg)
+                                                <option value="{{ $bg->id }}">{{ $bg->name }}/ {{ $bg->sector->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

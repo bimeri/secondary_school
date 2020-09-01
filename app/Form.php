@@ -38,4 +38,8 @@ class Form extends Model
     public function feecontrols(){
         return $this->hasMany('App\Feecontrol');
     }
+
+    public function generateresults(){
+        return $this->hasMany('App\Generateresult');
+    }
 }

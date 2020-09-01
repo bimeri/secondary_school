@@ -26,4 +26,13 @@ class Term extends Model
     public function scholarships(){
         return $this->hasMany('App\Scholarship');
     }
+    public function generateresults(){
+        return $this->hasMany('App\Generateresult');
+    }
+
+    public static function getCurrentTerm(){
+        $query = Term::select('id')->where('active', 1)->first();
+        $id = $query->id;
+        return $id;
+    }
 }

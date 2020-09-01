@@ -76,28 +76,28 @@
       cursor: pointer;
   }
   .st{
-    -webkit-box-reflect: right 10px linear-gradient(transparent, #cc00ff, #0002);
-    box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138);
+    -webkit-box-reflect: right 10px linear-gradient(transparent, #d17fe6, #0002);
+    box-shadow: 0 0 10px rgb(130, 243, 130), inset 0 0 10px rgb(138, 224, 138);
     animation: rot 3s linear infinite;
   }
   @keyframes rot{
     0%{
-        box-shadow: 0 0 10px rgb(130, 243, 130), inset 0 0 10px rgb(138, 224, 138);
+        box-shadow: 0 0 5px rgb(130, 243, 130), inset 0 0 5px rgb(138, 224, 138);
       }
     20%{
-        box-shadow: 0 0 20px rgb(130, 243, 130), inset 0 0 20px rgb(138, 224, 138);
+        box-shadow: 0 0 10px rgb(130, 243, 130), inset 0 0 10px rgb(138, 224, 138);
       }
     40%{
-        box-shadow: 0 0 10px rgb(207, 50, 44), inset 0 0 10px rgb(207, 50, 44);
+        box-shadow: 0 0 5px rgb(228, 122, 119), inset 0 0 5px rgb(216, 102, 98);
       }
     60%{
-        box-shadow: 0 0 20px rgb(207, 50, 44), inset 0 0 20px rgb(207, 50, 44);
+        box-shadow: 0 0 10px rgb(209, 123, 120), inset 0 0 10px rgb(201, 106, 103);
       }
     80%{
-        box-shadow: 0 0 10px rgb(204, 193, 36), inset 0 0 10px rgb(204, 193, 36);
+        box-shadow: 0 0 5px rgb(228, 220, 112), inset 0 0 5px rgb(212, 205, 101);
       }
     100%{
-        box-shadow: 0 0 20px rgb(204, 193, 36), inset 0 0 20px rgb(204, 193, 36);
+        box-shadow: 0 0 20px rgb(207, 202, 126), inset 0 0 20px rgb(226, 221, 148);
       }
   }
 
@@ -144,7 +144,7 @@
     </div>
 
     @else
-    <div class="col s11 m11 w3-border-t radius white w3-margin-left">
+    <div class="col s12 m10 offset-m1 w3-border-t radius white w3-margin-left">
         <div class="row">
             <div class="col m10 offset-m2 s12 w3-margin-top">
                 @if($check->count() == 0)
@@ -170,7 +170,20 @@
                 <button type="submit"
                         class="btn blue waves-effect waves-light right st"
                         style="position: fixed; right:10px;top:180px; border-radius:10px"
-                        onclick="load()">Generate</button>
+                        onclick="load()">Generate General Result</button>
+            </form>
+             @endif
+            @if($class_ranked->count() == 0)
+            <form method="post" action="{{ route('generate.class.result') }}">
+                @csrf
+                <input type="hidden" name="year_id" value="{{ $year->id }}"/>
+                <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
+                <input type="hidden" name="class_id" value="{{ $class }}"/>
+                <button type="submit"
+                        class="btn green waves-effect waves-light right st"
+                        style="position: fixed; right:10px;top:130px; border-radius:10px"
+                        onclick="load()">Generate Result per class
+                </button>
             </form>
              @endif
 
@@ -219,7 +232,7 @@
                             <td>Average /20</td>
 
                             <td>Students</td>
-                            <td>toke test</td>
+                            <td>took test</td>
                             <td>passed</td>
                             <td>highest Mark</td>
                             <td>Percetage /100</td>
