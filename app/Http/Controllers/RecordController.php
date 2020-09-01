@@ -82,18 +82,22 @@ class RecordController extends Controller
             return redirect()->back()->with($mes);
         }
         $formid = (int)$decrypted_id;
+        $subject = Subject::where('id', $sub)->first();
+        //return $subject->coefficient;
 
         if(Firsttermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
             ->where('subject_id', $sub)
             ->where('form_id', $formid)
             ->exists()){
+            $seqs = Firsttermresult::where('year_id', $yearid)->where('student_id', $studentId)->where('subject_id', $sub)->where('form_id', $formid)->first();
+            $av_point = (((float)$seq + (float)$seqs->seq2)/2)*$subject->coefficient;
                 if($seq == "0"){
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('subject_id', $sub)
                     ->where('form_id', $formid)
-                    ->update(['seq1' => 0]);
+                    ->update(['seq1' => 0, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 1 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -102,7 +106,7 @@ class RecordController extends Controller
                     ->where('student_id', $studentId)
                     ->where('subject_id', $sub)
                     ->where('form_id', $formid)
-                    ->update(['seq1' => null]);
+                    ->update(['seq1' => null, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 1 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -112,7 +116,8 @@ class RecordController extends Controller
                     ->where('subject_id', $sub)
                     ->where('form_id', $formid)
                     ->update([
-                        'seq1' => $seq
+                        'seq1' => $seq,
+                        'ave_point' => $av_point
                     ]);
                     $message = array('message' => 'SEQ 1 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -125,6 +130,7 @@ class RecordController extends Controller
             $firstseq->form_id = $formid;
             $firstseq->subject_id = $sub;
             $firstseq->seq1 = $seq;
+            $firstseq->ave_point = ($seq/2)*$subject->coefficient;
 
             $firstseq->save();
             $message = array('message' => 'SEQ 1 Mark saved', 'type' => 'success');
@@ -145,16 +151,19 @@ class RecordController extends Controller
             return redirect()->back()->with($mes);
         }
         $formid = (int)$decrypted_id;
+        $subject = Subject::where('id', $sub)->first();
 
         if(Firsttermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
             ->where('subject_id', $sub)
             ->where('form_id', $formid)->exists()){
+            $seqs = Firsttermresult::where('year_id', $yearid)->where('student_id', $studentId)->where('subject_id', $sub)->where('form_id', $formid)->first();
+            $av_point = (((float)$seq + (float)$seqs->seq1)/2)*$subject->coefficient;
                 if($seq == "0"){
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('subject_id', $sub)
-                    ->where('form_id', $formid)->update(['seq2' => 0]);
+                    ->where('form_id', $formid)->update(['seq2' => 0, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 2 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -162,7 +171,7 @@ class RecordController extends Controller
                     Firsttermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('subject_id', $sub)
-                    ->where('form_id', $formid)->update(['seq2' => null]);
+                    ->where('form_id', $formid)->update(['seq2' => null, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 2 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -171,7 +180,8 @@ class RecordController extends Controller
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
-                        'seq2' => $seq
+                        'seq2' => $seq,
+                        'ave_point' => $av_point
                     ]);
                     $message = array('message' => 'SEQ 2 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -184,6 +194,7 @@ class RecordController extends Controller
             $second->form_id = $formid;
             $second->subject_id = $sub;
             $second->seq2 = $seq;
+            $second->ave_point = ($seq/2)*$subject->coefficient;
 
             $second->save();
             $message = array('message' => 'SEQ 2 Mark saved', 'type' => 'success');
@@ -204,16 +215,19 @@ class RecordController extends Controller
             return redirect()->back()->with($mes);
         }
         $formid = (int)$decrypted_id;
+        $subject = Subject::where('id', $sub)->first();
 
         if(Secondtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
             ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
+            $seqs = Secondtermresult::where('year_id', $yearid)->where('student_id', $studentId)->where('subject_id', $sub)->where('form_id', $formid)->first();
+            $av_point = (((float)$seq + (float)$seqs->seq4)/2)*$subject->coefficient;
                 if($seq == "0"){
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq3' => 0]);
+                    ->where('subject_id', $sub)->update(['seq3' => 0, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 3 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -221,7 +235,7 @@ class RecordController extends Controller
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq3' => null]);
+                    ->where('subject_id', $sub)->update(['seq3' => null, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 3 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -230,7 +244,8 @@ class RecordController extends Controller
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
-                        'seq3' => $seq
+                        'seq3' => $seq,
+                        'ave_point' => $av_point
                     ]);
                     $message = array('message' => 'SEQ 3 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -243,6 +258,7 @@ class RecordController extends Controller
             $third->form_id = $formid;
             $third->subject_id = $sub;
             $third->seq3 = $seq;
+            $third->ave_point = ($seq/2)*$subject->coefficient;
 
             $third->save();
             $message = array('message' => 'SEQ 3 Mark saved', 'type' => 'success');
@@ -262,16 +278,19 @@ class RecordController extends Controller
             return redirect()->back()->with($mes);
         }
         $formid = (int)$decrypted_id;
+        $subject = Subject::where('id', $sub)->first();
 
         if(Secondtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
             ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
+            $seqs = Secondtermresult::where('year_id', $yearid)->where('student_id', $studentId)->where('subject_id', $sub)->where('form_id', $formid)->first();
+            $av_point = (((float)$seq + (float)$seqs->seq3)/2)*$subject->coefficient;
                 if($seq == "0"){
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq4' => 0]);
+                    ->where('subject_id', $sub)->update(['seq4' => 0, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 4 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -279,7 +298,7 @@ class RecordController extends Controller
                     Secondtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq4' => null]);
+                    ->where('subject_id', $sub)->update(['seq4' => null, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 4 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -288,7 +307,8 @@ class RecordController extends Controller
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
-                        'seq4' => $seq
+                        'seq4' => $seq,
+                        'ave_point' => $av_point
                     ]);
                     $message = array('message' => 'SEQ 4 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -301,6 +321,7 @@ class RecordController extends Controller
             $fourth->form_id = $formid;
             $fourth->subject_id = $sub;
             $fourth->seq4 = $seq;
+            $fourth->ave_point = ($seq/2)*$subject->coefficient;
 
             $fourth->save();
             $message = array('message' => 'SEQ 4 Mark saved', 'type' => 'success');
@@ -320,16 +341,20 @@ class RecordController extends Controller
             return redirect()->back()->with($mes);
         }
         $formid = (int)$decrypted_id;
+        $subject = Subject::where('id', $sub)->first();
+
 
         if(Thirdtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
             ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
+        $seqs = Thirdtermresult::where('year_id', $yearid)->where('student_id', $studentId)->where('subject_id', $sub)->where('form_id', $formid)->first();
+        $av_point = (((float)$seq + (float)$seqs->seq6)/2)*$subject->coefficient;
                 if($seq == "0"){
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq5' => 0]);
+                    ->where('subject_id', $sub)->update(['seq5' => 0, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 5 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -337,7 +362,7 @@ class RecordController extends Controller
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq5' => null]);
+                    ->where('subject_id', $sub)->update(['seq5' => null, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 5 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -346,7 +371,8 @@ class RecordController extends Controller
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
-                        'seq5' => $seq
+                        'seq5' => $seq,
+                        'ave_point' => $av_point
                     ]);
                     $message = array('message' => 'SEQ 5 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -359,6 +385,7 @@ class RecordController extends Controller
             $firth->form_id = $formid;
             $firth->subject_id = $sub;
             $firth->seq5 = $seq;
+            $firth->ave_point = ($seq/2)*$subject->coefficient;
 
             $firth->save();
             $message = array('message' => 'SEQ 5 Mark saved', 'type' => 'success');
@@ -379,16 +406,19 @@ class RecordController extends Controller
             return redirect()->back()->with($mes);
         }
         $formid = (int)$decrypted_id;
+        $subject = Subject::where('id', $sub)->first();
 
         if(Thirdtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
             ->where('form_id', $formid)
             ->where('subject_id', $sub)->exists()){
+        $seqs = Thirdtermresult::where('year_id', $yearid)->where('student_id', $studentId)->where('subject_id', $sub)->where('form_id', $formid)->first();
+        $av_point = (((float)$seq + (float)$seqs->seq5)/2)*$subject->coefficient;
                 if($seq == "0"){
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq6' => 0]);
+                    ->where('subject_id', $sub)->update(['seq6' => 0, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 6 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -396,7 +426,7 @@ class RecordController extends Controller
                     Thirdtermresult::where('year_id', $yearid)
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
-                    ->where('subject_id', $sub)->update(['seq6' => null]);
+                    ->where('subject_id', $sub)->update(['seq6' => null, 'ave_point' => $av_point]);
                     $message = array('message' => 'SEQ 6 Mark deleted', 'type' => 'warning', 'seq' => $seq);
                 return response()->json($message);
                 }
@@ -405,7 +435,8 @@ class RecordController extends Controller
                     ->where('student_id', $studentId)
                     ->where('form_id', $formid)
                     ->where('subject_id', $sub)->update([
-                        'seq6' => $seq
+                        'seq6' => $seq,
+                        'ave_point' => $av_point
                     ]);
                     $message = array('message' => 'SEQ 6 Mark updated', 'type' => 'update', 'seq' => $seq);
                 return response()->json($message);
@@ -418,6 +449,7 @@ class RecordController extends Controller
             $sith->form_id = $formid;
             $sith->subject_id = $sub;
             $sith->seq6 = $seq;
+            $sith->ave_point =($seq/2)*$subject->coefficient;
 
             $sith->save();
             $message = array('message' => 'SEQ 6 Mark saved', 'type' => 'success');

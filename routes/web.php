@@ -173,6 +173,7 @@ Route::get('student/firth_sequence', 'RecordController@savefirthSequence')->name
 Route::get('student/sith_sequence', 'RecordController@saveSithSequence')->name('sith.sequence.save');
 Route::get('student/rank', 'RankStudentController@index')->name('student.rank.result');
 Route::get('class/result', 'RankStudentController@classResult')->name('rank.result');
+Route::post('student/result', 'RankStudentController@studentResult')->name('sutdent.result.generate');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');
