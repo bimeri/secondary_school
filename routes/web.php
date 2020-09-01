@@ -74,7 +74,7 @@ Route::get('admin/add_user', 'AdminController@UserView')->name('manage.user');
 Route::post('admin/add_role', 'AdminController@addRole')->name('role.add');
 Route::post('add_user', 'AdminController@addUser')->name('user.save');
 Route::get('view_roles/{id}', 'AdminController@seeRole')->name('user.role.view');
-Route::get('edit_user/{id}', 'AdminController@editUser')->name('user.admin.edit');
+Route::get('edit_user/{id}', 'AdminController@editUser')->name('user.admin.edit'); 
 Route::post('edit_user', 'AdminController@editUserFunction')->name('user.information.update');
 Route::get('admin/edit_role/{id}', 'AdminController@editRole')->name('user.role.edit');
 Route::post('admin/edit_role', 'AdminController@editRoleFunction')->name('role.edit');
@@ -161,6 +161,7 @@ Route::get('admin/fees/statistics', 'Fees_expensesController@getSatistics')->nam
 Route::get('scholarship/create', 'ScholarshipController@index')->name('scholarship.create');
 Route::get('scholarship/student', 'ScholarshipController@getStudents')->name('scholarship.students.get');
 Route::post('student/scholarship', 'ScholarshipController@store')->name('scholarship.student.create');
+Route::get('student/scholarship/report', 'ScholarshipController@showReportView')->name('admin.scholarship.view');
 
 // record marks for student
 Route::get('student/marks/record', 'RecordController@index')->name('admin.record.marks');

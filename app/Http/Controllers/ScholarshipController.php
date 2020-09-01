@@ -139,4 +139,9 @@ class ScholarshipController extends Controller
     {
         //
     }
+
+    public function showReportView(){
+        $this->authorize('scholarship_report', Permission::class);
+        return view('admin.public.scholarship.report_scholarship');
+    }
 }

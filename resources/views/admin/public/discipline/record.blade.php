@@ -7,17 +7,13 @@
         <form action="" method="post">
             @csrf
             <div class="row">
-                <div class="input-field col s12 m3 offset-m1">
-                    <input name="discipline_type" id="au" type="text" class="validate" value="{{ old('discipline_type') }}">
-                    <label for="au">Add discipline Type</label>
-                </div>
-                <div class="input-field col s12 m3">
-                    <select>
-                        <option>select year</option>
-                        <option>2019</option>
-                        <option>2020</option>
+                <div class="input field col s12 m3">
+                    <select name="year_id">
+                        <option value="{{$current_year->id}}">{{ $current_year->name}}</option>
+                        @foreach($years as $year)
+                        <option value="{{$year->id}}">{{ $year->name}}</option>
+                        @endforeach
                     </select>
-                    <label for="code">Description of Type</label>
                 </div>
             </div>
             <div class="row">

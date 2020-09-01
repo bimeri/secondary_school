@@ -14,6 +14,7 @@
                     @endforeach
                 </select>
             </div>
+            <!-- Crypt::encrypt(['id' => $user->id]) -->
             <div class="input-field col s12 m3 offset-m1">
                 <button type="submit" class="btn teal waves-effect waves-light lighten-3">Get Statistics</button>
             </div>

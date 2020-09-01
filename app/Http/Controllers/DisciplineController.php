@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Discipline;
 use App\Permission;
+use App\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +22,9 @@ class DisciplineController extends Controller
 
     public function record(){
         $this->authorize('record_student', Permission::class);
-        return view('admin.public.discipline.record');
+
+        $data['years'] = Year::getAllYear();
+        return view('admin.public.discipline.record')->with($data);
     }
 
     public function view(){
