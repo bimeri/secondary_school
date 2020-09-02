@@ -35,6 +35,7 @@ class RankStudentController extends Controller
         $data['class_results'] = Generateresult::getClassYearlyResult($year);
         $data['c_year'] = Year::getYear($year);
         $data['notify'] = '';
+        $data['class_ranked'] = '';
         $data['year_name'] = Year::getYearName($year);
         return view('admin.student_marks.rank_students')->with($data);
     }
@@ -45,7 +46,7 @@ class RankStudentController extends Controller
             'class' => 'required'
         ]);
 
-        try {
+         try {
             $class_id = Crypt::decrypt($req['class']);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
@@ -58,63 +59,57 @@ class RankStudentController extends Controller
         $current_year = Year::where('active', 1)->first();
         $current_term = Term::where('active', 1)->first();
 
-        if (strcmp($current_term->name, "First Term") == 0) {
+        if(strcmp($current_term->name, "First Term") == 0){
             $term = Firsttermresult::where('year_id', $current_year->id)->where('form_id', $class_id)->get();
             $nu1 = 1;
             $nu2 = 2;
-        } elseif (strcmp($current_term->name, "Second Term") == 0) {
+        }elseif(strcmp($current_term->name, "Second Term") == 0){
             $term = Secondtermresult::where('year_id', $current_year->id)->where('form_id', $class_id)->get();
             $nu1 = 3;
             $nu2 = 4;
-        } else {
+        } else{
             $term = Thirdtermresult::where('year_id', $current_year->id)->where('form_id', $class_id)->get();
             $nu1 = 5;
             $nu2 = 6;
         }
-        if ($nu1 == 1) {
+        if($nu1 == 1){
             $data['seq_name1'] = "First Sequence";
             $data['seq_term'] =  Term::where('name', 'First Term')->first();
-        } elseif ($nu1 == 3) {
-            $data['seq_name1'] = "Third Sequence";
-        } else {
-            $data['seq_name1'] = "Firth Sequence";
+            $data['year'] = Year::where('id', $current_year->id)->first();
+            if(!(Firsttermresult::where('form_id', $class_id)->where('year_id', $current_year->id)->exists())){
+                session()->flash('message', 'There is no First Term result for this class. Students results are not yet recorded');
+                $notification = array('message' => 'There is no First Term result for this class. Students results are not yet recorded', 'alert-type' => 'info');
+                return redirect()->back()->with($notification);
+            }
         }
-        $data['seq_term'] =  Term::where('name', 'First Term')->first();
-        $data['year'] = Year::where('id', $current_year->id)->first();
-        if (!(Firsttermresult::where('form_id', $class_id)->where('year_id', $current_year->id)->exists())) {
-            session()->flash('message', 'There is no First Term result for this class. Students results are not yet recorded');
-            $notification = array('message' => 'There is no First Term result for this class. Students results are not yet recorded', 'alert-type' => 'info');
-            return redirect()->back()->with($notification);
-        }
-
-        if ($nu1 == 3) {
+        elseif($nu1 == 3){
             $data['seq_name1'] = "Third Sequence";
             $data['seq_term'] =  Term::where('name', 'Second Term')->first();
             $data['year'] = Year::where('id', $current_year->id)->first();
-            if (!(Secondtermresult::where('form_id', $class_id)->where('year_id', $current_year->id)->exists())) {
+            if(!(Secondtermresult::where('form_id', $class_id)->where('year_id', $current_year->id)->exists())){
                 session()->flash('message', 'There is no Second Term result for this class. Students results are not yet recorded');
                 $notification = array('message' => 'There is no result Second Term result for this class. Students results are not yet recorded', 'alert-type' => 'info');
                 return redirect()->back()->with($notification);
             }
-        } else {
+        }
+        else {
             $data['seq_name1'] = "Firth Sequence";
             $data['seq_term'] = Term::where('name', 'Third Term')->first();
             $data['year'] = Year::where('id', $current_year->id)->first();
-            if (!(Thirdtermresult::where('form_id', $class_id)->where('year_id', $current_year->id)->exists())) {
+            if(!(Thirdtermresult::where('form_id', $class_id)->where('year_id', $current_year->id)->exists())){
                 session()->flash('message', 'There is no Third Term result for this class. Students results are not yet recorded');
                 $notification = array('message' => 'There is no Third Term for this class. Students results are not yet recorded', 'alert-type' => 'info');
                 return redirect()->back()->with($notification);
             }
         }
 
-        if ($nu2 == 2) {
+    if($nu2 == 2){
             $data['seq_name2'] = "Second Sequence";
-        } elseif ($nu2 == 4) {
+        }elseif($nu2 == 4){
             $data['seq_name2'] = "Fourth Sequence";
-        } else {
-            $data['seq_name2'] = "Sixth Sequence";
+        }else {
+            $data['seq_name2'] = "Sith Sequence";
         }
-        $total_student = Studentinfo::where('form_id', $class_id)->count();
         $total_student = Studentinfo::where('form_id', $class_id)->where('year_id', $current_year->id)->count();
 
         $form = Form::where('id', $class_id)->first();
@@ -124,24 +119,26 @@ class RankStudentController extends Controller
         $subjects = Subject::where('form_id', $form->id)->get();
         $sub_coff = Subject::where('form_id', $form->id)->sum('coefficient');
 
-        if ($total_student == 0) {
+        if($total_student == 0){
             $message = array('message' => 'No result for the class you are Searching');
             session()->flash('message', 'No result found for the class you just search');
             return redirect()->back()->with($message);
         }
 
-        if ($sub_coff == 0) {
+        if($sub_coff == 0){
             $subjects_coefficient = 1;
-        } else {
+        }
+        else{
             $subjects_coefficient = $sub_coff;
         }
 
-        foreach ($subjects as $subject) {
-            if ($nu1 == 1 || $nu2 == 2) {
+        foreach($subjects as $subject){
+            if($nu1 == 1 || $nu2 == 2){
                 $count_student = Firsttermresult::where('subject_id', $subject->id)->where('form_id', $class_id)->where('year_id', $current_year->id)->count();
-            } elseif ($nu1 == 3 || $nu2 == 4) {
+            }elseif($nu1 == 3 || $nu2 == 4){
                 $count_student = Secondtermresult::where('subject_id', $subject->id)->where('form_id', $class_id)->where('year_id', $current_year->id)->count();
-            } else {
+            }
+            else{
                 $count_student = Thirdtermresult::where('subject_id', $subject->id)->where('form_id', $class_id)->where('year_id', $current_year->id)->count();
             }
             $sub = ['subject_name' => $subject->name,
@@ -152,44 +149,43 @@ class RankStudentController extends Controller
             array_push($arr, $sub);
             array_push($arr_sum, 20*(int)$subject->coefficient);
         }
-
         // first test
         $arr_first = array();
         $sum_ave = array();
         $sum_percent = array();
         $number_of_subject = $subjects->count();
-        if ($number_of_subject == 0) {
+        if($number_of_subject == 0){
             session()->flash('message', 'There are no subjects assign for this Class');
             $notification = array('message' => 'There are no subjects assign for this Class', 'alert-type' => 'info');
             return redirect()->back()->with($notification);
         }
-        foreach ($subjects as $sb) {
-            foreach ($subjects as $key => $sb) {
-                $first_test_student = $term->where('subject_id', $sb->id)->count();
-                $total_wrote = $term->where('seq'.$nu1.'', '!=', null)->where('subject_id', $sb->id)->count();
-                $total_pass = $term->where('seq'.$nu1.'', '>=', 10)->where('subject_id', $sb->id)->count();
-                $highest_mark = $term->where('subject_id', $sb->id)->max('seq'.$nu1.'');
-                $sum_marks = $term->where('subject_id', $sb->id)->sum('seq'.$nu1.'');
-                if ($first_test_student == 0) {
-                    $all_students = 1;
-                } else {
-                    $all_students = $total_student;
-                }
+        foreach ($subjects as $key => $sb) {
+            $first_test_student = $term->where('subject_id', $sb->id)->count();
+            $total_wrote = $term->where('seq'.$nu1.'', '!=', null)->where('subject_id', $sb->id)->count();
+            $total_pass = $term->where('seq'.$nu1.'', '>=', 10)->where('subject_id', $sb->id)->count();
+            $highest_mark = $term->where('subject_id', $sb->id)->max('seq'.$nu1.'');
+            $sum_marks = $term->where('subject_id', $sb->id)->sum('seq'.$nu1.'');
+        if($first_test_student == 0){
+            $all_students = 1;
+        }
+        else {
+            $all_students = $total_student;
+        }
 
-                if ($number_of_subject == 0) {
-                    $all_subjects = 1;
-                } else {
-                    $all_subjects = $number_of_subject;
-                }
-                $subject_percentage_pass = $sum_marks*100/(20*$all_students);
-                $average = 20*$subject_percentage_pass/100;
+        if($number_of_subject == 0){
+            $all_subjects = 1;
+        }
+        else {
+            $all_subjects = $number_of_subject;
+        }
+        $subject_percentage_pass = $sum_marks*100/(20*$all_students);
+        $average = 20*$subject_percentage_pass/100;
 
-                array_push($sum_ave, $average);
-                array_push($sum_percent, $subject_percentage_pass);
-                $total_percent = array_sum($sum_percent)/$all_subjects;
-                $total_ave = array_sum($sum_ave)/$all_subjects;
-                $farr = [
-                'sub_name' => $sb->name.' '.$sb->code,
+            array_push($sum_ave, $average);
+            array_push($sum_percent, $subject_percentage_pass);
+            $total_percent = array_sum($sum_percent)/$all_subjects;
+            $total_ave = array_sum($sum_ave)/$all_subjects;
+            $farr = [
                 'sub_name' => '<b class="left">'.($key+1) .'. '.$sb->name.'</b> '. '<em class="right">'.$sb->code.'</em>',
                 'total_student' => $all_students,
                 'first_test_student' => $first_test_student,
@@ -201,58 +197,47 @@ class RankStudentController extends Controller
                 'total_percent' => number_format((float)$total_percent, 2, '.', ' '),
                 'total_average' => number_format((float)$total_ave, 2, '.', ''),
             ];
-                array_push($arr_first, $farr);
+            array_push($arr_first, $farr);
+        }
+
+        // second result
+        //
+        $arr_second = array();
+        $sum_ave_second = array();
+        $sum_percent_second = array();
+        $number_of_subject_second = $subjects->count();
+        if($number_of_subject_second == 0){
+            session()->flash('message', 'There are no subjects assign for this Class');
+            $notification = array('message' => 'There are no subjects assign for this Class', 'alert-type' => 'info');
+            return redirect()->back()->with($notification);
+        }
+        foreach ($subjects as $sb) {
+            $second_test_student = $term->where('subject_id', $sb->id)->count();
+            $total_wrote_second = $term->where('seq'.$nu2.'', '!=', null)->where('subject_id', $sb->id)->count();
+            $total_pass_second = $term->where('seq'.$nu2.'', '>=', 10)->where('subject_id', $sb->id)->count();
+            $highest_mark_second = $term->where('subject_id', $sb->id)->max('seq'.$nu2.'');
+            $sum_marks_second = $term->where('subject_id', $sb->id)->sum('seq'.$nu2.'');
+            if($second_test_student == 0){
+                $all_students_second = 1;
+            }
+            else {
+                $all_students_second = $total_student;
             }
 
-            // second result
-            //
-            $arr_second = array();
-            $sum_ave_second = array();
-            $sum_percent_second = array();
-            $number_of_subject_second = $subjects->count();
-            if ($number_of_subject_second == 0) {
-                session()->flash('message', 'There are no subjects assign for this Class');
-                $notification = array('message' => 'There are no subjects assign for this Class', 'alert-type' => 'info');
-                return redirect()->back()->with($notification);
+            if($number_of_subject_second == 0){
+                $all_subjects_second = 1;
             }
-            foreach ($subjects as $sb) {
-                $second_test_student = $term->where('subject_id', $sb->id)->count();
-                $total_wrote_second = $term->where('seq'.$nu2.'', '!=', null)->where('subject_id', $sb->id)->count();
-                $total_pass_second = $term->where('seq'.$nu2.'', '>=', 10)->where('subject_id', $sb->id)->count();
-                $highest_mark_second = $term->where('subject_id', $sb->id)->max('seq'.$nu2.'');
-                $sum_marks_second = $term->where('subject_id', $sb->id)->sum('seq'.$nu2.'');
-                if ($second_test_student == 0) {
-                    $all_students_second = 1;
-                } else {
-                    $all_students_second = $total_student;
-                }
+            else {
+                $all_subjects_second = $number_of_subject_second;
+            }
+            $subject_percentage_pass_second = $sum_marks_second*100/(20*$all_students_second);
+            $average_second = 20*$subject_percentage_pass_second/100;
 
-                if ($number_of_subject_second == 0) {
-                    $all_subjects_second = 1;
-                } else {
-                    $all_subjects_second = $number_of_subject_second;
-                }
-                $subject_percentage_pass_second = $sum_marks_second*100/(20*$all_students_second);
-                $average_second = 20*$subject_percentage_pass_second/100;
-                if ($second_test_student == 0) {
-                    $all_students_second = 1;
-                } else {
-                    $all_students_second = $total_student;
-                }
-
-                if ($number_of_subject_second == 0) {
-                    $all_subjects_second = 1;
-                } else {
-                    $all_subjects_second = $number_of_subject_second;
-                }
-                $subject_percentage_pass_second = $sum_marks_second*100/(20*$all_students_second);
-                $average_second = 20*$subject_percentage_pass_second/100;
-
-                array_push($sum_ave_second, $average_second);
-                array_push($sum_percent_second, $subject_percentage_pass_second);
-                $total_percent_second = array_sum($sum_percent_second)/$all_subjects_second;
-                $total_ave_second = array_sum($sum_ave_second)/$all_subjects_second;
-                $farrs = [
+            array_push($sum_ave_second, $average_second);
+            array_push($sum_percent_second, $subject_percentage_pass_second);
+            $total_percent_second = array_sum($sum_percent_second)/$all_subjects_second;
+            $total_ave_second = array_sum($sum_ave_second)/$all_subjects_second;
+            $farrs = [
                 'sub_name_two' => $sb->name.' '.$sb->code,
                 'total_student_two' => $all_students_second,
                 'second_test_student' => $second_test_student,
@@ -264,34 +249,30 @@ class RankStudentController extends Controller
                 'total_percent_two' => number_format((float)$total_percent_second, 2, '.', ' '),
                 'total_average_two' => number_format((float)$total_ave_second, 2, '.', ''),
             ];
-                array_push($arr_second, $farrs);
-            }
-
-            $class_percentage = ($total_percent + $total_percent_second)/2;
-            $class_average = ($total_ave + $total_ave_second)/ 2;
-
-
-            $data['check'] = Generateresult::getStudentsResult($current_year->id, $current_term->id, $class_id);
-            $data['class_ranked'] = Classresult::where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $class_id)->get();
-
-            $data['term'] = $arr_first;
-            $data['term_name'] = $current_term->name;
-            $data['year_name'] = $current_year->name;
-            $data['class_percentage'] = number_format((float)$class_percentage, 2, '.', '');
-            $data['class_average'] =number_format((float)$class_average, 2, '.', '');
-            $data['term'] = $arr_first;
-            $data['class'] = $class_id;
-            $data['terms'] = $arr_second;
-            $data['avg'] = array_sum($arr_sum)/$subjects_coefficient;
-            $data['total_point'] = array_sum($arr_sum);
-            $data['total_student'] =$total_student;
-            $data['form'] = $form;
-            $data['subjects'] = $arr;
-            $data['sum_coff'] = $subjects_coefficient;
-            $data['ranked'] = Generateresult::where('term_id', $current_term)->where('year_id', $current_year)->get();
-
-            return view('admin.student_marks.rank_final')->with($data);
+            array_push($arr_second, $farrs);
         }
+        $class_percentage = ($total_percent + $total_percent_second )/2;
+        $class_average = ($total_ave + $total_ave_second )/ 2;
+
+
+        $data['check'] = Generateresult::getStudentsResult($current_year->id, $current_term->id, $class_id);
+        $data['class_ranked'] = Classresult::where('year_id',  $current_year->id)->where('term_id', $current_term->id)->where('form_id', $class_id)->get();
+        $data['term_name'] = $current_term->name;
+        $data['year_name'] = $current_year->name;
+        $data['class_percentage'] = number_format((float)$class_percentage, 2, '.', '');
+        $data['class_average'] =number_format((float)$class_average, 2, '.', '');
+        $data['term'] = $arr_first;
+        $data['class'] = $class_id;
+        $data['terms'] = $arr_second;
+        $data['avg'] = array_sum($arr_sum)/$subjects_coefficient;
+        $data['total_point'] = array_sum($arr_sum);
+        $data['total_student'] =$total_student;
+        $data['form'] = $form;
+        $data['subjects'] = $arr;
+        $data['sum_coff'] = $subjects_coefficient;
+        $data['ranked'] = Generateresult::where('term_id', $current_term)->where('year_id', $current_year)->get();
+
+        return view('admin.student_marks.rank_final')->with($data);
     }
     /*
     this ranking of students was done
