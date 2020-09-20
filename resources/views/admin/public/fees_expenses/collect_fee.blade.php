@@ -1,5 +1,13 @@
 @extends('admin.layout')
 @section('title') Collect fees @endsection
+@section('style')
+<style>
+    td, th, tr{
+        border: 1px solid #ccc !important;
+        font-size: 11px !important
+    }
+</style>
+@stop
 @section('content')
 <p class="w3-center">@lang('messages.welcome')</p>
 
@@ -72,7 +80,7 @@
                         {{ $user->student->full_name }}
                     </td>
                     <td>
-                        <b class="green-text">{{ $user->form->name }}</b> <br><b class="blue-text">{{ $user->form->background->name }}</b> <br><b class="orange-text">{{ $user->form->background->sector->name }}</b>
+                        <b class="green-text w3-tiny">{{ $user->form->name }}</b> {{ $user->subform_id ? ''.$user->subform->type.'':'A' }} <br><b class="blue-text w3-tiny">{{ $user->form->background->name }}</b> <br><b class="orange-text w3-tiny">{{ $user->form->background->sector->name }}</b>
                     </td>
                     <td>
                         {{ $user->student->email }}

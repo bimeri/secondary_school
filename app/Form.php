@@ -38,8 +38,15 @@ class Form extends Model
     public function feecontrols(){
         return $this->hasMany('App\Feecontrol');
     }
-
     public function generateresults(){
         return $this->hasMany('App\Generateresult');
+    }
+
+    public function scholarships(){
+        return $this->hasMany('App\Scholarship');
+    }
+
+    public static function getClassDetail($class){
+        return Form::where('id', $class)->first();
     }
 }

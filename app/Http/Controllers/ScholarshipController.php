@@ -8,6 +8,7 @@ use App\Student;
 use App\Studentinfo;
 use App\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class ScholarshipController extends Controller
@@ -26,7 +27,7 @@ class ScholarshipController extends Controller
     {
         $this->authorize('give_scholarship', Permission::class);
         //$year = Year::where('active', 1)->first();
-        $students = Studentinfo::paginate(5);
+        $students = Studentinfo::paginate(15);
         return view('admin.public.scholarship.create', compact('students'));
     }
 
@@ -142,6 +143,27 @@ class ScholarshipController extends Controller
 
     public function showReportView(){
         $this->authorize('scholarship_report', Permission::class);
-        return view('admin.public.scholarship.report_scholarship');
+        $yr = Year::getCurrentYear();
+        $data['records'] = Scholarship::getAllScholarship($yr);
+        $data['years'] = Year::getAllYear();
+        $data['academic_year'] = Year::getYearName($yr);
+        $data['amount'] = Scholarship::getSumAmount($yr);
+        return view('admin.public.scholarship.report_scholarship')->with($data);
+    }
+
+    public function scholarshipPeryear(Request $req){
+        $this->authorize('scholarship_report', Permission::class);
+        try {
+            $yr = Crypt::decrypt($req['year']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mes);
+        }
+
+        $data['records'] = Scholarship::getAllScholarship($yr);
+        $data['years'] = Year::getAllYear();
+        $data['academic_year'] = Year::getYearName($yr);
+        $data['amount'] = Scholarship::getSumAmount($yr);
+        return view('admin.public.scholarship.report_scholarship')->with($data);
     }
 }

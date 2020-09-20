@@ -19,7 +19,7 @@ class Subclass extends Model
     }
 
     public function studentinfos(){
-        return $this->belongsTo('App\Studentinfo');
+        return $this->hasMany('App\Studentinfo');
     }
 
     public function students(){

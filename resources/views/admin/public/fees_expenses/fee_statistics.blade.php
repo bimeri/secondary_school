@@ -76,10 +76,11 @@
                                     </b>
                                 </div>
                                 <div class="col s12 m4 w3-right">
-                                    <h4 class="center"><b style="color: teal">{{ $formName }} @if( $subForm ) {{ $subForm }} @else A @endif</b></h4>
+                                    <h4 class="center"><b style="color: teal">{{ $formName }} {{ $studentinfo->subform_id ? ''.$studentinfo->subform->type.'':'A' }}</b></h4>
                                     <h6 class="center upper"><b>{{ $sectorName }} @if($sectorName)<i class="fa fa-arrow-right"></i>@endif {{ $bgName }}</b></h6>
                                     <form method="#" action="#">
-                                        <button type="button" class="teal btn waves-effect waves-light">Print Receipt <i class="fa fa-download w3-small"></i></button>
+                                        <a href="{{ route('fee.download', ['year' => $fee1->year, 'studentId' => $studentinfo->student_id, 'form' => $current_form]) }}" class="teal btn waves-effect waves-light" onmouseover="func()">Print Receipt <i class="fa fa-file-pdf w3-small"></i></a>
+                                        <a href="" class="teal-text w3-margin-left w3-border w3-padding-small" id="csv" onclick="load()">CSV file <i class="fa fa-file-csv"></i></a>
                                     </form>
                                 </div>
                             </div>
@@ -206,7 +207,7 @@
                                 </div>
                                 <div class="col s12 m4 w3-right">
                                     @if($sector_name)
-                                    <h4 class="center"><b style="color: teal">{{ $form_name }}  @if( $subForm ) {{ $subForm }} @else A @endif</b></h4>
+                                    <h4 class="center"><b style="color: teal">{{ $form_name }} {{ $studentinfo->subform_id ? ''.$studentinfo->subform->type.'':'A' }}</b></h4>
                                     <h6 class="center upper"><b>{{ $sector_name }}<i class="fa fa-arrow-right"></i> {{ $bg_name }}</b></h6>
                                     <form>
                                         <button class="teal btn waves-effect waves-light">Print Receipt <i class="fa fa-download w3-small"></i></button>
@@ -223,4 +224,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#csv').hide();
+    function func(){
+        $('#csv').fadeIn();
+    }
+</script>
 @endsection

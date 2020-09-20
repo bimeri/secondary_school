@@ -29,10 +29,19 @@ class Term extends Model
     public function generateresults(){
         return $this->hasMany('App\Generateresult');
     }
+    public function studentdisciplines()
+    {
+        return $this->hasMany('App\Studentdiscipline');
+    }
 
     public static function getCurrentTerm(){
         $query = Term::select('id')->where('active', 1)->first();
         $id = $query->id;
         return $id;
+    }
+
+    public static function getAllTerm(){
+        $query = Term::all();
+        return $query;
     }
 }

@@ -38,4 +38,8 @@ return [
     'record_marks_header' => 'You are Entrying students result only for the current Academic Year and Term',
     'rank_student' => 'Select the class you wish to generate the report sheet',
     'record_grading' => 'All Grading folows the General Standard mark',
+    'student_discipine_header' => 'Enter Student Discipline Record By filling the form',
+    'income_statement' => 'Generating Income Statement',
+    'income_statement_header' => 'Income Statement (Statistics) for the Academic Year :year',
+    'income_statement_full' => 'Full Detail (Statistics) for the Academic Year :year',
 ];

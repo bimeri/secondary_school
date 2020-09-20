@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Expense;
 use App\Expensetype;
 use App\Fee;
 use App\Feecontrol;
@@ -11,8 +12,10 @@ use App\Scholarship;
 use App\Student;
 use App\Studentinfo;
 use App\Subclass;
+use App\Term;
 use App\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class Fees_ExpensesController extends Controller
@@ -30,7 +33,44 @@ class Fees_ExpensesController extends Controller
 
     public function createexpenseType(){
         $this->authorize('create_expenses', Permission::class);
-        return view('admin.public.fees_expenses.expense_type');
+        $data['expenses'] = Expense::getAllType();
+        $year = Year::getCurrentYear();
+        $data['yr'] = Year::getYearName($year);
+        $data['current'] = Expensetype::getCurrentYearInfo($year);
+
+        return view('admin.public.fees_expenses.expense_type')->with($data);
+    }
+
+    public function getExpenseType(Request $req){
+        $decrypted = '';
+        try {
+            $decrypted = Crypt::decrypt($req['year']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $notice = array('message' => 'Fail to Decrypt Id, plese cocntact the administrator', 'alert-type' => 'error');
+            return redirect()->back()->with($notice);
+        }
+
+        $this->authorize('create_expenses', Permission::class);
+        $data['expenses'] = Expense::getAllType();
+        $year = $decrypted;
+        $data['yr'] = Year::getYearName($year);
+        $data['current'] = Expensetype::getCurrentYearInfo($year);
+
+        return view('admin.public.fees_expenses.expense_type')->with($data);
+    }
+
+    public function addExpenseType(Request $req){
+        $this->authorize('create_expenses', Permission::class);
+        $this->validate($req, array('expense_type' => 'required'));
+        $exp_type = $req['expense_type'];
+        $expense = new Expense();
+
+        $expense->name = $exp_type;
+        $expense->save();
+
+        $notify = array('message' => 'Expense Type Saved successfully', 'alert-type' => 'success');
+        return redirect()->back()->with($notify);
+
     }
 
     public function collectFees(){
@@ -114,7 +154,6 @@ class Fees_ExpensesController extends Controller
         $data['student_id'] = $student->id;
         $data['studentinfo'] = $studentInfo;
         $data['formName'] = $studentInfo->form->name;
-        $data['subForm'] = $subclass;
         $data['bgName'] = $studentInfo->form->background->name;
         $data['sectorName'] = $studentInfo->form->background->sector->name;
         $data['currentYear'] = $year_id;
@@ -167,11 +206,13 @@ class Fees_ExpensesController extends Controller
         $term = $req['term'];
         $expense = $req['expense_type'];
         $reason = $req['reason'];
+        $amnt = $req['amount'];
 
         $expense_type = new Expensetype();
         $expense_type->year_id = $year;
         $expense_type->term_id = $term;
-        $expense_type->expense_type = $expense;
+        $expense_type->expense_id = $expense;
+        $expense_type->amount = $amnt;
         $expense_type->reason = $reason;
 
         try{

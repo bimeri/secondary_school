@@ -8,6 +8,7 @@ $(document).ready(function(){
     $('.sidenav').sidenav();
     $('.collapsible').collapsible();
     $('.tabs').tabs();
+    $('input#input_text, textarea#textarea1').characterCounter();
   });
   $('.dropdown-trigger').dropdown();
   M.textareaAutoResize($('#reason'));

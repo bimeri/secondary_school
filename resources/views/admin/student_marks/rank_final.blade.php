@@ -116,7 +116,7 @@
     <li><a href="#" class="tooltip tooltip-right" data-tooltip="You're wrong and I'm right">Tooltip right</a></li>
 </ul> --}}
 <div class="row">
-    <div class="col s12 m8 offset-m4">
+    {{-- <div class="col s12 m8 offset-m4">
         <form method="get" action="{{ route('rank.result') }}">
             @csrf
             <div class="row">
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div> --}}
     @if(Session::has('message'))
     <div class="row">
         <div class="col s12 m6 offset-m3 w3-center alert alert-info w3-padding" role="alert" style="height: 70px">
@@ -143,9 +143,35 @@
     </div>
 
     @else
+    <div class="col s12 m6 offset-m3">
+        @if($check->count() == 0)
+            <form method="post" action="{{ route('student.result.generate') }}">
+                @csrf
+                <input type="hidden" name="year_id" value="{{ $year->id }}"/>
+                <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
+                <input type="hidden" name="class_id" value="{{ $class }}"/>
+                <button type="submit" class="btn blue waves-effect waves-light right"
+                        onclick="load()">Generate General Result</button>
+            </form>
+        @endif
+
+        @if($class_ranked->count() == 0)
+            <form method="post" action="{{ route('generate.class.result') }}">
+                @csrf
+                <input type="hidden" name="year_id" value="{{ $year->id }}"/>
+                <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
+                <input type="hidden" name="class_id" value="{{ $class }}"/>
+                <button type="submit" class="btn green waves-effect waves-light col offset-m1"
+                        onclick="load()">Generate Result per class
+                </button>
+            </form>
+        @endif
+    </div>
+
+
     <div class="col s12 m10 offset-m1 w3-border-t radius white w3-margin-left">
         <div class="row">
-            <div class="col m10 offset-m2 s12 w3-margin-top">
+            <div class="col m10 offset-m1 s12 w3-margin-top">
                 @if($check->count() == 0)
                 <div class="alert alert-warning center w3-padding w3-small" role="alert">
                     <b>Class Result available. Student Rank Sheet have not yet been generated, please click the button on your right to generate student rank</b>
@@ -159,32 +185,6 @@
                 </div>
                 @endif
             </div>
-
-            @if($check->count() == 0)
-            <form method="post" action="{{ route('sutdent.result.generate') }}">
-                @csrf
-                <input type="hidden" name="year_id" value="{{ $year->id }}"/>
-                <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
-                <input type="hidden" name="class_id" value="{{ $class }}"/>
-                <button type="submit"
-                        class="btn blue waves-effect waves-light right st"
-                        style="position: fixed; right:10px;top:180px; border-radius:10px"
-                        onclick="load()">Generate General Result</button>
-            </form>
-             @endif
-            @if($class_ranked->count() == 0)
-            <form method="post" action="{{ route('generate.class.result') }}">
-                @csrf
-                <input type="hidden" name="year_id" value="{{ $year->id }}"/>
-                <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
-                <input type="hidden" name="class_id" value="{{ $class }}"/>
-                <button type="submit"
-                        class="btn green waves-effect waves-light right st"
-                        style="position: fixed; right:10px;top:130px; border-radius:10px"
-                        onclick="load()">Generate Result per class
-                </button>
-            </form>
-             @endif
 
             <div class="row">
                 <div class="col s12 m10 offset-m1">

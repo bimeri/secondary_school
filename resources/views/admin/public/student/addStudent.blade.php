@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="input-field col s12 m2  offset-m3">
                         <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" id="dates" placeholder="dd/mm/yy">
-                        <label for="dates"> Enter Date of birth</label>
+                        <label for="dates">Enter Date of birth</label>
                     </div>
                     <div class="file-field input-field col s12 m2">
                         <div class="btn">
@@ -68,7 +68,7 @@
                     </div>
                     <div class="input-field col s12 m2">
                         <input type="text" name="school_id" class="validate" value="{{ $matricule }}" id="school_id" readonly>
-                        <label for="school_id"> Student School Id</label>
+                        <label for="school_id">Student School Id</label>
                     </div>
                 </div>
                 <div class="row">

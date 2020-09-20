@@ -30,7 +30,11 @@ class Studentinfo extends Authenticatable
         return $this->belongsTo('App\Year');
     }
 
-    public function subclasses(){
-        return $this->hasMany('App\Subclass');
+    public function subform(){
+        return $this->belongsTo('App\Subclass');
+    }
+
+    public static function getStudentInfo($student_id){
+        return Studentinfo::where('student_id', $student_id)->first();
     }
 }

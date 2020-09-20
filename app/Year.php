@@ -47,6 +47,10 @@ class Year extends Model
     {
         return $this->hasMany('App\Feecontrol');
     }
+    public function studentdisciplines()
+    {
+        return $this->hasMany('App\Studentdiscipline');
+    }
 
     public static function getCurrentYear()
     {

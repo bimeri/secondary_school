@@ -74,7 +74,7 @@ Route::get('admin/add_user', 'AdminController@UserView')->name('manage.user');
 Route::post('admin/add_role', 'AdminController@addRole')->name('role.add');
 Route::post('add_user', 'AdminController@addUser')->name('user.save');
 Route::get('view_roles/{id}', 'AdminController@seeRole')->name('user.role.view');
-Route::get('edit_user/{id}', 'AdminController@editUser')->name('user.admin.edit'); 
+Route::get('edit_user/{id}', 'AdminController@editUser')->name('user.admin.edit');
 Route::post('edit_user', 'AdminController@editUserFunction')->name('user.information.update');
 Route::get('admin/edit_role/{id}', 'AdminController@editRole')->name('user.role.edit');
 Route::post('admin/edit_role', 'AdminController@editRoleFunction')->name('role.edit');
@@ -139,9 +139,14 @@ Route::get('admin/view/discipline', 'DisciplineController@view')->name('admin.vi
 Route::post('admin/discipline', 'DisciplineController@submit')->name('discipline.form.submit');
 Route::post('admin/discipline/update', 'DisciplineController@update')->name('discipline.form.update');
 Route::post('admin/discipline/delete', 'DisciplineController@delete')->name('admin.delete.discipline');
+Route::get('student/get/all', 'DisciplineController@getStudent')->name('get.student.all');//incomplete
+Route::post('student/discipline/save', 'DisciplineController@saveStudentDiscipline')->name('save.student.discipline');
+Route::post('student/discipline/delete', 'DisciplineController@deleteStudentDiscipline')->name('delete.student.discipline');
+
 //fees and expenses
 Route::get('fees/create', 'Fees_expensesController@createfeeType')->name('admin.create.fees.type');
 Route::get('expense/create', 'Fees_expensesController@createexpenseType')->name('admin.create.expense.type');
+Route::get('expense/creates', 'Fees_expensesController@getExpenseType')->name('expense.type.get');
 Route::post('expense/create', 'Fees_expensesController@createexpenseSubmit')->name('expense.type.submit');
 Route::post('fee/create', 'Fees_expensesController@SubmitType')->name('fee.type.submit');
 Route::post('fee/update', 'Fees_expensesController@updateType')->name('fee_type.update.submit');
@@ -156,12 +161,14 @@ Route::get('expense/view', 'Fees_expensesController@viewExpense')->name('admin.v
 Route::get('fees/report', 'Fees_expensesController@reportFee')->name('fees.report');
 Route::get('admin/collect/fees', 'Fees_expensesController@getStudents')->name('student.get.all');
 Route::get('admin/fees/statistics', 'Fees_expensesController@getSatistics')->name('fees.statistics.all');
+Route::post('admin/fees/statistics', 'Fees_expensesController@addExpenseType')->name('addExpense.type');
 
 // scholarship
 Route::get('scholarship/create', 'ScholarshipController@index')->name('scholarship.create');
 Route::get('scholarship/student', 'ScholarshipController@getStudents')->name('scholarship.students.get');
 Route::post('student/scholarship', 'ScholarshipController@store')->name('scholarship.student.create');
 Route::get('student/scholarship/report', 'ScholarshipController@showReportView')->name('admin.scholarship.view');
+Route::get('student/scholarship/get', 'ScholarshipController@scholarshipPeryear')->name('report.scholarship.get');
 
 // record marks for student
 Route::get('student/marks/record', 'RecordController@index')->name('admin.record.marks');
@@ -174,9 +181,14 @@ Route::get('student/firth_sequence', 'RecordController@savefirthSequence')->name
 Route::get('student/sith_sequence', 'RecordController@saveSithSequence')->name('sith.sequence.save');
 Route::get('student/rank', 'RankStudentController@index')->name('student.rank.result');
 Route::get('class/result', 'RankStudentController@classResult')->name('rank.result');
-Route::post('student/result', 'RankStudentController@studentResult')->name('sutdent.result.generate');
+Route::post('student/result/generate', 'RankStudentController@studentResult')->name('student.result.generate');
 Route::post('student/result', 'ClassResultController@getStudentResultPerclass')->name('generate.class.result');
 Route::get('class/student/result', 'RankStudentController@getResult')->name('student.class.result');
+
+// income statement
+Route::get('admin/income_statetment', 'IncomeController@index')->name('admin.income.statement');
+Route::get('admin/income_statetments', 'IncomeController@getIncomeStatment')->name('get.income.statment');
+Route::get('income/detail', 'IncomeController@getDetail')->name('get.detail');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');
@@ -189,3 +201,7 @@ Route::get('student_logout', 'authController@studentLogout')->name('student.logo
 //teacher
 Route::get('teacher_logout', 'authController@teacherLogout')->name('teacher.logout');
 Route::get('teacher_home', 'TeacherController@index')->name('teacher.home');
+
+
+//download controller
+Route::get('fee.download', 'Downloadcontroller@feeDownload')->name('fee.download');

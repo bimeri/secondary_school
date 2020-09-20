@@ -1,5 +1,25 @@
 @extends('admin.layout')
 @section('title') Scholarship @endsection
+@section('style')
+<style>
+    .st{
+        font-size: 13px !important;
+        color: white;
+        border: none;
+    }
+    td, th, tr{
+        border: .5px solid #ccc !important;
+        font-size: 11px !important
+    }
+    .under{
+        border-bottom: double 3px;
+        /* text-decoration: underline double; */
+    }
+    .tt:hover{
+        background-color: rgb(187, 231, 231);
+    }
+</style>
+@stop
 @section('content')
 <p class="w3-center">@lang('messages.welcome')</p>
 
@@ -75,7 +95,7 @@
                     </td>
                     <td>
                         @foreach (App\Form::where('id', $user->form_id)->get() as $form)
-                            <b class="green-text">{{ $form->name }}</b> <br><b class="blue-text">{{ $form->background->name }}</b> <br><b class="orange-text">{{ $form->background->sector->name }}</b>
+                            <b class="green-text w3-tiny">{{ $form->name }}</b> {{ $user->subform_id ? ''.$user->subform->type.'':'A' }} <br><b class="blue-text w3-tiny">{{ $form->background->name }} </b> <br><b class="orange-text w3-tiny">{{ $form->background->sector->name }}</b>
                         @endforeach
                     </td>
                     <td>
@@ -101,7 +121,7 @@
                         ?>
                         @if (App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->exists())
                                 <?php $am = App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->first();
-                                    echo '<hr><b class="teal-text">Balance:</b><br> CFA '.($fees - $am->amount);
+                                    echo '<br><b class="teal-text">Balance:</b> CFA '.($fees - $am->amount);
                                 ?>
                         @endif
                     </td>
@@ -114,7 +134,7 @@
                                  ?>
                             </button>
                         @else
-                            <button class="blue btn waves-light waves-effect w3-small modal-trigger" href="#modal{{ $key + 1 }}"> Scholarship <i class="fa fa-graduation-cap w3-small"></i></button>
+                            <button class="blue btn waves-light waves-effect w3-tiny modal-trigger" href="#modal{{ $key + 1 }}"> Scholarship <i class="fa fa-graduation-cap w3-small"></i></button>
                         @endif
                     </td>
                 </tr>

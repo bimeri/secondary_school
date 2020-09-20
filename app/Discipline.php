@@ -16,4 +16,9 @@ class Discipline extends Model
     public function studentdisciplines(){
         return $this->hasMany('App\Studentdiscipline');
     }
+
+    public static function getalldisciplineType(){
+        $query = Discipline::all();
+        return $query;
+    }
 }

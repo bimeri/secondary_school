@@ -58,4 +58,18 @@ class Student extends Authenticatable
     public function thirdtermresults(){
         return $this->hasMany('App\Thirdtermresult');
     }
+
+    public function scholarships(){
+        return $this->hasMany('App\Scholarship');
+    }
+
+    public static function getAllStudent(){
+        $query = Student::orderBy('full_name')->get();
+        return $query;
+    }
+
+    public static function getStudentByMatricule($matricule){
+        $query = Student::where('school_id', $matricule)->first();
+        return $query;
+    }
 }

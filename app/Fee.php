@@ -32,6 +32,14 @@ class Fee extends Model
         $feetype = Fee::where('year_id', $year_id)->where('form_id', $form_id)->where('student_id', $student_id)->get();
         return $feetype;
     }
+
+    public static function getStudentYearlyFeeSum($year_id, $form_id, $student_id){
+        return Fee::where('year_id', $year_id)
+                        ->where('form_id', $form_id)
+                        ->where('student_id', $student_id)
+                        ->sum('amount');
+
+    }
     public static function getStudentClass($year_id, $student_id){
         $class = Fee::where('year_id', $year_id)->where('student_id', $student_id)->first();
 

@@ -14,11 +14,23 @@ class Studentdiscipline extends Model
         'year_id', 'term_id', 'student_id', 'discipline_id', 'consequences'
     ];
 
-    public function students(){
-        return $this->hasMany('App\Student');
+    public function student(){
+        return $this->belongsTo('App\Student');
     }
 
-    public function disciplines(){
-        return $this->hasMany('App\Discipline');
+    public function discipline(){
+        return $this->belongsTo('App\Discipline');
+    }
+    public function year(){
+        return $this->belongsTo('App\Year');
+    }
+
+    public function term(){
+        return $this->belongsTo('App\Term');
+    }
+
+    public static function getalldiscipline(){
+        $query = Studentdiscipline::all();
+        return $query;
     }
 }

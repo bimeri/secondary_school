@@ -1,5 +1,21 @@
 @extends('admin.layout')
 @section('title') View Student @endsection
+@section('style')
+<style>
+
+    td, th, tr{
+        border: 1px solid #ccc !important;
+        font-size: 11px !important
+    }
+    .under{
+        border-bottom: double 3px;
+        /* text-decoration: underline double; */
+    }
+    .tt:hover{
+        background-color: rgb(187, 231, 231);
+    }
+</style>
+@stop
 @section('content')
 <p class="w3-center">@lang('messages.welcome')</p>
 <div class="row w3-margin-top">
@@ -8,9 +24,9 @@
         <div class="row">
             <div class="input-field col m3 offset-m3 s12">
                 <select name="year" class="validate">
-                    <option value="{{ $years->id }}">{{ $years->name }}</option>
+                    <option value="{{ Crypt::encrypt($years->id) }}">{{ $years->name }}</option>
                     @foreach (App\Year::all() as $year)
-                        <option value="{{ $year->id }}">{{ $year->name }}</option>
+                        <option value="{{ Crypt::encrypt($years->id) }}">{{ $year->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -18,7 +34,7 @@
                 <select name="class" id="class">
                     <option value="" disabled selected> Class / Background / Sector</option>
                   @foreach (App\Form::all() as $form)
-                    <option value="{{ $form->id }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
+                    <option value="{{ Crypt::encrypt($form->id) }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
                   @endforeach
                 </select>
                 <label for="class">Select the class</label>
@@ -65,7 +81,7 @@
                         {{ $user->student->full_name }}
                     </td>
                     <td>
-                        <b>{{ $user->form->name }} @php $subs = App\Subclass::where('id', $user->subform_id)->get();  @endphp @foreach($subs as $sub){{ $sub->type }}@endforeach</b> /{{ $user->form->background->name }}/{{ $user->form->background->sector->name }}
+                        <b>{{ $user->form->name }} {{ $user->subform_id ? $user->subform->type:'A' }} </b> /{{ $user->form->background->name }}/{{ $user->form->background->sector->name }}
                     </td>
                     <td>
                         {{ $user->student->email }}

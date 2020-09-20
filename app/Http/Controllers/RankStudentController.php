@@ -602,7 +602,6 @@ class RankStudentController extends Controller
                     $general_result->lowest_avg = $lowest_ave;
                     $general_result->rank_student = 1;
 
-
                     if(Generateresult::where('year_id', $year)
                                     ->where('form_id', $class)
                                     ->where('term_id', $terms->id)
@@ -635,8 +634,7 @@ class RankStudentController extends Controller
 
     }
 
-
-    // get class result perv academic year
+    // get class result per academic year
     public function getResult(Request $req){
         $this->authorize('rank_student', Permission::class);
 

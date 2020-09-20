@@ -10,6 +10,7 @@ use App\Studentinfo;
 use App\Subclass;
 use App\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class AdminstudentController extends Controller
@@ -240,7 +241,7 @@ class AdminstudentController extends Controller
     public function viewStudent(){
         $this->authorize('class_list', Permission::class);
         $years = Year::where('active', 1)->first();
-        $students = Studentinfo::where('year_id', $years->id)->paginate(10);
+        $students = Studentinfo::where('year_id', $years->id)->paginate(15);
         $path = 'admin/student/list?_tSlIExxyy3wYsmScPxFP1EiqgXVDr4PJPeWrxxnDdP1EiqgXVDr4PJPeWrxxnDdP1EiqgXVDr4PJPeWrxxnDd';
         return view('admin.public.student.viewStudent', compact('students', 'years'));
     }
@@ -251,11 +252,19 @@ class AdminstudentController extends Controller
             'class' => 'required',
         ]);
 
-        $year_id = $req['year'];
-        $form_id = $req['class'];
+        try {
+            $decrypted_year = Crypt::decrypt($req['year']);
+            $decrypted_class = Crypt::decrypt($req['class']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mess = array('message' => 'Fail to Decrypt Id, please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mess);
+        }
+
+        $year_id = $decrypted_year;
+        $form_id = $decrypted_class;
         $years = Year::where('id', $year_id)->first();
 
-        $students = Studentinfo::where('year_id', $year_id)->where('form_id', $form_id)->paginate(4);
+        $students = Studentinfo::where('year_id', $year_id)->where('form_id', $form_id)->paginate(15);
         $path = '';
         session()->flash('message', 'Student for the academic year '.$years->name.' ');
         return view('admin.public.student.viewStudent', compact('students', 'years'));

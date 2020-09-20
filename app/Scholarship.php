@@ -19,8 +19,25 @@ class Scholarship extends Model
     public function term(){
         return $this->belongsTo('App\Term');
     }
+
+    public function student(){
+        return $this->belongsTo('App\Student');
+    }
+
+    public function form(){
+        return $this->belongsTo('App\Form');
+    }
+
     public static function getYearlyScholarship($year_id, $student_id){
         $total = Scholarship::where('year_id', $year_id)->where('student_id', $student_id)->sum('amount');
         return $total;
+    }
+
+    public static function getAllScholarship($year){
+        return Scholarship::where('year_id', $year)->get();
+    }
+
+    public static function getSumAmount($year){
+        return Scholarship::where('year_id', $year)->sum('amount');
     }
 }
