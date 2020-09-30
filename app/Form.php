@@ -49,4 +49,5 @@ class Form extends Model
     public static function getClassDetail($class){
         return Form::where('id', $class)->first();
     }
+
 }

@@ -298,7 +298,7 @@ class RankStudentController extends Controller
 
         if(strcmp($terms->name, 'First Term') == 0){
             $data = Firsttermresult::getStudentClassRecord($year, $class);
-        //    return $data;
+         return $data;
            $arr = array();
            foreach($data as $dat){
                if(in_array($dat->stud_id, $arr)){}
@@ -606,17 +606,17 @@ class RankStudentController extends Controller
                                     ->where('form_id', $class)
                                     ->where('term_id', $terms->id)
                                     ->exists()){
-                                        Generateresult::where('year_id', $year)
-                                        ->where('form_id', $class)
-                                        ->where('term_id', $terms->id)
-                                        ->update([
-                                            'number_of_student' =>  $student_count,
-                                            'number_passed' =>  $number_pass,
-                                            'class_avg' =>  $class_ave,
-                                            'highest_avg' =>  $highest_ave,
-                                            'lowest_avg' =>  $lowest_ave,
-                                            'rank_student' =>  1
-                                        ]);
+                        Generateresult::where('year_id', $year)
+                                    ->where('form_id', $class)
+                                    ->where('term_id', $terms->id)
+                                    ->update([
+                                        'number_of_student' =>  $student_count,
+                                        'number_passed' =>  $number_pass,
+                                        'class_avg' =>  $class_ave,
+                                        'highest_avg' =>  $highest_ave,
+                                        'lowest_avg' =>  $lowest_ave,
+                                        'rank_student' =>  1
+                                    ]);
                                     }
                                     else{
                                         $general_result->save();

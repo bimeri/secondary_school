@@ -73,8 +73,8 @@ class Year extends Model
 
     public static function getCurrentAcademicYear()
     {
-        $qr = Year::where('active', 1)->first();
-        return $qr;
+        return Year::where('active', 1)->first();
+
     }
 
     public static function getYear($id)

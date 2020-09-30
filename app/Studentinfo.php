@@ -37,4 +37,17 @@ class Studentinfo extends Authenticatable
     public static function getStudentInfo($student_id){
         return Studentinfo::where('student_id', $student_id)->first();
     }
+
+    public static function getStudentMatricule($student_id){
+        $mat = Studentinfo::select('student_school_id')->where('student_id', $student_id)->first();
+        return $mat->student_school_id;
+    }
+
+    public static function getAllStudentPerYear($year){
+        return Studentinfo::where('year_id', $year)->groupBy('student_school_id')->get();
+    }
+
+    public static function getAllStudentPerYearAndClass($year, $class){
+        return Studentinfo::where('year_id', $year)->where('form_id', $class)->get();
+    }
 }

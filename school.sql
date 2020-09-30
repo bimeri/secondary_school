@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2020 at 09:46 AM
+-- Generation Time: Sep 29, 2020 at 03:11 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -177,6 +177,31 @@ INSERT INTO `disciplines` (`id`, `type`, `description`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `expenses`
+--
+
+CREATE TABLE `expenses` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Scholarship', '2020-09-17 19:33:20', '2020-09-17 19:33:20'),
+(2, 'Medication', '2020-09-17 19:39:11', '2020-09-17 19:39:11'),
+(3, 'Part-time Teacher', '2020-09-17 21:41:37', '2020-09-17 21:41:37'),
+(4, 'Handicap', '2020-09-19 09:08:21', '2020-09-19 09:08:21'),
+(5, 'IDP', '2020-09-27 12:52:29', '2020-09-27 12:52:29'),
+(6, 'Library', '2020-09-27 12:52:46', '2020-09-27 12:52:46');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `expensetypes`
 --
 
@@ -184,7 +209,8 @@ CREATE TABLE `expensetypes` (
   `id` int(10) UNSIGNED NOT NULL,
   `year_id` int(10) UNSIGNED NOT NULL,
   `term_id` int(10) UNSIGNED NOT NULL,
-  `expense_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expense_id` int(10) UNSIGNED DEFAULT NULL,
+  `amount` decimal(6,1) UNSIGNED DEFAULT NULL,
   `reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -194,9 +220,12 @@ CREATE TABLE `expensetypes` (
 -- Dumping data for table `expensetypes`
 --
 
-INSERT INTO `expensetypes` (`id`, `year_id`, `term_id`, `expense_type`, `reason`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Medication', 'form one student had medication problem, so little was spent on them', '2020-07-30 10:09:34', '2020-07-30 10:09:34'),
-(2, 3, 2, 'Scholarship', 'money spend on scholarship this terms', '2020-07-30 10:20:48', '2020-07-30 10:20:48');
+INSERT INTO `expensetypes` (`id`, `year_id`, `term_id`, `expense_id`, `amount`, `reason`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, '3000.0', 'form one student had medication problem, so little was spent on them', '2020-07-30 10:09:34', '2020-07-30 10:09:34'),
+(2, 3, 2, 2, '1500.0', 'money spend on scholarship this terms', '2020-07-30 10:20:48', '2020-07-30 10:20:48'),
+(3, 1, 1, 1, '3090.0', 'unknown reason', '2020-09-17 21:42:35', '2020-09-17 21:42:35'),
+(4, 1, 1, 3, '1000.0', 'new teachers came entered', '2020-09-19 08:33:41', '2020-09-19 08:33:41'),
+(5, 1, 1, 4, '2000.0', 'nothing much', '2020-09-19 10:39:46', '2020-09-19 10:39:46');
 
 -- --------------------------------------------------------
 
@@ -235,7 +264,8 @@ CREATE TABLE `feecontrols` (
 --
 
 INSERT INTO `feecontrols` (`id`, `student_id`, `student_school_id`, `form_id`, `year_id`, `clearance_date`, `created_at`, `updated_at`) VALUES
-(6, 6, 'BG0A03', 3, 1, 'Mon, 10 Aug 2020 15:25pm', '2020-08-10 14:25:25', '2020-08-10 14:25:25');
+(6, 6, 'BG0A03', 3, 1, 'Mon, 10 Aug 2020 15:25pm', '2020-08-10 14:25:25', '2020-08-10 14:25:25'),
+(7, 5, 'BG0A02', 1, 1, 'Sat, 19 Sep 2020 12:55pm', '2020-09-19 11:55:57', '2020-09-19 11:55:57');
 
 -- --------------------------------------------------------
 
@@ -272,7 +302,11 @@ INSERT INTO `fees` (`id`, `year_id`, `feetype_id`, `student_id`, `student_school
 (11, 1, 3, 6, 'BG0A03', 3, NULL, 500, 'Bank Transaction', 0, 1, 'Aug 08, 2020 - 11:45 am', '2020-08-08 10:45:36', '2020-08-08 10:45:36'),
 (12, 4, 7, 6, 'BG0A03', 3, NULL, 250, 'Orange Money', 0, 1, 'Aug 08, 2020 - 11:42 am', '2020-08-08 10:42:50', '2020-08-08 10:42:50'),
 (13, 4, 7, 6, 'BG0A03', 3, NULL, 500, 'Bank Transaction', 0, 1, 'Aug 08, 2020 - 11:45 am', '2020-08-08 10:45:36', '2020-08-08 10:45:36'),
-(14, 2, 8, 6, 'BG0A03', 4, 0, 600, 'Cash Payment', 0, 1, 'Aug 09, 2020 - 04:12 am', '2020-08-09 03:12:33', '2020-08-09 03:12:33');
+(14, 2, 8, 6, 'BG0A03', 4, 0, 600, 'Cash Payment', 0, 1, 'Aug 09, 2020 - 04:12 am', '2020-08-09 03:12:33', '2020-08-09 03:12:33'),
+(26, 1, 3, 7, 'BG0A04', 3, 1000, 1000, 'Cash Payment', 1000, 0, 'Sep 28, 2020 - 11:59pm', '2020-09-28 22:59:14', '2020-09-28 22:59:14'),
+(27, 1, 4, 7, 'BG0A04', 3, NULL, 700, 'MTN Mobile Money', 50, 0, 'Sep 29, 2020 - 01:07am', '2020-09-29 00:07:18', '2020-09-29 00:07:18'),
+(28, 1, 4, 7, 'BG0A04', 3, NULL, 48, 'Bank Transaction', 2, 0, 'Sep 29, 2020 - 01:07am', '2020-09-29 00:07:41', '2020-09-29 00:07:41'),
+(29, 1, 3, 7, 'BG0A04', 3, NULL, 500, 'Orange Money', 500, 0, 'Sep 29, 2020 - 01:08am', '2020-09-29 00:08:23', '2020-09-29 00:08:23');
 
 -- --------------------------------------------------------
 
@@ -363,13 +397,13 @@ INSERT INTO `firsttermresults` (`id`, `year_id`, `student_id`, `form_id`, `subje
 (33, 1, 8, 3, 15, '10.0', '16.0', '52.00', 0, '2020-08-17 22:16:46', '2020-08-22 22:15:50'),
 (34, 1, 7, 3, 15, '10.5', NULL, '21.00', 0, '2020-08-17 22:16:50', '2020-08-22 22:13:37'),
 (35, 1, 23, 3, 15, '12.0', '8.0', '40.00', 0, '2020-08-17 22:16:58', '2020-08-22 22:15:39'),
-(36, 1, 7, 3, 14, NULL, '11.0', '11.00', 0, '2020-08-17 22:17:03', '2020-08-22 22:13:46'),
+(36, 1, 7, 3, 14, '9.0', '11.0', '20.00', 1, '2020-08-17 22:17:03', '2020-09-03 20:25:27'),
 (37, 1, 8, 3, 14, NULL, '18.0', '18.00', 0, '2020-08-17 22:17:05', '2020-08-22 22:15:58'),
 (38, 1, 9, 3, 14, '11.0', NULL, '11.00', 0, '2020-08-17 22:17:07', '2020-08-22 22:16:07'),
 (39, 1, 23, 3, 14, NULL, '12.0', '12.00', 0, '2020-08-17 22:17:10', '2020-08-22 22:16:02'),
 (40, 1, 24, 3, 14, '6.0', '17.0', '23.00', 0, '2020-08-17 22:17:13', '2020-08-22 22:22:32'),
 (41, 1, 25, 3, 14, NULL, '7.5', '7.50', 1, '2020-08-17 22:17:18', '2020-08-31 15:08:07'),
-(42, 1, 6, 3, 14, '11.0', '9.5', '20.50', 0, '2020-08-17 22:17:22', '2020-08-22 22:13:26'),
+(42, 1, 6, 3, 14, '12.0', '9.5', '21.50', 1, '2020-08-17 22:17:22', '2020-09-03 20:19:42'),
 (43, 1, 26, 3, 5, '17.0', '11.0', '42.00', 0, '2020-08-17 22:19:31', '2020-08-22 22:14:53'),
 (44, 1, 26, 3, 11, '8.0', '10.0', '27.00', 1, '2020-08-17 22:19:34', '2020-08-31 15:47:42'),
 (45, 1, 26, 3, 12, '10.5', '9.5', '20.00', 1, '2020-08-17 22:19:37', '2020-08-31 16:01:17'),
@@ -471,13 +505,6 @@ CREATE TABLE `generateresults` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `generateresults`
---
-
-INSERT INTO `generateresults` (`id`, `year_id`, `term_id`, `form_id`, `number_of_student`, `number_passed`, `class_avg`, `highest_avg`, `lowest_avg`, `rank_student`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 3, 8, 2, '9.34', '11.72', '7.39', 1, '2020-08-23 15:35:53', '2020-08-23 15:50:14');
-
 -- --------------------------------------------------------
 
 --
@@ -552,7 +579,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (57, '2020_08_17_031822_create_thirdtermresults_table', 30),
 (58, '2020_08_17_121006_create_firsttermresults_table', 30),
 (59, '2020_08_22_182327_create_studentresults_table', 31),
-(60, '2020_08_30_020338_create_classresults_table', 32);
+(60, '2020_08_30_020338_create_classresults_table', 32),
+(61, '2020_09_14_091918_create_expenses_table', 33);
 
 -- --------------------------------------------------------
 
@@ -733,7 +761,8 @@ CREATE TABLE `scholarships` (
 INSERT INTO `scholarships` (`id`, `year_id`, `term_id`, `form_id`, `student_id`, `amount`, `reason`, `created_at`, `updated_at`) VALUES
 (3, 1, 1, 1, 5, 500, 'you are a great boy', '2020-07-31 23:52:01', '2020-07-31 23:52:01'),
 (4, 2, 2, 3, 7, 1000, 'you did actually well in your previous class', '2020-08-03 23:31:22', '2020-08-03 23:31:22'),
-(6, 1, 1, 3, 7, 1000, 'thats good my dear', '2020-08-07 23:45:18', '2020-08-07 23:45:18');
+(6, 1, 1, 3, 7, 1000, 'thats good my dear', '2020-08-07 23:45:18', '2020-08-07 23:45:18'),
+(7, 1, 1, 3, 8, 1000, 'very brief student', '2020-09-28 21:00:31', '2020-09-28 21:00:31');
 
 -- --------------------------------------------------------
 
@@ -848,6 +877,13 @@ CREATE TABLE `studentdisciplines` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `studentdisciplines`
+--
+
+INSERT INTO `studentdisciplines` (`id`, `year_id`, `term_id`, `student_id`, `discipline_id`, `consequences`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 33, 1, 'two week punishment with serious Labor', '2020-09-07 13:19:07', '2020-09-07 13:19:07');
+
 -- --------------------------------------------------------
 
 --
@@ -887,9 +923,6 @@ INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, 
 (9, 15, 'BG0A10', 1, 1, NULL, '123456789', NULL, 'molyko buea', 'BG0A10.jpg', '2020-08-06', 'Male', '2020-08-10 03:34:16', '2020-08-10 03:34:16'),
 (10, 16, 'BG0A11', 1, 1, NULL, '123234565', NULL, NULL, 'BG0A11.jpg', '2020-08-06', 'Female', '2020-08-10 03:35:57', '2020-08-10 03:35:57'),
 (11, 17, 'BG0A12', 1, 1, NULL, '678956709', 'sara@gmail.com', 'camsick', 'BG0A12.jpg', '2020-08-07', 'Female', '2020-08-10 03:49:44', '2020-08-10 03:49:44'),
-(13, 20, 'BG0A13', 1, 1, 1, '567898789', 'magaza.noel@gmail.com', 'Limbe Motto Park', 'BG0A13.jpg', '2020-08-07', 'Male', '2020-08-11 00:45:58', '2020-08-11 00:45:58'),
-(14, 21, 'BG0A14', 1, 1, 1, NULL, NULL, NULL, 'BG0A14.jpg', '1997-01-17', 'Male', '2020-08-12 22:34:42', '2020-08-12 22:34:42'),
-(15, 22, 'BG0A15', 1, 1, 1, '123454567', 'papa@gmail.com', 'molyko', 'BG0A15.jpg', '2019-12-12', 'Male', '2020-08-12 23:44:26', '2020-08-12 23:44:26'),
 (16, 23, 'BG0A16', 1, 3, NULL, '123234356', 'ly@gmail.com', 'myea', 'BG0A16.jpg', '2020-08-12', 'Male', '2020-08-16 21:31:30', '2020-08-16 21:31:30'),
 (17, 24, 'BG0A17', 1, 3, NULL, '678538564', NULL, 'small soppo buea cameroon', 'BG0A17.jpg', '2020-08-07', 'Male', '2020-08-16 21:34:26', '2020-08-16 21:34:26'),
 (18, 25, 'BG0A18', 1, 3, NULL, '687754968', NULL, NULL, 'BG0A18.jpg', '2020-08-12', 'Male', '2020-08-16 21:36:02', '2020-08-16 21:36:02'),
@@ -933,14 +966,22 @@ CREATE TABLE `studentresults` (
 --
 
 INSERT INTO `studentresults` (`id`, `year_id`, `term_id`, `form_id`, `student_id`, `student_school_id`, `average_point`, `sum_coff`, `stud_ave`, `position`, `remark`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 3, 6, 'BG0A03', '151.90', '16.00', '9.49', 4, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
-(2, 1, 1, 3, 7, 'BG0A04', '126.65', '16.00', '7.92', 7, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
-(3, 1, 1, 3, 8, 'BG0A05', '134.80', '16.00', '8.43', 6, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
-(4, 1, 1, 3, 9, 'BG0A06', '187.50', '16.00', '11.72', 1, NULL, '2020-08-23 12:59:58', '2020-08-23 15:50:14'),
-(5, 1, 1, 3, 23, 'BG0A16', '145.25', '16.00', '9.08', 5, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14'),
-(6, 1, 1, 3, 24, 'BG0A17', '118.20', '16.00', '7.39', 8, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14'),
-(7, 1, 1, 3, 25, 'BG0A18', '176.80', '16.00', '11.05', 2, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14'),
-(8, 1, 1, 3, 26, 'BG0A19', '154.00', '16.00', '9.63', 3, NULL, '2020-08-23 12:59:59', '2020-08-23 15:50:14');
+(1, 1, 1, 3, 6, 'BG0A03', '152.90', '16.00', '9.56', 11, NULL, '2020-08-23 12:59:58', '2020-09-27 20:23:00'),
+(2, 1, 1, 3, 7, 'BG0A04', '156.65', '16.00', '9.79', 10, NULL, '2020-08-23 12:59:58', '2020-09-27 20:23:00'),
+(3, 1, 1, 3, 8, 'BG0A05', '134.80', '16.00', '8.43', 14, NULL, '2020-08-23 12:59:58', '2020-09-27 20:23:00'),
+(4, 1, 1, 3, 9, 'BG0A06', '188.00', '16.00', '11.75', 3, NULL, '2020-08-23 12:59:58', '2020-09-27 20:23:00'),
+(5, 1, 1, 3, 23, 'BG0A16', '145.25', '16.00', '9.08', 12, NULL, '2020-08-23 12:59:59', '2020-09-27 20:23:00'),
+(6, 1, 1, 3, 24, 'BG0A17', '118.20', '16.00', '7.39', 16, NULL, '2020-08-23 12:59:59', '2020-09-27 20:23:00'),
+(7, 1, 1, 3, 25, 'BG0A18', '177.30', '16.00', '11.08', 6, NULL, '2020-08-23 12:59:59', '2020-09-27 20:23:00'),
+(8, 1, 1, 3, 26, 'BG0A19', '184.00', '16.00', '11.50', 4, NULL, '2020-08-23 12:59:59', '2020-09-27 20:23:00'),
+(9, 1, 1, 3, 30, 'BG0A23', '196.50', '16.00', '12.28', 2, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00'),
+(10, 1, 1, 3, 31, 'BG0A24', '177.75', '16.00', '11.11', 5, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00'),
+(11, 1, 1, 3, 32, 'BG0A25', '175.50', '16.00', '10.97', 7, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00'),
+(12, 1, 1, 3, 33, 'BG0A26', '173.00', '16.00', '10.81', 8, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00'),
+(13, 1, 1, 3, 34, 'BG0A27', '133.05', '16.00', '8.32', 15, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00'),
+(14, 1, 1, 3, 35, 'BG0A28', '144.00', '16.00', '9.00', 13, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00'),
+(15, 1, 1, 3, 36, 'BG0A29', '185.00', '14.00', '13.21', 1, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00'),
+(16, 1, 1, 3, 37, 'BG0A30', '171.60', '16.00', '10.73', 9, NULL, '2020-09-08 20:27:56', '2020-09-27 20:23:00');
 
 -- --------------------------------------------------------
 
@@ -1016,10 +1057,10 @@ CREATE TABLE `subclasses` (
 --
 
 INSERT INTO `subclasses` (`id`, `form_id`, `type`, `max_number`, `created_at`, `updated_at`) VALUES
-(1, 1, 'B', 4, '2020-07-07 01:55:57', '2020-07-07 01:55:57'),
 (3, 3, 'B', 5, '2020-08-16 21:38:06', '2020-08-16 21:38:06'),
 (4, 3, 'C', 4, '2020-08-30 13:05:12', '2020-08-30 13:05:12'),
-(5, 1, 'C', 3, '2020-08-31 19:39:49', '2020-08-31 19:39:49');
+(5, 1, 'C', 3, '2020-08-31 19:39:49', '2020-08-31 19:39:49'),
+(8, 1, 'B', 4, '2020-09-27 21:50:55', '2020-09-27 21:50:55');
 
 -- --------------------------------------------------------
 
@@ -1256,12 +1297,19 @@ ALTER TABLE `disciplines`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `expenses`
+--
+ALTER TABLE `expenses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `expensetypes`
 --
 ALTER TABLE `expensetypes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `expensetypes_year_id_foreign` (`year_id`),
-  ADD KEY `expensetypes_term_id_foreign` (`term_id`);
+  ADD KEY `expensetypes_term_id_foreign` (`term_id`),
+  ADD KEY `expensetypes_expense_id_foreign` (`expense_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -1541,10 +1589,16 @@ ALTER TABLE `disciplines`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `expenses`
+--
+ALTER TABLE `expenses`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `expensetypes`
 --
 ALTER TABLE `expensetypes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1556,13 +1610,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `feecontrols`
 --
 ALTER TABLE `feecontrols`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `fees`
 --
 ALTER TABLE `fees`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `feetypes`
@@ -1586,7 +1640,7 @@ ALTER TABLE `forms`
 -- AUTO_INCREMENT for table `generateresults`
 --
 ALTER TABLE `generateresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -1598,7 +1652,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1622,7 +1676,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `scholarships`
 --
 ALTER TABLE `scholarships`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `secondtermresults`
@@ -1652,7 +1706,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `studentdisciplines`
 --
 ALTER TABLE `studentdisciplines`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `studentinfos`
@@ -1664,7 +1718,7 @@ ALTER TABLE `studentinfos`
 -- AUTO_INCREMENT for table `studentresults`
 --
 ALTER TABLE `studentresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -1676,7 +1730,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `subclasses`
 --
 ALTER TABLE `subclasses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `subjects`
@@ -1757,6 +1811,7 @@ ALTER TABLE `classresults`
 -- Constraints for table `expensetypes`
 --
 ALTER TABLE `expensetypes`
+  ADD CONSTRAINT `expensetypes_expense_id_foreign` FOREIGN KEY (`expense_id`) REFERENCES `expenses` (`id`),
   ADD CONSTRAINT `expensetypes_term_id_foreign` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `expensetypes_year_id_foreign` FOREIGN KEY (`year_id`) REFERENCES `years` (`id`) ON DELETE CASCADE;
 

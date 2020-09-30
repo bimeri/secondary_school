@@ -99,8 +99,7 @@
           </div>
       </div>
     </li><hr style="margin-top: 43px !important; border-top:1px solid rgb(60, 182, 182)">
-        <div>
-            <ul class="collapsible w3-ul" style="margin-top:-15px">
+            <ul class="collapsible w3-ul navbar-fixed" style="margin-top:-15px">
                 <li>
             @canany(['add_role', 'add_user', 'user_role'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="roles()" @if( Request::is('admin/role', 'admin/add_user', 'view_roles/'.request()->route("id").'', 'edit_user/'.request()->route("id").'', 'admin/edit_role/'.request()->route("id").'', 'admin/all_user'))  style="background-color: rgb(173, 231, 217)" @endif ><i class="fa fa-user teal-text w3-small"></i>{{ __('messages.manage_role_permission') }}<i class="fa fa-chevron-down right w3-small" id="role"></i></div>@endcanany
                 <div class="collapsible-body">
@@ -116,8 +115,8 @@
             @canany(['create_income', 'create_expenses', 'record_expense','receive_fees','report_fees', 'give_scholarship', 'income_statement', 'print_reciept'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="fees()" @if( Request::is('fees/create', 'expense/create', 'admin/collect_fees', 'scholarship/create', 'admin/fee_statistics', 'scholarship/student', 'expense/view', 'fees/report', 'admin/collect/fees', 'admin/fees/statistics', 'student/scholarship/report', 'student/scholarship/get', 'admin/income_statetment', 'admin/income_statetments', 'income/detail', 'expense/creates'))  style="background-color: rgb(173, 231, 217)" @endif> &nbsp;<i class="fa fa-money-bill-wave-alt teal-text w3-small"></i> Fees and Expenses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="fee"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
-                        @can('create_income', App\Permission::class)<li><a href="{{ route('admin.create.fees.type') }}" class="teal-text"  @if( Request::is('fees/create'))  style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">Create Income Type</a></li>@endcan
-                        @can('create_expenses', App\Permission::class)<li><a href="{{ route('admin.create.expense.type') }}" class="teal-text" @if( Request::is('expense/create', 'expense/creates'))  style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">Create Expense Type</a></li>@endcan
+                        @can('create_income', App\Permission::class)<li><a href="{{ route('admin.create.fees.type') }}" class="teal-text"  @if( Request::is('fees/create'))  style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">Create Fee Type</a></li>@endcan
+                        @can('create_expenses', App\Permission::class)<li><a href="{{ route('admin.create.expense.type') }}" class="teal-text" @if( Request::is('expense/create', 'expense/creates'))  style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">Create/record Expense</a></li>@endcan
                         @can('give_scholarship', App\Permission::class)<li><a href="{{ route('scholarship.create') }}" class="teal-text" @if(Request::is('scholarship/create')) style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">Give Scholarship</a></li>@endcan
                         @can('receive_fees', App\Permission::class)<li><a href="{{ route('admin.collect.fees') }}" class="teal-text" @if( Request::is('admin/collect_fees', 'admin/fee_statistics', 'scholarship/student', 'admin/collect/fees'))  style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">Receive Fees</a></li>@endcan
                         @can('record_expense', App\Permission::class)<li><a href="{{ route('admin.view.expense') }}" class="teal-text" @if(Request::is('expense/view')) style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">view/Edit expense</a></li>@endcan
@@ -196,10 +195,10 @@
                 </li>
 
                 <li>
-            @canany(['record_mark', 'rank_student', 'print_result', 'print_rank', 'print_fee'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="results()" @if(Request::is('student/marks/record', 'student/rank', 'class/result', 'class/student/result')) style="background-color: rgb(173, 231, 217)" @endif><i class="fa fa-pencil-alt teal-text w3-small"></i> Results &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="result"></i></div>@endcanany
+            @canany(['record_mark', 'rank_student', 'print_result', 'print_rank', 'print_fee'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="results()" @if(Request::is('student/marks/record', 'student/rank', 'class/result', 'class/student/result', 'get/student/record')) style="background-color: rgb(173, 231, 217)" @endif><i class="fa fa-pencil-alt teal-text w3-small"></i> Results &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="result"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
-                        @can('record_mark', App\Permission::class)<li><a href="{{ route('admin.record.marks') }}" class="teal-text" @if(Request::is('student/marks/record'))style="background-color: rgb(229, 233, 232)"@endif  onclick="load()">Record Mark</a></li>@endcan
+                        @can('record_mark', App\Permission::class)<li><a href="{{ route('admin.record.marks') }}" class="teal-text" @if(Request::is('student/marks/record', 'get/student/record'))style="background-color: rgb(229, 233, 232)"@endif  onclick="load()">Record Mark</a></li>@endcan
                         @can('rank_student', App\Permission::class)<li><a href="{{ route('student.rank.result') }}" class="teal-text" @if(Request::is('student/rank', 'class/result', 'class/student/result'))style="background-color: rgb(229, 233, 232)"@endif  onclick="load()">Rank Students</a></li>@endcan
                         @can('print_result', App\Permission::class)<li><a href="#!" class="teal-text">Print Result</a></li>@endcan
                         @can('promote_student', App\Permission::class)<li><a href="#!" class="teal-text">Promote Student</a></li>@endcan
@@ -220,7 +219,6 @@
                 </li>
                 <li><a href="{{ route('admin.logout') }}"  class="waves-effect waves-light red-text"  onclick="load()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="fa fa-power-off"></span> logout</a></li>
             </ul>
-        </div>
   </ul>
 
     <div class="cal">

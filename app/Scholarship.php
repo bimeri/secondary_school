@@ -40,4 +40,12 @@ class Scholarship extends Model
     public static function getSumAmount($year){
         return Scholarship::where('year_id', $year)->sum('amount');
     }
+
+    public static function getStudentAcademicScholarship($student, $year, $term, $form){
+        return Scholarship::where('student_id', $student)
+                            ->where('year_id', $year)
+                            ->where('term_id', $term)
+                            ->where('form_id', $form)
+                            ->first();
+    }
 }

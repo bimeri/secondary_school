@@ -30,6 +30,16 @@ class Feetype extends Model
         return $feetype;
     }
 
+    public static function getCurrentYearformFee($year_id, $form_id){
+        $feetype = Feetype::where('year_id', $year_id)->where('form_id', $form_id)->get();
+        $cc = array();
+        foreach ($feetype as $type) {
+            $type = "<option value=".$type->id.">".$type->fee_type."/".$type->amount."</option>";
+            array_push($cc, $type);
+        }
+        return $cc;
+    }
+
     // public function background(){
     //     return $this->belongsTo('App\Background');
     // }

@@ -18,8 +18,10 @@
                         <th>Fee Type</th>
                         <th>Amount</th>
                         <th>Amount Paid</th>
+                        <th>Balance</th>
                         <th>Scholarship</th>
                         <th>Status</th>
+                        <th>action</th>
                     </tr>
                     @foreach ($student_fees as $key => $fee1)
                     <tr>
@@ -29,6 +31,7 @@
                         <td>{{ $fee1->feetype->fee_type }}</td>
                         <td>{{ $fee1->feetype->amount }}</td>
                         <td>{{ $fee1->amount }}</td>
+                        <td>{{ $fee1->balance }}</td>
                         <td>
                             @if ($fee1->scholarship == 0 || null)
                             <b class="orange-text">No Scholarship</b>
@@ -42,23 +45,28 @@
                             <b class="green-text">Completed</b>
                             @endif
                         </td>
+                        <td>
+                            <a href="{{ route('downoad.print', ['fee_id' => $fee1->id]) }}" class="btn w3-small blue lighten-1 waves-effect waves-light">print</a>
+                        </td>
                     </tr>
                     @endforeach
+                    <?php $scholarsh = App\Fee::where('year_id',$current_year->id)->where('student_id', $studentinfo->student->id)->sum('scholarship'); ?>
+
                     <tr class="w3-center">
-                        <td colspan="8">
+                        <td colspan="13" class="teal lighten-5">
                             <div class="row">
                                 <div class="col 12 m8">
                                     Total fees for {{ $current_year->name }}:
                                     <b class="blue-text">{{ $total_fees }},</b>
-                                    Student Paid: <b class="blue-text">{{ $total_paid }}</b><br>
+                                    Student Paid: <b>{{ $total_paid }} XCFA {{ $scholarsh ? ' + Scholarship of: '.$scholarsh.' XCFA':'' }} <br><u class="w3-medium blue-text"> {{$scholarsh ?'Total: '.($total_paid + $scholarsh).' XCFA':''}}</u></b><br>
                                     <b>Status:
                                         @if($total_fees == 0)
-                                            <b class="red-text">Unavailable</b>
+                                            <b class="orange-text">Unavailable</b>
                                             @else
                                             @if($total_paid + $yearly_scholarship >= $total_fees)
                                                 <b class="green-text w3-medium">Completed</b><br>
                                                 @if(App\Feecontrol::where('year_id', $currentYear)->where('student_id', $studentinfo->student->id)->where('form_id', $current_form)->exists())
-                                                        <button class="btn green waves-light waves-effect w3-small">Student Fee Clearance Validated <i class="fa fa-check"></i></button>
+                                                        <button class="btn green waves-light lighten-1 waves-effect w3-small">Student Fee Clearance Validated <i class="fa fa-check"></i></button>
                                                     @else
                                                         <form action="{{ route('student.fee_clearance') }}" method="post">
                                                             @csrf
@@ -66,7 +74,7 @@
                                                             <input type="hidden" name="school_id" value="{{ $studentinfo->student_school_id }}">
                                                             <input type="hidden" name="form_id" value="{{ $current_form }}">
                                                             <input type="hidden" name="year_id" value="{{ $currentYear }}">
-                                                            <button class="btn red waves-light waves-effect w3-small">Validate Student Fees Clearance</button>
+                                                            <button class="btn red waves-light lighten-1 waves-effect w3-small">Validate Student Fees Clearance</button>
                                                         </form>
                                                     @endif
                                             @else
@@ -78,10 +86,12 @@
                                 <div class="col s12 m4 w3-right">
                                     <h4 class="center"><b style="color: teal">{{ $formName }} {{ $studentinfo->subform_id ? ''.$studentinfo->subform->type.'':'A' }}</b></h4>
                                     <h6 class="center upper"><b>{{ $sectorName }} @if($sectorName)<i class="fa fa-arrow-right"></i>@endif {{ $bgName }}</b></h6>
+                                    @if(App\Feecontrol::where('year_id', $currentYear)->where('student_id', $studentinfo->student->id)->where('form_id', $current_form)->exists())
                                     <form method="#" action="#">
                                         <a href="{{ route('fee.download', ['year' => $fee1->year, 'studentId' => $studentinfo->student_id, 'form' => $current_form]) }}" class="teal btn waves-effect waves-light" onmouseover="func()">Print Receipt <i class="fa fa-file-pdf w3-small"></i></a>
                                         <a href="" class="teal-text w3-margin-left w3-border w3-padding-small" id="csv" onclick="load()">CSV file <i class="fa fa-file-csv"></i></a>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         </td>
@@ -90,14 +100,18 @@
             </div>
         </div>
         <hr>
+
+
+
+{{-- other yearly fees statistics --}}
         <div class="row">
             <div class="col s12">
               <ul class="tabs orange">
-                  @foreach (App\Year::all() as $key => $year)
+                  @foreach (App\Year::all() as $key => $y)
                 <li class="tab col s2">
-                    <a class="@if($year->id == $current_year->id) active @endif"
+                    <a class="@if($y->id == $current_year->id) active @endif"
                     href="#test{{ $key + 1 }}">
-                    {{ $year->name }}
+                    {{ $y->name }}
                     </a>
                 </li>
                   @endforeach
@@ -106,17 +120,19 @@
             @foreach (App\Year::all() as $keyy => $year)
             <div id="test{{ $keyy + 1 }}" style="margin-top: 15px">
             <?php
-            $arr = array();
+            $formIds = array();
             $formname = array();
             $bg = array();
             $sector = array();
-            foreach (App\Fee::where('student_id', $student_id)->where('year_id', $year->id)->get() as $key => $value) {
-                array_push($arr, $value->form_id);
-                array_push($formname, $value->form->name);
-                array_push($bg, $value->form->background->name);
-                array_push($sector, $value->form->background->sector->name);
+            $me = App\Fee::getStudentFees($student_id, $year->id);
+            foreach ($me as $key => $value) {
+                array_push($formIds, $value->formId);
+                array_push($formname, $value->fname);
+                array_push($bg, $value->bg_name);
+                array_push($sector, $value->sec_name );
             }
-            $formid = current($arr);
+
+            $formid = current($formIds);
             $form_name = current($formname);
             $bg_name = current($bg);
             $sector_name = current($sector);
@@ -136,32 +152,36 @@
                         <th>Amount Paid</th>
                         <th>Scholarship</th>
                         <th>Status</th>
+                        <th>action</th>
                     </tr>
-                    @foreach (App\Fee::getStudentYearlyFee($year->id, $formid, $student_id) as $key => $fee1)
+                    @foreach (App\Fee::getStudentYearlyFee($year->id, $formid, $student_id) as $key => $fe1)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $fee1->year->name }}</td>
-                        <td>{{ $fee1->payment_date }}</td>
-                        <td>{{ $fee1->feetype->fee_type }}</td>
-                        <td>{{ $fee1->feetype->amount }}</td>
-                        <td>{{ $fee1->amount }}</td>
+                        <td>{{ $fe1->year->name }}</td>
+                        <td>{{ $fe1->payment_date }}</td>
+                        <td>{{ $fe1->feetype->fee_type }}</td>
+                        <td>{{ $fe1->feetype->amount }}</td>
+                        <td>{{ $fe1->amount }}</td>
                         <td>
-                            @if ($fee1->scholarship == 0 || null)
+                            @if ($fe1->scholarship == 0 || null)
                             <b class="orange-text">No Scholarship</b>
                             @else
-                            {{ $fee1->scholarship }}
+                            {{ $fe1->scholarship }}
                             @endif
                         </td>
-                        <td>@if ($fee1->status == 0)
+                        <td>@if ($fe1->status == 0)
                             <b class="red-text">Not Completed</b>
                             @else
                             <b class="green-text">Completed</b>
                             @endif
                         </td>
+                        <td>
+                            <a href="{{ route('downoad.print', ['fee_id' => $fe1->id]) }}" class="btn w3-small blue lighten-1 waves-effect waves-light">print</a>
+                        </td>
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="8">
+                        <td colspan="11">
                             <div class="row">
                                 <div class="col s12 m8">
                                     Total fees for {{ $year->name}}:
@@ -170,7 +190,7 @@
                                     <b>Status:
                                         @if($year->id == $current_year->id)
                                             @if($total_fees == 0)
-                                                <b class="red-text">Unavailable</b>
+                                                <b class="orange-text">Unavailable</b>
                                                 @else
                                                 @if($total_paid + $yearly_scholarship >= $total_fees)
                                                     <b class="green-text w3-medium">Completed</b><br>
@@ -193,7 +213,7 @@
                                             @endif
                                         @else
                                             @if($total == 0)
-                                                <b class="red-text">Unavailable</b>
+                                                <b class="orange-text">Unavailable</b>
                                                 @else
                                                 @if($paid + $scholarship >= $total)
                                                 <b class="green-text w3-medium">Completed</b>
@@ -202,16 +222,14 @@
                                                 @endif
                                             @endif
                                         @endif
-
                                     </b>
                                 </div>
                                 <div class="col s12 m4 w3-right">
                                     @if($sector_name)
                                     <h4 class="center"><b style="color: teal">{{ $form_name }} {{ $studentinfo->subform_id ? ''.$studentinfo->subform->type.'':'A' }}</b></h4>
                                     <h6 class="center upper"><b>{{ $sector_name }}<i class="fa fa-arrow-right"></i> {{ $bg_name }}</b></h6>
-                                    <form>
-                                        <button class="teal btn waves-effect waves-light">Print Receipt <i class="fa fa-download w3-small"></i></button>
-                                    </form>
+                                        <a href="{{ route('fee.download', ['year' => $fe1->year, 'studentId' => $studentinfo->student_id, 'form' => $formid]) }}" class="teal btn waves-effect waves-light">Print Receipt <i class="fa fa-file-pdf w3-small"></i></a>
+                                        {{-- <a href="" class="teal-text w3-margin-left w3-border w3-padding-small" id="csv" onclick="load()">CSV file <i class="fa fa-file-csv"></i></a> --}}
                                     @endif
                                 </div>
                             </div>

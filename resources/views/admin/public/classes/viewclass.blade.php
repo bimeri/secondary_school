@@ -1,8 +1,15 @@
 @extends('admin.layout')
 @section('title') view classes @endsection
+@section('style')
+<style>
+   tr> th{
+        color: #009688 !important;
+    }
+</style>
+@endsection
 @section('content')
 <div class="row">
-    <div class="col s11 w3-margin-left m10 offset-m1 my-orange" style="color: #ff9800 !important; background-color: rgb(243, 213, 158) !important;">
+    <div class="col s11 w3-margin-left m10 offset-m1  orange orange-text lighten-4">
     <span onclick="this.parentElement.style.display='none'" class="w3-close right red-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
         <h5 class="w3-center w3-medium w3-padding bold">{{ __('messages.create_view_class') }}
         </h5>
@@ -17,7 +24,7 @@
     <div class="col s12 m10 offset-m1" style="overflow-x:scroll !important;">
     <p class="center">All Main Classes</p>
         <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
-            <tr class="teal">
+            <tr class="teal lighten-4">
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Type</th>
@@ -47,7 +54,7 @@
     <div class="col s12 m10 offset-m1" style="overflow-x:scroll !important;">
         <p class="center">Sub Classes</p>
         <table id="myTables" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
-            <tr class="teal">
+            <tr class="teal lighten-4">
                 <th>S/N</th>
                 <th>Class Name</th>
                 <th>Class Type / Maximum capacity</th>

@@ -2,7 +2,7 @@
 @section('title') Class @endsection
 @section('content')
 <div class="row">
-    <div class="col s12 m10 offset-m1 my-orange" style="color: #ff9800 !important; background-color: rgb(243, 213, 158) !important;">
+    <div class="col s12 m10 offset-m1 orange orange-text lighten-4">
     <span onclick="this.parentElement.style.display='none'" class="w3-close right red-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
         <h5 class="w3-center w3-medium w3-padding bold">{{ __('messages.create_create_header') }}
         </h5>

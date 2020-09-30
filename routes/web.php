@@ -204,4 +204,5 @@ Route::get('teacher_home', 'TeacherController@index')->name('teacher.home');
 
 
 //download controller
-Route::get('fee.download', 'Downloadcontroller@feeDownload')->name('fee.download');
+Route::get('fee/download', 'Downloadcontroller@feeDownload')->name('fee.download');
+Route::get('fee/print', 'Downloadcontroller@printFee')->name('downoad.print');

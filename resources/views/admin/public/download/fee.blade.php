@@ -155,8 +155,8 @@ tr, td {
   font-weight: bold;
 }
 .teal {
-  background-color: #009688 !important;
-  color: white;
+    background-color: #009688 !important;
+    color: white !important;
 }
 td, th, tr{
         border: 1px solid black !important;
@@ -170,13 +170,24 @@ td, th, tr{
 .gr{
     text-align: center;
     background-color: #C8E6C9 !important;
+    color: green !important;
+}
+.re{
+    text-align: center;
+    background-color: #dfb9b0 !important;
+    color: red !important;
+}
+.red-text{
+    color: #F44336 !important;
+}
+.green-text{
     color: #4CAF50 !important;
 }
 </style>
 <div class="container w3-white view-box" style="width: 95%; margin-top: 0px;">
     <div id="bord">
         <center>
-            <img src="./image/logo/logo.png" class="w3-circle w3-center w3-margin" width="150" height="150">
+            <img src="./image/logo/header.png" class="w3-circle w3-center w3-margin" width="97%" height="150">
         </center>
     </div>
     <center>
@@ -189,14 +200,14 @@ td, th, tr{
 <br><br>
 
 <p class="left w3-margin" style="font-size: 17px">
-    Receipt Number : <b>{{ 'reciet_number' }}</b><br>
+    Receipt Number : <b>{{ $receipt }}</b><br>
     Student Name: <b style="text-transform: uppercase;">
         {{ $student->student->full_name }} {{ $student->student_school_id }}/{{ $studentClass->name }} {{ $student->subform_id ? $student->subform->type:'A' }}</b>
 </p> <p><br><br></p>
 
 <table class="w3-table w3-striped w3-border-t" style="font-size: 16px !important;">
     <tr class="tr">
-        <td colspan="9">
+        <td colspan="11">
             Total Amount Paid for Fees for the  academic year: <b>{{ $year }}: {{ $total_amount }} XCFA</b>
         </td>
     </tr>
@@ -208,6 +219,7 @@ td, th, tr{
         <th>Payment Method</th>
         <th>Amount</th>
         <th>Amount Paid</th>
+        <th>Balance</th>
         <th>Scholarship</th>
         <th>Status</th>
     </tr>
@@ -220,6 +232,7 @@ td, th, tr{
         <td>{{ $detail->payment_method }}</td>
         <td>{{ $detail->feetype->amount }}</td>
         <td>{{ $detail->amount }}</td>
+        <td>{{ $detail->balance }}</td>
         <td>
             @if ($detail->scholarship == 0 || null)
             <b class="orange-text">No Scholarship</b>
@@ -227,27 +240,29 @@ td, th, tr{
             {{ $detail->scholarship }}
             @endif
         </td>
-        <td>0</td>
-    </tr>
-    @endforeach
-    <tr class="gr">
-        <td colspan="9">
-            School Fee Reccommedation, weather complete or not. still to Implement
+        <td>@if ($detail->status == 0)
+            <b class="red-text">Not Completed</b>
+            @else
+            <b class="green-text">Completed</b>
+            @endif
         </td>
     </tr>
+    @endforeach
+    @if($total_fee >= $total_amount)
+    <tr class="gr">
+        <td colspan="11">
+            You Have completed fees For the Acdemic year: {{ $year }}
+        </td>
+    </tr>
+    @else
+    <tr class="re">
+        <td colspan="11">
+            You Have not Yet completed School Fee for the Academic Year: {{ $year }}
+        </td>
+    </tr>
+    @endif
 </table>
 </div>
-
-<div class="row">
-    <div class="col s11 m10 white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">
-        <div class="row">
-            <div class="col s12 m12">
-
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <script type="text/php">
     if(isset($pdf)){

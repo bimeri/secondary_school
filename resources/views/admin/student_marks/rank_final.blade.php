@@ -4,7 +4,7 @@
 <style>
     table{
         border: 1px solid black !important;
-        box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138);
+        /* box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138); */
     }
     td, th, tr{
         border: 1px solid black !important;

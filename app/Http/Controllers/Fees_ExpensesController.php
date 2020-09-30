@@ -7,6 +7,7 @@ use App\Expensetype;
 use App\Fee;
 use App\Feecontrol;
 use App\Feetype;
+use App\Form;
 use App\Permission;
 use App\Scholarship;
 use App\Student;
@@ -75,9 +76,12 @@ class Fees_ExpensesController extends Controller
 
     public function collectFees(){
         $this->authorize('receive_fees', Permission::class);
-        $current_year = Year::where('active', 1)->first();
-        $students = Studentinfo::where('year_id', $current_year->id)->paginate(5);
-        return view('admin.public.fees_expenses.collect_fee', compact('students'));
+        $current_year = Year::getCurrentAcademicYear();
+        $data['year'] =  $current_year;
+        $data['form_name'] = '';
+        $data['all_year'] =  Year::getAllYear();
+        $data['students'] = Studentinfo::getAllStudentPerYear($current_year->id);
+        return view('admin.public.fees_expenses.collect_fee')->with($data);
     }
 
     public function getStudents(Request $req){
@@ -86,19 +90,22 @@ class Fees_ExpensesController extends Controller
             'year' => 'required',
             'class' => 'required',
         ]);
-        $year_id = $req['year'];
-        $form_id = $req['class'];
-
-        $students = Studentinfo::where('year_id', $year_id)->where('form_id', $form_id)->paginate(5);
-        $path = '';
-        if($students){
-        $notify = array('message' => 'Some result were found', 'alert-type' => 'success');
-        return  view('admin.public.fees_expenses.collect_fee', compact('students'))->with($notify);
+        try {
+            $yr = Crypt::decrypt($req['year']);
+            $cla = Crypt::decrypt($req['class']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $mess = array('message' => 'Fail to Decrypt ,please Contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($mess);
         }
-        else {
-            $notify = array('message' => 'Your seach matched not result found', 'alert-type' => 'info');
-            return  view('admin.public.fees_expenses.collect_fee', compact('students'))->with($notify);
-        }
+        $year_id = $yr;
+        $form_id = $cla;
+        $data['form_name'] = Form::getClassDetail($form_id);
+        $current_year = Year::getYear($year_id);
+        $data['year'] = $current_year;
+        $data['all_year'] = Year::getAllYear();
+        $data['students'] = Studentinfo::getAllStudentPerYearAndClass($year_id, $form_id);
+        $data['notify'] = array('message' => 'Some result were found', 'alert-type' => 'success');
+        return  view('admin.public.fees_expenses.collect_fee')->with($data);
     }
 
     public function viewExpense(){
@@ -303,13 +310,14 @@ class Fees_ExpensesController extends Controller
 
     public function collectSubmit(Request $req){
         $this->validate($req, [
-            'amount' => 'required'
+            'amount' => 'required',
+            'form_id' => 'required'
         ]);
 
         $student_id = $req['student_id'];
         $studentschool_id = $req['student_schoold_id'];
         $year = $req['year'];
-        $formId = $req['firm_id'];
+        $formId = $req['form_id'];
         $amount = $req['amount'];
         $scholarship = $req['scholarship'];
         $method = $req['method'];
@@ -378,20 +386,16 @@ class Fees_ExpensesController extends Controller
             $year_id = $req['year'];
             $form_id = $req['form_id'];
 
-           // $all = $req->input();
-            $cc = array();
-             $feetype = DB::table("feetypes")
-            ->where("year_id", $year_id)
-            ->where("form_id", $form_id)
-            ->get();
-
+           if(!$year_id){
+               $yr = Year::getCurrentYear();
+           }
+           else{
+               $yr = $year_id;
+           }
+            $cc = Feetype::getCurrentYearformFee($yr, $form_id);
             $sum = Feetype::getAllFeesPerClassAndYear($year_id, $form_id);
-
-            foreach ($feetype as $type) {
-                $arr = array('feetype' => $type->fee_type, 'amount' => $type->amount, 'id' => $type->id, 'sum' => $sum);
-                array_push($cc, $arr);
-            }
-            return response()->json($cc);
+            //return $arr;
+            return response()->json(["option" => $cc, "sum" => $sum]);
         }
 
     public function feeclearance(Request $req){

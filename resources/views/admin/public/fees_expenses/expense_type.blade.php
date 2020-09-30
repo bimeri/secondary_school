@@ -107,7 +107,7 @@
 
 
 
-<button type="button" href="#modall2" class="teal btn white-text waves-effect waves-light modal-trigger right w3-small"  style="border-radius: 10px; width: 15%; margin: 5px; position:fixed; top:80px; right:20px">Add Expense Type <i class="fa fa-plus-square w3-small"></i></button>
+<button type="button" href="#modall2" class="orange btn white-text waves-effect waves-light modal-trigger right w3-small"  style="border-radius: 10px; width: 15%; margin: 5px; position:fixed; top:80px; right:20px">Add Expense Type <i class="fa fa-plus-square w3-small"></i></button>
 {{-- modal to add sequences --}}
 <div id="modall2" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -115,9 +115,9 @@
       <hr style="border-top: 1px solid orange">
         <div class="row">
             <h4>All Recorded Expenses</h4>
-            <div class="input-field col s12 m6 lighten-4 teal teal-text" style="overflow-y: scroll">
+            <div class="input-field col s12 m6 lighten-4 teal teal-text w3-border" style="overflow-y: scroll; max-height:220px">
                 @foreach (App\Expense::getAllType() as $exp)
-                    <h5>{{ $exp->name }}</h5>
+                    <h5><i class="fa fa-arrow-right w3-small"></i> {{ $exp->name }}</h5>
                 @endforeach
             </div>
             <div class="input-field col s12 m6">

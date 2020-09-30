@@ -98,6 +98,12 @@
     </div>
   </div>
   <script>
+      $(document).ready(function(){
+          createCookie("class", document.getElementById('select').value);
+      });
+     function createCookie(name, valu){
+        document.cookie = escape(name) + "=" + escape(valu);
+     }
     $('#select').on('change', function(){
         $("#subclass").empty();
         $.ajaxSetup({
@@ -116,8 +122,10 @@
                console.log('the response is: ',res);
             if(res){
                 $("#type").empty();
-                console.log('the six is', res.size);
-                console.log('the student is', res.student);
+                // console.log('result', res);
+                // console.log('data', document.getElementById('select').value);
+                // console.log('the size is', res.size);
+                // console.log('the student is', res.student);
                 if(res.size == res.student || res.student > res.size){
                     document.getElementById('subclass').style.display = 'block';
                     $("#type").append(" <div class='w3-border w3-padding w3-margin-right w3-small' style='background-color:rgb(245, 200, 200)'>"+

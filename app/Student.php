@@ -63,6 +63,10 @@ class Student extends Authenticatable
         return $this->hasMany('App\Scholarship');
     }
 
+    public function fees(){
+        return $this->hasMany('App\Fee');
+    }
+
     public static function getAllStudent(){
         $query = Student::orderBy('full_name')->get();
         return $query;

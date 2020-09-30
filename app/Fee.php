@@ -24,6 +24,10 @@ class Fee extends Model
         return $this->belongsTo('App\Form');
     }
 
+    public function student(){
+        return $this->belongsTo('App\Student');
+    }
+
     public static function getTotalFeePaid($year_id, $student_School_id){
         $total = Fee::where('year_id', $year_id)->where('student_school_id', $student_School_id)->sum('amount');
         return $total;
@@ -40,6 +44,11 @@ class Fee extends Model
                         ->sum('amount');
 
     }
+
+    public static function getFeeById($id){
+        return Fee::where('id', $id)->first();
+    }
+
     public static function getStudentClass($year_id, $student_id){
         $class = Fee::where('year_id', $year_id)->where('student_id', $student_id)->first();
 
@@ -49,5 +58,16 @@ class Fee extends Model
     public static function getYearlyFeeStatistics($year_id){
         $query = Fee::select('*')->where('year_id', $year_id)->get();
         return $query;
+    }
+
+    public static function getStudentFees($student_id, $year_id){
+        $qr = Fee::select('forms.name as fname', 'forms.id as formId', 'backgrounds.name as bg_name', 'sectors.name as sec_name')
+                    ->join('forms', 'forms.id', 'fees.form_id')
+                    ->join('backgrounds', 'backgrounds.id', 'forms.background_id')
+                    ->join('sectors', 'sectors.id', 'backgrounds.sector_id')
+                    ->where('fees.student_id', $student_id)
+                    ->where('fees.year_id', $year_id)
+                    ->get();
+            return $qr;
     }
 }
