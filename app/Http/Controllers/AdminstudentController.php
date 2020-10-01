@@ -275,6 +275,11 @@ class AdminstudentController extends Controller
         $class = Form::where('id', $id)->first();
         $size = $class->max_number;
         $diff = $size - $all_students;
+
+        // this is what i will do with this branch
+
+
+
         $arr = array('size' => $size, 'student' => $all_students, 'diff' => $diff);
         return response()->json($arr);
     }
