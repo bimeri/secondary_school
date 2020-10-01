@@ -101,11 +101,9 @@
 </div>
 @else
 <center>
-<div class="col s12 m8 offset-m2 alert alert-danger center" role="alert" style="width: 50%;">there is no Expense recorded for the current academic year: {{ $yr }}</div>
+    <div class="col s12 m8 offset-m2 alert alert-danger center" role="alert" style="width: 50%;">there is no Expense recorded for the current academic year: {{ $yr }}</div>
 </center>
 @endif
-
-
 
 <button type="button" href="#modall2" class="orange btn white-text waves-effect waves-light modal-trigger right w3-small"  style="border-radius: 10px; width: 15%; margin: 5px; position:fixed; top:80px; right:20px">Add Expense Type <i class="fa fa-plus-square w3-small"></i></button>
 {{-- modal to add sequences --}}

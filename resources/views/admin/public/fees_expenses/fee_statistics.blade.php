@@ -53,7 +53,7 @@
                     <?php $scholarsh = App\Fee::where('year_id',$current_year->id)->where('student_id', $studentinfo->student->id)->sum('scholarship'); ?>
 
                     <tr class="w3-center">
-                        <td colspan="13" class="teal lighten-5">
+                        <td colspan="10" class="teal lighten-5">
                             <div class="row">
                                 <div class="col 12 m8">
                                     Total fees for {{ $current_year->name }}:
@@ -181,7 +181,7 @@
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="11">
+                        <td colspan="9">
                             <div class="row">
                                 <div class="col s12 m8">
                                     Total fees for {{ $year->name}}:

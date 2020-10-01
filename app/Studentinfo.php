@@ -35,19 +35,23 @@ class Studentinfo extends Authenticatable
     }
 
     public static function getStudentInfo($student_id){
-        return Studentinfo::where('student_id', $student_id)->first();
+        return Studentinfo::where('student_id', $student_id)->orderBy('id', 'desc')->first();
     }
 
     public static function getStudentMatricule($student_id){
         $mat = Studentinfo::select('student_school_id')->where('student_id', $student_id)->first();
         return $mat->student_school_id;
     }
+     public static function getStudentByName($student_id){
+        $qu = Studentinfo::select('*')->where('student_id', $student_id)->first();
+        return $qu->student->full_name;
+    }
 
     public static function getAllStudentPerYear($year){
-        return Studentinfo::where('year_id', $year)->groupBy('student_school_id')->get();
+        return Studentinfo::where('year_id', $year)->orderBy('id', 'desc')->get();
     }
 
     public static function getAllStudentPerYearAndClass($year, $class){
-        return Studentinfo::where('year_id', $year)->where('form_id', $class)->get();
+        return Studentinfo::where('year_id', $year)->where('form_id', $class)->orderBy('id', 'desc')->get();
     }
 }

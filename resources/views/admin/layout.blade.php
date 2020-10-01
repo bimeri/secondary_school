@@ -141,7 +141,7 @@
                 </li>
 
                 <li>
-            @canany(['create_class', 'edit_delete_class', 'sub_class', 'see_class'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="classes()" @if(Request::is('admin/create/class', 'admin/create/subclass', 'admin/view/class')) style="background-color: rgb(173, 231, 217)" @endif><i class="fa fa-asterisk teal-text w3-small"></i> {{ __('messages.manage_class') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>@endcanany
+            @canany(['create_class', 'edit_delete_class', 'sub_class', 'see_class'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="classes()" @if(Request::is('admin/create/class', 'admin/create/subclass', 'admin/view/class')) style="background-color: rgb(173, 231, 217)" @endif><i class="fa fa-asterisk teal-text w3-small"></i> {{ __('messages.manage_class') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
                         @can('create_class', App\Permission::class)<li><a href="{{ route('admin.create.class') }}" class="teal-text"  @if( Request::is('admin/create/class'))  style="background-color: rgb(229, 233, 232)" @endif  onclick="load()">{{ __('messages.create_class') }}</a></li>@endcan

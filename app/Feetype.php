@@ -40,6 +40,19 @@ class Feetype extends Model
         return $cc;
     }
 
+    public static function SumClassFeePerYear($form, $year){
+     return   Feetype::where('form_id', $form)->where('year_id', $year)->sum('amount');
+    }
+
+    public static function getFeeTypeById($id){
+     return   Feetype::where('id', $id)->first();
+    }
+
+    public static function getFeeTypeName($id){
+     $qr = Feetype::where('id', $id)->first();
+     return $qr->fee_type;
+    }
+
     // public function background(){
     //     return $this->belongsTo('App\Background');
     // }

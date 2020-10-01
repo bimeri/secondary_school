@@ -70,4 +70,19 @@ class Fee extends Model
                     ->get();
             return $qr;
     }
+
+    public static function getStudentFeeTypeSum($year, $formId, $feetype, $studentId){
+        return Fee::where('year_id', $year)
+                    ->where('form_id', $formId)
+                    ->where('feetype_id', $feetype)
+                    ->where('student_id', $studentId)
+                ->sum('amount');
+    }
+
+    public static function getStudentTotalFeePaid($year,$form, $student_id){
+    return Fee::where('year_id', $year)
+        ->where('form_id', $form)
+        ->where('student_id', $student_id)
+        ->sum('amount');
+    }
 }

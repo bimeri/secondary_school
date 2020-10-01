@@ -42,4 +42,5 @@ return [
     'income_statement' => 'Generating Income Statement',
     'income_statement_header' => 'Income Statement (Statistics) for the Academic Year :year',
     'income_statement_full' => 'Full Detail (Statistics) for the Academic Year :year',
+    'has_completed' => 'has alreay completed',
 ];

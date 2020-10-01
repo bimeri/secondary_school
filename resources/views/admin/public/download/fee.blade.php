@@ -10,6 +10,12 @@
   display: table;
   clear: both;
 }
+table, tr, td, th{
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 0.3px solid #000;
+}
 
 .container {
   margin: 0 auto;
@@ -135,9 +141,6 @@
     border: 1px solid #ccc;
     margin: 5px;
 }
-table, th, td tr {
-  border: 1px solid black;
-}
 
 table {
   width: 100%;
@@ -149,7 +152,9 @@ tr {
 tr, td {
   text-align: center !important;
 }
-
+th, td{
+    font-size: 12px !important;
+}
 .upper{
   text-transform: uppercase;
   font-weight: bold;
@@ -158,9 +163,6 @@ tr, td {
     background-color: #009688 !important;
     color: white !important;
 }
-td, th, tr{
-        border: 1px solid black !important;
-    }
 .tr{
     text-align: center;
     background-color: #b2dfdb !important;
@@ -207,8 +209,9 @@ td, th, tr{
 
 <table class="w3-table w3-striped w3-border-t" style="font-size: 16px !important;">
     <tr class="tr">
-        <td colspan="11">
-            Total Amount Paid for Fees for the  academic year: <b>{{ $year }}: {{ $total_amount }} XCFA</b>
+        <td colspan="9">
+            Total Amount Paid for Fees for the academic year: <b>{{ $year }}: {{ $total_amount }} XCFA</b><br>
+            {!! $details->sum('scholarship') > 0 ? "<b>Scholarsdhip of: ".$details->sum('scholarship')." XCFA</b>" : "" !!}
         </td>
     </tr>
     <tr class="teal">
@@ -220,7 +223,6 @@ td, th, tr{
         <th>Amount</th>
         <th>Amount Paid</th>
         <th>Balance</th>
-        <th>Scholarship</th>
         <th>Status</th>
     </tr>
     @foreach ($details as $key => $detail)
@@ -233,13 +235,6 @@ td, th, tr{
         <td>{{ $detail->feetype->amount }}</td>
         <td>{{ $detail->amount }}</td>
         <td>{{ $detail->balance }}</td>
-        <td>
-            @if ($detail->scholarship == 0 || null)
-            <b class="orange-text">No Scholarship</b>
-            @else
-            {{ $detail->scholarship }}
-            @endif
-        </td>
         <td>@if ($detail->status == 0)
             <b class="red-text">Not Completed</b>
             @else
@@ -256,7 +251,7 @@ td, th, tr{
     </tr>
     @else
     <tr class="re">
-        <td colspan="11">
+        <td colspan="9">
             You Have not Yet completed School Fee for the Academic Year: {{ $year }}
         </td>
     </tr>

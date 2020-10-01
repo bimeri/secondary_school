@@ -22,8 +22,8 @@
     </div>
     <div class="col s11 m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">
         @if(Session::has('message'))
-            <div class="col s12 m10 offset-m1 waves-effect waves-orange orange lighten-4 orange-text w3-margin-top" style="border-radius: 10px;">
-            <span onclick="this.parentElement.style.display='none'" class="w3-close w3-padding right white-text w3-hover">&times;</span>
+            <div class="col s12 m10 offset-m1 waves-effect waves-orange orange lighten-5 orange-text w3-margin-top" style="border-radius: 10px;">
+            <span onclick="this.parentElement.style.display='none'" class="w3-close w3-padding right orange-text w3-hover">&times;</span>
                 <h5 class=" w3-center">{{Session::get('message')}}</h5>
             </div>
         @endif
@@ -99,12 +99,27 @@
                         <td>{{ number_format((float)$all_percent_student_paid, 2, '.', ' ') }}%</td>
                         <td>{{ number_format((float)$all_percent_amount_paid, 2, '.', '') }}%</td>
                    </tr>
+                   <tr>
+                       <td colspan="10">
+                           <div class="right">
+                            <form method="#" action="#">
+                                <a type="button" class="orange btn waves-effect waves-light" style="margin:5px" onmouseover="func()">Download Statistics <i class="fa fa-download w3-small"></i></a>
+                                <a href="{{ route('report.fee.excel', ['yearId' => $year_id]) }}" class="teal-text w3-border w3-padding-small teal lighten-4 w3-shadow w3-margin w3-medium" onclick="load()" id="csv">CSV file <i class="fa fa-file-csv"></i></a>
+                            </form>
+                           </div>
+
+                       </td>
+                   </tr>
 
             </table>
         </div>
-        <form method="#" action="#">
-            <button type="button" class="orange btn waves-effect waves-light right" style="margin:5px">Download Statistics <i class="fa fa-download w3-small"></i></button>
-        </form>
     </div>
 </div>
+
+<script>
+    $('#csv').hide();
+    function func(){
+        $('#csv').fadeIn();
+    }
+</script>
 @endsection

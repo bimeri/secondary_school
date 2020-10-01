@@ -3,6 +3,7 @@
 @section('style')
 <style>
     td, th, tr{
+        border-collapse: collapse;
         border: 1px solid #ccc !important;
         font-size: 11px !important
     }
@@ -10,8 +11,10 @@
 @stop
 @section('content')
 <p class="w3-center">@lang('messages.welcome')</p>
-
-<div class="row w3-margin-top">
+<div class="row col">
+<h5 class="left w3-padding">Collect Fees for Acdemic Year <b>{{ $current_year->name }}</b></h5>
+</div>
+<div class="row" style="margin-top: -20px">
     <form method="get" action="{{ route('student.get.all') }}">
         @csrf
         <div class="row">
@@ -49,6 +52,16 @@
         </div>
         <div class="col s12 m12" style="overflow-x:scroll !important;">
             <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
+                @if(Session::has('notify'))
+                <tr>
+                    <td colspan="13" class="w3-medium">
+                        <div class="alert alert-danger" role="alert">
+                            {!! session::get('notify') !!}
+                            {{ session::forget('notify') }}
+                        </div>
+                    </td>
+                </tr>
+                @endif
                 <tr>
                     @if($students->count() != 0 && $form_name)
                         <td colspan="13" class="center yellow lighten-4 w3-medium">
@@ -110,18 +123,18 @@
                         echo $amount + $scholarship;
                          ?>
                     </td>
+
+                    <td>
+                        <button class="w3-blue w3-btn waves-light waves-effect w3-small modal-trigger" href="#modal{{ $key + 1 }}"> Collect Fees <i class="fa fa-dollar-sign w3-small"></i></button>
+                    </td>
                     <td>
                         <form action="{{ route('student_fee_statistics') }}" method="get">
                             @csrf
                             <input type="hidden" name="student_school_id" value="{{ $user->student_school_id }}">
                             <input type="hidden" name="year_id" value="{{ $current_year->id }}">
                             <input type="hidden" name="form_id" value="{{ $user->form_id }}">
-                        <button class="w3-orange w3-text-white w3-btn waves-light waves-effect w3-small"> Fees Statistics <i class="fa fa-dollar-sign w3-small"></i></button>
+                        <button class="w3-orange w3-text-white w3-btn waves-light waves-effect w3-small"> Fees Statistics </button>
                         </form>
-                    </td>
-
-                     <td>
-                        <button class="w3-blue w3-btn waves-light waves-effect w3-small modal-trigger" href="#modal{{ $key + 1 }}"> Collect Fees <i class="fa fa-dollar-sign w3-small"></i></button>
                     </td>
                 </tr>
 
@@ -133,13 +146,11 @@
                         @endforeach
                     </h4>
                     <?php
-                        $fees = App\Feetype::where('form_id', $user->form_id)->where('year_id', $current_year->id)->sum('amount');
-                            echo "<div class='col left' id='fee_change".($key+1)."'><b>Total Fee: ".$fees."</b> CFA</div>";
+                        $f = App\Feetype::SumClassFeePerYear($user->form_id, $current_year->id);
+                            echo "<div class='col left' id='fee_change".($key+1)."'><b>Total Fee: ".$f."</b> CFA</div>";
                     ?>
                     @if (App\Scholarship::getStudentAcademicScholarship($user->student_id, $current_year->id, $current_term->id, $user->form_id))
                     <?php
-                    $fees = App\Feetype::where('form_id', $user->form_id)->where('year_id', $current_year->id)->sum('amount');
-                        echo "<div class='col left'><b id='fee_change'>Total Fee: ".$fees."</b> CFA</div>";
                     $am = App\Scholarship::getStudentAcademicScholarship($user->student_id, $current_year->id, $current_term->id, $user->form_id);
                         echo "<div class='right'><b class='blue-text w3-small capitalize'>Student have scholarship of: </b>".( $am->amount)." CFA</div>";
                     ?>
@@ -157,7 +168,7 @@
                                     <input type="hidden" name="form_id" value="{{ $user->form_id }}">
                                     <div class="col s12 m3">
                                         <label for="year">select year</label>
-                                        <select name="year" class="browser-default chosen-select form-control dynamic" id="year{{$key+1}}" data-dependent="type{{$key+1}}">
+                                        <select name="year" class="browser-default chosen-select form-control dynamic" id="year{{$key+1}}" data-dependent="type{{$key+1}}" required>
                                             {{-- <option value="" selected>select the year</option> --}}
                                             <option value="{{ $current_year->id }}">{{ $current_year->name }}</option>
                                             @foreach (App\Year::where('active', '!=', 1)->get() as $year)
@@ -166,15 +177,17 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m4">
-                                        <?php //$currentFeeData = App\Feetype::getCurrentYearformFee($current_year->id, $user->form_id);
+                                        <?php $currentFeeData = App\Feetype::getCurrentYearformFee($current_year->id, $user->form_id);
                                          ?>
                                         <label for="type">select fees type</label>
-                                        <select name="feetype" class="browser-default form-control" id="type{{$key+1}}">
-                                        <option value="">Select Fee Type</option>
+                                        <select name="feetype" class="browser-default form-control" id="type{{$key+1}}" required>
+                                        @foreach ($currentFeeData as $cc)
+                                            {!! $cc !!}
+                                        @endforeach
                                         </select>
                                     </div>
                                     <div class="col s12 m2 input-field">
-                                        <input type="number" name="amount" placeholder="enter amount">
+                                        <input type="number" name="amount" placeholder="enter amount" required>
                                     </div>
                                     <div class="col s12 m3 input-field">
                                         <input id="autocompleteChannel" name="method" class="autocompleteChannel" placeholder="Enter the method of Payment ..."/>

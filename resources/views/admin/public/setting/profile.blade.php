@@ -64,20 +64,20 @@
       <hr style="border-top: 1px solid teal">
         <div class="row">
             <div class="col s12 m12">
-                <div class="w3-padding w3-center-bottom">
-                    <b class="blue-text">1.</b> The school uniqye Id is use to generate student matricule number.<br>
+                <div class="w3-padding w3-center-bottom" style="text-align: justify;text-justify: inter-word;">
+                    <b class="blue-text">1.</b> The school unique Id is use to generate student matricule number.<br>
                     This number will sustain the student stay in the School from his enrollement day till the day he graduate.<br>
-                    <b class="blue-text">2.</b> All student must have a unique number that will be used to identify them, especially when writing exams or
+                    <b class="blue-text"><br>2.</b> All student must have a unique number that will be used to identify them, especially when writing exams or
                     when enrolling them to another class.<br>
-                    <b class="blue-text">3.</b>All these matricuole number should start with a unique character and should not be greater than Six(6)
+                    <b class="blue-text"><br> 3.</b>All these matricule number should start with a unique character and should not be greater than Six(6)
                     digit.<br>
-                    <b class="blue-text">4.</b>The <b>Unique character</b> is what is required for you as the admin to set. once set for you school,
+                    <b class="blue-text"><br> 4.</b>The <b>Unique character</b> is what is required for you as the admin to set. once set for you school,
                     it will remain unchanged till the at leat an academic year finished before it can be changed. <br>
-                    <b class="blue-text">5.</b> It can't be changed while registration is currently going on, because the system will use it to auto generate a unique matricule number for the student.<br>
-                    <b class="blue-text">6.</b> These unique Character should be a maximum of tow letters, so that student will not need to memorize something beyond their ability.<br>
-                    <b class="blue-text">7.</b> Example of generating these character: If the School Name is <em class="teal-text bold">Government Technical High School</em>,
+                    <b class="blue-text"><br> 5.</b> It can't be changed while registration is currently going on, because the system will use it to auto generate a unique matricule number for the student.<br>
+                    <b class="blue-text"><br> 6.</b> These unique Character should be a maximum of two letters, so that student will not need to memorize something beyond their ability.<br>
+                    <b class="blue-text"><br> 7.</b> Example of generating these character: If the School Name is <em class="teal-text bold">Government Technical High School</em>,
                     you can generate a Unique identifier <b class="teal-text">GT, or GH</b>, so much such that it matches the the name in one way or the other.<br>
-                    <b class="blue-text">7.</b> Sample of School Id are <b>GS0A01, GS0A02, GS0B03, GS1A01 etc.</b> where the <em class="green-text">GS</em> is the unique identifier, the <em class="green-text">0 or 1</em> that follows
+                    <b class="blue-text"><br> 8.</b> Sample of School Id are <b>GS0A01, GS0A02, GS0B03, GS1A01 etc.</b> where the <em class="green-text">GS</em> is the unique identifier, the <em class="green-text">0 or 1</em> that follows
                     is the last character of the year of enrollement, that is 2020. the <em class="green-text">A</em> is for continuation if the number reaches it maximun, it will auto switch to <em class="green-text">B01</em>.
                     <br><br>
                     <h6 class="w3-center"><u>Common Examples</u></h6>
@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="modal-close teal waves-effect waves-green btn-flat right white-text">Cancel</button>
+        <button type="button" class="modal-close teal waves-effect waves-green btn-flat right white-text">closed</button>
     </div>
 </div>
 
