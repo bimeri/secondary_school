@@ -1,5 +1,10 @@
 @extends('admin.layout')
 @section('title') Report Fee @endsection
+@section('style')
+<style>
+
+</style>
+@endsection
 @section('content')
 <p class="w3-center">@lang('messages.welcome')</p>
 <div class="row w3-margin-top">
@@ -77,15 +82,15 @@
                 }
                 @endphp
                    <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $form->name }}</td>
-                    <td>{{ $student }}</td>
-                    <td>{{ $total_class_fee }}</td>
-                    <td>{{ $total_amount_tobepaid }}</td>
-                    <td>{{ $total_paid_amount }}</td>
-                    <td>{{ $total_paid_student }}</td>
-                    <td>{{ number_format((float)$percent_student_paid, 2, '.', '') }}%</td>
-                    <td>{{ number_format((float)$percent_amount_paid, 2, '.', '') }}%</td>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $form->name }}</td>
+                        <td>{{ $student }}</td>
+                        <td>{{ $total_class_fee }}</td>
+                        <td>{{ $total_amount_tobepaid }}</td>
+                        <td>{{ $total_paid_amount }}</td>
+                        <td>{{ $total_paid_student }}</td>
+                        <td>{{ number_format((float)$percent_student_paid, 2, '.', '') }}%</td>
+                        <td>{{ number_format((float)$percent_amount_paid, 2, '.', '') }}%</td>
                    </tr>
                 @endforeach
                     <tr style="background-color: rgb(172, 241, 241); color:teal">
@@ -107,15 +112,132 @@
                                 <a href="{{ route('report.fee.excel', ['yearId' => $year_id]) }}" class="teal-text w3-border w3-padding-small teal lighten-4 w3-shadow w3-margin w3-medium" onclick="load()" id="csv">CSV file <i class="fa fa-file-csv"></i></a>
                             </form>
                            </div>
-
                        </td>
                    </tr>
-
             </table>
+            <div class="row"><hr>
+                <div class="container w3-margin-top">
+                    <ul class="tabs teal teal-text w3-border">
+                        <li class="tab col s4"><a href="#t1" class="active">daily statistics</a></li>
+                        <li class="tab col s4"><a href="#t2" class="">Monthly statistics</a></li>
+                        <li class="tab col s4"><a href="#t3" class="">Yearly Statistics</a></li>
+                    </ul>
+                </div>
+                {{-- daily stastistics --}}
+                <div class="col s12 w3-border" id="t1">
+                    <div class="row">
+                        <div class="col s3 m3">
+                            <div class="input-field">
+                                <select class="validate browser-default" name="year">
+                                    <option value="">select the year</option>
+                                    @foreach($years as $year)
+                                        <option value="{{ $year->id }}">{{ $year->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s3 m3">
+                            <div class="input-field">
+                                <select class="validate browser-default" name="year">
+                                    <option value="">select the month</option>
+                                    <option value="january">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">Augut</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s3 m3">
+                            <div class="input-field">
+                                <select class="validate browser-default" name="year">
+                                    <option value="">select the day</option>
+                                    @for ($i = 0; $i < 30; $i++)
+                                        <option value="{{ $i+1 }}">{{ $i+1 }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s3 m3">
+                            <div class="input-field">
+                               <button class="btn green waves-effect waves-light w3-small">get statistics</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                {{-- monthly statistics --}}
+                <div class="col s12" id="t2">
+                    <div class="row">
+                        <div class="col s3 m3 offset-m2">
+                            <div class="input-field">
+                                <select class="validate browser-default" name="year">
+                                    <option value="">select the year</option>
+                                    @foreach($years as $year)
+                                        <option value="{{ $year->id }}">{{ $year->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s3 m3">
+                            <div class="input-field">
+                                <select class="validate browser-default" name="year">
+                                    <option value="">select the month</option>
+                                    <option value="january">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">Augut</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s3 m3">
+                            <div class="input-field">
+                               <button class="btn green waves-effect waves-light w3-small">get statistics</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- yearly statistics --}}
+                <div class="col s12" id="t3">
+                    <div class="row">
+                        <div class="col s3 m3 offset-m4">
+                            <div class="input-field">
+                                <select class="validate browser-default" name="year">
+                                    <option value="">select the year</option>
+                                    @foreach($years as $year)
+                                        <option value="{{ $year->id }}">{{ $year->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s3 m3">
+                            <div class="input-field">
+                               <button class="btn green waves-effect waves-light w3-small">get statistics</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 <script>
     $('#csv').hide();
     function func(){

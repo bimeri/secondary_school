@@ -224,12 +224,7 @@
                $("#fee_change{{$key+1}}").append("<b>Total Fee: "+res.sum+"</b> CFA ");
             if(res){
                 $("#type{{$key+1}}").empty();
-                // $.each(res,function(key, value){
-                    // console.log('the id is: ', value.id);
-                    // console.log('the name is: ', value.feetype);
-                    // console.log('the amount is: ', value.amount);
                    $("#type{{$key+1}}").append(res.option);
-                // });
             }else{
                $("#type{{$key+1}}").empty();
             }
@@ -254,7 +249,6 @@
                 </tr>
             </table>
         </div>
-            {{-- {{ $students->onEachSide(5)->links() }} --}}
     </div>
 </div>
 

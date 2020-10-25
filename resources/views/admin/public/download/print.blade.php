@@ -79,7 +79,7 @@ onClick="window.print()"/>
 <div style=" float:left; width:170px; height:25px;font-size:17px;"> Channel :</div>
 <div style=" float:left; width:500px;border-bottom:1px solid #000;font-weight:normal; height:25px;font-size:17px;">
     <div style=" float:left; width:500px;margin-top:3px; font-size:2vw">
-        <b>{{ $fee->payment_method }}</b>, Paid for: <b>{{ $fee->feetype->fee_type }}</b>
+        <b>{{ $fee->payment_method ? $fee->payment_method :"Non Selected" }}</b>, Paid for: <b>{{ $fee->feetype->fee_type }}</b>
     </div>
     <div style=" float:left; width:200px;  height:25px;margin-top:3px;"></div>
 </div>

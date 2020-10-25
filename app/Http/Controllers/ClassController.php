@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Form;
 use App\Permission;
+use App\Studentinfo;
 use App\Subclass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -202,5 +203,84 @@ class ClassController extends Controller
         $var = $newar;
 
         return current($var);
+    }
+
+    public function showClassLiss(){
+
+        $data['table'] = Form::getAllClasses();
+
+        return view('admin.public.student.viewAllStudent')->with($data);
+    }
+
+    public function changeClass(){
+        $this->authorize('change_class', Permission::class);
+        $data['table'] = Form::getAllClasses();
+        $data['studentinfo'] = Studentinfo::all();
+
+        return view('admin.public.classes.change_class')->with($data);
+    }
+
+    public function getStudentclassDetails(Request $req){
+        $this->authorize('change_class', Permission::class);
+            $details = $req['user'];
+            $u = explode('/', trim($details));
+            $matricule = $u[1];
+            $studentInfo = Studentinfo::getStudentByMatricule($matricule);
+
+            $previousclass = $studentInfo->form->name." / ".$studentInfo->form->background->name." / ".$studentInfo->form->background->sector->name;
+            $previoussubclass = $studentInfo->subform_id ? $studentInfo->subform->type: 'A';
+        return response()->json([$previousclass, $previoussubclass]);
+    }
+
+    public function changeClassFunction(Request $req){
+        $this->authorize('change_class', Permission::class);
+        $student_name = $req['student_name'];
+        $formId = $req['class'];
+        $student_subclass = $req['subclass'];
+
+        $u = explode('/', trim($student_name));
+        $matricule = $u[1];
+
+        $form = Form::where('id', $formId)->first();
+        $all_student = Studentinfo::where('form_id', $formId)->where('subform_id', null)->count();
+
+        if($student_subclass != null){
+            $forms = Subclass::where('id', $student_subclass)->first();
+            $all_students = Studentinfo::where('subform_id', $student_subclass)->count();
+            if($forms->max_number == $all_students || $forms->max_number < $all_students){
+                $notify = array('message' => 'Fail to update '.$matricule = $u[0].', in '.$forms->form->name.' '.$forms->type.' The Sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type' => 'warning');
+                session()->flash('notify', 'Fail to update '.$matricule = $u[0].', in '.$forms->form->name.' '.$forms->type.' The sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type');
+                return redirect()->back()->with($notify);
+            }
+        }
+        else {
+            if($form->max_number == $all_student || $form->max_number < $all_student){
+                $notify = array('message' => 'Fail to update '.$matricule = $u[0].', in '.$form->name.' A, the class is full already, please considered creating a sub class or extending this class size to fit in the student.','alert-type' => 'warning');
+                session()->flash('notify', 'Fail to update '.$matricule = $u[0].', in '.$form->name.' the class is full already, please considered creating a sub class or extending this class size to fit in the student.','alert-type');
+                return redirect()->back()->with($notify);
+            }
+        }
+
+
+        if($student_subclass != null){
+            $update = DB::table('studentinfos')
+                        ->where('student_school_id', $matricule)
+                        ->update(['form_id' => $formId, 'subform_id' => $student_subclass]);
+
+                            $message = array('message' => 'successfully updated '.$matricule = $u[0].' class', 'alert-type' => 'success');
+                            return redirect()->back()->with($message);
+
+        }
+        else {
+            $update = DB::table('studentinfos')
+                        ->where('student_school_id', $matricule)
+                        ->update(['form_id' => $formId, 'subform_id' => $student_subclass]);
+
+                            $message = array('message' => 'successfully updated '.$matricule = $u[0].' class', 'alert-type' => 'success');
+                            return redirect()->back()->with($message);
+
+        }
+
+        return redirect()->back();
     }
 }

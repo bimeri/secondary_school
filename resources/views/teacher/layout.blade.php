@@ -77,27 +77,41 @@
   <a href="#" data-target="slide-out" class="sidenav-trigger white-text w3-xlarge w3-padding" style="width:40px; margin-top: -60px; position: relative; z-index:10"><i class="fa fa-th"></i></a>
 
   <ul id="slide-out" class="sidenav w3-ul" style="transform: translateX(-105%); overflow-y: scroll">
-    <li>
+    {{--  <li>
       <div class="user-view">
         <div class="containeradmin w3-margin-bottom">
-            <img src="{{ URL::asset('image/icon.jpg') }}" alt="Avatar" class="image">
-            <span class="white-black email center">{{ auth::user()->email }}</span>
+            <img src="{{ URL::asset('image/logo/'.$setting->logo.' ') }}"  class="image left" alt="logo" style="margin-top:4px; height:40px; width:40px">
+            <img src="{{ URL::asset('image/icon.jpg') }}" alt="Avatar" class="image right">
+            <span class="white-black email center">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
             <div class="overlay">
               <div class="textadmin">
-                  <div class="row">
-                    <img src="image/logo/{{ $setting->logo }}" width="40" height="40" class="w3-circle w3-border left" style="margin-left:-30px; margin-top:-30px">
-                    <img src="image/logo/{{ $setting->logo }}" width="40" height="40" class="w3-circle w3-border right" style="margin-right:-30px; margin-top:-30px">
-                  </div><hr style="border-top:1px solid #fff; width:133%; margin-left:-30px">
-                  <label class="white-text" style="margin-top: -40px !important">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }} | Teacher </label>
+                <div class="row">
+                    <h6 class="center white-text" style="text-align: center">{{ $setting->motto ?? '' }}</h6><hr style="margin-top: -10px;">
+                </div>
               </div>
             </div>
           </div>
       </div>
-    </li>
-    <li><a href="#"  class="waves-effect">Notification <i class="fa fa-bell t-teal-text"></i></a></li>
-    <li><a href="#"  class="waves-effect">Messages <i class="fa fa-envelope t-teal-text"></i></a></li>
-        <div>
-            <ul class="collapsible">
+    </li>  --}}
+    <li>
+        <div class="user-view">
+          <div class="containeradmin w3-margin-bottom">
+              <img src="{{ URL::asset('image/logo/'.$setting->logo.' ') }}"  class="image left" alt="logo" style="margin-top:4px; height:40px; width:40px">
+              <img src="{{ URL::asset('image/icon.jpg') }}" alt="Avatar" class="image right">
+              <span class="user-email">{{ auth()->user()->email }}</span>
+              <div class="overlay">
+                <div class="textadmin">
+                    <div class="row">
+                      <h6 class="center white-text" style="text-align: center">{{ $setting->motto ?? '' }}</h6>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </li><hr style="margin-top: 0px !important; border-top:1px solid #669900">
+            <ul class="collapsible w3-ul navbar-fixed" style="margin-top:35px !important">
+                <li><a href="#"  class="waves-effect">Notification <i class="fa fa-bell t-teal-text"></i></a></li>
+                <li><a href="#"  class="waves-effect">Messages <i class="fa fa-envelope t-teal-text"></i></a></li>
                 <li>
                 <div class="collapsible-header" onclick="classes()"> &nbsp;<i class="fa fa-list t-teal-text w3-small"></i> Manage Subject&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>
                 <div class="collapsible-body">
@@ -122,7 +136,6 @@
                 </li>
                 <li><a href="#"  class="waves-effect waves-light red-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="fa fa-power-off"></span> logout</a></li>
             </ul>
-        </div>
   </ul>
 
     <div class="cal w3-padding row">

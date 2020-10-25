@@ -25,114 +25,46 @@ class AdminstudentController extends Controller
         $this->authorize('add_student', Permission::class);
         $id = Setting::find(1);
         $first = $id->school_id;
+        $data['students'] = Studentinfo::getTenStudents();
+        $current_year = Year::getCurrentAcademicYear();
+        $countStudentPerYear = Studentinfo::countAllSchoolStudentPerYear($current_year->id);
+        //return $year;
+        $yearLastDigits = explode('/', trim($current_year->name));
+        $year = substr($yearLastDigits[0], -2);
+        $count = $countStudentPerYear + 1;
+        $letter = 'A';
+        $trans_count = sprintf('%03d', $count);
+
+        if($count > 4995){
+            $letter = 'F';
+            $trans_count = sprintf('%03d', $count - 4995);
+        } elseif($count > 3996){
+            $letter = 'E';
+            $trans_count = sprintf('%03d', $count - 3996);
+        }
+        elseif($count > 2997){
+            $letter = 'D';
+            $trans_count = sprintf('%03d', $count - 2997);
+        } elseif($count > 1998){
+            $letter = 'C';
+            $trans_count = sprintf('%03d', $count - 1998);
+        } elseif($count > 999){
+            $letter = 'B';
+            $trans_count = sprintf('%03d', $count - 999);
+        } else {
+            $letter = 'A';
+            $trans_count = sprintf('%03d', $count);
+        }
+        $matricule = $first.$year.$letter.$trans_count;
+        $data['matricule'] = $matricule;
+
 
         if($id->school_id == null){
             $notify = array('message' => 'Please go to Setting and set the School Unique Identifier. You can\'t register any student without the Identifier','alert-type' => 'info');
             return redirect()->back()->with($notify);
         }
-        else {
-             $count = Student::count() + 1;
-            //$count = 1683;
-            $last_digits = sprintf("%02d", $count);
 
-             if($count >= 1684){
-                $count_transform = sprintf("%02d", ($count - 1683));
-                $matricule = $first .'0Q'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 1585){
-                $count_transform = sprintf("%02d", ($count - 1584));
-                $matricule = $first .'0P'. $count_transform;
-                //return $matricule;
-            }
-            else if($count >= 1486){
-                $count_transform = sprintf("%02d", ($count - 1485));
-                $matricule = $first .'0O'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 1387){
-                $count_transform = sprintf("%02d", ($count - 1386));
-                $matricule = $first .'0N'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 1288){
-                $count_transform = sprintf("%02d", ($count - 1287));
-                $matricule = $first .'0M'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 1189){
-                $count_transform = sprintf("%02d", ($count - 1188));
-                $matricule = $first .'0L'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 1090){
-                $count_transform = sprintf("%02d", ($count - 1089));
-                $matricule = $first .'0L'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 991){
-                $count_transform = sprintf("%02d", ($count - 990));
-                $matricule = $first .'0K'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 892){
-                $count_transform = sprintf("%02d", ($count - 891));
-                $matricule = $first .'0J'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 793){
-                $count_transform = sprintf("%02d", ($count - 792));
-                $matricule = $first .'0I'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 694){
-                $count_transform = sprintf("%02d", ($count - 693));
-                $matricule = $first .'0H'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 595){
-                $count_transform = sprintf("%02d", ($count - 594));
-                $matricule = $first .'0G'. $count_transform;
-                //return $matricule;
-            }
-            else if($count >= 496){
-                $count_transform = sprintf("%02d", ($count - 495));
-                $matricule = $first .'0F'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 397){
-                $count_transform = sprintf("%02d", ($count - 396));
-                $matricule = $first .'0E'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 298){
-                $count_transform = sprintf("%02d", ($count - 297));
-                $matricule = $first .'0D'. $count_transform;
-               // return $matricule;
-            }
-            else if($count >= 199){
-                $count_transform = sprintf("%02d", ($count - 198));
-                $matricule = $first .'0C'. $count_transform;
-                //return $matricule;
-            }
-            else if($count > 99){
-                $count_transform = sprintf("%02d", ($count - 99));
-                $matricule = $first .'0B'. $count_transform;
-               // return $matricule;
-            }
-            else if($count < 99){
-                $count_transform = sprintf("%02d", ($count));
-                $matricule = $first .'0A'. $count_transform;
-               // return $matricule;
-            }
-            else if($count == 99){
-                $count_transform = sprintf("%02d", ($count));
-                $matricule = $first .'0A'. $count_transform;
-               // return $matricule;
-            }
-
-            return view('admin.public.student.addStudent', compact('matricule'));
-        }
+        return view('admin.public.student.addStudent')->with($data);
     }
 
     public function submitInfo(Request $req){
@@ -169,14 +101,14 @@ class AdminstudentController extends Controller
             $forms = Subclass::where('id', $subclass)->first();
             $all_students = Studentinfo::where('subform_id', $subclass)->count();
             if($forms->max_number == $all_students || $forms->max_number < $all_students){
-                $notify = array('message' => 'Fail to add '.$fname.', in '.$form->name.' The Sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type' => 'warning');
-                session()->flash('notify', 'Fail to add '.$fname.', in '.$form->name.' The sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type');
+                $notify = array('message' => 'Fail to add '.$fname.', in '.$forms->form->name.' '.$forms->type.' The Sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type' => 'warning');
+                session()->flash('notify', 'Fail to add '.$fname.', in '.$forms->form->name.' '.$forms->type.' The sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type');
                 return redirect()->back()->with($notify);
             }
         }
         else {
             if($form->max_number == $all_student || $form->max_number < $all_student){
-                $notify = array('message' => 'Fail to add '.$fname.', in '.$form->name.' the class is full already, please considered creating a sub class or extending this class size to fit in the student.','alert-type' => 'warning');
+                $notify = array('message' => 'Fail to add '.$fname.', in '.$form->name.' A, the class is full already, please considered creating a sub class or extending this class size to fit in the student.','alert-type' => 'warning');
                 session()->flash('notify', 'Fail to add '.$fname.', in '.$form->name.' the class is full already, please considered creating a sub class or extending this class size to fit in the student.','alert-type');
                 return redirect()->back()->with($notify);
             }
@@ -242,7 +174,6 @@ class AdminstudentController extends Controller
         $this->authorize('class_list', Permission::class);
         $years = Year::where('active', 1)->first();
         $students = Studentinfo::where('year_id', $years->id)->paginate(15);
-        $path = 'admin/student/list?_tSlIExxyy3wYsmScPxFP1EiqgXVDr4PJPeWrxxnDdP1EiqgXVDr4PJPeWrxxnDdP1EiqgXVDr4PJPeWrxxnDd';
         return view('admin.public.student.viewStudent', compact('students', 'years'));
     }
 
@@ -269,13 +200,91 @@ class AdminstudentController extends Controller
         session()->flash('message', 'Student for the academic year '.$years->name.' ');
         return view('admin.public.student.viewStudent', compact('students', 'years'));
     }
+
+    public function searchStudentLive(Request $req){
+        $value = $req['info'];
+        //$getFullName = Student::where('full_name', 'like', '%'.$value.'%')->first();
+        //$name = $getFullName->id;
+        $studentinfo = Studentinfo::select('*')->where('student_school_id', 'like', '%'.$value.'%')
+        ->join('students', 'students.id', 'studentinfos.student_id')
+        ->orWhere('students.full_name', '%'.$value.'%')
+        ->get();
+        return json_encode($studentinfo);
+    }
+
     public function getSize(Request $req){
         $id = (int)$req['class'];
-        $all_students = Studentinfo::where('form_id', $id)->where('subform_id', null)->count();
+        $year = $req['year'];
+        $all_students = Studentinfo::countAllclassStudent($year, $id, null);
         $class = Form::where('id', $id)->first();
         $size = $class->max_number;
         $diff = $size - $all_students;
         $arr = array('size' => $size, 'student' => $all_students, 'diff' => $diff);
-        return response()->json($arr);
+
+        $getAllSubclasses = Subclass::where('form_id', $id)->orderBy('type')->get();
+
+        $textColr = $this->getColor($diff, $size);
+
+        $table = "
+        <table>
+            <tr class='blue lighten-1 center w3-small'>
+                <th>Type</th>
+                <th>Max size</th>
+                <th>Student</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>".$size."</td>
+                <td>".$all_students."</td>
+                <td class='".$textColr[0]."' title='".$textColr[1]."'></td>
+            </tr>
+            ";
+            foreach($getAllSubclasses as $subc){
+                $substudent = Studentinfo::countAllclassStudent($year, $id, $subc->id);
+                $siz = $subc->max_number;
+                $dif = $siz - $substudent;
+                $colorText = $this->getColor($dif, $siz);
+                $table .= "
+                <tr>
+                    <td>".$subc->type."</td>
+                    <td>".$subc->max_number."</td>
+                    <td>".$substudent."</td>
+                    <td class='".$colorText[0]."' title='".$colorText[1]."'></td>
+                </tr>
+            ";
+            }
+        $table .= "</table>";
+
+        $subclassArray = [];
+        $initial_push = "<option value=''>".$class->name."-".$class->type."/".$class->background->name."/".$class->background->sector->name."</option>";
+        array_push($subclassArray, $initial_push);
+        foreach($getAllSubclasses as $subclass){
+            $value = "<option value='".$subclass->id."'>".$subclass->form->name."-".$subclass->type."/".$subclass->form->background->name."/".$subclass->form->background->sector->name."</option>";
+            array_push($subclassArray, $value);
+        }
+
+        return response()->json([$arr, $subclassArray, $table]);
+    }
+
+    public function getColor($diff, $size){
+        $color = "";
+        $message = "";
+        if($diff == 0){
+            $color = "red";
+            $message = "class Full";
+        }elseif($diff > 0 && $diff > $size/2){
+            $color = "green";
+            $message = "More space still available";
+        }elseif($diff > 0 && $diff <= $size/2 && $diff < $size){
+            $color = "orange";
+            $message = "class almost full";
+        }
+        else {
+            $color = "grey";
+            $message = "class Undefined";
+        }
+
+        return [$color, $message];
     }
 }

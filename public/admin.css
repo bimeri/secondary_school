@@ -13,6 +13,7 @@ body{
     background-color: #009688  !important;
     right: 0px;
     left: 0px;
+    bottom: 0px;
     margin:0px;
     padding: 0px;
   }
@@ -164,7 +165,7 @@ ul li a.actives {
   .danger {background-color: #f44336;} /* Red */
   .danger:hover {background: #da190b;}
 
-  .default {background-color: #e7e7e7; color: black;} /* Gray */
+  .default {background-color: #e7e7e7; color: #000000;} /* Gray */
   .default:hover {background: #ddd;}
 
 .topnav {
@@ -194,7 +195,7 @@ ul li a.actives {
     margin-top: -40px;
 }
 tr th {
-    color: white !important;
+    color: #ffffff !important;
     text-align: center !important;
 }
 tr td{
@@ -260,7 +261,7 @@ tr td{
     top: 5px;
     width: 5px;
     height: 10px;
-    border: solid white;
+    border: solid #ffffff;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -309,20 +310,20 @@ tr td{
     text-transform: uppercase;;
 }
 .my-orange{
-    background-color: rgb(238, 198, 123) !important;
-    color: rgb(206, 136, 7) !important;
-    border: .5px solid orange;
+    background-color: #eec67b !important;
+    color: #ce8807 !important;
+    border: .5px solid #ffa500;
 }
 .my-red{
-    background-color: rgb(211, 146, 146) !important;
-    color: rgb(240, 69, 69) !important;
-    border: .5px solid rgb(212, 58, 58);
+    background-color: #d39292 !important;
+    color: #f04545 !important;
+    border: .5px solid #d43a3a;
 }
 .scrollToTop{
     position: fixed; z-index:1000; bottom:0; right:0;
     margin-bottom: 20px;
     margin-right: 20px;
-    box-shadow: 0px 0px 3px 3px white !important;
+    box-shadow: 0px 0px 3px 3px #ffffff !important;
 }
 
 
@@ -421,7 +422,7 @@ tr td{
 	position: absolute;
 	border-width: 7px;
 	border-style: solid;
-	border-color: rgba(0, 0, 0, 0);
+	border-color: #00000000;
 	opacity: 0;
 	transition: all .2s ease-in-out .25s;
 	visibility: hidden;
@@ -473,27 +474,6 @@ tr td{
 .tooltip-right:hover:before {
 	right: -11%;
 }
-
-/* Section with links */
-
-/* .links {
-	text-align: center;
-	margin-top: 40px;
-}
-.links .link {
-	font-weight: 700;
-	font-size: 1.3em;
-	color: #fff;
-	display: inline-block;
-	margin: auto 5px;
-}
-.links .link:hover {
-	background: #1FDA9A;
-}
-.links .link:active {
-	background: #fff;
-	color: #1FDA9A;
-} */
 
 .alert {
     padding: 15px;

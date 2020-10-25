@@ -1,10 +1,22 @@
 @extends('admin.layout')
 @section('title') enroll student @endsection
+@section('style')
+<style>
+    td, th, tr{
+        border-collapse: collapse;
+        border: 1px solid black !important;
+        font-size: 11px !important
+    }
+    td{
+        font-size: 3px;
+    }
+</style>
+@endsection
 @section('content')
 <p class="w3-center">@lang('messages.add_student')</p>
 <div class="row">
     <div class="col s11 m10 w3-border-t offset-m1 radius white w3-margin-left">
-        <form action="{{ route('amin.submit.student.info') }}" method="post" enctype="multipart/form-data" id="form">
+        <form action="{{ route('admin.submit.student.info') }}" method="post" enctype="multipart/form-data" id="form">
             {{ csrf_field() }}
             <div class="row">
                 @if(Session::has('notify'))
@@ -17,9 +29,6 @@
                     <select name="year" id="year" class="validate">
                         <option value="" disabled>select academic year</option>
                         <option value="{{ $current_year->id }}" selected>{{ $current_year->name }}</option>
-                        @foreach (App\Year::where('active', '!=', 1)->get() as $year)
-                            <option value="{{ $year->id }}">{{ $year->name }}</option>
-                        @endforeach
                     </select>
                 </div>
                  <div class="input-field col s12 m3">
@@ -53,7 +62,7 @@
                     <label>Select Gender</label>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12 m2  offset-m3">
+                    <div class="input-field col s12 m2">
                         <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" id="dates" placeholder="dd/mm/yy">
                         <label for="dates">Enter Date of birth</label>
                     </div>
@@ -70,9 +79,8 @@
                         <input type="text" name="school_id" class="validate" value="{{ $matricule }}" id="school_id" readonly>
                         <label for="school_id">Student School Id</label>
                     </div>
-                </div>
-                <div class="row">
                     <div class="input-field col s12 m4">
+                        <input type="hidden" name="year" value="{{ $current_year->id }}">
                         <select name="class" id="select">
                             <option value="" disabled selected> Class / Background / Sector</option>
                           @foreach (App\Form::all() as $form)
@@ -90,13 +98,52 @@
                 </div>
             </div>
             <center>
-                <div class="w3-padding" style="margin-top: -10px !important" style="width: 50%;">
+                <div class="w3-padding" style="margin-top: -50px !important" style="width: 50%;">
                     <button class="btn teal waves-effect waves-light w3-medium" type="submit" style="width: 40%">Register Student</button>
                 </div>
             </center>
         </form>
     </div>
   </div>
+  <div class="row container">
+      <h5 class="center green-text">Newly Admitted Students</h5>
+    <div class="col s12 m10 offset-m1" style="overflow-x:auto !important;">
+        <table id="myTable" class="w3-table w3-striped w3-border-t container" style="font-size: 13px !important;">
+            <tr class="teal">
+                <th>S/N</th>
+                <th>profile</th>
+                <th>Full Name</th>
+                <th>Class</th>
+                <th>School ID Number</th>
+                <th>gender</th>
+                <th>date of birth</th>
+            </tr>
+            @foreach($students as $key => $student)
+            <tr>
+                <td>{{ $key+1 }}</td>
+                <td>
+                    <?php $enroll = explode('/', trim($student->year->name)); ?>
+                    <img src="{{ URL::asset('image/students/'.$enroll[1].'/'.$student->profile.'') }}" width="50" height="50" class="w3-circle w3-border-t">
+                </td>
+                <td> {{ $student->student->full_name }}</td>
+                <td>
+                    <b>{{ $student->form->name }} {{ $student->subform_id ? $student->subform->type:'A' }} </b> /{{ $student->form->background->name }}/{{ $student->form->background->sector->name }}
+                </td>
+                <td>{{ $student->student_school_id }}</td>
+                <td>
+                    {{ $student->gender }}
+                </td>
+                <td>
+                    {{ $student->date_of_birth }}
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+    <div class="right w3-padding">
+        <button class="btn teal waves-effect waves-light">show more</button>
+    </div>
+</div>
   <script>
       $(document).ready(function(){
           createCookie("class", document.getElementById('select').value);
@@ -106,6 +153,7 @@
      }
     $('#select').on('change', function(){
         $("#subclass").empty();
+        $("#type").empty();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -122,37 +170,19 @@
                console.log('the response is: ',res);
             if(res){
                 $("#type").empty();
-                // console.log('result', res);
-                // console.log('data', document.getElementById('select').value);
-                // console.log('the size is', res.size);
-                // console.log('the student is', res.student);
-                if(res.size == res.student || res.student > res.size){
+                 console.log('result', res);
                     document.getElementById('subclass').style.display = 'block';
-                    $("#type").append(" <div class='w3-border w3-padding w3-margin-right w3-small' style='background-color:rgb(245, 200, 200)'>"+
-                    "<b class='red-text'>"+
-                    "The Class is full already, please try creating a sub class to continue registring students. Or You might increase the class Size</b><hr> "+
-                    " Class Size: <b class='red-text w3-center'>" + res.size +" Maximum</b><br> Number of Student in the class: <b class='red-text'>"+ res.student +"</div> ");
-
-                    $('#subclass').append("<?php $subs = App\Subclass::all(); ?>"+
-                    "<div class='form-control'><label for='sub'>Select a subclass instead</label>"+
-                    "<select class='browser-default' name='subclass' id='sub'>"+
+                    $("#type").append("<div class='w3-border w3-padding w3-margin-right green black-text lighten-5'>"+res[2] +"</br> </div> ");
+                    $('#subclass').append("<div class='form-control'><label for='sub'>Select the class Type</label>"+
+                    "<select class='browser-default' name='subclass' id='sub' required>"+
                     "<option value=''>select sub class</option>"+
-                    "@foreach($subs as $sub)<option value='{{ $sub->id }}'>{{ $sub->form->name }}-{{ $sub->type }} /{{ $sub->form->background->name }}/{{ $sub->form->background->sector->name }}</option>@endforeach"+
+                    " "+ res[1]+" "+
                     "</div></select> ");
-                }
-                if(res.size > res.student){
-                    $("#subclass").empty();
-                    $("#type").append("<div class='w3-border w3-padding w3-margin-right' style='background-color:rgb(194, 241, 241)'><b class='green-text'>The Class is Not yet Full, it requires <b>"+res.diff+"</b> more student(s)</b><br> "+
-                    " Class Size: <b class='green-text'>" + res.size +"</b><br> Number of Student in the class: <b class='green-text'>"+ res.student +"</br> </div> ");
-
-                }
-
             }else{
                $("#type").empty();
             }
            },
            error: function(error){
-               console.log('an error: ', error);
            }
         });
     }else{

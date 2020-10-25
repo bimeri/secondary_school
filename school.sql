@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2020 at 03:11 AM
+-- Generation Time: Oct 21, 2020 at 02:11 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -197,7 +197,8 @@ INSERT INTO `expenses` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (3, 'Part-time Teacher', '2020-09-17 21:41:37', '2020-09-17 21:41:37'),
 (4, 'Handicap', '2020-09-19 09:08:21', '2020-09-19 09:08:21'),
 (5, 'IDP', '2020-09-27 12:52:29', '2020-09-27 12:52:29'),
-(6, 'Library', '2020-09-27 12:52:46', '2020-09-27 12:52:46');
+(6, 'Library', '2020-09-27 12:52:46', '2020-09-27 12:52:46'),
+(7, 'Sport Activities', '2020-10-03 17:33:21', '2020-10-03 17:33:21');
 
 -- --------------------------------------------------------
 
@@ -225,7 +226,8 @@ INSERT INTO `expensetypes` (`id`, `year_id`, `term_id`, `expense_id`, `amount`, 
 (2, 3, 2, 2, '1500.0', 'money spend on scholarship this terms', '2020-07-30 10:20:48', '2020-07-30 10:20:48'),
 (3, 1, 1, 1, '3090.0', 'unknown reason', '2020-09-17 21:42:35', '2020-09-17 21:42:35'),
 (4, 1, 1, 3, '1000.0', 'new teachers came entered', '2020-09-19 08:33:41', '2020-09-19 08:33:41'),
-(5, 1, 1, 4, '2000.0', 'nothing much', '2020-09-19 10:39:46', '2020-09-19 10:39:46');
+(5, 1, 1, 4, '2000.0', 'nothing much', '2020-09-19 10:39:46', '2020-09-19 10:39:46'),
+(6, 1, 1, 7, '10000.0', 'spend money of sport', '2020-10-03 17:34:28', '2020-10-03 17:34:28');
 
 -- --------------------------------------------------------
 
@@ -265,7 +267,10 @@ CREATE TABLE `feecontrols` (
 
 INSERT INTO `feecontrols` (`id`, `student_id`, `student_school_id`, `form_id`, `year_id`, `clearance_date`, `created_at`, `updated_at`) VALUES
 (6, 6, 'BG0A03', 3, 1, 'Mon, 10 Aug 2020 15:25pm', '2020-08-10 14:25:25', '2020-08-10 14:25:25'),
-(7, 5, 'BG0A02', 1, 1, 'Sat, 19 Sep 2020 12:55pm', '2020-09-19 11:55:57', '2020-09-19 11:55:57');
+(7, 5, 'BG0A02', 1, 1, 'Sat, 19 Sep 2020 12:55pm', '2020-09-19 11:55:57', '2020-09-19 11:55:57'),
+(8, 7, 'BG0A04', 3, 1, 'Tue, 29 Sep 2020 21:41pm', '2020-09-29 20:41:55', '2020-09-29 20:41:55'),
+(9, 38, 'BG0A31', 1, 1, 'Thu, 01 Oct 2020 16:54pm', '2020-10-01 15:54:38', '2020-10-01 15:54:38'),
+(10, 41, 'BG0A33', 6, 1, 'Sat, 03 Oct 2020 18:18pm', '2020-10-03 17:18:22', '2020-10-03 17:18:22');
 
 -- --------------------------------------------------------
 
@@ -306,7 +311,21 @@ INSERT INTO `fees` (`id`, `year_id`, `feetype_id`, `student_id`, `student_school
 (26, 1, 3, 7, 'BG0A04', 3, 1000, 1000, 'Cash Payment', 1000, 0, 'Sep 28, 2020 - 11:59pm', '2020-09-28 22:59:14', '2020-09-28 22:59:14'),
 (27, 1, 4, 7, 'BG0A04', 3, NULL, 700, 'MTN Mobile Money', 50, 0, 'Sep 29, 2020 - 01:07am', '2020-09-29 00:07:18', '2020-09-29 00:07:18'),
 (28, 1, 4, 7, 'BG0A04', 3, NULL, 48, 'Bank Transaction', 2, 0, 'Sep 29, 2020 - 01:07am', '2020-09-29 00:07:41', '2020-09-29 00:07:41'),
-(29, 1, 3, 7, 'BG0A04', 3, NULL, 500, 'Orange Money', 500, 0, 'Sep 29, 2020 - 01:08am', '2020-09-29 00:08:23', '2020-09-29 00:08:23');
+(29, 1, 3, 7, 'BG0A04', 3, NULL, 500, 'Orange Money', 500, 0, 'Sep 29, 2020 - 01:08am', '2020-09-29 00:08:23', '2020-09-29 00:08:23'),
+(30, 1, 2, 38, 'BG0A31', 1, NULL, 300, 'Cash Payment', 200, 0, 'Sep 30, 2020 - 04:29pm', '2020-09-30 15:29:22', '2020-09-30 15:29:22'),
+(31, 1, 1, 38, 'BG0A31', 1, NULL, 1000, 'Orange Money', 0, 1, 'Sep 30, 2020 - 04:43pm', '2020-09-30 15:43:13', '2020-09-30 15:43:13'),
+(32, 1, 3, 37, 'BG0A30', 3, NULL, 1000, NULL, 1000, 0, 'Oct 01, 2020 - 04:17pm', '2020-10-01 15:17:12', '2020-10-01 15:17:12'),
+(33, 1, 2, 38, 'BG0A31', 1, NULL, 100, NULL, 0, 1, 'Oct 01, 2020 - 04:34pm', '2020-10-01 15:34:21', '2020-10-01 15:34:21'),
+(34, 1, 2, 38, 'BG0A31', 1, NULL, 100, NULL, 0, 1, 'Oct 01, 2020 - 04:36pm', '2020-10-01 15:36:17', '2020-10-01 15:36:17'),
+(38, 1, 1, 40, 'BG0A32', 1, NULL, 700, 'Cash Payment', 300, 0, 'Oct 02, 2020 - 12:08am', '2020-10-01 23:08:23', '2020-10-01 23:08:23'),
+(39, 1, 2, 40, 'BG0A32', 1, NULL, 250, 'MTN Mobile Money', 250, 0, 'Oct 02, 2020 - 12:08am', '2020-10-01 23:08:41', '2020-10-01 23:08:41'),
+(40, 1, 1, 40, 'BG0A32', 1, NULL, 200, NULL, 100, 0, 'Oct 02, 2020 - 12:09am', '2020-10-01 23:09:08', '2020-10-01 23:09:08'),
+(41, 1, 2, 40, 'BG0A32', 1, NULL, 200, 'Orange Money', 50, 0, 'Oct 02, 2020 - 12:12am', '2020-10-01 23:12:38', '2020-10-01 23:12:38'),
+(42, 1, 1, 40, 'BG0A32', 1, NULL, 100, NULL, 0, 1, 'Oct 02, 2020 - 12:12am', '2020-10-01 23:12:49', '2020-10-01 23:12:49'),
+(43, 1, 2, 40, 'BG0A32', 1, NULL, 50, 'Cash Payment', 0, 1, 'Oct 02, 2020 - 12:13am', '2020-10-01 23:13:55', '2020-10-01 23:13:55'),
+(44, 1, 12, 41, 'BG0A33', 6, NULL, 5000, 'mtn money', 5000, 0, 'Oct 03, 2020 - 06:16pm', '2020-10-03 17:16:14', '2020-10-03 17:16:14'),
+(45, 1, 12, 41, 'BG0A33', 6, NULL, 5000, 'Cash Payment', 0, 1, 'Oct 03, 2020 - 06:17pm', '2020-10-03 17:17:28', '2020-10-03 17:17:28'),
+(46, 1, 11, 41, 'BG0A33', 6, NULL, 65000, 'cash payment', 0, 1, 'Oct 03, 2020 - 06:18pm', '2020-10-03 17:18:00', '2020-10-03 17:18:00');
 
 -- --------------------------------------------------------
 
@@ -335,7 +354,9 @@ INSERT INTO `feetypes` (`id`, `year_id`, `form_id`, `fee_type`, `amount`, `creat
 (4, 1, 3, 'Computer', 750, '2020-07-30 17:36:40', '2020-07-30 17:36:40'),
 (7, 4, 3, 'Tuition test', 2000, '2020-07-28 07:44:13', '2020-07-28 07:44:13'),
 (8, 2, 3, 'Tuition', 600, '2020-08-09 03:10:34', '2020-08-09 03:10:34'),
-(9, 2, 3, 'Practical', 200, '2020-08-09 03:11:09', '2020-08-09 03:11:09');
+(9, 2, 3, 'Practical', 200, '2020-08-09 03:11:09', '2020-08-09 03:11:09'),
+(11, 1, 6, 'Tuition', 65000, '2020-10-03 17:08:43', '2020-10-03 17:08:43'),
+(12, 1, 6, 'Medical', 10000, '2020-10-03 17:10:34', '2020-10-03 17:10:34');
 
 -- --------------------------------------------------------
 
@@ -481,8 +502,9 @@ CREATE TABLE `forms` (
 
 INSERT INTO `forms` (`id`, `name`, `code`, `type`, `max_number`, `background_id`, `created_at`, `updated_at`) VALUES
 (1, 'Form One', 'FM1A01', 'A', 7, 1, '2020-07-06 21:23:58', '2020-07-06 21:23:58'),
-(3, 'Form Two', 'FM2A01', 'A', 7, 1, '2020-07-07 01:39:41', '2020-07-07 01:39:41'),
-(4, 'Form Three', 'FM301', 'A', 10, 1, '2020-07-16 22:12:20', '2020-07-16 22:12:20');
+(3, 'Form Two', 'FM2A01', 'A', 8, 1, '2020-07-07 01:39:41', '2020-07-07 01:39:41'),
+(4, 'Form Three', 'FM301', 'A', 10, 1, '2020-07-16 22:12:20', '2020-07-16 22:12:20'),
+(6, 'Form Four', 'F4', 'A', 50, 3, '2020-10-03 17:03:16', '2020-10-03 17:03:16');
 
 -- --------------------------------------------------------
 
@@ -858,7 +880,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `year_id`, `school_name`, `school_id`, `motto`, `logo`, `test_session`, `exam_session`, `start_time`, `break_time`, `stop_time`, `hours_per_period`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Government Bilingual High School Kumba', 'BG', 'Knowledge with Wisdom', 'logo.png', 0, 0, '07:30 AM', '11:30 AM', '04:30 PM', '2 hrs', '2020-06-24 20:28:34', '2020-06-24 20:28:34');
+(1, 1, 'Bilingual Grammar School Molyko', 'BG', 'Knowledge with Wisdom', 'logo.png', 0, 0, '07:30 AM', '11:30 AM', '04:30 PM', '2 hrs', '2020-06-24 20:28:34', '2020-06-24 20:28:34');
 
 -- --------------------------------------------------------
 
@@ -920,7 +942,7 @@ INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, 
 (6, 10, 'BG0A07', 1, 1, NULL, '678723450', 'enow@gmail.com', 'long street', 'BG0A07.jpg', '2000-02-23', 'Female', '2020-07-30 14:27:11', '2020-07-30 14:27:11'),
 (7, 13, 'BG0A08', 1, 1, NULL, '656787890', 'ddd@example.com', 'mile 4', 'default.png', '2020-08-01', 'Female', '2020-08-07 18:44:57', '2020-08-07 18:44:57'),
 (8, 14, 'BG0A09', 1, 1, NULL, '123123123', 'example@gmail.com', 'muyuka', 'BG0A09.jpg', '2020-07-02', 'Male', '2020-08-07 18:49:52', '2020-08-07 18:49:52'),
-(9, 15, 'BG0A10', 1, 1, NULL, '123456789', NULL, 'molyko buea', 'BG0A10.jpg', '2020-08-06', 'Male', '2020-08-10 03:34:16', '2020-08-10 03:34:16'),
+(9, 15, 'BG0A10', 1, 3, 4, '123456789', NULL, 'molyko buea', 'BG0A10.jpg', '2020-08-06', 'Male', '2020-08-10 03:34:16', '2020-08-10 03:34:16'),
 (10, 16, 'BG0A11', 1, 1, NULL, '123234565', NULL, NULL, 'BG0A11.jpg', '2020-08-06', 'Female', '2020-08-10 03:35:57', '2020-08-10 03:35:57'),
 (11, 17, 'BG0A12', 1, 1, NULL, '678956709', 'sara@gmail.com', 'camsick', 'BG0A12.jpg', '2020-08-07', 'Female', '2020-08-10 03:49:44', '2020-08-10 03:49:44'),
 (16, 23, 'BG0A16', 1, 3, NULL, '123234356', 'ly@gmail.com', 'myea', 'BG0A16.jpg', '2020-08-12', 'Male', '2020-08-16 21:31:30', '2020-08-16 21:31:30'),
@@ -937,7 +959,10 @@ INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, 
 (27, 34, 'BG0A27', 1, 3, 4, NULL, 'exs@email.com', 'muyuka', 'default.png', '2020-08-21', 'Male', '2020-08-30 13:12:12', '2020-08-30 13:12:12'),
 (28, 35, 'BG0A28', 1, 3, 4, NULL, NULL, NULL, 'BG0A28.jpg', '2020-08-03', 'Female', '2020-08-30 13:13:26', '2020-08-30 13:13:26'),
 (29, 36, 'BG0A29', 1, 3, 4, NULL, NULL, NULL, 'BG0A29.jpg', '2020-08-09', 'Female', '2020-08-30 13:14:44', '2020-08-30 13:14:44'),
-(30, 37, 'BG0A30', 1, 3, 4, NULL, NULL, NULL, 'default.png', '2020-07-09', 'Male', '2020-08-30 13:15:56', '2020-08-30 13:15:56');
+(30, 37, 'BG0A30', 1, 3, 4, NULL, NULL, NULL, 'default.png', '2020-07-09', 'Male', '2020-08-30 13:15:56', '2020-08-30 13:15:56'),
+(31, 38, 'BG0A31', 1, 1, 8, NULL, NULL, NULL, 'default.png', NULL, 'Male', '2020-09-30 15:14:46', '2020-09-30 15:14:46'),
+(33, 40, 'BG0A32', 1, 1, 8, '12345665', 'g@jom.com', 'yaounde', 'BG0A32.jpg', '2020-10-20', 'Female', '2020-10-01 22:35:07', '2020-10-01 22:35:07'),
+(34, 41, 'BG0A33', 1, 6, NULL, '12343476', 'ccc@email.com', 'molyko', 'BG0A33.jpg', '2020-12-10', 'Female', '2020-10-03 17:07:37', '2020-10-03 17:07:37');
 
 -- --------------------------------------------------------
 
@@ -1035,7 +1060,10 @@ INSERT INTO `students` (`id`, `full_name`, `school_id`, `email`, `password`, `da
 (34, 'Nghaha magaza', 'BG0A27', NULL, '$2y$10$.beo9VNwVvQuDfBco.K89uy1g16IZERuhbV2owV4xy0lo.aL0Zoo2', 'Sun, 30 Aug 2020 14:12pm', NULL, '2020-08-30 13:12:12', '2020-08-30 13:12:12'),
 (35, 'silvia stephany', 'BG0A28', NULL, '$2y$10$.yl66AiEb1KpOfko26.dJu9WYlkKk1kE/7fOxyiFSCh62SsKyMoQu', 'Sun, 30 Aug 2020 14:13pm', NULL, '2020-08-30 13:13:26', '2020-08-30 13:13:26'),
 (36, 'Vanessa Yaka', 'BG0A29', 'josephina@gmail.com', '$2y$10$md4R0op9Etz7qpg35MiIRuBDsesXoXX04JymidutBsUUzC.r5wj1W', 'Sun, 30 Aug 2020 14:14pm', NULL, '2020-08-30 13:14:44', '2020-08-30 13:14:44'),
-(37, 'Lowrence Peter', 'BG0A30', NULL, '$2y$10$01uJQ1JBdEyUHmJqBuhnde3r8bp1vi.SEXWhdsrI.nMTZaa0UeEqu', 'Sun, 30 Aug 2020 14:15pm', NULL, '2020-08-30 13:15:56', '2020-08-30 13:15:56');
+(37, 'Lowrence Peter', 'BG0A30', NULL, '$2y$10$01uJQ1JBdEyUHmJqBuhnde3r8bp1vi.SEXWhdsrI.nMTZaa0UeEqu', 'Sun, 30 Aug 2020 14:15pm', NULL, '2020-08-30 13:15:56', '2020-08-30 13:15:56'),
+(38, 'example student', 'BG0A31', NULL, '$2y$10$32qDPDggoSggIpVkUkba3.MqZsNkJLOaTOSOQip7ppIZaPoJztqQS', 'Wed, 30 Sep 2020 16:14pm', NULL, '2020-09-30 15:14:46', '2020-09-30 15:14:46'),
+(40, 'Example two', 'BG0A32', 'examm@email.net', '$2y$10$6awg4zdfTtL1z0llrF4OleR0An4UmsHfekQIQ79c5.rHOfVVv9Kni', 'Thu, 01 Oct 2020 23:35pm', NULL, '2020-10-01 22:35:07', '2020-10-01 22:35:07'),
+(41, 'Mataku', 'BG0A33', 'mat@gmail.com', '$2y$10$d7wfqI2Z5/U24RnLWbm6v.CCtQ9z5XCuyOXDJws1MG6H.wM9sMTz2', 'Sat, 03 Oct 2020 18:07pm', NULL, '2020-10-03 17:07:37', '2020-10-03 17:07:37');
 
 -- --------------------------------------------------------
 
@@ -1122,7 +1150,9 @@ INSERT INTO `subject_teacher` (`id`, `subject_id`, `teacher_id`, `created_at`, `
 (10, 5, 3, NULL, NULL),
 (11, 1, 1, NULL, NULL),
 (12, 2, 1, NULL, NULL),
-(13, 15, 1, NULL, NULL);
+(13, 15, 1, NULL, NULL),
+(14, 6, 6, NULL, NULL),
+(15, 7, 6, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1153,7 +1183,8 @@ INSERT INTO `teachers` (`id`, `full_name`, `user_name`, `profile`, `date_of_birt
 (2, 'Lucien Magaza', 'lucien', 'lucien.jpg', '5555-02-05', 'Male', 'lucien@gmail.com', '$2y$10$ET2HJ4wUtBsK0YQXY2ty3uuMSlB1dHGqdjIujwDeVuydq7nIkMEq2', NULL, '2020-07-16 22:53:07', '2020-07-16 22:53:07'),
 (3, 'Claris Busi', 'Busi', 'Busi.jpg', '2002-02-23', 'Female', 'busi@gmail.com', '$2y$10$aNRSB8RgIZNXph1HN9HMtuOUGwfKszNsKUlAU/5aV6CuDUrsbG6rG', NULL, '2020-07-17 01:04:40', '2020-07-17 01:04:40'),
 (4, 'Muyal Magaza', 'Muyal', 'Muyal.jpg', '2003-12-13', 'Male', 'muyal@gmail.com', '$2y$10$G73FUJPmJ40zr0AaUwm4OuXhPh5tuDsx9SDtC6mq2YRrq2RB/wR/i', NULL, '2020-07-17 01:06:18', '2020-07-17 01:06:18'),
-(5, 'Tawa Peggy', 'peggy', 'peggy.jpg', '2000-02-22', 'Female', 'tawa@peggy.com', '$2y$10$WgBow6KdY4Ye/DEplrJF4uYelGaCs7iFSS1ddy3kUNn2yTOC.b1Xu', NULL, '2020-08-01 18:16:11', '2020-08-01 18:16:11');
+(5, 'Tawa Peggy', 'peggy', 'peggy.jpg', '2000-02-22', 'Female', 'tawa@peggy.com', '$2y$10$WgBow6KdY4Ye/DEplrJF4uYelGaCs7iFSS1ddy3kUNn2yTOC.b1Xu', NULL, '2020-08-01 18:16:11', '2020-08-01 18:16:11'),
+(6, 'noelino', 'noel', 'noel.jpg', '2020-10-01', 'Male', 'noel@email.com', '$2y$10$y0pFtxYbBylK1QHZ3A658.GHsbffBpRgCW2zIel7ZDZoZgmQ67/z6', NULL, '2020-10-03 17:42:54', '2020-10-03 17:42:54');
 
 -- --------------------------------------------------------
 
@@ -1592,13 +1623,13 @@ ALTER TABLE `disciplines`
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `expensetypes`
 --
 ALTER TABLE `expensetypes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1610,19 +1641,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `feecontrols`
 --
 ALTER TABLE `feecontrols`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `fees`
 --
 ALTER TABLE `fees`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `feetypes`
 --
 ALTER TABLE `feetypes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `firsttermresults`
@@ -1634,7 +1665,7 @@ ALTER TABLE `firsttermresults`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `generateresults`
@@ -1712,7 +1743,7 @@ ALTER TABLE `studentdisciplines`
 -- AUTO_INCREMENT for table `studentinfos`
 --
 ALTER TABLE `studentinfos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `studentresults`
@@ -1724,7 +1755,7 @@ ALTER TABLE `studentresults`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `subclasses`
@@ -1742,13 +1773,13 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `subject_teacher`
 --
 ALTER TABLE `subject_teacher`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `terms`

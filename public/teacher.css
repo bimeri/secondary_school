@@ -12,6 +12,7 @@ body{
     color: #fff;
     background-color: #669900  !important;
     right: 0px;
+    bottom: 0px;
     left: 0px;
     margin:0px;
     padding: 0px;
@@ -25,15 +26,16 @@ body{
 .t-teal-text{
     color: #669900 !important;
 }
+
 .coc{
     border-top: .5px solid #009688;
 }
 .activ{
-    background-color: rgb(173, 231, 217) !important;
+    background-color: #ade7d9 !important;
     font-weight: bold;
 }
 .act{
-    color: teal;
+    color: #008080;
     font-size: 12px;
 }
 #span-in{
@@ -49,6 +51,13 @@ body{
 .term{
     text-transform: uppercase;
 }
+.user-email{
+    color: #669900;
+    background-color: #d2e9a5;
+    padding: 5px;
+    margin: 5px;
+    width: 100% !important;
+}
 .dropdownc{
     display: none;
     right: 0px;
@@ -59,7 +68,7 @@ body{
     margin-top: 50px;
     float: right;
     text-align: center;
-    box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 16px 16px #00000033;
   }
   @media screen and (min-width: 60%) and (max-width: 60%) {
     .dropdownc{ width: 60% !important; }  /* show it on large screen */
@@ -93,13 +102,14 @@ body{
   .containeradmin {
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 30px;
+    margin-top: -15px;
   }
 
   .image {
     display: block;
-    width: 100%;
-    height:150px;
+    width: 60px;
+    height: 50px;
   }
 
   .overlay {
@@ -110,17 +120,18 @@ body{
     background-color: #669900;
     overflow: hidden;
     width: 0;
-    height: 100%;
+    height: 30px;
     transition: .5s ease;
   }
 
   .containeradmin:hover .overlay {
     width: 100%;
-    height:170px;
+    height:47px;
+    margin-bottom: -20px;
   }
 
   .textadmin {
-    color: white;
+    color: #ffffff;
     font-size: 20px;
     position: absolute;
     top: 50%;
@@ -134,7 +145,7 @@ body{
     width: 5px;
   }
   ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
+    box-shadow: inset 0 0 5px #808080;
     border-radius: 10px;
   }
 

@@ -207,7 +207,7 @@ th, td{
         {{ $student->student->full_name }} {{ $student->student_school_id }}/{{ $studentClass->name }} {{ $student->subform_id ? $student->subform->type:'A' }}</b>
 </p> <p><br><br></p>
 
-<table class="w3-table w3-striped w3-border-t" style="font-size: 16px !important;">
+<table class="w3-table w3-striped" style="font-size: 16px !important;">
     <tr class="tr">
         <td colspan="9">
             Total Amount Paid for Fees for the academic year: <b>{{ $year }}: {{ $total_amount }} XCFA</b><br>

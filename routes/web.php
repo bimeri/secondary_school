@@ -113,12 +113,17 @@ Route::post('admin/create', 'ClassController@submitClass')->name('class.form.sub
 Route::post('admin/create/subclass', 'ClassController@subClassSubmit')->name('subclass.form.submit');
 Route::post('admin/edit/subclass', 'ClassController@EditsubClassSubmit')->name('admin.edit.subclass');
 Route::post('class/type', 'ClassController@getType')->name('class.getType');
+Route::get('student/class_list', 'ClassController@showClassLiss')->name('school.class_list');
+Route::get('student/class/change', 'ClassController@changeClass')->name('change.student.class');
+Route::post('student/class/change', 'ClassController@changeClassFunction')->name('change.student_class');
+Route::post('student/ajax/getdetail', 'ClassController@getStudentclassDetails')->name('student.getDetail');
 //manage student
 Route::get('admin/student/create', 'AdminstudentController@create')->name('amin.create.student');
 Route::get('admin/student/list', 'AdminstudentController@viewStudent')->name('amdin.view.student');
-Route::post('admin/student/create', 'AdminstudentController@submitInfo')->name('amin.submit.student.info');
+Route::post('admin/student/create', 'AdminstudentController@submitInfo')->name('admin.submit.student.info');
 Route::get('admin/student', 'AdminstudentController@getStudent')->name('student.get');
 Route::post('admin/class_size', 'AdminstudentController@getSize')->name('class.getsize');
+Route::post('student/jax/post', 'AdminstudentController@searchStudentLive')->name('live.search.student');
 
 // manage subjects
 Route::get('admin/subject', 'SubjectController@index')->name('admin.subject');

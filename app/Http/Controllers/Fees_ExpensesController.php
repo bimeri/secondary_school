@@ -116,6 +116,7 @@ class Fees_ExpensesController extends Controller
     public function reportFee(Request $req){
         $this->authorize('report_fees', Permission::class);
         $current_year = Year::where('active', 1)->first();
+        $data['years'] = Year::getAllYear();
         $year_id = $current_year->id;
         $data['years'] = Year::all();
         $data['year_name'] = $current_year->name;
@@ -145,12 +146,6 @@ class Fees_ExpensesController extends Controller
         $year_id = $req['year_id'];
         $form_id = $req['form_id'];
         $studentInfo = Studentinfo::where('student_school_id', $student_id)->first();
-        if($studentInfo->subform_id == null){
-            $subclass = null;
-        } else {
-            $sub = Subclass::where('form_id', $studentInfo->form_id)->first();
-            $subclass = $sub->type;
-        };
         $student = Student::where('school_id', $student_id)->first();
         $data['total_fees'] = Feetype::getAllFeesPerClassAndYear($year_id, $form_id);
         $data['total_paid'] = Fee::getTotalFeePaid($year_id, $student_id);
@@ -188,7 +183,6 @@ class Fees_ExpensesController extends Controller
         $fees_type->form_id = $class;
         $fees_type->fee_type = $feeType;
         $fees_type->amount = $amount;
-
         try{
             $notify = array('message' => 'Fee type has been saved with Success', 'alert-type' => 'success');
             $fees_type->save();
@@ -198,7 +192,6 @@ class Fees_ExpensesController extends Controller
             $notify = array('message' => 'fail to save data, error occured at the database level', 'alert-type' => 'error');
             return redirect()->back()->with($notify);
         }
-
     }
 
     public function createexpenseSubmit(Request $req){
@@ -235,7 +228,6 @@ class Fees_ExpensesController extends Controller
 
     public function updateType(Request $req){
         $this->authorize('create_income', Permission::class);
-
         $this->validate($req, [
             'year' => 'required',
             'fee_type' => 'required',
@@ -318,7 +310,7 @@ class Fees_ExpensesController extends Controller
         $studentschool_id = $req['student_schoold_id'];
         $year = $req['year'];
         $formId = $req['form_id'];
-        $amount = $req['amount'];
+        (float)$amount = $req['amount'];
         $scholarship = $req['scholarship'];
         $method = $req['method'];
         $feetype = $req['feetype'];
@@ -326,43 +318,21 @@ class Fees_ExpensesController extends Controller
         $getFeeTypeAmount = Feetype::getFeeTypeById($feetype);
         $feetypeName = Feetype::getFeeTypeName($feetype);
         $yearNme = Year::getYearName($year);
-        $sumStudentPaidFeeType = Fee::getStudentFeeTypeSum($year,$formId,$feetype, $student_id);
+        (float)$sumStudentPaidFeeType = Fee::getStudentFeeTypeSum($year,$formId,$feetype, $student_id);
         $studentName = Studentinfo::getStudentByName($student_id);
 
-        if($getFeeTypeAmount->amount == $sumStudentPaidFeeType){
-            //$notif = array("message" => "You have completed ".$feetypeName." for the academic Year:".$yearNme."", "alert-type" => "info");
+        if((float)$getFeeTypeAmount->amount == $sumStudentPaidFeeType){
             session()->flash('notify', "<b>".$studentName."</b> ".trans("messages.has_completed")." <b>".$feetypeName." Fees</b> for the academic Year:<b>".$yearNme."</b>. You can't Exceed Payment");
             return redirect()->back();
         }
-
         if(($sumStudentPaidFeeType + $amount) > $getFeeTypeAmount->amount ){
-           // $notif = array("message" => "You have already paid ".$sumStudentPaidFeeType."XCFA, making a total of: ".($sumStudentPaidFeeType+ $amount)."CFA which is Greater than the Current Fee Amount: ".$getFeeTypeAmount->amount." CFA. please you just need to add ".($getFeeTypeAmount->amount - $sumStudentPaidFeeType)." CFA", "alert-type" => "warning");
             session()->flash('notify', "You have already paid ".$sumStudentPaidFeeType."XCFA, adding <b>".$amount." CFA</b> will make a total of: ".($sumStudentPaidFeeType+ $amount)."CFA which is Greater than the Current Fee Amount: ".$getFeeTypeAmount->amount." CFA. please you just need to add ".($getFeeTypeAmount->amount - $sumStudentPaidFeeType)." CFA");
             return redirect()->back();
         }
 
         $dates =  date('M d, Y - h:ia', time());
-        $sum_paid = Fee::getStudentTotalFeePaid($year, $formId, $student_id);
-        $type_amount = Feetype::where('year_id', $year)->where('id', $feetype)->first();
-        $total_amount = $type_amount->amount;
-        if($sum_paid >= $total_amount){
-            $balance = 0;
-        }
-        elseif($total_amount > $amount){
-            $holder = $total_amount - ($sum_paid + $amount);
-            if($holder > 0){
-                $balance = $holder;
-            }
-            else {
-                $balance = 0;
-            }
-        }
-        elseif($total_amount == ($sum_paid + $amount)){
-            $balance = 0;
-        }
-         else {
-            $balance = 0;
-        }
+        $balance = $getFeeTypeAmount->amount - ($sumStudentPaidFeeType + $amount);
+
         if(Fee::where('student_school_id', $studentschool_id)->where('year_id', $year)->where('scholarship', '!=', null)->exists()){
             $scholar = null;
         } else{
@@ -433,7 +403,7 @@ class Fees_ExpensesController extends Controller
 
         try{
             $feecontrol->save();
-            $notify = array('message' => 'Student clearance was successfully made', 'alert-type' => 'success');
+            $notify = array('message' => 'Student Fees clearance was successfully approved', 'alert-type' => 'success');
             return redirect()->back()->with($notify);
         }
         catch(\Illuminate\Database\QueryException $e){

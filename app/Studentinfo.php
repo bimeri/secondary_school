@@ -47,11 +47,30 @@ class Studentinfo extends Authenticatable
         return $qu->student->full_name;
     }
 
+    public static function getStudentByMatricule($matricule){
+        $qu = Studentinfo::where('student_school_id', $matricule)->first();
+        return $qu;
+    }
+
     public static function getAllStudentPerYear($year){
         return Studentinfo::where('year_id', $year)->orderBy('id', 'desc')->get();
     }
 
     public static function getAllStudentPerYearAndClass($year, $class){
         return Studentinfo::where('year_id', $year)->where('form_id', $class)->orderBy('id', 'desc')->get();
+    }
+    public static function getTenStudents(){
+       return Studentinfo::latest()->take(10)->get();
+    }
+
+    public static function countAllSchoolStudentPerYear($year_id){
+       return Studentinfo::where('year_id', $year_id)->count();
+    }
+
+    public static function countAllclassStudent($year, $form, $subclass){
+        return Studentinfo::where('year_id', $year)
+                            ->where('form_id', $form)
+                            ->where('subform_id', $subclass)
+                            ->count();
     }
 }

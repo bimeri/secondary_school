@@ -50,4 +50,30 @@ class Form extends Model
         return Form::where('id', $class)->first();
     }
 
+    public static function getAllClasses(){
+        $classes = Form::all();
+        $classes = Form::all();
+
+        $table = "";
+        $table .= "<div class='row'>
+                            <div class='col s12'>
+                                <ul class='tabs orange'>
+          ";
+        foreach ($classes as $key => $y){
+        $table .=  "<li class='tab col s2'>
+            <a class='";
+            if($y->id == 1) {
+                $table .= "active";
+            }
+        $table .= "
+            'href='#test". ($key + 1) ."'>
+            ".$y->name."
+            </a>
+        </li>";
+        }
+        $table .= "</div></div></ul>";
+
+        return $table;
+    }
+
 }

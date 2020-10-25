@@ -7,7 +7,6 @@
         /* box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138); */
     }
     .refl{
-
         /* -webkit-box-reflect: right 10px linear-gradient(transparent, #cc00ff, #0002); */
     }
     td, th, tr{
@@ -555,7 +554,7 @@
                 @endif
                 @foreach ($b_students as $key => $sub_student)
                 <tr>
-                    <td><b class="left">{{ $key + 1 }}. {{ $sub_student->student->full_name }} - <?php $cl = App\Subclass::where('id',  $sub_student->subform_id)->first(); echo $cl->type;?></b> <em class="right">{{ $sub_student->student_school_id }}</em></td>
+                    <td><b class="left">{{ $key + 1 }}. {{ $sub_student->student->full_name }} - <?php $cl = App\Subclass::where('id',  $sub_student->subform_id)->first(); echo $cl->type;?></b> <em class="right">{{ $sub_student->student->school_id }}</em></td>
 
                     @foreach ($subjects as $s => $subs)
                     {{-- first sequence --}}
@@ -982,7 +981,7 @@
 @endif
 @foreach ($c_students as $key => $c_student)
 <tr>
-    <td><b class="left">{{ $key + 1 }}. {{ $c_student->student->full_name }} - <?php $c_s = App\Subclass::where('id',  $c_student->subform_id)->first(); echo $c_s->type;?></b> <em class="right">{{ $c_student->student_school_id }}</em></td>
+    <td><b class="left">{{ $key + 1 }}. {{ $c_student->student->full_name }} - <?php $c_s = App\Subclass::where('id',  $c_student->subform_id)->first(); echo $c_s->type;?></b> <em class="right">{{ $c_student->student->school_id }}</em></td>
 
     @foreach ($subjects as $s => $c_subject)
     {{-- first term --}}
