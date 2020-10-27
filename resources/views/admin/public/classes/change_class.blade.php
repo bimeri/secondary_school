@@ -41,7 +41,7 @@
             <div class="row" id="hides">
                 <div class="input-field col s12 m4">
                     <input type="hidden" name="year" value="{{ $current_year->id }}">
-                    <select name="class" id="select">
+                    <select name="class" id="select" required>
                         <option value="" disabled selected> Class / Background / Sector</option>
                       @foreach (App\Form::all() as $form)
                       @php

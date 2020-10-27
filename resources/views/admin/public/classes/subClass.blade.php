@@ -151,7 +151,7 @@
 </div>
 @else
 <div class="row">
-    <div class="col s12 m10 offset-m1" style="color: #d19b07 !important; background-color: rgb(248, 221, 171) !important;">
+    <div class="col s12 m10 offset-m1 red red-text lighten-4">
         <h5 class="w3-center w3-medium w3-padding bold">{{ __('messages.create_no_subclass') }}</h5>
     </div>
 </div>

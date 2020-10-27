@@ -105,7 +105,7 @@ class AdminController extends Controller
                 foreach ($roles as $role) {
 
                     $admin->roles()->attach($role);
-                }
+                } 
 
                // $arr = array();
                 $admin_role = DB::table('admin_role')->where('admin_id', $userId)->get();

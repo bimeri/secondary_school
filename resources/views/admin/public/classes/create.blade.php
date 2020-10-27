@@ -11,20 +11,24 @@
 
 <div class="row">
     <div class="col s11 w3-margin-left m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius" style="margin-top: 5px">
-        <form action="{{ route('class.form.submit') }}" method="post">
+        <form action="{{ route('class.form.create') }}" method="get">
             @csrf
             <div class="row">
-                <div class="input-field col s12 m3">
-                    <select name="background" class="validate" id="backk">
+                <div class="input-field col s12 m5">
+                    <select name="background" class="browser-default" id="back" required>
+                        <option value="">select the background/section</option>
                         @foreach (App\Background::all() as $bg)
-                            <option value="{{ $bg->id }}">{{ $bg->name }}/ {{ $bg->sector->name }}</option>
+                            <option value="{{ Crypt::encrypt($bg->id) }}">{{ $bg->name }}/ {{ $bg->sector->name }}</option>
                         @endforeach
                     </select>
-                    <label for="backk">Select Class Background</label>
+                </div>
+                <div class="input-field col s12 m3 offset-m2">
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="load()">Create Class</button>
                 </div>
             </div>
 
-            <div class="row">
+
+            {{-- <div class="row">
                 <div class="input-field col s12 m6">
                     <input name="name" id="autocomplete-input" type="text" class="autocompletess" value="{{ old('name') }}">
                     <i class="fa fa-pen teal-text w3-xlarge right" style="margin-top: -40px"></i>
@@ -43,11 +47,7 @@
                     <input id="type" name="type" type="text" value="A" class="validate" readonly placeholder="example A,B,C,D, etc">
                     <label for="type">Class Type (optional)</label>
                 </div>
-
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-primary waves-effect waves-light col offset-m3 offset-s3" style="width: 40%">Create Class</button>
-            </div>
+            </div> --}}
         </form>
     </div>
 </div>

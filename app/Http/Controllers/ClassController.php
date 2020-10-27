@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Background;
 use App\Form;
 use App\Permission;
 use App\Studentinfo;
 use App\Subclass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class ClassController extends Controller
@@ -38,6 +40,22 @@ class ClassController extends Controller
         return view('admin.public.classes.create');
     }
 
+    public function getclassSubjects(Request $req){
+        $this->authorize('create_class', Permission::class);
+        $background = $req['background'];
+        $decrypted = '';
+        try {
+            $decrypted = Crypt::decrypt($background);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+           $message = array('message' => 'Fail to decrypt ID, please contact the administrator', 'alert-type' => 'error');
+           return redirect()->back()->with($message);
+        }
+
+        $data['background'] = Background::where('id', $decrypted)->first();
+        $data['forms'] = Form::where('background_id', $decrypted)->get();
+
+        return view('admin.public.classes.create_submit')->with($data);
+    }
 
     public function submitClass(Request $req){
         $this->authorize('create_class', Permission::class);

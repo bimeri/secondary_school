@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Fee;
 use App\Feetype;
 use App\Form;
@@ -9,6 +10,9 @@ use App\Setting;
 use App\Studentinfo;
 use App\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+// use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class DownloadController extends Controller
@@ -176,5 +180,70 @@ class DownloadController extends Controller
             }
         }
         return $rettxt;
+    }
+
+    public function exportStudentRecord(Request $req){
+        $yr = $req['yearId'];
+        $subfm = $req['subform_id'];
+        $fm = $req['formId'];
+        $year = '';
+        $subform = null;
+        $form = '';
+        try {
+            $year = Crypt::decrypt($yr);
+            $subform = Crypt::decrypt($subfm);
+            $form = Crypt::decrypt($fm);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $notify = array('message' => 'fail to decrypt IDs please contact the admin', 'alert-tpye' => 'error');
+            return redirect()->back()->with($notify);
+        }
+        $students = Studentinfo::getAllStudentPerYearClassAndSubClass($year, $form, $subform);
+        //$students = $data->toArray();
+        $newArray = [
+            "Full Name",
+            "school ID",
+            "email",
+            "date of birth",
+            "gender",
+            "date enrolled",
+            "year",
+            "Class",
+            "Class Type",
+            "Address",
+            "Parent contact",
+            "Parent email",
+        ];
+        foreach($students as $student){
+            $val = [
+                 $student->student->full_name,
+                 $student->student->school_id,
+                 $student->student->email,
+                 $student->date_of_birth,
+                 $student->gender,
+                 $student->student->date_enrolled,
+                 $student->year->name,
+                 $student->form->name,
+                 $student->subform_id ? $student->subform->type:'A',
+                 $student->address,
+                 $student->parent_contact,
+                 $student->parent_email,
+            ];
+            array_push($newArray, $val);
+        }
+    //    return $newArray;
+
+        return Excel::download($newArray, 'student_information.xlsx');
+        // Excel::create('Students Information', function($excel) use ($newArray){
+        //     $excel->setTitle('Students Information');
+        //     $excel->setTitle('Students Information');
+        //     $excel->sheet('Students Information', function($sheet) use ($newArray){
+        //         $sheet->fromArray($newArray, null, 'A1', false, false);
+        //     });
+        // });
+    }
+
+    public function fileExport()
+    {
+        return Excel::download(new UsersExport, 'users-collection.xlsx');
     }
 }

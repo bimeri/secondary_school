@@ -13,3 +13,4 @@ class AdminRole extends Model
         'admin_id', 'role_id'
     ];
 }
+ 

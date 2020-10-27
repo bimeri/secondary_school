@@ -109,6 +109,7 @@ Route::post('admin/delete/class', 'ClassController@delete')->name('admin.delete.
 Route::post('admin/delete/subclass', 'ClassController@deletesubClass')->name('admin.delete.subclass');
 Route::get('admin/create/subclass', 'ClassController@subClass')->name('admin.create.subclass');
 Route::get('admin/view/class', 'ClassController@index')->name('admin.view.class');
+Route::get('admin/getclass', 'ClassController@getclassSubjects')->name('class.form.create');
 Route::post('admin/create', 'ClassController@submitClass')->name('class.form.submit');
 Route::post('admin/create/subclass', 'ClassController@subClassSubmit')->name('subclass.form.submit');
 Route::post('admin/edit/subclass', 'ClassController@EditsubClassSubmit')->name('admin.edit.subclass');
@@ -123,7 +124,11 @@ Route::get('admin/student/list', 'AdminstudentController@viewStudent')->name('am
 Route::post('admin/student/create', 'AdminstudentController@submitInfo')->name('admin.submit.student.info');
 Route::get('admin/student', 'AdminstudentController@getStudent')->name('student.get');
 Route::post('admin/class_size', 'AdminstudentController@getSize')->name('class.getsize');
-Route::post('student/jax/post', 'AdminstudentController@searchStudentLive')->name('live.search.student');
+Route::get('admin/student/subclasses', 'AdminstudentController@studentSubclasses')->name('view.student.class');
+Route::post('student/ajax/post', 'AdminstudentController@searchStudentLive')->name('live.search.student');
+Route::post('student/ajax/background', 'AdminstudentController@ajaxGetBackground')->name('background.ajax.get');
+Route::post('student/ajax/class', 'AdminstudentController@ajaxGetClass')->name('classes.ajax.get');
+Route::get('student/excel/class', 'DownloadController@exportStudentRecord')->name('export.excel.student');
 
 // manage subjects
 Route::get('admin/subject', 'SubjectController@index')->name('admin.subject');

@@ -75,5 +75,4 @@ class Form extends Model
 
         return $table;
     }
-
 }

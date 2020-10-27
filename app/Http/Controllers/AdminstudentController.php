@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Background;
 use App\Form;
 use App\Permission;
 use App\Setting;
@@ -172,9 +173,11 @@ class AdminstudentController extends Controller
 
     public function viewStudent(){
         $this->authorize('class_list', Permission::class);
-        $years = Year::where('active', 1)->first();
-        $students = Studentinfo::where('year_id', $years->id)->paginate(15);
-        return view('admin.public.student.viewStudent', compact('students', 'years'));
+        $data['data'] = [];
+        $data['form'] = '';
+        $data['count'] = 0;
+        $data['years'] = Year::where('active', 1)->first();
+        return view('admin.public.student.viewStudent')->with($data);
     }
 
     public function getStudent(Request $req){
@@ -183,22 +186,64 @@ class AdminstudentController extends Controller
             'class' => 'required',
         ]);
 
+        $year_id = $req['year'];
+        $form_id =  $req['class'];
+        $years = Year::where('id', $year_id)->first();
+        $data['years'] = $years;
+        $subClasses = Subclass::where('form_id', $form_id)->get();
+        $getFormDetail = Form::getClassDetail($form_id);
+        $className = $getFormDetail->name;
+        $Astudents = Studentinfo::countAllclassStudent($year_id, $form_id, null);
+        $classAstudents = [
+            "subId" => null,
+            "formId" => $form_id,
+            "yearId" => $year_id,
+            "className" => $className,
+            "classType" => 'A',
+            "students" => $Astudents
+        ];
+        $arr = [$classAstudents];
+
+        foreach($subClasses as $subclass){
+            $subclassType = $subclass->type;
+            $numberOfstudents = Studentinfo::countAllclassStudent($year_id, $form_id, $subclass->id);
+            $arrayElement = [
+                "subId" => $subclass->id,
+                "formId" => $form_id,
+                "yearId" => $year_id,
+                "className" => $className,
+                "classType" => $subclassType,
+                "students" => $numberOfstudents
+            ];
+            array_push($arr, $arrayElement);
+        }
+        $data['data'] = $arr;
+        $data['form'] = $getFormDetail;
+        $data['count'] = $numberOfstudents;
+        session()->flash('message', 'Student for the academic year '.$years->name.' ');
+        return view('admin.public.student.viewStudent')->with($data);
+    }
+
+    public function studentSubclasses(Request $req){
+        $yr = $req['yearId'];
+        $subfm = $req['subform_id'];
+        $fm = $req['formId'];
+        $year = '';
+        $subform = null;
+        $form = '';
+
         try {
-            $decrypted_year = Crypt::decrypt($req['year']);
-            $decrypted_class = Crypt::decrypt($req['class']);
+            $year = Crypt::decrypt($yr);
+            $subform = Crypt::decrypt($subfm);
+            $form = Crypt::decrypt($fm);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mess = array('message' => 'Fail to Decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mess);
+            $notify = array('message' => 'fail to decrypt IDs please contact the admin', 'alert-tpye' => 'error');
+            return redirect()->back()->with($notify);
         }
 
-        $year_id = $decrypted_year;
-        $form_id = $decrypted_class;
-        $years = Year::where('id', $year_id)->first();
+        $data['students'] = Studentinfo::getAllStudentPerYearClassAndSubClass($year, $form, $subform);
 
-        $students = Studentinfo::where('year_id', $year_id)->where('form_id', $form_id)->paginate(15);
-        $path = '';
-        session()->flash('message', 'Student for the academic year '.$years->name.' ');
-        return view('admin.public.student.viewStudent', compact('students', 'years'));
+        return view('admin.public.student.viewSubclassStudent')->with($data);
     }
 
     public function searchStudentLive(Request $req){
@@ -210,6 +255,29 @@ class AdminstudentController extends Controller
         ->orWhere('students.full_name', '%'.$value.'%')
         ->get();
         return json_encode($studentinfo);
+    }
+
+    public function ajaxGetBackground(Request $req){
+        $sectorId = $req['info'];
+        $backgrounds = Background::where('sector_id', $sectorId)->get();
+        $array = ["<option value=''>Select the Background</option>"];
+        foreach($backgrounds as $background){
+            $arrayValue = "<option value='".$background->id."'>".$background->name."</option>";
+            array_push($array, $arrayValue);
+        }
+
+        return json_encode($array);
+    }
+
+    public function ajaxGetClass(Request $req){
+        $backgroundId = $req['info'];
+        $forms = Form::where('background_id', $backgroundId)->get();
+        $array = ["<option value=''>Select the Class</option>"];
+        foreach($forms as $form){
+            $arrayValue = "<option value='".$form->id."'>".$form->name."/".$form->code."-- size: ".$form->max_number."</option>";
+            array_push($array, $arrayValue);
+        }
+        return json_encode($array);
     }
 
     public function getSize(Request $req){

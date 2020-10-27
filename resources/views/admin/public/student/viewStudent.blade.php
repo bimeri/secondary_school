@@ -2,8 +2,8 @@
 @section('title') View Student @endsection
 @section('style')
 <style>
-
     td, th, tr{
+        border-collapse: collapse;
         border: 1px solid #ccc !important;
         font-size: 11px !important
     }
@@ -19,149 +19,142 @@
 @section('content')
 <p class="w3-center">@lang('messages.welcome')</p>
 <div class="row w3-margin-top">
-    <form method="get" action="{{ route('student.get') }}">
+    <form method="get" action="{{ route('student.get') }}" id="forms">
         @csrf
-        <div class="row">
-            <div class="input-field col m3 offset-m3 s12">
-                <select name="year" class="validate">
-                    <option value="{{ Crypt::encrypt($years->id) }}">{{ $years->name }}</option>
+        <div class="row container" style="font-size: 16px !important">
+            <div class="col m3 s12">
+                <select name="year" class="browser-default">
+                    <option value="{{ $years->id }}">{{ $years->name }}</option>
                     @foreach (App\Year::all() as $year)
-                        <option value="{{ Crypt::encrypt($years->id) }}">{{ $year->name }}</option>
+                        <option value="{{ $years->id }}">{{ $year->name }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="input-field col m3 s12">
-                <select name="class" id="class">
-                    <option value="" disabled selected> Class / Background / Sector</option>
-                  @foreach (App\Form::all() as $form)
-                    <option value="{{ Crypt::encrypt($form->id) }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
+            <div class="col m3 s12">
+                <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
+                    <option value="" disabled selected>select the Sector</option>
+                  @foreach (App\Sector::all() as $sector)
+                    <option value="{{ $sector->id }}">{{ $sector->name }}</option>
                   @endforeach
                 </select>
-                <label for="class">Select the class</label>
             </div>
-            <div class="col m2 offset-s3 m3" style="margin-top: 20px !important">
+            <div class="col s12 m3" id="backgrounds">
+                <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
+                    <option value="">select the Background</option>
+                </select>
+            </div>
+
+            <div class="col s12 m3" id="classes">
+                <select class="browser-default" name="class" id="form" required>
+                    <option value="">select the Class</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m2 m3 right offset-m7" id="submit">
                 <button class="btn btn-primary waves-effect waves-light">Get Students</button>
             </div>
         </div>
     </form>
 
     <div class="col s11 m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">
-        @if ($students->count() == 0)
-        <div class="red lighten-4 red-text w3-padding w3-border w3-center bold">No record found, please search again</div>
-        @endif
-        <form id="form">
-            <div class="col s6 m6 l3 right topnav">
-                <input type="text" placeholder="Search name or school ID..." onkeyup="myFunctionn()" id="myInputt">
-                <i class="fa fa-search right w3-large teal-text search"></i>
-            </div>
-            {{--  <div class="col s6 m3 right topnav" style="margin-right: 10px !important">
-                <input type="text" placeholder="Search Name..." onkeyup="myFunction()"  id="myInput">
-                <i class="fa fa-search right w3-large teal-text search"></i>
-            </div>  --}}
-        </form>
-        <div class="col s12 m12" style="overflow-x:scroll !important;">
+        @if ($count == 0)
+        <div class="red lighten-4 red-text w3-padding w3-border w3-center bold w3-margin-bottom">No record found, please search again</div>
+        @else
+        <div class="green lighten-4 green-text w3-padding w3-border w3-center w3-margin-bottom">All <b>{{ $form->name }}</b> Students from <b>{{ $form->background->name }}/{{ $form->background->sector->name }}</b> for the academic year: <b>{{ $years->name }}</b></div>
+
+        <div class="col s12 m12" style="overflow-x:auto !important;">
             <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
                 <tr class="teal">
                     <th>S/N</th>
-                    <th>profile</th>
-                    <th>Full Name</th>
-                    <th>Class</th>
-                    <th>email</th>
-                    <th>School ID Number</th>
-                    <th>gender</th>
-                    <th>date of birth</th>
-                    <th colspan="2">Action</th>
+                    <th>Class Name</th>
+                    <th>Class Type</th>
+                    <th>Number of Students</th>
+                    <th colspan="3">Action</th>
                 </tr>
                 <tbody id="clear">
-                    @foreach ($students as $key => $user)
+
+                    @foreach ($data as $key => $value)
                 <tr>
                     <td>{{ $key + 1 }}</td>
+                    <td>{{ $value['className'] }}</td>
+                    <td>{{ $value['classType'] }}</td>
+                    <td>{{ $value['students'] }}</td>
                     <td>
-                        <?php $enroll = explode('/', trim($user->year->name)); ?>
-                        <img src="{{ URL::asset('image/students/'.$enroll[1].'/'.$user->profile.'') }}" width="50" height="50" class="w3-circle w3-border-t">
+                    <a href="{{ route('view.student.class', ['yearId' => Crypt::encrypt($value['yearId']), 'subform_id' => Crypt::encrypt($value['subId']), 'formId' => Crypt::encrypt($value['formId']) ]) }}" class="btn orange orange-text lighten-4 waves-light waves-effect">view students <i class="fa fa-eye w3-small"></i></a>
                     </td>
                     <td>
-                        {{ $user->student->full_name }}
+                    <a href="{{ route('export.excel.student', ['yearId' => Crypt::encrypt($value['yearId']), 'subform_id' => Crypt::encrypt($value['subId']), 'formId' => Crypt::encrypt($value['formId']) ]) }}" class="btn green lighten-4 green-text waves-light waves-effect">class list <i class="fa fa-file-csv w3-small"></i></a>
                     </td>
                     <td>
-                        <b>{{ $user->form->name }} {{ $user->subform_id ? $user->subform->type:'A' }} </b> /{{ $user->form->background->name }}/{{ $user->form->background->sector->name }}
-                    </td>
-                    <td>
-                        {{ $user->student->email }}
-                    </td>
-                    <td>{{ $user->student_school_id }}</td>
-                    <td>
-                        {{ $user->gender }}
-                    </td>
-                    <td>
-                        {{ $user->date_of_birth }}
-                    </td>
-                    <td>
-                    <button class="my-orange btn waves-light waves-effect">Edit <i class="fa fa-pencil-alt w3-small"></i></button>
-                    </td>
-                    <td>
-                    <button class="red btn waves-light waves-effect" disabled>Delete <i class="fa fa-trash w3-small"></i></button>
+                    <a class="btn blue blue-text lighten-4 waves-light waves-effect">print <i class="fa fa-file-pdf w3-small"></i></a>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
             </table>
         </div>
-            {{ $students->onEachSide(5)->links() }}
+        @endif
     </div>
 </div>
 
 <script>
-    // $('body').on('keyup', '#myInputt' function(){
-    //     var item = $(this).val();
-    //     console.log('the value is', item);
-    // });
-
-    function myFunction() {
-    //   // Declare variables
-    //   var input, filter, table, tr, td, i, txtValue;
-    //   input = document.getElementById("myInput");
-    //   filter = input.value.toUpperCase();
-    //   table = document.getElementById("myTable");
-    //   tr = table.getElementsByTagName("tr");
-    //   // Loop through all table rows, and hide those who don't match the search query
-    //   for (i = 0; i < tr.length; i++) {
-    //     td = tr[i].getElementsByTagName("td")[2];
-    //     if (td) {
-    //       txtValue = td.textContent || td.innerText;
-    //       if (txtValue.toUpperCase().indexOf(filter) > -1) {
-    //         tr[i].style.display = "";
-    //       } else {
-    //         tr[i].style.display = "none";
-    //       }
-    //     }
-    //   }
-
-
+    $('#submit').hide();
+    function getBackground(e) {
+        $('#background').empty();
+        var valu = e.target.value;
+        $.ajax({
+            type: "post",
+            url: "{{ route('background.ajax.get') }}",
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                info: valu
+            },
+            success: function(res){
+                if(res.length > 0) {
+                $('#background').append(res);
+                } else {
+                $('#background').append("<option value=''>Sector have no Background</option>");
+                }
+                console.log('the response is', res);
+                $tablerow = ''
+                $('#clear').empty();
+                $('#clear').html = '';
+            },
+            error: function(error){
+                console.log("some error occur", error);
+            }
+        });
     }
+
+    function getclasses(e) {
+        $('#form').empty();
+        $('#submit').show();
+        var bgId = e.target.value;
+        $.ajax({
+            type: "post",
+            url: "{{ route('classes.ajax.get') }}",
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                info: bgId
+            },
+            success: function(response){
+                if(response.length > 0) {
+                $('#form').append(response);
+                } else {
+                $('#form').append("<option value=''>Background has no Class</option>");
+                }
+            },
+            error: function(error){
+                console.log("some error occur", error);
+            }
+        });
+    }
+
     function myFunctionn() {
-    //   // Declare variables
-    //   var input, filter, table, tr, td, i, txtValue;
-    //   input = document.getElementById("myInputt");
-    //   filter = input.value.toUpperCase();
-    //   table = document.getElementById("myTable");
-    //   tr = table.getElementsByTagName("tr");
-    //   // Loop through all table rows, and hide those who don't match the search query
-    //   for (i = 0; i < tr.length; i++) {
-    //     td = tr[i].getElementsByTagName("td")[5];
-    //     if (td) {
-    //       txtValue = td.textContent || td.innerText;
-    //       if (txtValue.toUpperCase().indexOf(filter) > -1) {
-    //         tr[i].style.display = "";
-    //       } else {
-    //         tr[i].style.display = "none";
-    //       }
-    //     }
-    //   }
-    var item = $('#myInputt').val();
-        //console.log('the value is', item);
-        //var item = $('#myInputt').val();
-        //console.log('the value is', item);
+        var item = $('#myInputt').val();
         $.ajax({
             type: "post",
             url: "{{ route('live.search.student') }}",
@@ -175,8 +168,6 @@
                 $tablerow = ''
                 $('#clear').empty();
                 $('#clear').html = '';
-
-
             },
             error: function(error){
                 console.log("some error occur", error);

@@ -59,6 +59,13 @@ class Studentinfo extends Authenticatable
     public static function getAllStudentPerYearAndClass($year, $class){
         return Studentinfo::where('year_id', $year)->where('form_id', $class)->orderBy('id', 'desc')->get();
     }
+
+    public static function getAllStudentPerYearClassAndSubClass($year, $class, $subformId){
+        return Studentinfo::where('year_id', $year)
+                            ->where('form_id', $class)
+                            ->where('subform_id', $subformId)
+                            ->orderBy('id', 'desc')->get();
+    }
     public static function getTenStudents(){
        return Studentinfo::latest()->take(10)->get();
     }
