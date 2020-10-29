@@ -26,28 +26,6 @@
                     <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="load()">Create Class</button>
                 </div>
             </div>
-
-
-            {{-- <div class="row">
-                <div class="input-field col s12 m6">
-                    <input name="name" id="autocomplete-input" type="text" class="autocompletess" value="{{ old('name') }}">
-                    <i class="fa fa-pen teal-text w3-xlarge right" style="margin-top: -40px"></i>
-                    <label for="autocomplete-input">Class Name</label>
-                </div>
-
-                <div class="input-field col s12 m3">
-                    <input id="max" name="maximum_number" type="number" value="{{ old('maximum_number') }}" class="validate">
-                    <label for="max">Maximum Capacity</label>
-                </div>
-                <div class="input-field col s12 m3">
-                    <input id="code" name="ClassCode" type="text" value="{{ old('code') }}" class="validate">
-                    <label for="code">Class Code</label>
-                </div>
-                 <div class="input-field col s12 m3">
-                    <input id="type" name="type" type="text" value="A" class="validate" readonly placeholder="example A,B,C,D, etc">
-                    <label for="type">Class Type (optional)</label>
-                </div>
-            </div> --}}
         </form>
     </div>
 </div>

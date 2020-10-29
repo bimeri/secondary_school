@@ -317,6 +317,82 @@
                       break;
               }
             @endif
+
+            $('#submit').hide();
+    function getBackground(e) {
+        $('#background').empty();
+        var valu = e.target.value;
+        $.ajax({
+            type: "post",
+            url: "{{ route('background.ajax.get') }}",
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                info: valu
+            },
+            success: function(res){
+                if(res.length > 0) {
+                $('#background').append(res);
+                } else {
+                $('#background').append("<option value=''>Sector have no Background</option>");
+                }
+                console.log('the response is', res);
+                $tablerow = ''
+                $('#clear').empty();
+                $('#clear').html = '';
+            },
+            error: function(error){
+                console.log("some error occur", error);
+            }
+        });
+    }
+
+    function getclasses(e) {
+        $('#form').empty();
+        $('#submit').show();
+        var bgId = e.target.value;
+        $.ajax({
+            type: "post",
+            url: "{{ route('classes.ajax.get') }}",
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                info: bgId
+            },
+            success: function(response){
+                if(response.length > 0) {
+                $('#form').append(response);
+                } else {
+                $('#form').append("<option value=''>Background has no Class</option>");
+                }
+            },
+            error: function(error){
+                console.log("some error occur", error);
+            }
+        });
+    }
+
+    function myFunctionn() {
+        var item = $('#myInputt').val();
+        $.ajax({
+            type: "post",
+            url: "{{ route('live.search.student') }}",
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                info: item
+            },
+            success: function(res){
+                //console.log('the response is', res);
+                $tablerow = ''
+                $('#clear').empty();
+                $('#clear').html = '';
+            },
+            error: function(error){
+                console.log("some error occur", error);
+            }
+        });
+    }
           </script>
     </body>
 </html>

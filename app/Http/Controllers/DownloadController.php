@@ -199,7 +199,7 @@ class DownloadController extends Controller
         }
         $students = Studentinfo::getAllStudentPerYearClassAndSubClass($year, $form, $subform);
         //$students = $data->toArray();
-        $newArray = [
+        $newArray[] = [
             "Full Name",
             "school ID",
             "email",
@@ -213,8 +213,8 @@ class DownloadController extends Controller
             "Parent contact",
             "Parent email",
         ];
-        foreach($students as $student){
-            $val = [
+        foreach($students as $key => $student){
+            $newArray[] = [
                  $student->student->full_name,
                  $student->student->school_id,
                  $student->student->email,
@@ -228,18 +228,17 @@ class DownloadController extends Controller
                  $student->parent_contact,
                  $student->parent_email,
             ];
-            array_push($newArray, $val);
         }
     //    return $newArray;
 
-        return Excel::download($newArray, 'student_information.xlsx');
-        // Excel::create('Students Information', function($excel) use ($newArray){
-        //     $excel->setTitle('Students Information');
-        //     $excel->setTitle('Students Information');
-        //     $excel->sheet('Students Information', function($sheet) use ($newArray){
-        //         $sheet->fromArray($newArray, null, 'A1', false, false);
-        //     });
-        // });
+        return
+        Excel::download(function($excel) use ($newArray){
+            $excel->setTitle('Students Information');
+            $excel->setTitle('Students Information');
+            $excel->sheet('Students Information', function($sheet) use ($newArray){
+                $sheet->fromArray($newArray, null, 'A1', false, false);
+            });
+        }, 'Students.xlsx');
     }
 
     public function fileExport()

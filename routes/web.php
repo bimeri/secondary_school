@@ -135,6 +135,7 @@ Route::get('admin/subject', 'SubjectController@index')->name('admin.subject');
 Route::post('admin/subject', 'SubjectController@submit')->name('subject.create.submit');
 Route::get('admin/subject/all', 'SubjectController@view')->name('admin.subject.view');
 Route::post('admin/subject/edit', 'SubjectController@edit')->name('subject.edit');
+Route::get('admin/subject/get', 'SubjectController@select')->name('subject.create.select');
 // manage teacher
 Route::get('admin/create/teacher', 'AdminTeacherController@index')->name('admin.teacher.create');
 Route::post('admin/create/teacher', 'AdminTeacherController@submit')->name('teacher.create.submit');

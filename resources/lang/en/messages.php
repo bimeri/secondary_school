@@ -44,4 +44,5 @@ return [
     'income_statement_full' => 'Full Detail (Statistics) for the Academic Year :year',
     'has_completed' => 'has alreay completed',
     'change_student_class' => 'Select the student in which you want to change the class',
+    'select_subject' => 'Select the Class and proceed with the creation of Subject',
 ];

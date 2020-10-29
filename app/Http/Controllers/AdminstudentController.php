@@ -192,6 +192,7 @@ class AdminstudentController extends Controller
         $data['years'] = $years;
         $subClasses = Subclass::where('form_id', $form_id)->get();
         $getFormDetail = Form::getClassDetail($form_id);
+        $numberOfstudents = null;
         $className = $getFormDetail->name;
         $Astudents = Studentinfo::countAllclassStudent($year_id, $form_id, null);
         $classAstudents = [

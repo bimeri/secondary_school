@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Form;
 use App\Permission;
 use App\Subject;
 use Illuminate\Http\Request;
@@ -27,6 +28,14 @@ class SubjectController extends Controller
         $subjects = Subject::all();
 
         return view('admin.public.subject.view', compact('subjects'));
+    }
+
+    public function select(Request $req){
+        $formid = $req['class'];
+        $data['formsDetail'] = Form::getClassDetail($formid);
+        $data['subjects'] = Subject::getClassSubject($formid);
+
+        return view('admin.public.subject.submitSubject')->with($data);
     }
 
     public function submit(Request $req){

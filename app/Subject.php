@@ -29,4 +29,8 @@ class Subject extends Model
     public function thirdtermresults(){
         return $this->hasMany('App\Thirdtermresult');
     }
+
+    public static function getClassSubject($class_id){
+        return Subject::where('form_id', $class_id)->get();
+    }
 }
