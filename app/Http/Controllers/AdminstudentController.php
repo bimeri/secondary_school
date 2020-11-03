@@ -9,6 +9,7 @@ use App\Setting;
 use App\Student;
 use App\Studentinfo;
 use App\Subclass;
+use App\Subject;
 use App\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -103,14 +104,14 @@ class AdminstudentController extends Controller
             $all_students = Studentinfo::where('subform_id', $subclass)->count();
             if($forms->max_number == $all_students || $forms->max_number < $all_students){
                 $notify = array('message' => 'Fail to add '.$fname.', in '.$forms->form->name.' '.$forms->type.' The Sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type' => 'warning');
-                session()->flash('notify', 'Fail to add '.$fname.', in '.$forms->form->name.' '.$forms->type.' The sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.','alert-type');
+                session()->flash('notify', 'Fail to add '.$fname.', in '.$forms->form->name.' '.$forms->type.' The sub class is full already, please considered creating another sub class or extending this sub-class size to fit in the student.');
                 return redirect()->back()->with($notify);
             }
         }
         else {
             if($form->max_number == $all_student || $form->max_number < $all_student){
                 $notify = array('message' => 'Fail to add '.$fname.', in '.$form->name.' A, the class is full already, please considered creating a sub class or extending this class size to fit in the student.','alert-type' => 'warning');
-                session()->flash('notify', 'Fail to add '.$fname.', in '.$form->name.' the class is full already, please considered creating a sub class or extending this class size to fit in the student.','alert-type');
+                session()->flash('notify', 'Fail to add '.$fname.', in '.$form->name.' the class is full already, please considered creating a sub class or extending this class size to fit in the student.');
                 return redirect()->back()->with($notify);
             }
         }
@@ -203,24 +204,28 @@ class AdminstudentController extends Controller
             "classType" => 'A',
             "students" => $Astudents
         ];
+        if($classAstudents){
         $arr = [$classAstudents];
+        }
 
-        foreach($subClasses as $subclass){
-            $subclassType = $subclass->type;
-            $numberOfstudents = Studentinfo::countAllclassStudent($year_id, $form_id, $subclass->id);
-            $arrayElement = [
-                "subId" => $subclass->id,
-                "formId" => $form_id,
-                "yearId" => $year_id,
-                "className" => $className,
-                "classType" => $subclassType,
-                "students" => $numberOfstudents
-            ];
-            array_push($arr, $arrayElement);
+        if($subClasses){
+            foreach($subClasses as $subclass){
+                $subclassType = $subclass->type;
+                $numberOfstudents = Studentinfo::countAllclassStudent($year_id, $form_id, $subclass->id);
+                $arrayElement = [
+                    "subId" => $subclass->id,
+                    "formId" => $form_id,
+                    "yearId" => $year_id,
+                    "className" => $className,
+                    "classType" => $subclassType,
+                    "students" => $numberOfstudents
+                ];
+                array_push($arr, $arrayElement);
+            }
         }
         $data['data'] = $arr;
         $data['form'] = $getFormDetail;
-        $data['count'] = $numberOfstudents;
+        $data['count'] = $Astudents;
         session()->flash('message', 'Student for the academic year '.$years->name.' ');
         return view('admin.public.student.viewStudent')->with($data);
     }
@@ -279,6 +284,17 @@ class AdminstudentController extends Controller
             array_push($array, $arrayValue);
         }
         return json_encode($array);
+    }
+
+    public function ajaxGetClassSubjects(Request $req){
+        $formId = $req['info'];
+        $subjects = Subject::where('form_id', $formId)->get();
+        $sujetctsArray = ["<option value=''>Select the subjects</option>"];
+        foreach($subjects as $subject){
+            $arrayValue = "<option value='".$subject->id."'>".$subject->name."/".$subject->code."</option>";
+            array_push($sujetctsArray, $arrayValue);
+        }
+        return json_encode($sujetctsArray);
     }
 
     public function getSize(Request $req){

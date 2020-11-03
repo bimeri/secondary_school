@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Permission;
 use App\Teacher;
+use App\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -77,6 +78,7 @@ class AdminTeacherController extends Controller
 
     public function saveSubject(Request $req){
         $uname = $req['user_name'];
+        $yearid = Year::getCurrentYear();
         $data = request()->all();
 
         $teacher = Teacher::where('user_name', $uname)->first();
@@ -87,7 +89,7 @@ class AdminTeacherController extends Controller
         try {
             if($dat == $req['_token'] || $dat == $req['user_name']){} else {
                 DB::table('subject_teacher')->insert(
-                    ['teacher_id' => $tid, 'subject_id' => $dat]
+                    ['teacher_id' => $tid, 'subject_id' => $dat, 'year_id' => $yearid]
                 );
                //$teacher->subjects()->attach($dat);
             }

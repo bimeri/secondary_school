@@ -23,6 +23,7 @@
                 background-color: #ccc !important;
             }
         </style>
+        @yield('style')
     </head>
     <body>
         <nav>
@@ -77,27 +78,11 @@
   <a href="#" data-target="slide-out" class="sidenav-trigger white-text w3-xlarge w3-padding" style="width:40px; margin-top: -60px; position: relative; z-index:10"><i class="fa fa-th"></i></a>
 
   <ul id="slide-out" class="sidenav w3-ul" style="transform: translateX(-105%); overflow-y: scroll">
-    {{--  <li>
-      <div class="user-view">
-        <div class="containeradmin w3-margin-bottom">
-            <img src="{{ URL::asset('image/logo/'.$setting->logo.' ') }}"  class="image left" alt="logo" style="margin-top:4px; height:40px; width:40px">
-            <img src="{{ URL::asset('image/icon.jpg') }}" alt="Avatar" class="image right">
-            <span class="white-black email center">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
-            <div class="overlay">
-              <div class="textadmin">
-                <div class="row">
-                    <h6 class="center white-text" style="text-align: center">{{ $setting->motto ?? '' }}</h6><hr style="margin-top: -10px;">
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-    </li>  --}}
     <li>
         <div class="user-view">
           <div class="containeradmin w3-margin-bottom">
               <img src="{{ URL::asset('image/logo/'.$setting->logo.' ') }}"  class="image left" alt="logo" style="margin-top:4px; height:40px; width:40px">
-              <img src="{{ URL::asset('image/icon.jpg') }}" alt="Avatar" class="image right">
+              <img src="{{ URL::asset('image/icon.jpg') }}" alt="Avatar" class="image right" style="margin-top:4px; height:50px; width:50px">
               <span class="user-email">{{ auth()->user()->email }}</span>
               <div class="overlay">
                 <div class="textadmin">
@@ -109,40 +94,35 @@
             </div>
         </div>
       </li><hr style="margin-top: 0px !important; border-top:1px solid #669900">
-            <ul class="collapsible w3-ul navbar-fixed" style="margin-top:35px !important">
+            <ul class="collapsible w3-ul navbar-fixed" style="margin-top:0px !important">
                 <li><a href="#"  class="waves-effect">Notification <i class="fa fa-bell t-teal-text"></i></a></li>
                 <li><a href="#"  class="waves-effect">Messages <i class="fa fa-envelope t-teal-text"></i></a></li>
                 <li>
-                <div class="collapsible-header" onclick="classes()"> &nbsp;<i class="fa fa-list t-teal-text w3-small"></i> Manage Subject&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>
+                <div class="collapsible-header waves-effect waves-teal" onclick="classes()"  @if( Request::is('teacher/subjects'))  style="background-color: #c4e287" @endif> &nbsp;<i class="fa fa-list t-teal-text w3-small"></i> Manage Subject&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>
                 <div class="collapsible-body">
-                    <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All Subjects <i class="fa fa-list right t-teal-text"></i></a></li>
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assigments <i class="fa fa-plus-square right t-teal-text"></i></a></li>
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vidoes <i class="fa fa-play-circle right t-teal-text"></i></a></li>
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandOut <i class="fa fa-book right t-teal-text"></i></a></li>
+                    <ul class="w3-border w3-padding" style="background-color: #d2f9fa">
+                        <li><a href="{{ route('teacher.subjects') }}" class="t-teal-text" @if( Request::is('teacher/subjects')) style="background-color: #c8d6bc" @endif onclick="load()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All Subjects <i class="fa fa-list right t-teal-text"></i></a></li>
                     </ul>
                 </div>
                 </li>
                  <li>
-                <div class="collapsible-header" onclick="students()"> &nbsp;<i class="fa fa-graduation-cap t-teal-text w3-small"></i> Manage Students <i class="fa fa-chevron-down right w3-small" id="student"></i></div>
+                <div class="collapsible-header waves-effect waves-tea" onclick="students()" @if(Request::is('teacher/subjects/test')) style="background-color: #c4e287" @endif> &nbsp;<i class="fa fa-graduation-cap t-teal-text w3-small"></i> Manage Students <i class="fa fa-chevron-down right w3-small" id="student"></i></div>
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See Student <i class="fa fa-graduation-cap right t-teal-text"></i></a></li>
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student Test <i class="fa fa-wrench t-teal-text right"></i></a></li>
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student Exam <i class="fa fa-file-pdf right t-teal-text"></i></a></li>
+                        <li><a href="{{ route('student.register.test') }}" class="t-teal-text" @if(Request::is('teacher/subjects/test')) style="background-color: #c8d6bc" @endif onclick="students()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student Test <i class="fa fa-wrench t-teal-text right"></i></a></li>
                         <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Statistics <i class="fa fa-list-alt right t-teal-text"></i></a></li> <!--  -->
                     </ul>
                 </div>
                 </li>
-                <li><a href="#"  class="waves-effect waves-light red-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="fa fa-power-off"></span> logout</a></li>
+                <li><a href="#" class="waves-effect waves-light red-text" style="margin-left: 30px"><span class="fa fa-power-off"></span> logout</a></li>
             </ul>
   </ul>
 
-    <div class="cal w3-padding row">
+    <div class="cal w3-padding">
         @yield('content')
     </div>
 
-        <div id="menu" class="t-teal" style="height: 800px !important; width: 100% !important; position: fixed !important; top:0px; bottom: 0px; left: 0px; right: 0px; z-index: 1000;">
+        <div id="menu" class="t-teal" style="height: 800px !important; width: 100% !important; position: fixed !important; top:0px; bottom: 0px; left: 0px; right: 0px; z-index: 1000; opacity:.5">
             <div class="w3-margin-top">
                 <center>
                     <div class="preloader-wrapper big active spinner-white" style="margin-top: 200px !important;">

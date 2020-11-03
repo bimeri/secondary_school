@@ -411,4 +411,21 @@ class Fees_ExpensesController extends Controller
             return redirect()->back()->with($notify);
         }
     }
+
+    public function getClasses(Request $req){
+        $year = $req['year'];
+        $form = $req['class'];
+
+        try {
+            $year = Crypt::decrypt($req['year']);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $message = array('message' => 'fail to decrypt Id please contact the admin', 'alert-type' => 'error');
+            return redirect()->back()->with($message);
+        }
+        $data['year'] = Year::getYear($year);
+        $data['feetypes'] = Feetype::getclasssFeePerYear($year, $form);
+        $data['form'] = Form::getClassDetail($form);
+        $data['count'] = Feetype::getclasssFeePerYear($year,  $form)->count();
+        return view('admin.public.fees_expenses.create_class_fee')->with($data);
+    }
 }

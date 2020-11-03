@@ -1312,6 +1312,11 @@ a {
     color: #fff !important;
     background-color: #009688 !important;
 }
+.w3-teacher,
+.w3-hover-teacher:hover {
+    color: #fff !important;
+    background-color: #91c529 !important;
+}
 .w3-yellow,
 .w3-hover-yellow:hover {
     color: #000 !important;
@@ -1564,6 +1569,12 @@ a {
 }
 .w3-border-t {
     border: 1px solid #009688 !important;
+}
+.w3-border-teacher {
+    border: 1px solid #669900 !important;
+}
+.w3-t-border {
+    border: 0.3px solid #669900 !important;
 }
 .w3-border-yellow,
 .w3-hover-border-yellow:hover {

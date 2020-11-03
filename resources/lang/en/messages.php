@@ -45,4 +45,9 @@ return [
     'has_completed' => 'has alreay completed',
     'change_student_class' => 'Select the student in which you want to change the class',
     'select_subject' => 'Select the Class and proceed with the creation of Subject',
+    'students' => 'Students',
+    'teacher_subjects' => 'Subjects',
+    'teacher_student_mark' => 'Students Marks',
+    'teacher_uplaodFile' => 'Upload File',
+    'teacher_preview' => 'Preview file',
 ];

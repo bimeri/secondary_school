@@ -53,6 +53,11 @@ class Feetype extends Model
      return $qr->fee_type;
     }
 
+    public static function getclasssFeePerYear($year, $class){
+     $qr = Feetype::where('year_id', $year)->where('form_id', $class)->get();
+     return $qr;
+    }
+
     // public function background(){
     //     return $this->belongsTo('App\Background');
     // }

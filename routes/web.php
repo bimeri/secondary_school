@@ -128,6 +128,7 @@ Route::get('admin/student/subclasses', 'AdminstudentController@studentSubclasses
 Route::post('student/ajax/post', 'AdminstudentController@searchStudentLive')->name('live.search.student');
 Route::post('student/ajax/background', 'AdminstudentController@ajaxGetBackground')->name('background.ajax.get');
 Route::post('student/ajax/class', 'AdminstudentController@ajaxGetClass')->name('classes.ajax.get');
+Route::post('class/ajax/subjects', 'AdminstudentController@ajaxGetClassSubjects')->name('classes.ajax.subjects');
 Route::get('student/excel/class', 'DownloadController@exportStudentRecord')->name('export.excel.student');
 
 // manage subjects
@@ -173,6 +174,7 @@ Route::get('fees/report', 'Fees_expensesController@reportFee')->name('fees.repor
 Route::get('admin/collect/fees', 'Fees_expensesController@getStudents')->name('student.get.all');
 Route::get('admin/fees/statistics', 'Fees_expensesController@getSatistics')->name('fees.statistics.all');
 Route::post('admin/fees/statistics', 'Fees_expensesController@addExpenseType')->name('addExpense.type');
+Route::get('admin/fees/ajax/create', 'Fees_expensesController@getClasses')->name('student.get.classes');
 
 // scholarship
 Route::get('scholarship/create', 'ScholarshipController@index')->name('scholarship.create');
@@ -212,6 +214,18 @@ Route::get('student_logout', 'authController@studentLogout')->name('student.logo
 //teacher
 Route::get('teacher_logout', 'authController@teacherLogout')->name('teacher.logout');
 Route::get('teacher_home', 'TeacherController@index')->name('teacher.home');
+Route::get('teacher/subjects', 'TeacherController@getSubjects')->name('teacher.subjects');
+Route::get('teacher/subjects/test', 'TeacherController@enterSubjectsTest')->name('student.register.test');
+Route::get('get/student/records', 'TeacherController@getStudents')->name('teacher.record.student.mark');
+Route::get('teacher/fisrt_sequence', 'TeacherController@savefirstSequence')->name('first.sequence.saves');
+Route::get('teacher/second_sequence', 'TeacherController@saveSecondSequence')->name('second.sequence.saves');
+Route::get('teacher/third_sequence', 'TeacherController@saveThirdSequence')->name('third.sequence.saves');
+Route::get('teacher/fourth_sequence', 'TeacherController@savefourthSequence')->name('fourth.sequence.saves');
+Route::get('teacher/firth_sequence', 'TeacherController@savefirthSequence')->name('firth.sequence.saves');
+Route::get('teacher/sith_sequence', 'TeacherController@saveSithSequence')->name('sixth.sequence.save');
+Route::get('teacher/file/upload', 'TeacherController@uploadFilePage')->name('teacher.upload.file');
+Route::post('teacher/pdf/upload', 'TeacherController@uploadPfdf')->name('pdf.upload');
+Route::get('teacher/pdf/preview', 'TeacherController@previewPfdf')->name('preview.pdf');
 
 
 //download controller

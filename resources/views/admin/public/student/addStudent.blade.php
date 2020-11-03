@@ -16,7 +16,7 @@
 <p class="w3-center">@lang('messages.add_student')</p>
 <div class="row">
     <div class="col s11 m10 w3-border-t offset-m1 radius white w3-margin-left">
-        <form action="{{ route('admin.submit.student.info') }}" method="post" enctype="multipart/form-data" id="form">
+        <form action="{{ route('admin.submit.student.info') }}" method="post" enctype="multipart/form-data" id="fm">
             {{ csrf_field() }}
             <div class="row">
                 @if(Session::has('notify'))
@@ -80,19 +80,33 @@
                         <label for="school_id">Student School Id</label>
                     </div>
                     <div class="input-field col s12 m4">
+                        {{--  end dynamic  --}}
                         <input type="hidden" name="year" value="{{ $current_year->id }}">
-                        <select name="class" id="select">
-                            <option value="" disabled selected> Class / Background / Sector</option>
-                          @foreach (App\Form::all() as $form)
-                          @php
-                          $class_check = App\Form::where('id', $form->id)->first();
-                          $student_count = App\Studentinfo::where('form_id', $form->id)->where('year_id', $current_year->id)->first();
-                          @endphp
-                            <option value="{{ $form->id }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
+                    </div>
+                </div>
+                {{--  dynamic selecrt start  --}}
+                <div class="row container" style="font-size: 16px !important">
+                    <div class="col m4 s12">
+                        <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
+                            <option value="" disabled selected>select the Sector</option>
+                          @foreach (App\Sector::all() as $sector)
+                            <option value="{{ $sector->id }}">{{ $sector->name }}</option>
                           @endforeach
                         </select>
-                        <label>Select the class</label>
                     </div>
+                    <div class="col s12 m4" id="backgrounds">
+                        <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
+                            <option value="">select the Background</option>
+                        </select>
+                    </div>
+
+                    <div class="col s12 m4" id="classes">
+                        <select class="browser-default" name="class" id="form" required>
+                            <option value="">select the Class</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="input-field col s12 m4" id="subclass"></div>
                     <div class="col m4 s12" id="type"></div>
                 </div>
@@ -146,12 +160,12 @@
 </div>
   <script>
       $(document).ready(function(){
-          createCookie("class", document.getElementById('select').value);
+          createCookie("class", document.getElementById('form').value);
       });
      function createCookie(name, valu){
         document.cookie = escape(name) + "=" + escape(valu);
      }
-    $('#select').on('change', function(){
+    $('#form').on('change', function(){
         $("#subclass").empty();
         $("#type").empty();
         $.ajaxSetup({
@@ -159,13 +173,13 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    var data = $('#form').serialize();
+    var data = $('#fm').serialize();
     var semesterid = $(this).val();
     if(semesterid){
         $.ajax({
            type:"POST",
            url:"{{route('class.getsize')}}",
-           data: $('#form').serialize(),
+           data: $('#fm').serialize(),
            success:function(res){
                console.log('the response is: ',res);
             if(res){

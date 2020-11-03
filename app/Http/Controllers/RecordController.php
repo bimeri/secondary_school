@@ -41,15 +41,12 @@ class RecordController extends Controller
 
     public function getStudents(Request $req){
         $this->authorize('record_mark', Permission::class);
-
-
         try {
             $classId = Crypt::decrypt($req['class']);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
             return redirect()->back()->with($mes);
         }
-
         $formId =(int)$classId;
         $data['class'] = Form::where('id', $formId)->first();
         $data['subjects'] = Subject::where('form_id', $formId)->get();

@@ -17,7 +17,7 @@ class Subject extends Model
         return $this->belongsTo('App\Form');
     }
     public function teachers(){
-        return $this->belongsToMany('App\Teacher', 'subject_teacher','subject_id', 'teacher_id');
+        return $this->hasMany('App\Teacher');
     }
     public function firsttermresults(){
         return $this->hasMany('App\Firsttermresult');
@@ -30,7 +30,14 @@ class Subject extends Model
         return $this->hasMany('App\Thirdtermresult');
     }
 
+    public function files(){
+        return $this->hasMany('App\File');
+    }
+
     public static function getClassSubject($class_id){
         return Subject::where('form_id', $class_id)->get();
+    }
+    public static function getSubjectDetail($sub_id){
+        return Subject::where('id', $sub_id)->first();
     }
 }

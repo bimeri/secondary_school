@@ -1,44 +1,46 @@
-@extends('admin.layout')
-@section('title') Record Marks @endsection
+@extends('teacher.layout')
+@section('title') {{ __('teacher_student_mark') }} @endsection
 @section('style')
 <style>
+    td, th, tr{
+        border-collapse: collapse;
+        border: 1px solid black !important;
+        font-size: 11px !important
+    }
     table{
         border: 1px solid black !important;
         /* box-shadow: 0 0 25px rgb(130, 243, 130), inset 0 0 25px rgb(138, 224, 138); */
     }
+    th{
+        text-align: center !important;
+    }
     .refl{
         /* -webkit-box-reflect: right 10px linear-gradient(transparent, #cc00ff, #0002); */
     }
-    td, th, tr{
-        border: 1px solid black !important;
-        font-size: 11px !important
-    }
-    th>div#stud{
+    th.stud{
         margin-top: 10px !important;
-        transform: rotate(-20deg) !important;
-    }
-    th>div#studs{
-        margin-top: 10px !important;
+        color: white;
+        text-align: center !important;
     }
     input[type='number'].sp{
         position: absolute ;
         outline: none !important;
         border: 1px solid transparent !important;
         border-bottom: 1px solid white !important;
-        width: 60px !important;
+        width: 100px !important;
         height: 30px !important;
         margin-top: -8px;
-        margin-left: -31px;
+        margin-left: 7px;
     }
     input[type='number'].ss{
         position: absolute;
         outline: none !important;
         border: 1px solid transparent !important;
         border-bottom: 1px solid white !important;
-        width: 60px !important;
+        width: 100px !important;
         height: 30px !important;
         margin-top: -8px;
-        margin-left: -31px ;
+        margin-left: 7px ;
     }
     input[type = 'number'].sp{
         color:#2196F3 !important;
@@ -68,83 +70,34 @@
     }
 </style>
 @endsection
-<style>
-     @media only screen and (max-width: 600px) {
-
-}
-</style>
 @section('content')
-<div class="row">
-    <h5 class="right w3-padding w3-center" style="position: absolute; float: right !important"><b>{{ $current_year->name }}</b> Academic year<br>{{ $current_term->name }}</h5>
-    <div class="col s12 m6 offset-m3 teal teal-text rounded lighten-4 waves-effect waves-orange w3-center">
-        @lang('messages.record_marks_header')
-    </div>
-</div>
-<div class="row">
-    <form method="get" action="{{ route('student.get') }}" id="forms">
-        @csrf
-        <div class="row container" style="font-size: 16px !important">
-            <div class="col m3 s12">
-                <select name="year" class="browser-default">
-                    <option value="{{ $current_year->id }}">{{ $current_year->name }}</option>
-                    @foreach (App\Year::all() as $year)
-                        <option value="{{ $year->id }}">{{ $year->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col m3 s12">
-                <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
-                    <option value="" disabled selected>select the Sector</option>
-                  @foreach (App\Sector::all() as $sector)
-                    <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                  @endforeach
-                </select>
-            </div>
-            <div class="col s12 m3" id="backgrounds">
-                <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
-                    <option value="">select the Background</option>
-                </select>
-            </div>
-
-            <div class="col s12 m3" id="classes">
-                <select class="browser-default" name="class" id="form" required>
-                    <option value="">select the Class</option>
-                </select>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="row">
-    <div class="col s12 m8 offset-m4">
-        <form method="get" action="{{ route('record.student.get') }}">
+<div class="row w3-margin-top">
+    <div class="col s11 m10 w3-border-teacher offset-m1 radius white">
+        <form action="{{ route('teacher.record.student.mark') }}" method="get">
             @csrf
             <div class="row">
-                <div class="input-field col m5 s12">
-                    <select name="class" id="class">
-                        @if($class != [])
-                        <option value="{{ \Crypt::encrypt($class->id) }}" selected> {{ $class->name }} / {{ $class->background->name }} / {{ $class->background->sector->name }}</option>
-                        @else
-                        <option value="" selected>form / background / sector</option>
-                        @endif
-                      @foreach (App\Form::where('id', '!=', $class->id ?? '')->get() as $form)
-                        <option value="{{\Crypt::encrypt($form->id) }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
-                      @endforeach
+                <h5 class="center w3-padding black-text">Select the subject from which you want to enter students marks</h5>
+                <div class="col s12 m4 offset-m3">
+                    <select class="browser-default" name="class">
+                        <option value="">select the subjects</option>
+                        @foreach ($teacherSubjecs as $sub)
+                            <option value="{{ Crypt::encrypt($sub['class_id']) }}">{{ $sub['sub_name'] }}/{{ $sub['class'] }}</option>
+                        @endforeach
                     </select>
-                    <label for="class">Select the class</label>
                 </div>
-                <div class="col m2 offset-s3 m3" style="margin-top: 2px !important">
-                    <button class="btn btn-primary waves-effect waves-light" onclick="load()">Get Students</button>
+                <div class="col" class="s12 m3">
+                    <button type="submit" class="w3-btn w3-teacher waves-effect waves-light">get Students</button>
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="col s11 m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">
-        <div class="col s12 m12 refl" style="overflow-x:scroll !important;">
-            <h5 class="center teal-text">{{ __('messages.record_grading') }}. <b>(/20)</b></h5>
+        <hr>
+        <div class="col s12 m12 w3-padding" style="overflow-x:auto !important;">
+            <div class="green lighten-4 green-text center">
+                <h5 class="center teal-text">{{ __('messages.record_grading') }}. <b>(/20)</b></h5>
+            </div>
             <table id="myTable" class="w3-table w3-border-t" style="font-size: 13px !important;">
-                <tr class="teal">
-                        <th rowspan="2" class="w3-xlarge blue">@if(!Empty($students))<div id="stud">Students</div>@else<div id="studs">Students</div>@endif</th>
+                <tr class="teacher-dark">
+                        <th rowspan="2" class="w3-xlarge teacher" class="stud">Students</th>
                         @foreach ($subjects as $sub)
                             <th class="black-text tooltip-wrapper" colspan="2"  id="subjects">
                                 <a class="tooltip tooltip-left" data-tooltip="{{ $sub->code }}">{{ $sub->name }}</a>
@@ -153,16 +106,16 @@
                     <tr>
                         @foreach ($subjects as $sub)
                         @if($first)
-                            <td>1<sup>st</sup> Seq</td>
-                            <td>2<sup>nd</sup> Seq</td>
+                            <td style="text-align: center">1<sup>st</sup> Sequence</td>
+                            <td style="text-align: center">2<sup>nd</sup> Sequence</td>
                         @endif
                         @if($second)
-                            <td>3<sup>rd</sup> Seq</td>
-                            <td>4<sup>th</sup> Seq</td>
+                            <td style="text-align: center">3<sup>rd</sup> Sequence</td>
+                            <td style="text-align: center">4<sup>th</sup> Seq</td>
                         @endif
                         @if($third)
-                            <td>5<sup>th</sup> Seq</td>
-                            <td>6<sup>th</sup> Seq</td>
+                            <td style="text-align: center">5<sup>th</sup> Sequence</td>
+                            <td style="text-align: center">6<sup>th</sup> Sequence</td>
                         @endif
                         @endforeach
                     </tr>
@@ -181,7 +134,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form_id) }}">
                                     <?php $fseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                      $arr = array();
@@ -196,7 +149,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form_id) }}">
                                     <?php $fseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                      $arr2 = array();
@@ -215,7 +168,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form_id) }}">
                                 <?php $tseq = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $arr3 = array();
@@ -230,7 +183,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form_id) }}">
                                 <?php $fseq = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $fsa = array();
@@ -249,7 +202,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form_id) }}">
                                 <?php $seq5 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $fseq5 = array();
@@ -264,7 +217,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $sub->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($sub->form_id) }}">
                                 <?php $noel6 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $student->student->id)->where('subject_id', $sub->id)->get();
                                  $noell = array();
@@ -291,7 +244,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('first.sequence.save') }}",
+                                    url: "{{ route('first.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#fm{{$student->id }}{{$sub->id }}').serialize(),
                                     success: function(response){
@@ -342,7 +295,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('second.sequence.save') }}",
+                                    url: "{{ route('second.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#sm{{$student->id }}{{$sub->id }}').serialize(),
                                     success: function(response){
@@ -392,7 +345,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('third.sequence.save') }}",
+                                    url: "{{ route('third.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#tsm{{$student->id }}{{$sub->id }}').serialize(),
                                     success: function(response){
@@ -442,7 +395,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('fourth.sequence.save') }}",
+                                    url: "{{ route('fourth.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#fsm{{$student->id }}{{$sub->id }}').serialize(),
                                     success: function(response){
@@ -492,7 +445,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('firth.sequence.save') }}",
+                                    url: "{{ route('firth.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#seq5{{$student->id }}{{$sub->id }}').serialize(),
                                     success: function(response){
@@ -542,7 +495,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('sith.sequence.save') }}",
+                                    url: "{{ route('sixth.sequence.save') }}",
                                     method: 'get',
                                     data: $('#ffseq6m{{$student->id }}{{$sub->id }}').serialize(),
                                     success: function(response){
@@ -600,7 +553,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form_id) }}">
                                     <?php $sfseq = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                      $sarr1 = array();
@@ -615,7 +568,7 @@
                                     <input type="hidden" name="year" value="{{ $current_year->id }}">
                                     <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                     <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
+                                    <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form_id) }}">
                                     <?php $sfseq2 = App\Firsttermresult::where('year_id',$current_year->id)
                                     ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                      $sarr2 = array();
@@ -634,7 +587,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form_id) }}">
                                 <?php $tseqs = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $tsa1 = array();
@@ -650,7 +603,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form_id) }}">
                                 <?php $fseqs4 = App\Secondtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $fsa4 = array();
@@ -669,7 +622,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form_id) }}">
                                 <?php $fff = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $ffseq5 = array();
@@ -684,7 +637,7 @@
                                 <input type="hidden" name="year" value="{{ $current_year->id }}">
                                 <input type="hidden" name="student" value="{{ $sub_student->student->id }}">
                                 <input type="hidden" name="subject" value="{{ $subs->id }}">
-                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form->id) }}">
+                                <input type="hidden" name="form" value="{{ \Crypt::encrypt($subs->form_id) }}">
                                 <?php $noel6 = App\Thirdtermresult::where('year_id',$current_year->id)
                                 ->where('student_id', $sub_student->student->id)->where('subject_id', $subs->id)->get();
                                  $noell = array();
@@ -711,7 +664,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('first.sequence.save') }}",
+                                    url: "{{ route('first.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#fms{{$sub_student->id }}{{$subs->id }}').serialize(),
                                     success: function(response){
@@ -763,7 +716,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('second.sequence.save') }}",
+                                    url: "{{ route('second.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#sms{{$sub_student->id }}{{$subs->id }}').serialize(),
                                     success: function(response){
@@ -814,7 +767,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('third.sequence.save') }}",
+                                    url: "{{ route('third.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#tsms{{$sub_student->id }}{{$subs->id }}').serialize(),
                                     success: function(response){
@@ -866,7 +819,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('fourth.sequence.save') }}",
+                                    url: "{{ route('fourth.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#fsms{{$sub_student->id }}{{$subs->id }}').serialize(),
                                     success: function(response){
@@ -917,7 +870,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('firth.sequence.save') }}",
+                                    url: "{{ route('firth.sequence.saves') }}",
                                     method: 'get',
                                     data: $('#fseqq{{$sub_student->id }}{{$subs->id }}').serialize(),
                                     success: function(response){
@@ -968,7 +921,7 @@
                                     });
                                     /* Submit form data using ajax*/
                                 $.ajax({
-                                    url: "{{ route('sith.sequence.save') }}",
+                                    url: "{{ route('sixth.sequence.save') }}",
                                     method: 'get',
                                     data: $('#sfseq6m{{$sub_student->id }}{{$subs->id }}').serialize(),
                                     success: function(response){
@@ -1138,7 +1091,7 @@
                     });
                     /* Submit form data using ajax*/
                 $.ajax({
-                    url: "{{ route('first.sequence.save') }}",
+                    url: "{{ route('first.sequence.saves') }}",
                     method: 'get',
                     data: $('#c_stud_form{{$c_student->id }}{{$c_subject->id }}').serialize(),
                     success: function(response){
@@ -1190,7 +1143,7 @@
                     });
                     /* Submit form data using ajax*/
                 $.ajax({
-                    url: "{{ route('second.sequence.save') }}",
+                    url: "{{ route('second.sequence.saves') }}",
                     method: 'get',
                     data: $('#c_stud_form2{{$c_student->id }}{{$c_subject->id }}').serialize(),
                     success: function(response){
@@ -1241,7 +1194,7 @@
                     });
                     /* Submit form data using ajax*/
                 $.ajax({
-                    url: "{{ route('third.sequence.save') }}",
+                    url: "{{ route('third.sequence.saves') }}",
                     method: 'get',
                     data: $('#c_third{{$c_student->id }}{{$c_subject->id }}').serialize(),
                     success: function(response){
@@ -1293,7 +1246,7 @@
                     });
                     /* Submit form data using ajax*/
                 $.ajax({
-                    url: "{{ route('fourth.sequence.save') }}",
+                    url: "{{ route('fourth.sequence.saves') }}",
                     method: 'get',
                     data: $('#c4_form{{$c_student->id }}{{$c_subject->id }}').serialize(),
                     success: function(response){
@@ -1344,7 +1297,7 @@
                     });
                     /* Submit form data using ajax*/
                 $.ajax({
-                    url: "{{ route('firth.sequence.save') }}",
+                    url: "{{ route('firth.sequence.saves') }}",
                     method: 'get',
                     data: $('#c4_form{{$c_student->id }}{{$c_subject->id }}').serialize(),
                     success: function(response){
@@ -1395,7 +1348,7 @@
                     });
                     /* Submit form data using ajax*/
                 $.ajax({
-                    url: "{{ route('sith.sequence.save') }}",
+                    url: "{{ route('sixth.sequence.save') }}",
                     method: 'get',
                     data: $('#c6_form{{$c_student->id }}{{$c_subject->id }}').serialize(),
                     success: function(response){

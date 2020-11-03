@@ -45,10 +45,47 @@
                     </tr>
 
                     {{--  model to assign subjects  --}}
-                    <div id="modal{{ $key + 1 }}" class="modal modal-fixed-footer" >
+                    <div id="modal{{ $key + 1 }}" class="modal modal-fixed-footer" style="width: 60%">
                         <div class="modal-content">
                         <h4 class="w3-center teal-text">Select the Subjects to be assign to <b class="upper">{{ $user->full_name }}.</b> </h4>
                         <hr style="border-top: 1px solid orange">
+
+                        <form method="get" action="{{ route('student.get') }}" id="forms">
+                            @csrf
+                            <div class="row" style="font-size: 16px !important">
+                                <div class="col m4 s12">
+                                    <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
+                                        <option value="" disabled selected>select the Sector</option>
+                                      @foreach (App\Sector::all() as $sector)
+                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                                      @endforeach
+                                    </select>
+                                </div>
+                                <div class="col s12 m4" id="backgrounds">
+                                    <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
+                                        <option value="">select the Background</option>
+                                    </select>
+                                </div>
+
+                                <div class="col s12 m4" id="classes" onchange="bookes(event)">
+                                    <select class="browser-default" name="class" id="form" required>
+                                        <option value="">select the Class</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m2 m3 right offset-m7" id="submit">
+                                    <button class="btn btn-primary waves-effect waves-light">Get subjects</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m6">
+                                    <h6>Select the Subject</h6><hr>
+                                    <input type="checkbox" class="right" name=""  value="" />
+                                </div>
+                            </div>
+                        </form>
+
                             <form action="{{ route('teacher.subject') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="user_name" value="{{ $user->user_name }}">
