@@ -99,9 +99,9 @@
           </div>
       </div>
     </li><hr style="margin-top: 43px !important; border-top:1px solid rgb(60, 182, 182)">
-            <ul class="collapsible w3-ul navbar-fixed" style="margin-top:-15px">
-                <li>
-            @canany(['add_role', 'add_user', 'user_role'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="roles()" @if( Request::is('admin/role', 'admin/add_user', 'view_roles/'.request()->route("id").'', 'edit_user/'.request()->route("id").'', 'admin/edit_role/'.request()->route("id").'', 'admin/all_user'))  style="background-color: #ade7d9" @endif ><i class="fa fa-user teal-text w3-small"></i>{{ __('messages.manage_role_permission') }}<i class="fa fa-chevron-down right w3-small" id="role"></i></div>@endcanany
+        <ul class="collapsible w3-ul navbar-fixed" style="margin-top:-15px">
+            <li>
+                @canany(['add_role', 'add_user', 'user_role'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="roles()" @if( Request::is('admin/role', 'admin/add_user', 'view_roles/'.request()->route("id").'', 'edit_user/'.request()->route("id").'', 'admin/edit_role/'.request()->route("id").'', 'admin/all_user'))  style="background-color: #ade7d9" @endif ><i class="fa fa-user teal-text w3-small"></i>{{ __('messages.manage_role_permission') }}<i class="fa fa-chevron-down right w3-small" id="role"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                         @can('add_role', App\Permission::class) <li><a href="{{ route('admin.manage.role') }}" @if( Request::is('admin/role', 'add_user/'.request()->route("id").'', 'admin/edit_role/'.request()->route("id").'')) style="background-color:#e5e9e8" @endif class="teal-text"  onclick="load()"> &nbsp;{{ __('messages.add_role') }}</a></li>@endcan
@@ -109,7 +109,7 @@
                         @can('user_role', App\Permission::class)<li><a href="{{ route('view.admin.user') }}" @if( Request::is('admin/all_user')) style="background-color:#e5e9e8" @endif class="teal-text"  onclick="load()">{{ __('messages.see_all_user') }}</a></li>@endcan
                     </ul>
                 </div>
-                </li>
+            </li>
 
                 <li>
             @canany(['create_income', 'create_expenses', 'record_expense','receive_fees','report_fees', 'give_scholarship', 'income_statement', 'print_reciept'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="fees()" @if( Request::is('fees/create', 'expense/create', 'admin/collect_fees', 'scholarship/create', 'admin/fee_statistics', 'scholarship/student', 'expense/view', 'fees/report', 'admin/collect/fees', 'admin/fees/statistics', 'student/scholarship/report', 'student/scholarship/get', 'admin/income_statetment', 'admin/income_statetments', 'income/detail', 'expense/creates', 'admin/fees/ajax/create'))  style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-money-bill-wave-alt teal-text w3-small"></i> Fees and Expenses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="fee"></i></div>@endcanany
@@ -199,51 +199,34 @@
 
                 <li>
             @canany(['record_mark', 'rank_student', 'print_result', 'print_rank', 'print_fee'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="results()" @if(Request::is('student/marks/record', 'student/rank', 'class/result', 'class/student/result', 'get/student/record')) style="background-color: #ade7d9" @endif><i class="fa fa-pencil-alt teal-text w3-small"></i> Results &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="result"></i></div>@endcanany
-                <div class="collapsible-body">
-                    <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
-                        @can('record_mark', App\Permission::class)<li><a href="{{ route('admin.record.marks') }}" class="teal-text" @if(Request::is('student/marks/record', 'get/student/record'))style="background-color: #e5e9e8"@endif  onclick="load()">Record Mark</a></li>@endcan
-                        @can('rank_student', App\Permission::class)<li><a href="{{ route('student.rank.result') }}" class="teal-text" @if(Request::is('student/rank', 'class/result', 'class/student/result'))style="background-color: #e5e9e8"@endif  onclick="load()">Rank Students</a></li>@endcan
-                        @can('print_result', App\Permission::class)<li><a href="#!" class="teal-text">Print Result</a></li>@endcan
-                        @can('promote_student', App\Permission::class)<li><a href="#!" class="teal-text">Promote Student</a></li>@endcan
-                        @can('print_rank', App\Permission::class)<li><a href="#!" class="teal-text">Print Rank Sheets</a></li>@endcan
-                        @can('print_fee', App\Permission::class)<li><a href="#!" class="teal-text">Fees Controlled Print</a></li>@endcan
-                    </ul>
-                </div>
+                    <div class="collapsible-body">
+                        <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
+                            @can('record_mark', App\Permission::class)<li><a href="{{ route('admin.record.marks') }}" class="teal-text" @if(Request::is('student/marks/record', 'get/student/record'))style="background-color: #e5e9e8"@endif  onclick="load()">Record Mark</a></li>@endcan
+                            @can('rank_student', App\Permission::class)<li><a href="{{ route('student.rank.result') }}" class="teal-text" @if(Request::is('student/rank', 'class/result', 'class/student/result'))style="background-color: #e5e9e8"@endif  onclick="load()">Rank Students</a></li>@endcan
+                            @can('print_result', App\Permission::class)<li><a href="#!" class="teal-text">Print Result</a></li>@endcan
+                            @can('promote_student', App\Permission::class)<li><a href="#!" class="teal-text">Promote Student</a></li>@endcan
+                            @can('print_rank', App\Permission::class)<li><a href="#!" class="teal-text">Print Rank Sheets</a></li>@endcan
+                            @can('print_fee', App\Permission::class)<li><a href="#!" class="teal-text">Fees Controlled Print</a></li>@endcan
+                        </ul>
+                    </div>
                 </li>
-manage
                 <li>
-               @canany(['school_theme', 'school_profile'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="settings()" @if( Request::is('admin/school_theme', 'admin/school_profile'))   style="background-color: #ade7d9"  @endif><i class="fa fa-wrench w3-medium teal-text"></i> Setting/Configuration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="setting"></i></div>@endcanany
-                <div class="collapsible-body">
-                    <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
-                        @can('school_theme', App\Permission::class)<li><a href="{{ route('view.admin.theme') }}" class="teal-text" @if( Request::is('admin/school_theme'))  style="background-color:#e5e9e8" @endif onclick="load()">School theme</a></li>@endcan <!-- year, term, sequesnces -->
-                        @can('school_profile', App\Permission::class)<li><a href="{{ route('view.admin.profile') }}" class="teal-text" @if( Request::is('admin/school_profile'))  style="background-color:#e5e9e8" @endif onclick="load()">School profile</a></li> @endcan<!-- name, motto, logo, exam/test session,  -->
-                    </ul>
-                </div>
+            @canany(['school_theme', 'school_profile'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="settings()" @if( Request::is('admin/school_theme', 'admin/school_profile', 'admin/more_setting', 'admin/all_setting'))   style="background-color: #ade7d9"  @endif><i class="fa fa-wrench w3-medium teal-text"></i> Setting/Configuration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="setting"></i></div>@endcanany
+                    <div class="collapsible-body">
+                        <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
+                            @can('school_theme', App\Permission::class)<li><a href="{{ route('view.admin.theme') }}" class="teal-text" @if( Request::is('admin/school_theme', 'admin/more_setting', 'admin/all_setting'))  style="background-color:#e5e9e8" @endif onclick="load()">School theme</a></li>@endcan <!-- year, term, sequesnces -->
+                            @can('school_profile', App\Permission::class)<li><a href="{{ route('view.admin.profile') }}" class="teal-text" @if( Request::is('admin/school_profile'))  style="background-color:#e5e9e8" @endif onclick="load()">School profile</a></li> @endcan<!-- name, motto, logo, exam/test session,  -->
+                        </ul>
+                    </div>
                 </li>
                 <li><a href="{{ route('admin.logout') }}"  class="waves-effect waves-light red-text"  onclick="load()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="fa fa-power-off"></span> logout</a></li>
             </ul>
   </ul>
 
     <div class="cal">
-        <div class="row">
-            <div class="col s10 offset-s1 m6 offset-m3">
-                @if(count($errors) > 0)
-                <center>
-                    <div class="w3-container red-text w3-card-8 w3-margin-top materialize-red lighten-4" style="display: block; position: relative; z-index: 30">
-                        <span onclick="this.parentElement.style.display='none'" class="close right w3-padding-16 w3-margin-top" style="cursor: pointer">x</span>
-                        <ul id="error" class="w3-margin w3-padding">
-                            @foreach($errors->all() as $error)
-                                <li style="text-align: center;">{{ $error }} </li>
-                            @endforeach  <center><i class="mdi-action-thumb-down" style="font-size: 25px;"></i></center>
-                        </ul>
-                    </div>
-                </center>
-                @endif
-            </div>
-        </div>
+        @include('admin.public.includes.error')
         @yield('content')
     </div>
-
         <div id="menu" class="teal" style="height: 800px !important; width: 100% !important; position: fixed !important; top:0px; bottom: 0px; left: 0px; right: 0px; z-index: 1000; opacity:.5 !important">
             <div class="w3-margin-top">
                 <center>

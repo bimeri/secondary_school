@@ -45,7 +45,7 @@
                     <td>{{ $value['classType'] }}</td>
                     <td>{{ $value['students'] }}</td>
                     <td>
-                    <a href="{{ route('view.student.class', ['yearId' => Crypt::encrypt($value['yearId']), 'subform_id' => Crypt::encrypt($value['subId']), 'formId' => Crypt::encrypt($value['formId']) ]) }}" class="btn orange orange-text lighten-4 waves-light waves-effect">view students <i class="fa fa-eye w3-small"></i></a>
+                    <a href="{{ route('view.student.class', ['yearId' => Crypt::encrypt($value['yearId']), 'subform_id' => Crypt::encrypt($value['subId']), 'formId' => Crypt::encrypt($value['formId']), 'type' => $value['classType']]) }}" class="btn orange orange-text lighten-4 waves-light waves-effect">view students <i class="fa fa-eye w3-small"></i></a>
                     </td>
                     <td>
                     <a href="{{ route('export.excel.student', ['yearId' => Crypt::encrypt($value['yearId']), 'subform_id' => Crypt::encrypt($value['subId']), 'formId' => Crypt::encrypt($value['formId']) ]) }}" class="btn green lighten-4 green-text waves-light waves-effect">class list <i class="fa fa-file-csv w3-small"></i></a>

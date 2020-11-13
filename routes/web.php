@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -18,17 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-// layout route
-// Route::get('welcome/{locale}', function ($locale) {
-//     if (! in_array($locale, ['en', 'es', 'fr'])) {
-//         abort(400);
-//     }
-
-//     App::setLocale($locale);
-
-//     //
-// });
-
 Route::group(['middleware' => ['web']], function()
 {
     route::get('admin_layout', 'pageController@adminLaygout')->name('admin.layout');
@@ -45,7 +35,7 @@ Route::post('language/french', function(){
         DB::table('languages')->where('id', '!=', '2')->update(['active' => 0 ]);
         DB::table('languages')->where('id', 2)->update(['active' => 1]);
         App::setLocale('fr');
-        Session::put('key', 'fr');
+        session()->put('key', 'fr');
     $notification = array(
         'message' => 'Your language has been changed to French successfully!',
         'alert-type' => 'success');
@@ -58,7 +48,7 @@ Route::post('language/english', function(){
         DB::table('languages')->where('id', '!=', '1')->update(['active' => 0 ]);
         DB::table('languages')->where('id', 1)->update(['active' => 1]);
         App::setLocale('en');
-        Session::put('key', 'en');
+        session()->put('key', 'en');
     $notification = array(
         'message' => 'Your language has been changed to English successfully!',
         'alert-type' => 'success');
@@ -82,6 +72,8 @@ Route::get('admin/all_user', 'AdminController@seeUser')->name('view.admin.user')
 //school profile and theming
 Route::get('admin/school_theme', 'SettingController@index')->name('view.admin.theme');
 Route::get('admin/school_profile', 'SettingController@profile')->name('view.admin.profile');
+Route::get('admin/more_setting', 'SettingController@moreSetting')->name('admin.more_setting');
+Route::get('admin/all_setting', 'SettingController@allSetting')->name('admin.all_settintg');
 Route::post('admin/create_sequence', 'SettingController@createSequence')->name('sequence.create');
 Route::post('admin/onTest', 'SettingController@OnTest')->name('on.test.session');
 Route::post('admin/offTest', 'SettingController@OffTest')->name('off.test.session');
@@ -91,6 +83,10 @@ Route::post('admin/setting/time', 'SettingController@schoolTime')->name('setting
 Route::post('admin/setting/information', 'SettingController@schoolCurrentInformation')->name('setting.current.information');
 Route::post('admin/setting/profile', 'SettingController@schoolProfile')->name('setting.school.profile');
 Route::post('admin/setting/year', 'SettingController@addYear')->name('setting.year.create');
+Route::post('admin/setting/ajax/table', 'SettingController@resultTable')->name('get.result.table');
+Route::post('admin/setting/ajax/publish_first', 'SettingController@PublishFirstResult')->name('publish.first.result');
+Route::post('admin/setting/ajax/publish_second', 'SettingController@PublishSecondResult')->name('publish.second.result');
+Route::post('admin/setting/teacher/', 'SettingController@recordTeacherMarks')->name('teacher.record.marks');
 // Sectors and Background
 Route::get('admin/sector', 'SectorController@create')->name('admin.add.sector');
 Route::get('admin/background', 'SectorController@createBackround')->name('admin.create.background');
@@ -203,15 +199,19 @@ Route::get('admin/income_statetment', 'IncomeController@index')->name('admin.inc
 Route::get('admin/income_statetments', 'IncomeController@getIncomeStatment')->name('get.income.statment');
 Route::get('income/detail', 'IncomeController@getDetail')->name('get.detail');
 
-
-//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('admin_logout', 'authController@adminLogout')->name('admin.logout');
 
-//student
-Route::get('student_home', 'StudentController@index')->name('student.home');
+//student's route
+Route::get('student/home', 'StudentController@index')->name('student.home');
+Route::get('student/subjects', 'StudentController@studentSubjectPage')->name('student.subjects');
+Route::get('student/test_result', 'StudentController@studentResultPage')->name('student.result');
+Route::get('student/test/result', 'StudentController@studentTestResult')->name('get_student.tes_result');
+Route::get('student/note/get', 'StudentController@studentTeacherNote')->name('student.get.note');
+Route::get('student/view_file', 'StudentController@studentFileView')->name('student.view.file');
+
 Route::get('student_logout', 'authController@studentLogout')->name('student.logout');
 
-//teacher
+//teacher's route
 Route::get('teacher_logout', 'authController@teacherLogout')->name('teacher.logout');
 Route::get('teacher_home', 'TeacherController@index')->name('teacher.home');
 Route::get('teacher/subjects', 'TeacherController@getSubjects')->name('teacher.subjects');
@@ -226,7 +226,10 @@ Route::get('teacher/sith_sequence', 'TeacherController@saveSithSequence')->name(
 Route::get('teacher/file/upload', 'TeacherController@uploadFilePage')->name('teacher.upload.file');
 Route::post('teacher/pdf/upload', 'TeacherController@uploadPfdf')->name('pdf.upload');
 Route::get('teacher/pdf/preview', 'TeacherController@previewPfdf')->name('preview.pdf');
-
+Route::get('teacher/pdf/share', 'TeacherController@pdfShare')->name('share.pdf');
+Route::get('teacher/upload_assignments', 'teacherAssignmentController@assignments')->name('teacher.upload.assignment');
+Route::post('teacher/upload_assignments', 'teacherAssignmentController@assignmentsAddFunction')->name('teacher.add_assignment');
+Route::get('teacher/preview_assignment', 'teacherAssignmentController@assignmentPreview')->name('teacher.view.assignment');
 
 //download controller
 Route::get('fee/download', 'Downloadcontroller@feeDownload')->name('fee.download');

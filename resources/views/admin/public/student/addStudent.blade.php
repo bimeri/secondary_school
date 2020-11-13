@@ -137,7 +137,7 @@
                 <td>{{ $key+1 }}</td>
                 <td>
                     <?php $enroll = explode('/', trim($student->year->name)); ?>
-                    <img src="{{ URL::asset('image/students/'.$enroll[1].'/'.$student->profile.'') }}" width="50" height="50" class="w3-circle w3-border-t">
+                    <img src="{{ URL::asset('image/students/'.$enroll[0].'/'.$student->profile.'') }}" width="50" height="50" class="w3-circle w3-border-t">
                 </td>
                 <td> {{ $student->student->full_name }}</td>
                 <td>

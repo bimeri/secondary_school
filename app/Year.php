@@ -55,6 +55,21 @@ class Year extends Model
     {
         return $this->hasMany('App\File');
     }
+    public function promotions(){
+        return $this->hasMany('App\Promotion');
+    }
+
+    public function firsttermresults(){
+        return $this->hasMany('App\Firsttermresult');
+    }
+
+    public function resultcontrols(){
+        return $this->hasMany('App\Resultcontrol');
+    }
+
+    public function assignments(){
+        return $this->hasMany('App\Assignment');
+    }
 
     public static function getCurrentYear()
     {

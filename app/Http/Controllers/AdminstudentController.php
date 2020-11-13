@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Background;
 use App\Form;
 use App\Permission;
+use App\Promotion;
 use App\Setting;
 use App\Student;
 use App\Studentinfo;
@@ -116,6 +117,7 @@ class AdminstudentController extends Controller
             }
         }
 
+        $studentPromotion = new Promotion();
         $student = new Student();
         $student->full_name = $fname;
         $student->school_id = $schoolId;
@@ -130,11 +132,14 @@ class AdminstudentController extends Controller
 
             $studentinfo = new Studentinfo();
             if($subclass != null){
+                $subType = Subclass::where('id', $subclass)->first();
                 $studentinfo->form_id = $form_id;
                 $studentinfo->subform_id = $subclass;
+                $studentPromotion->form_type = $subType->type;
             }
             else {
                 $studentinfo->form_id = $form_id;
+                $studentPromotion->form_type = 'A';
             }
             $studentinfo->year_id = $year;
             $studentinfo->student_school_id = $school_id;
@@ -146,10 +151,17 @@ class AdminstudentController extends Controller
             $studentinfo->gender = $gender;
             $studentinfo->save();
 
-            if($studentinfo && $req['profile_image']){
+
+            $studentPromotion->year_id = $year;
+            $studentPromotion->student_id = $student_id->id;
+            $studentPromotion->form_id = $form_id;
+            $studentPromotion->remark = 'New';
+
+            $studentPromotion->save();
+            if($studentinfo && $studentPromotion && $req['profile_image']){
                 $year = Year::where('active', 1)->first();
                 $folder = explode('/', trim($year->name));
-                $destinationPath = '/image/students/'.$folder[1].'';
+                $destinationPath = '/image/students/'.$folder[0].'';
                 $filename = $school_id.'.'.request()->profile_image->getClientOriginalExtension();
                 request()->profile_image->move(public_path($destinationPath), $filename);
                 DB::table('studentinfos')->where('student_school_id', $school_id)->update(['profile' => $filename]);
@@ -231,22 +243,22 @@ class AdminstudentController extends Controller
     }
 
     public function studentSubclasses(Request $req){
-        $yr = $req['yearId'];
-        $subfm = $req['subform_id'];
-        $fm = $req['formId'];
         $year = '';
-        $subform = null;
         $form = '';
 
         try {
-            $year = Crypt::decrypt($yr);
-            $subform = Crypt::decrypt($subfm);
-            $form = Crypt::decrypt($fm);
+            $year = Crypt::decrypt($req['yearId']);
+            $subform = Crypt::decrypt($req['subform_id']);
+            $form = Crypt::decrypt($req['formId']);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             $notify = array('message' => 'fail to decrypt IDs please contact the admin', 'alert-tpye' => 'error');
             return redirect()->back()->with($notify);
         }
+        $clas = Form::where('id', $form)->first();
 
+        $data['clas'] = $clas;
+        $data['type'] = $req['type'];
+        $data['years'] = Year::getYearName($year);
         $data['students'] = Studentinfo::getAllStudentPerYearClassAndSubClass($year, $form, $subform);
 
         return view('admin.public.student.viewSubclassStudent')->with($data);

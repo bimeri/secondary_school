@@ -50,4 +50,5 @@ return [
     'teacher_student_mark' => 'Students Marks',
     'teacher_uplaodFile' => 'Upload File',
     'teacher_preview' => 'Preview file',
+    'student_viewNote' => 'Preview file',
 ];

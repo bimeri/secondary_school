@@ -33,6 +33,10 @@ class Term extends Model
     {
         return $this->hasMany('App\Studentdiscipline');
     }
+    public function resultcontrols()
+    {
+        return $this->hasMany('App\Resultcontrol');
+    }
 
     public static function getCurrentTerm(){
         $query = Term::select('id')->where('active', 1)->first();
@@ -43,5 +47,13 @@ class Term extends Model
     public static function getAllTerm(){
         $query = Term::all();
         return $query;
+    }
+
+    public static function getTermByName($name){
+        return Term::where('name', $name)->first();
+    }
+
+    public static function getTermById($id){
+        return Term::where('id', $id)->first();
     }
 }

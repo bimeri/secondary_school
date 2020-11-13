@@ -34,7 +34,7 @@ class TeacherController extends Controller
         $userId = auth()->user()->id;
         $data['year'] = Year::getYearName($yearid);
         $data['yearId'] = $yearid;
-        $subjects = DB::table('subject_teacher')->where('teacher_id', $userId)->where('year_id', $yearid)->get();
+        $subjects = DB::table('subject_teacher')->where('teacher_id', $userId)->get();
         $arr = [];
         foreach ($subjects as $sub) {
            $subjectDetail = Subject::getSubjectDetail($sub->subject_id);
@@ -55,7 +55,7 @@ class TeacherController extends Controller
     public function enterSubjectsTest(){
         $yearId =  Year::getCurrentYear();
         $userId = auth()->user()->id;
-        $teacher_subject = DB::table('subject_teacher')->where('year_id', $yearId)->where('teacher_id', $userId)->get();
+        $teacher_subject = DB::table('subject_teacher')->where('teacher_id', $userId)->get();
         $arr = [];
         foreach ($teacher_subject as $sub) {
             $subjectDetail = Subject::getSubjectDetail($sub->subject_id);
@@ -77,6 +77,10 @@ class TeacherController extends Controller
     // teacher side to get students and input their marks
     public function getStudents(Request $req){
         // $this->authorize('record_mark', Permission::class);
+        $this->validate($req, [
+            'class' => 'required'
+        ]);
+        $data['recordingMarks'] = '';
         try {
             $classId = Crypt::decrypt($req['class']);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
@@ -106,15 +110,14 @@ class TeacherController extends Controller
 
         $yearId =  Year::getCurrentYear();
         $userId = auth()->user()->id;
-        $teacher_subject = DB::table('subject_teacher')->where('year_id', $yearId)->where('teacher_id', $userId)->get();
+        $teacher_subject = DB::table('subject_teacher')->where('teacher_id', $userId)->get();
         $arr = [];
         $data['subjects'] = DB::table('subjects')
-        ->select('*')
-        ->join('subject_teacher', 'subject_teacher.subject_id', 'subjects.id')
-        ->where('subject_teacher.teacher_id', auth()->user()->id)
-        ->where('subjects.form_id', $formId)
-        ->get();
-        // return $subjects;
+                        ->select('*')
+                        ->join('subject_teacher', 'subject_teacher.subject_id', 'subjects.id')
+                        ->where('subject_teacher.teacher_id', auth()->user()->id)
+                        ->where('subjects.form_id', $formId)
+                        ->get();
         foreach ($teacher_subject as $sub) {
             $subjectDetail = Subject::getSubjectDetail($sub->subject_id);
              $subjectArray = [
@@ -128,29 +131,43 @@ class TeacherController extends Controller
              array_push($arr, $subjectArray);
          }
         $data['teacherSubjecs'] = $arr;
+        if(DB::table('subject_teacher')->where('status', 0)->where('year_id', $yearId)->exists()){
+            $data['recordingMarks'] = true;
+        } else {
+            $data['recordingMarks'] = false;
+        }
 
         $data['students'] = Studentinfo::where('form_id', $formId)->where('subform_id', null)->get();
         $data['b_students'] = Subclass::getStudentBysubClasses('B', $formId);
         $data['c_students'] = Subclass::getStudentBysubClasses('C', $formId);
+        $data['d_students'] = Subclass::getStudentBysubClasses('D', $formId);
+        $data['e_students'] = Subclass::getStudentBysubClasses('E', $formId);
         return view('teacher.public.student.recordMarks')->with($data);
     }
 
-
+    public function pdfShare(Request $req){
+        $fileId = $req['file_id'];
+        $update = File::where('id', $fileId)->update([
+            'share' => 1
+        ]);
+        if($update){
+            $notify = array('message' => 'File was Published successfully', 'alert-type' => 'success');
+            return redirect()->back()->with($notify);
+        } else {
+            $notify = array('message' => 'Fail to spublish File', 'alert-type' => 'error');
+            return redirect()->back()->with($notify);
+        }
+    }
 
 
     // start saving students result
+    // first sequence
     public function savefirstSequence(Request $req){
         $seq = $req['seq1'];
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
         //return $subject->coefficient;
 
@@ -215,13 +232,7 @@ class TeacherController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Firsttermresult::where('year_id', $yearid)
@@ -283,13 +294,7 @@ class TeacherController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Secondtermresult::where('year_id', $yearid)
@@ -348,13 +353,7 @@ class TeacherController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Secondtermresult::where('year_id', $yearid)
@@ -413,13 +412,7 @@ class TeacherController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
 
@@ -480,13 +473,7 @@ class TeacherController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Thirdtermresult::where('year_id', $yearid)
@@ -541,11 +528,10 @@ class TeacherController extends Controller
     }
 
     public function uploadFilePage(Request $req){
-        $yearId = '';
+        $yearId = Year::getCurrentYear();
         $subjectId = '';
 
         try {
-            $yearId = Crypt::decrypt($req['yearId']);
             $subjectId = Crypt::decrypt( $req['subjectId']);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             $mess = array('message' => 'Fail to decrypt Id please contact the administrator', 'alert-type' => 'error');
@@ -553,7 +539,6 @@ class TeacherController extends Controller
         }
         $data['files'] = File::getTeachersFiles($yearId, auth()->user()->id, $subjectId);
         $teacherSubject = DB::table('subject_teacher')
-                            ->where('year_id', $yearId)
                             ->where('teacher_id', auth()->user()->id)
                             ->where('subject_id', $subjectId)->get();
         $array = [];
@@ -561,6 +546,7 @@ class TeacherController extends Controller
             $subjectDetail = Subject::getSubjectDetail($value->subject_id);
             $newArray = [
                 'subject_name' => $subjectDetail->name,
+                'subject_code' => $subjectDetail->code,
                 'subject_id' => $subjectDetail->id,
                 'yearId' => $yearId
             ];
@@ -578,19 +564,24 @@ class TeacherController extends Controller
         $subject = $req['subjectId'];
         $type = $req['type'];
 
-        $subjectName = Subject::getSubjectDetail($subject);
+        $fileExtension = request()->pdf_file->getclientOriginalExtension();
+        if(strtolower($fileExtension) != strtolower($type)){
+            $message = array('message' => 'Please upload the correct file type. '.strtolower($type).' is different from '.$fileExtension.'', 'alert-type' => 'error');
+            return redirect()->back()->with($message);
+        }
         $userId = auth()->user()->id;
         $counter = File::where('teacher_id', $userId)
                         ->where('file_type', $type)
                         ->where('year_id', $yearId)
                         ->where('subject_id', $subject)
                         ->count();
-
+         $fullFileName = explode('.', trim(request()->pdf_file->getClientOriginalName()));
+         $fileName = $fullFileName[0];
         $year = Year::where('active', 1)->first();
         $folder = explode('/', trim($year->name));
-        $destinationPath = '/image/files/'.$folder[1].'';
+        $destinationPath = '/image/files/'.$folder[0].'';
         // file name is of tpe: SUBJECTNAME_USERID_NUMBEROFFILES.FILEEXTENSION
-        $filename = $subjectName->name.'_'.$userId. '_'.($counter+1).'.'.request()->pdf_file->getClientOriginalExtension();
+        $filename = $fileName.'_'.$userId. '_'.($counter+1).'.'.request()->pdf_file->getClientOriginalExtension();
         request()->pdf_file->move(public_path($destinationPath), $filename);
 
         $files = new File();

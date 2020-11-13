@@ -16,4 +16,8 @@ class Setting extends Model
     public function year(){
         return $this->belongsTo('App\Year');
     }
+    public static function getSchoolMotto(){
+        $query = Setting::first();
+        return $query->motto;
+    }
 }

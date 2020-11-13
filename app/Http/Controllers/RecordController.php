@@ -41,13 +41,8 @@ class RecordController extends Controller
 
     public function getStudents(Request $req){
         $this->authorize('record_mark', Permission::class);
-        try {
-            $classId = Crypt::decrypt($req['class']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formId =(int)$classId;
+
+        $formId =(int)$req['class'];
         $data['class'] = Form::where('id', $formId)->first();
         $data['subjects'] = Subject::where('form_id', $formId)->get();
         $terms = Term::where('active', 1)->first();
@@ -79,13 +74,7 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
         //return $subject->coefficient;
 
@@ -150,13 +139,7 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Firsttermresult::where('year_id', $yearid)
@@ -218,13 +201,7 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Secondtermresult::where('year_id', $yearid)
@@ -283,13 +260,7 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Secondtermresult::where('year_id', $yearid)
@@ -348,15 +319,8 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
-
 
         if(Thirdtermresult::where('year_id', $yearid)
             ->where('student_id', $studentId)
@@ -415,13 +379,7 @@ class RecordController extends Controller
         $studentId = (int)$req['student'];
         $sub = (int)$req['subject'];
         $yearid = (int)$req['year'];
-        try {
-            $decrypted_id = Crypt::decrypt($req['form']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
-        $formid = (int)$decrypted_id;
+        $formid = (int)$req['form'];
         $subject = Subject::where('id', $sub)->first();
 
         if(Thirdtermresult::where('year_id', $yearid)

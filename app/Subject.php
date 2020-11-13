@@ -16,8 +16,8 @@ class Subject extends Model
     public function form(){
         return $this->belongsTo('App\Form');
     }
-    public function teachers(){
-        return $this->hasMany('App\Teacher');
+    public function teacher(){
+        return $this->belongsTo('App\Teacher');
     }
     public function firsttermresults(){
         return $this->hasMany('App\Firsttermresult');
@@ -32,6 +32,10 @@ class Subject extends Model
 
     public function files(){
         return $this->hasMany('App\File');
+    }
+
+    public function assignments(){
+        return $this->hasMany('App\Assignment');
     }
 
     public static function getClassSubject($class_id){

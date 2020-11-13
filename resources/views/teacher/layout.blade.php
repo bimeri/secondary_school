@@ -98,27 +98,28 @@
                 <li><a href="#"  class="waves-effect">Notification <i class="fa fa-bell t-teal-text"></i></a></li>
                 <li><a href="#"  class="waves-effect">Messages <i class="fa fa-envelope t-teal-text"></i></a></li>
                 <li>
-                <div class="collapsible-header waves-effect waves-teal" onclick="classes()"  @if( Request::is('teacher/subjects'))  style="background-color: #c4e287" @endif> &nbsp;<i class="fa fa-list t-teal-text w3-small"></i> Manage Subject&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>
+                <div class="collapsible-header waves-effect waves-teal" onclick="classes()"  @if( Request::is('teacher/subjects', 'teacher/upload_assignments', 'teacher/file/upload', 'teacher/pdf/preview', 'teacher/preview_assignment'))  style="background-color: #c4e287" @endif> &nbsp;<i class="fa fa-list t-teal-text w3-small"></i> Manage Subject&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d2f9fa">
-                        <li><a href="{{ route('teacher.subjects') }}" class="t-teal-text" @if( Request::is('teacher/subjects')) style="background-color: #c8d6bc" @endif onclick="load()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All Subjects <i class="fa fa-list right t-teal-text"></i></a></li>
+                        <li><a href="{{ route('teacher.subjects') }}" class="t-teal-text" @if( Request::is('teacher/subjects', 'teacher/upload_assignments', 'teacher/file/upload', 'teacher/pdf/preview', 'teacher/preview_assignment')) style="background-color: #c8d6bc" @endif onclick="load()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All Subjects <i class="fa fa-list right t-teal-text"></i></a></li>
                     </ul>
                 </div>
                 </li>
-                 <li>
-                <div class="collapsible-header waves-effect waves-tea" onclick="students()" @if(Request::is('teacher/subjects/test')) style="background-color: #c4e287" @endif> &nbsp;<i class="fa fa-graduation-cap t-teal-text w3-small"></i> Manage Students <i class="fa fa-chevron-down right w3-small" id="student"></i></div>
-                <div class="collapsible-body">
-                    <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
-                        <li><a href="{{ route('student.register.test') }}" class="t-teal-text" @if(Request::is('teacher/subjects/test')) style="background-color: #c8d6bc" @endif onclick="students()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student Test <i class="fa fa-wrench t-teal-text right"></i></a></li>
-                        <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Statistics <i class="fa fa-list-alt right t-teal-text"></i></a></li> <!--  -->
-                    </ul>
-                </div>
+                <li>
+                    <div class="collapsible-header waves-effect waves-tea" onclick="students()" @if(Request::is('teacher/subjects/test')) style="background-color: #c4e287" @endif> &nbsp;<i class="fa fa-graduation-cap t-teal-text w3-small"></i> Manage Students <i class="fa fa-chevron-down right w3-small" id="student"></i></div>
+                    <div class="collapsible-body">
+                        <ul class="w3-border w3-padding" style="background-color: rgb(209, 251, 252)">
+                            <li><a href="{{ route('student.register.test') }}" class="t-teal-text" onclick="load()" @if(Request::is('teacher/subjects/test')) style="background-color: #c8d6bc" @endif onclick="students()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student Test <i class="fa fa-wrench t-teal-text right"></i></a></li>
+                            <li><a href="#!" class="t-teal-text"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Statistics <i class="fa fa-list-alt right t-teal-text"></i></a></li> <!--  -->
+                        </ul>
+                    </div>
                 </li>
                 <li><a href="#" class="waves-effect waves-light red-text" style="margin-left: 30px"><span class="fa fa-power-off"></span> logout</a></li>
             </ul>
   </ul>
 
     <div class="cal w3-padding">
+        @include('admin.public.includes.error')
         @yield('content')
     </div>
 

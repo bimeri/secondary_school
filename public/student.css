@@ -142,3 +142,10 @@ body{
 .coc{
     border-top: .5px solid #2196F3;
 }
+.radius{
+  border-radius: 10px;
+}
+.upper{
+    text-transform: uppercase;
+    text-align: center !important;
+}

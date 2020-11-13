@@ -25,12 +25,16 @@ class Teacher extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function subject(){
-        return $this->belongsTo('App\Subject');
+    public function subjects(){
+        return $this->hasMany('App\Subject');
     }
 
     public function files(){
         return $this->hasMany('App\file');
+    }
+
+    public function assignments(){
+        return $this->hasMany('App\Assignment');
     }
     // public function teachersubjects(){
     //     return $this->belongsToMany('App\Teachersubject');

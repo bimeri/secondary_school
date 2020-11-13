@@ -26,7 +26,7 @@
                     </select>
                 </div>
                 <div class="col" class="s12 m3">
-                    <button type="submit" class="w3-btn w3-teacher waves-effect waves-light">get Students</button>
+                    <button type="submit" class="w3-btn w3-teacher waves-effect waves-light" onclick="load()">get Students</button>
                 </div>
             </div>
         </form>

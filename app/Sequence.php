@@ -16,4 +16,8 @@ class Sequence extends Model
     public function term(){
         return $this->belongsTo('App\Term');
     }
+
+    public function resultcontrols(){
+        return $this->hasMany('App\Resultcontrol');
+    }
 }

@@ -1570,6 +1570,9 @@ a {
 .w3-border-t {
     border: 1px solid #009688 !important;
 }
+.w3-border-s {
+    border: 1px solid #2196f3 !important;
+}
 .w3-border-teacher {
     border: 1px solid #669900 !important;
 }

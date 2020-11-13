@@ -8,8 +8,8 @@
         font-size: 14px !important;
         text-align: center !important;
     }
-
 </style>
+
 @endsection
 @section('content')
 <div class="row w3-margin-top">
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="col s11 m10 w3-border-teacher offset-m1 radius white">
-        <h6 class="w3-padding lime text-darken-3 lighten-4 lime-text center">Select what you want to upload</h6>
+        <h6 class="w3-padding lime text-darken-3 lighten-4 lime-text center" style="border-radius: 10px">Select what you want to upload for the subject: <b>{{ $subject[0]['subject_name'].'/'.$subject[0]['subject_code'] }}</b></h6>
         <div class="row"><hr>
             <div class="col s12 m3"><a href="#pdfModal" class="modal-trigger w3-btn w3-orange w3-text-white waves-effect waves-light w3-medium" onclick="setValue('PDF')"> PDF File &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<i class="fa fa-file-pdf"></i></a></div>
             <div class="col s12 m3"><a href="#pdfModal" class="modal-trigger w3-btn w3-blue waves-light waves-effect w3-medium" onclick="setValue('WORD')"> Word Document &nbsp; &nbsp; &nbsp;<i class="fa fa-file-word"></i></a></div>
@@ -32,7 +32,7 @@
             <tr class="teacher">
                 <th>S/N</th>
                 <th>Year</th>
-                <th>Name</th>
+                <th>File Name</th>
                 <th>File Type</th>
                 <th>file icon</th>
                 <th colspan="3">Action</th>
@@ -43,7 +43,10 @@
                 <tr>
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $file->year->name}}</td>
-                    <td>{{ $file->subject->name.'/'.$file->subject->code}}</td>
+                    <td> <?php $filename = explode('_'.auth()->user()->id.'', trim($file->file_name));
+                    echo $filename[0];
+                     ?>
+                    </td>
                     <td>{{ $file->file_type}}</td>
                     <td>
                         @if($file->file_type == 'PDF')
@@ -57,7 +60,14 @@
                         @endif
                     </td>
                     <td><a href="{{ route('preview.pdf', ['file_id' => Crypt::encrypt($file->id)]) }}" class="w3-btn blue blue-text lighten-4 waves-effect waves-light w3-medium">Preview <i class="fa fa-eye"></i></a></td>
-                    <td><a class="w3-btn green green-text lighten-4 waves-effect waves-light w3-medium">Share <i class="fa fa-share-alt-square"></i></a></td>
+                    <td>
+                        @if($file->share == 1)
+                        <button class="btn orange orange-text lighten-4 waves-effect waves-light w3-medium" >Published <i class="fa fa-share-square-o"></i></button><br>
+                        <small class="red-text w3-margin-top" style="cursor: pointer;" title="Make it un available for students">un publish</small>
+                        @else
+                        <a href="{{ route('share.pdf', ['file_id' => $file->id]) }}" class="w3-btn green green-text lighten-4 waves-effect waves-light w3-medium">Publish <i class="fa fa-share-alt-square"></i></a>
+                        @endif
+                    </td>
                     <td><a class="w3-btn red red-text lighten-4 waves-effect waves-light w3-medium">Delete <i class="fa fa-trash"></i></a></td>
                 </tr>
                 @endforeach
@@ -75,7 +85,7 @@
 {{-- modal to add sequences --}}
 <div id="pdfModal" class="modal modal-fixed-footer">
     <div class="modal-content">
-    <h4 class="w3-center teal-text">Select the <b id="setter"></b> file you want to upload</h4>
+    <h4 class="w3-center teal-text">Select the <b id="setter"></b>File you want to upload</h4>
     <hr style="border-top: 1px solid orange">
         <div class="row">
             <form action="{{ route('pdf.upload') }}" method="post" enctype="multipart/form-data">

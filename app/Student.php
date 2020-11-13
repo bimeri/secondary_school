@@ -62,6 +62,9 @@ class Student extends Authenticatable
     public function scholarships(){
         return $this->hasMany('App\Scholarship');
     }
+    public function promotions(){
+        return $this->belongsTo('App\Promotion');
+    }
 
     public function fees(){
         return $this->hasMany('App\Fee');
