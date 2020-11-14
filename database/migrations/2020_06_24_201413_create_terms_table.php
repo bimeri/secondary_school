@@ -14,7 +14,7 @@ class CreateTermsTable extends Migration
     public function up()
     {
         Schema::create('terms', function (Blueprint $table) {
-            $table->integer('id')->unsigned()->autoIncrement();
+            $table->increments('id')->unsigned();
             $table->string('name');
             $table->boolean('active');
             $table->timestamps();

@@ -7,7 +7,7 @@
         <form action="{{ route('expense.type.submit') }}" method="post">
             @csrf
             <div class="row">
-                <div class="input-field col s12 m2 offset-m1">
+                <div class="input-field col s12 m2">
                     <select name="year" class="validate" id="year">
                         <option value="{{ $current_year->id }}" selected>{{ $current_year->name }}</option>
                         @foreach (App\Year::where('active', '!=', 1)->get() as $year)
@@ -16,7 +16,7 @@
                     </select>
                     <label for="autocomplete-input">select the Academic year</label>
                 </div>
-                <div class="input-field col s12 m3">
+                <div class="input-field col s12 m2">
                     <select name="term" class="validate" id="class">
                         <option value="{{ $current_term->id }}" selected>{{ $current_term->name }}</option>
                         @foreach (App\Term::where('active', '!=', 1)->get() as $term)
@@ -33,15 +33,13 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="input-field col s12 m2">
+                    <label for="amount">Enter the amount</label>
+                    <input type="number" name="amount" placeholder="1000 XCFA" id="amount">
+                </div>
                  <div class="input-field col s12 m3">
                     <textarea id="reason" name="reason" class="materialize-textarea" placeholder="spend money on this because of ..."></textarea>
                     <label for="reason">Reason</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 m4 offset-m3">
-                    <label for="amount">Enter the amount</label>
-                    <input type="number" name="amount" placeholder="1000 XCFA" id="amount">
                 </div>
             </div>
             <div class="row">
@@ -113,7 +111,7 @@
       <hr style="border-top: 1px solid orange">
         <div class="row">
             <h4>All Recorded Expenses</h4>
-            <div class="input-field col s12 m6 lighten-4 teal teal-text w3-border" style="overflow-y: scroll; max-height:220px">
+            <div class="input-field col s12 m6 lighten-5 teal teal-text w3-border" style="overflow-y: scroll; max-height:220px">
                 @foreach (App\Expense::getAllType() as $exp)
                     <h5><i class="fa fa-arrow-right w3-small"></i> {{ $exp->name }}</h5>
                 @endforeach
@@ -124,7 +122,7 @@
                     <div class="row">
                         <div class="input-field col s12 m8">
                             <input id="expense_type" name="expense_type" type="text" value="{{ old('expense_type') }}" class="autocompleteExpense">
-                            <label for="expense_type">Expense Type</label>
+                            <label for="expense_type">Enter Expense Type</label>
                         </div>
                         <div class="col s6 m2 offset-s3 input-field">
                             <button class="btn teal waves-effect waves-light w3-small" type="submit">Saved</button>

@@ -23,8 +23,10 @@ class CreateThirdtermresultsTable extends Migration
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $table->smallInteger('seq5')->nullable();
-            $table->smallInteger('seq6')->nullable();
+            $table->decimal('seq5', 6,2)->nullable();
+            $table->decimal('seq6', 6,2)->nullable();
+            $table->decimal('ave_point',6,2)->nullable();
+            $table->booleanl('status')->default(0);
             $table->timestamps();
         });
     }

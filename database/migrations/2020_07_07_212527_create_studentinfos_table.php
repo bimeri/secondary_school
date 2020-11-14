@@ -15,10 +15,15 @@ class CreateStudentinfosTable extends Migration
     {
         Schema::create('studentinfos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('school_id');
-            $table->foreign('school_id')->references('school_id')->on('students')->onDelete('cascade');
+            $table->string('student_id');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->string('student_school_id');
+            $table->integer('year_id')->unsigned();
+            $table->foreign('year_id')->references('id')->on('years')->onDelete('cascade');
             $table->integer('form_id')->unsigned();
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
+            $table->integer('subform_id')->unsigned();
+            $table->foreign('subform_id')->references('id')->on('subclasses')->onDelete('cascade');
             $table->string('parent_contact');
             $table->string('parent_email')->nullable();
             $table->string('address')->nullable();

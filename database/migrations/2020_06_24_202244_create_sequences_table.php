@@ -18,6 +18,7 @@ class CreateSequencesTable extends Migration
             $table->string('name');
             $table->integer('term_id')->unsigned();
             $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

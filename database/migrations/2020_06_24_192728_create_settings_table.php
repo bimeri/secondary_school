@@ -25,6 +25,7 @@ class CreateSettingsTable extends Migration
             $table->string('start_time');
             $table->string('break_time');
             $table->string('stop_time');
+            $table->string('hours_per_period')->nullable();
             $table->timestamps();
         });
     }

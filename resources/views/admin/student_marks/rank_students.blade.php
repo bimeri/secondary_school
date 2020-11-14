@@ -82,18 +82,28 @@
     </div>
 </div>
 <div class="row">
-    <div class="col s12 m8 offset-m4">
+    <div class="col s12 m10 offset-m2" style="font-size: 13px">
         <form method="get" action="{{ route('rank.result') }}">
             @csrf
             <div class="row">
-                <div class="input-field col m5 s12">
-                    <select name="class" id="class">
-                        <option value="" selected>form / background / sector</option>
-                      @foreach (App\Form::all() as $form)
-                        <option value="{{\Crypt::encrypt($form->id) }}">{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
+                <div class="col m2 s12">
+                    <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
+                        <option value="" disabled selected>select the Sector</option>
+                      @foreach (App\Sector::all() as $sector)
+                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
                       @endforeach
                     </select>
-                    <label for="class">Select the class</label>
+                </div>
+                <div class="col s12 m3" id="backgrounds">
+                    <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
+                        <option value="">select the Background</option>
+                    </select>
+                </div>
+
+                <div class="col s12 m3" id="classes">
+                    <select class="browser-default" name="class" id="form" required>
+                        <option value="">select the Class</option>
+                    </select>
                 </div>
                 <div class="col m2 offset-s3 m3 input-field">
                     <button class="w3-btn w3-teal waves-effect waves-light" onclick="load()">Generate {{ $current_term->name }} Result</button>

@@ -2,30 +2,42 @@
 @section('title') Sub-Class @endsection
 @section('content')
 <div class="row">
-    <div class="col s12 m10 offset-m1 orange lighten-5 orange-text">
-    <span onclick="this.parentElement.style.display='none'" class="w3-close right orange-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
+    <div class="col s12 m10 offset-m1 teal lighten-4 teal-text">
+    <span onclick="this.parentElement.style.display='none'" class="w3-close right teal-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
         <h5 class="w3-center w3-medium w3-padding bold">{{ __('messages.create_subclass') }}
         </h5>
     </div>
 </div>
 <div class="row">
     <div class="col s11 w3-margin-left m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius" style="margin-top: 5px">
-        <form action="{{ route('subclass.form.submit') }}" method="post" id="form">
+        <form action="{{ route('subclass.form.submit') }}" method="post" id="forms">
             @csrf
-            <div class="row">
-                <div class="input-field col s12 m4">
-                   <select class="" name="classId" onchange="getValue(event)">
-                       <option value="" disabled selected>select the class you are extending</option>
-                       @foreach (App\Form::all() as $class)
-                           <option value="{{ $class->id }}">{{ $class->name }} {{ $class->code }}/{{ $class->background->name }}/{{ $class->background->sector->name }}</option>
-                       @endforeach
-                   </select>
+            <div class="row w3-small">
+                <div class="col m2 s12">
+                    <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
+                        <option value="" disabled selected>select the Sector</option>
+                        @foreach (App\Sector::all() as $sector)
+                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="input-field col s12 m4">
+                <div class="col s12 m3" id="backgrounds">
+                    <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
+                        <option value="">select the Background</option>
+                    </select>
+                </div>
+
+                <div class="col s12 m3" id="classes">
+                    <select class="browser-default" name="classId" id="form" onchange="getValue(event)" required>
+                    <option value="" disabled selected>select the class you are extending</option>
+                        <option value="">select the Class</option>
+                    </select>
+                </div>
+                <div class="input-field col s12 m2">
                     <input id="max" name="maximum_number" type="number" value="{{ old('maximum_number') }}" class="validate">
-                    <label for="max">Maximum extended capacity</label>
+                    <label for="max">Maximum capacity</label>
                 </div>
-                 <div class="input-field col s12 m4">
+                 <div class="input-field col s12 m2">
                     <input id="type" name="type" type="text" value="{{ old('type') }}" class="validate" readonly placeholder="example B,C,D, etc">
                     <label for="type">Class Type </label>
                 </div>
@@ -48,7 +60,7 @@
                 <th>Maximum Capacity</th>
                 @can('sub_class', App\Permission::class) <th colspan="2">Action</th> @endcan
             </tr>
-            @foreach (App\Subclass::orderBy('form_id')->get(); as $key => $class)
+            @foreach (App\Subclass::orderBy('id', 'desc')->get(); as $key => $class)
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $class->form->name }}/{{ $class->form->background->name }}/{{ $class->form->background->sector->name }}</td>
@@ -56,23 +68,23 @@
                 <td>{{ $class->type }}</td>
                 <td>{{ $class->max_number }}</td>
                 @can('edit_delete_class', App\Permission::class)
-                    <td><button class="btn my-orange waves-light waves-effect capitalize modal-trigger"  href="#modal{{  $key + 1 }}">Edit <i class="fa fa-pencil-alt w3-small"></i></button></td>
+                    <td><button class="btn orange orange-text lighten-4 waves-light waves-effect capitalize modal-trigger"  href="#modal{{  $key + 1 }}">Edit <i class="fa fa-pencil-alt w3-small"></i></button></td>
                     <td>
                         <form action="{{ route('admin.delete.subclass') }}" method="post" id="form{{ $class->id }}">
                             @csrf
                             <input type="hidden" name="subclassid" value="{{ $class->id }}">
-                            <button class="btn my-red waves-light waves-effect capitalize" onclick="save{{ $class->id }}()" id="btn-submit{{ $class->id }}">Delete <i class="fa fa-trash w3-small"></i></button>
+                            <button class="btn red red-text lighten-4 waves-light waves-effect capitalize" onclick="save{{ $class->id }}()" id="btn-submit{{ $class->id }}">Delete <i class="fa fa-trash w3-small"></i></button>
                         </form>
                     </td>
                 @endcan
             </tr>
-
+            {{-- update modal --}}
             <div id="modal{{  $key + 1 }}" class="modal modal-fixed-footer">
                 <div class="modal-content">
                   <h4 class="w3-center teal-text">Update Sub-Class Information</h4>
                   <hr style="border-top: 1px solid orange">
                     <div class="row">
-                        <form action="{{ route('admin.edit.subclass') }}" method="post" id="form">
+                        <form action="{{ route('admin.edit.subclass') }}" method="post" id="forms">
                             @csrf
                             <div class="row">
                                 <input type="hidden" name="id" value="{{ $class->id }}" />
@@ -123,18 +135,15 @@
                 } else {
                   swal("the sub-class form {{ $class->form->name }} remain unchanged!");
                 }
-
                   });
               });
-
               }
 
               function getValue(e){
-                //console.log('the value', e.target.value);
                 $.ajax({
            type:"POST",
            url:"{{route('class.getType')}}",
-           data:  $('#form').serialize(),
+           data:  $('#forms').serialize(),
            success:function(res){
                console.log('response is:', res);
                document.getElementById('type').value = res;

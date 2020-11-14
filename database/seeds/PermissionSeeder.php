@@ -58,7 +58,8 @@ class PermissionSeeder extends Seeder
                 'parent' => 'fees_expenses',
                 'name' => 'can print receipt',
                 'name_slug' => 'print_reciept',
-            ], // these ones are for class center
+            ],
+            // these ones are for class
             [
                 'parent' => 'classes',
                 'name' => 'can create class',
@@ -66,7 +67,7 @@ class PermissionSeeder extends Seeder
             ],
             [
                 'parent' => 'classes',
-                'name' => 'can create Edit/Delete class',
+                'name' => 'can create, edit and delete class',
                 'name_slug' => 'edit_delete_class',
             ],
             [
@@ -78,7 +79,8 @@ class PermissionSeeder extends Seeder
                 'parent' => 'classes',
                 'name' => 'can see sub-class',
                 'name_slug' => 'see_class',
-            ], // sector and Background
+            ],
+            // sector and Background
             [
                 'parent' => 'sector_background',
                 'name' => 'can create sector',
@@ -98,7 +100,8 @@ class PermissionSeeder extends Seeder
                 'parent' => 'sector_background',
                 'name' => 'can see all background',
                 'name_slug' => 'see_background',
-            ],// students
+            ],
+            // students
             [
                 'parent' => 'students',
                 'name' => 'can add students',
@@ -108,11 +111,6 @@ class PermissionSeeder extends Seeder
                 'parent' => 'students',
                 'name' => 'can see class list',
                 'name_slug' => 'class_list',
-            ],
-            [
-                'parent' => 'students',
-                'name' => 'can can promote student',
-                'name_slug' => 'promote_student',
             ],
             [
                 'parent' => 'students',

@@ -19,8 +19,10 @@ class CreateResultcontrolsTable extends Migration
             $table->foreign('year_id')->references('id')->on('years')->onDelete('cascade');
             $table->integer('term_id')->unsigned();
             $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
-            $table->integer('sequence_id')->unsigned();
-            $table->foreign('sequence_id')->references('id')->on('sequences')->onDelete('cascade');
+            $table->integer('seq1_id')->unsigned();
+            $table->foreign('seq1_id')->references('id')->on('sequences')->onDelete('cascade');
+            $table->integer('seq2_id')->unsigned();
+            $table->foreign('seq2_id')->references('id')->on('sequences')->onDelete('cascade');
             $table->integer('generateresult_id')->unsigned();
             $table->foreign('generateresult_id')->references('id')->on('generateresults')->onDelete('cascade');
             $table->boolean('status');

@@ -15,19 +15,11 @@ class CreateStudentSeeder extends Seeder
         //
         $students = [
             [
-                'first_name' => 'Baron',
-                'last_name' => 'Noelino',
-                'school_id' => 'FM1A001',
-                'email' => 'baron.noelino@gmail.com',
-                'password' => bcrypt('fm1a001'),
-                'date_enrolled' => '12/07/2020',
-            ],
-            [
-                'first_name' => 'Valeri',
+                'first_name' => 'Noel',
                 'last_name' => 'Magaza',
-                'school_id' => 'FM1A002',
-                'email' => 'valeri.magaza@gmail.com',
-                'password' => bcrypt('fm1a002'),
+                'school_id' => 'FM1A001',
+                'email' => 'bimerinoel@gmail.com',
+                'password' => bcrypt('Magaza@890'),
                 'date_enrolled' => '12/07/2020',
             ]
         ];

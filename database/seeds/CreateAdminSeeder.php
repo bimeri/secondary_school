@@ -23,7 +23,7 @@ class CreateAdminSeeder extends Seeder
                'profile'=>'image/profiles/2.png',
                'gender'=>'male',
                'date_of_birth'=>'12/17/1997',
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('Magaza@890'),
             ],
             [
                 'first_name'=>'Second',
@@ -34,7 +34,7 @@ class CreateAdminSeeder extends Seeder
                'profile'=>'image/profiles/2.png',
                'gender'=>'male',
                'date_of_birth'=>'01/17/1997',
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('Magaza@890'),
             ],
         ];
 

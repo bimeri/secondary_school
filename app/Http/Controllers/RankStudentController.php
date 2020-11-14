@@ -45,13 +45,7 @@ class RankStudentController extends Controller
         $this->validate($req, [
             'class' => 'required'
         ]);
-
-         try {
-            $class_id = Crypt::decrypt($req['class']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $mes = array('message' => 'fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
-            return redirect()->back()->with($mes);
-        }
+        $class_id = $req['class'];
 
         $arr = array();
         $arr_sum = array();

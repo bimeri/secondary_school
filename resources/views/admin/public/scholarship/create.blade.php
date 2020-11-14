@@ -143,7 +143,7 @@
                     <div class="modal-content">
                       <h4 class="w3-center teal-text">Fill the form to Give Student Scholarship award.<br>
                         @foreach (App\Student::where('school_id', $user->student_school_id)->get() as $info)
-                       <b class="blue-text"> ({{ $info->full_name }} :: {{ $user->student_school_id }})</b>
+                       <b class="blue-text"> ({{ $info->full_name }} -- {{ $user->student_school_id }})</b>
                         @endforeach
 
                     </h4>

@@ -22,11 +22,14 @@ class CreateFeesTable extends Migration
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->string('student_school_id');
-            $table->foreign('student_school_id')->references('school_id')->on('students')->onDelete('cascade');
+            $table->integer('form_id')->unsigned();
+            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
+            $table->bigInteger('scholarship')->unsigned();
             $table->bigInteger('amount')->unsigned();
             $table->string('payment_method');
             $table->bigInteger('balance')->unsigned();
             $table->boolean('status')->default(0);
+            $table->string('payment_date')->nullable();
             $table->timestamps();
         });
     }

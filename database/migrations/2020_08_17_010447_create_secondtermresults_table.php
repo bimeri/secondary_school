@@ -23,8 +23,10 @@ class CreateSecondtermresultsTable extends Migration
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $table->smallInteger('seq3')->nullable();
-            $table->smallInteger('seq4')->nullable();
+            $table->decimal('seq3', 6,2)->nullable();
+            $table->decimal('seq4', 6,2)->nullable();
+            $table->decimal('ave_point', 6,2)->nullable();
+            $table->booleanl('status')->default(0);
             $table->timestamps();
         });
     }

@@ -15,10 +15,10 @@ class createTeacherSeeder extends Seeder
         //
         $teachers = [
             [
-                'first_name' => 'John',
-                'last_name' => 'Paul',
-                'email' => 'paul@gmail.com',
-                'password' => bcrypt('123456'),
+                'first_name' => 'Bimeri',
+                'last_name' => 'Noel',
+                'email' => 'bimerinoel@gmail.com',
+                'password' => bcrypt('Magaza@890'),
             ]
         ];
         foreach($teachers as $teacher){
