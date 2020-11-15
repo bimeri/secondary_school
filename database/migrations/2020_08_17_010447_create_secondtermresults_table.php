@@ -26,7 +26,7 @@ class CreateSecondtermresultsTable extends Migration
             $table->decimal('seq3', 6,2)->nullable();
             $table->decimal('seq4', 6,2)->nullable();
             $table->decimal('ave_point', 6,2)->nullable();
-            $table->booleanl('status')->default(0);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

@@ -184,7 +184,6 @@
                     <td class="{{ (float)$result->highest_avg >= 10 ? 'blue-text':'red-text'}}">{{ (float)$result->highest_avg }}</td>
                     <td class="{{ (float)$result->lowest_avg >= 10 ? 'blue-text':'red-text'}}">{{ $result->lowest_avg }}</td>
                     <td class="{{ (float)$result->class_avg >= 10 ? 'blue-text':'red-text'}}">{{ $result->class_avg }}</td>
-
                     <td>
                         @if(App\Classresult::where('year_id', $result->year_id)->where('term_id',$result->term_id)->where('form_id', $result->form_id)->exists())
                             <button class="bn orange white-text lighten-2 w3-small waves-green waves-effect">View Result</button>
@@ -192,8 +191,6 @@
                             <button class="bn white-text lighten-2 w3-small disabled" style="background-color: rgb(187, 175, 175); cursor:not-allowed">Result not generated</button>
                         @endif
                     </td>
-
-
                     <td>
                         @if(App\Classresult::where('year_id', $result->year_id)->where('term_id',$result->term_id)->where('form_id', $result->form_id)->exists())
                             <button class="bn blue waves-green white-text lighten-2 w3-small waves-effect">Publish Result</button>

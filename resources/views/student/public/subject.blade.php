@@ -12,7 +12,7 @@ td, th, tr{
 @endsection
 @section('content')
 <div class="row">
-    <div class="col s11 m10 w3-border-s offset-m1 radius white">
+    <div class="col s12 m10 w3-border-s offset-m1 radius white">
         <div class="col s12 m12 w3-padding" style="overflow-x:auto !important;">
             <table class="w3-table w3-striped w3-border-blue" style="font-size: 15px !important;">
                 @if ($currentClass)

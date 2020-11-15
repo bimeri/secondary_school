@@ -66,6 +66,7 @@ class RecordController extends Controller
         $data['students'] = Studentinfo::where('form_id', $formId)->where('subform_id', null)->get();
         $data['b_students'] = Subclass::getStudentBysubClasses('B', $formId);
         $data['c_students'] = Subclass::getStudentBysubClasses('C', $formId);
+        $data['d_students'] = Subclass::getStudentBysubClasses('D', $formId);
         return view('admin.student_marks.record_marks')->with($data);
     }
 

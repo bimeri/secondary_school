@@ -68,8 +68,9 @@ class StudentController extends Controller
         $result = null;
         $termId = Term::getCurrentTerm();
         $yearId = Year::getCurrentYear();
+        $studentInfo = Studentinfo::where('student_id', auth()->user()->id)->first();
         $formDetail = $promotions->where('year_id', $yearId)->first();
-        $formId = $formDetail->form_id;
+        $formId = $formDetail ? $formDetail->form_id : $studentInfo->form_id;
         $termName = Term::getTermById($termId);
         if($termName->name == 'First Term'){
             $result = Firsttermresult::getStudentResult(auth()->user()->id, $yearId, $termId, $formId);

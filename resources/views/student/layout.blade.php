@@ -27,7 +27,7 @@
                 <li><a href="#" class="name">{{ $setting->school_name }} &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-chevron-right w3-large"></i></a></li>
                 <li><a href="#" class="term">{{ $current_term->name }} {{ $current_year->name }}</a></li>
               </ul>
-              <ul id="nav-mobile small" class="hide-on-med-and-up">
+              <ul id="nav-mobile small" class="hide-on-med-and-up" style="position: absolute; margin-left:-10px">
                 <li style="margin-left: 70px; margin-top:-10px"><label class="name white-text w3-medium">{{ $setting->school_name }}</label></li>
                 <li style="margin-top: -30px !important; margin-left:75px"><label class="term black-text w3-small">{{ $current_term->name }} {{ $current_year->name }}</label></li>
               </ul>
@@ -85,9 +85,9 @@
         <li><a href="{{ route('student.home') }}" onclick="load()" @if(Request::is('student/home')) style="background-color: #e5e9e8" @endif>  Home <i class="fa fa-home w3-small right gray-text"></i></a></li>
         <li><a href="{{ route('student.subjects') }}" onclick="load()" @if(Request::is('student/subjects', 'student/note/get', 'student/view_file')) style="background-color: #e5e9e8" @endif> Subjects <i class="fa fa-tasks w3-small right gray-text"></i></a></li>
         <li><a href="{{ route('student.result') }}" onclick="load()" @if(Request::is('student/test_result', 'student/test/result')) style="background-color: #e5e9e8" @endif> Test Result <i class="fa fa-file w3-small right gray-text"></i></a></li>
-        <li><a onclick="load()"> Final Result <i class="fa fa-file-pdf w3-small right gray-text"></i></a></li>
-        <li><a onclick="load()"> Pay fees <i class="fa fa-money-bill-alt w3-small right gray-text"></i></a></li>
-        <li><a onclick="load()" class="red-text"><span class="fa fa-power-off"></span> &nbsp;&nbsp;&nbsp;&nbsp; Logout {{auth()->user()->last_name}}</a></li>
+        <li><a > Final Result <i class="fa fa-file-pdf w3-small right gray-text"></i></a></li>
+        <li><a > Fees statistics <i class="fa fa-money-bill-alt w3-small right gray-text"></i></a></li>
+        <li><a href="{{ route('student.logout') }}" onclick="load()" class="red-text"><span class="fa fa-power-off"></span> &nbsp;&nbsp;&nbsp;&nbsp; Logout {{auth()->user()->last_name}}</a></li>
         <li><a style="background-color:transparent"> <span class=""></span> </a></li>
   </ul>
 

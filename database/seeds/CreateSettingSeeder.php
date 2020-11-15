@@ -3,7 +3,7 @@
 use App\Setting;
 use Illuminate\Database\Seeder;
 
-class CreateSequenceSeeder extends Seeder
+class CreateSettingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class CreateSequenceSeeder extends Seeder
     public function run()
     {
         //
-        $sequences = [
+        $setting = [
                 'year_id' => '1',
                 'school_name' => 'Balingual Grammar School',
                 'motto' => 'Bonita Disciplina Sianta',
@@ -24,6 +24,6 @@ class CreateSequenceSeeder extends Seeder
                 'break_time' => '12:00',
                 'stop_time' => '17:00'
             ];
-            Setting::create($sequences);
+            Setting::create($setting);
     }
 }

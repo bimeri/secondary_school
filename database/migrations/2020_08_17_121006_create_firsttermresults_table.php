@@ -26,7 +26,7 @@ class CreateFirsttermresultsTable extends Migration
             $table->decimal('seq1', 6,2)->nullable();
             $table->decimal('seq2',6,2)->nullable();
             $table->decimal('ave_point',6,2)->nullable();
-            $table->booleanl('status')->default(0);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

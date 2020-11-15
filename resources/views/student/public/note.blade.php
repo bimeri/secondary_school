@@ -2,7 +2,7 @@
 @section('title') {{ __('student_viewNote') }} @endsection
 @section('content')
 <div class="row">
-    <div class="col s11 m10 w3-border-s offset-m1 radius white">
+    <div class="col s12 m10 w3-border-s offset-m1 radius white">
         <div class="row w3-margin-top">
             <div class="col s11 m10 w3-border-teacher offset-m1 radius white">
                 <div class="col s12 m12 w3-padding" style="overflow-x:auto !important;">

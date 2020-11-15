@@ -26,7 +26,7 @@ a.link{
         </div>
     @endif
 
-    <div class="col s11 m10 w3-border-s offset-m1 radius white">
+    <div class="col s12 m10 w3-border-s offset-m1 radius white">
         <div class="row">
             <div class="col s12 m8 offset-m2 w3-padding" style="overflow-x:auto !important;">
                 <div class="black-text center w3-padding" style="background-color: #e6e6e6">
@@ -50,7 +50,7 @@ a.link{
                 </div>
                 <p><b class="upper orange-text  w3-large">{{ $studentinfo->student->full_name }}</b></p>
             </div>
-            <div class="col s12 m8 w3-padding w3-border-s">
+            <div class="col s12 m8 w3-padding w3-border">
                 <p class="blue-text w3-large w3-center">Personal Information</p><hr class="divide">
                 <div class="w3-left" style="margin-left: 25%">
                     <p><i class="blue-text w3-medium">First Name:</i>

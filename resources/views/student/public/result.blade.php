@@ -20,12 +20,12 @@
 @endsection
 @section('content')
 <div class="row">
-    <div class="col s11 m10 w3-border-s offset-m1 radius white">
+    <div class="col s12 m10 w3-border-s offset-m1 radius white">
         <div class="col s12 m12 w3-padding">
             <div class="row">
                 <form action="{{ route('get_student.tes_result') }}" method="get">
                     @csrf
-                    <div class="input-field col s6 m3">
+                    <div class="input-field col s12 m3">
                         <option value="{{ Crypt::encrypt($current_year->id) }}" selected>{{ $current_year->name }}</option>
                         <select name="year" id="year">
                             @foreach ($years as $year)
@@ -33,7 +33,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="input-field col s6 m3">
+                    <div class="input-field col s12 m3">
                         <option value="{{ Crypt::encrypt($current_term->id) }}" selected>{{ $current_term->name }}</option>
                         <select name="term">
                             @foreach ($terms as $term)
@@ -41,7 +41,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="input-field col s6 m3">
+                    <div class="input-field col s12 m3">
                         <option value="{{ Crypt::encrypt($promotions[0]['id']) }}" selected>class: {{ App\Form::getClassDetail($promotions[0]['form_id'])->name }}</option>
                         <select name="class">
                             @foreach ($promotions as $promotion)
@@ -49,21 +49,25 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="input-field col s12 m3 w3-margin-top" style="margin-top:40px !important">
-                        <button type="submit" class="w3-btn w3-blue waves-effect waves-light">Get Result</button>
+                    <div class="input-field">
+                        <button type="submit" class="col s12 m3 btn w3-blue waves-effect waves-light">Get Result</button>
                     </div>
                 </form>
             </div><hr>
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    @if ($result != null)
+                    <h5 class="center w3-padding orange-text orange lighten-4">
+                        Semester Result for <b>{{ $termName }}</b> for the academic year <b>{{ $yearName }}</b>
+                    </h5>
+                    @else
+                    <h5 class="center w3-padding red-text red lighten-4">
+                        There is no result for <b>{{ $termName }}</b>, <b>{{ $yearName }}</b>
+                    </h5>
+                    @endif
+                </div>
+            </div>
             <div class="col s12 m12 w3-padding" style="overflow-x:auto !important;">
-                @if ($result != null)
-                <h5 class="center w3-padding orange-text orange lighten-4">
-                    Semester Result for <b>{{ $termName }}</b> for the academic year <b>{{ $yearName }}</b>
-                </h5>
-                @else
-                <h5 class="center w3-padding red-text red lighten-4">
-                    There is no result for <b>{{ $termName }}</b>, <b>{{ $yearName }}</b>
-                </h5>
-                @endif
                 <div class="col s12 m6">
                     <table class="w3-table w3-striped w3-border-blue">
                         <tr class="w3-blue">

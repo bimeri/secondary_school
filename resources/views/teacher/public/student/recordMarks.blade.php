@@ -130,9 +130,9 @@
                         @endforeach
                     </tr>
                 </tr>
-            @include('teacher.public.includes.class_a_students')
-            @include('teacher.public.includes.class_b_students')
-            @include('teacher.public.includes.class_c_students')
+            @include('teacher.public.includes.classes.class_a_students')
+            @include('teacher.public.includes.classes.class_b_students')
+            @include('teacher.public.includes.classes.class_c_students')
             </table>
         </div>
     </div>
