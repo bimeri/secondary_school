@@ -25,35 +25,41 @@ class Firsttermresult extends Model
     }
 
     public static function getStudentClassRecord($year, $class){
-        $query = Firsttermresult::select('student_id as stud_id',
-                                         'seq1', 'seq2', 'ave_point as points',
-                                         'students.school_id as stud_card',
-                                         'subjects.coefficient as subject_coff')
-        ->where('firsttermresults.year_id', $year)
-        ->where('firsttermresults.form_id', $class)
+        $query = Firsttermresult::
+        select('student_id as stud_id',
+                'seq1',
+                'seq2',
+                'form_type',
+                'ave_point as points',
+                'students.school_id as stud_card',
+                'subjects.coefficient as subject_coff')
         ->join('students', 'firsttermresults.student_id', 'students.id')
         ->join('subjects', 'firsttermresults.subject_id', 'subjects.id')
+        ->where('firsttermresults.year_id', $year)
+        ->where('firsttermresults.form_id', $class)
         ->orderBy('students.id')
         ->get();
         return $query;
     }
 
     public static function getResultByClass($year, $class){
-        $query = Firsttermresult::select('firsttermresults.id', 'firsttermresults.student_id as stud_id',
-                                         'firsttermresults.seq1', 'firsttermresults.seq2',
-                                          'firsttermresults.ave_point as points',
-                                         'students.school_id as school_id',
-                                         'subjects.coefficient as subject_coff',
-                                         'subjects.name as subject_name',
-                                         'studentinfos.subform_id as sub_class',
-                                         'subclasses.type as class_type', 'subclasses.form_id as class')
-        ->where('firsttermresults.year_id', $year)
-        ->where('firsttermresults.form_id', $class)
+        $query = Firsttermresult::
+                select('firsttermresults.id',
+                       'firsttermresults.student_id as studentId',
+                       'firsttermresults.seq1',
+                       'firsttermresults.seq2',
+                       'firsttermresults.ave_point as points',
+                       'firsttermresults.form_type',
+                       'students.school_id as schoolId',
+                       'subjects.coefficient as cofficient',
+                       'subjects.name as subjectName',
+                       'students.full_name as studentName'
+                        )
         ->join('students', 'firsttermresults.student_id', 'students.id')
         ->join('subjects', 'firsttermresults.subject_id', 'subjects.id')
-        ->join('studentinfos', 'students.id', 'studentinfos.student_id')
-        ->join('subclasses', 'studentinfos.subform_id', 'subclasses.id')
         ->orderBy('students.id')
+        ->where('firsttermresults.year_id', $year)
+        ->where('firsttermresults.form_id', $class)
         ->get();
         return $query;
     }
@@ -72,12 +78,13 @@ class Firsttermresult extends Model
                 ->where('term_id', $termId)
                 ->where('seq1_id', '!=', null)
                 ->exists()){
-            $firstResult = Firsttermresult::select('firsttermresults.seq1 as mark',
-                                                   'subjects.name as subject',
-                                                   'subjects.code as code',
-                                                   'forms.name as class',
-                                                   'subclasses.type as type',
-                                                   'firsttermresults.ave_point')
+            $firstResult = Firsttermresult::
+                select('firsttermresults.seq1 as mark',
+                        'subjects.name as subject',
+                        'subjects.code as code',
+                        'forms.name as class',
+                        'subclasses.type as type',
+                        'firsttermresults.ave_point')
                 ->join('subjects', 'subjects.id', 'firsttermresults.subject_id')
                 ->join('forms', 'forms.id', 'firsttermresults.form_id')
                 ->join('subclasses', 'subclasses.form_id', 'forms.id')
@@ -94,19 +101,20 @@ class Firsttermresult extends Model
                 ->where('term_id', $termId)
                 ->where('seq2_id', '!=', null)
                 ->exists()){
-            $secondResult = Firsttermresult::select('firsttermresults.seq2 as mark',
-            'subjects.name as subject',
-            'subjects.code as code',
-            'forms.name as class',
-            'subclasses.type as type',
-            'firsttermresults.ave_point')
-->join('subjects', 'subjects.id', 'firsttermresults.subject_id')
-->join('forms', 'forms.id', 'firsttermresults.form_id')
-->join('subclasses', 'subclasses.form_id', 'forms.id')
-->where('firsttermresults.student_id', $stud_id)
-->where('firsttermresults.form_id', $formId)
-->where('firsttermresults.year_id', $yearId)
-->get();
+                $secondResult = Firsttermresult::
+                select('firsttermresults.seq2 as mark',
+                        'subjects.name as subject',
+                        'subjects.code as code',
+                        'forms.name as class',
+                        'subclasses.type as type',
+                        'firsttermresults.ave_point')
+            ->join('subjects', 'subjects.id', 'firsttermresults.subject_id')
+            ->join('forms', 'forms.id', 'firsttermresults.form_id')
+            ->join('subclasses', 'subclasses.form_id', 'forms.id')
+            ->where('firsttermresults.student_id', $stud_id)
+            ->where('firsttermresults.form_id', $formId)
+            ->where('firsttermresults.year_id', $yearId)
+            ->get();
         } else {
             $secondResult = "NO_SECOND_RESULT";
         }
@@ -115,4 +123,28 @@ class Firsttermresult extends Model
 
         return $result;
     }
+
+    public static function getStudentTest1($stud_id, $class, $year, $subjectId){
+        return Firsttermresult::where('student_id', $stud_id)
+        ->where('form_id', $class)
+        ->where('year_id', $year)
+        ->where('subject_id', $subjectId)
+        ->first();
+
+    }
+    public static function sumSequenceOne($stud_id, $class, $year){
+        return Firsttermresult::where('student_id', $stud_id)
+        ->where('form_id', $class)
+        ->where('year_id', $year)
+        ->sum('seq1');
+
+    }
+    public static function sumSequenceTwo($stud_id, $class, $year){
+        return Firsttermresult::where('student_id', $stud_id)
+        ->where('form_id', $class)
+        ->where('year_id', $year)
+        ->sum('seq2');
+
+    }
+
 }

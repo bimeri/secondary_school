@@ -16,7 +16,7 @@ class Student extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'full_name', 'school_id', 'email', 'password',
+        'full_name', 'school_id', 'email', 'place_of_birth', 'password',
     ];
 
     protected $hidden = [
@@ -68,6 +68,10 @@ class Student extends Authenticatable
 
     public function fees(){
         return $this->hasMany('App\Fee');
+    }
+
+    public function studentresults(){
+        return $this->hasMany('App\Studentresult');
     }
 
     public static function getAllStudent(){

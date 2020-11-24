@@ -44,4 +44,23 @@ class Subject extends Model
     public static function getSubjectDetail($sub_id){
         return Subject::where('id', $sub_id)->first();
     }
+    public static function sumClassCoefficient($classId){
+        return Subject::where('form_id', $classId)->sum('coefficient');
+    }
+
+    public static function getTeacher($subjectId){
+       $qr = Teacher::select('full_name')
+                    ->join('subject_teacher', 'subject_teacher.teacher_id', 'teachers.id')
+                    ->where('subject_teacher.subject_id', $subjectId)->get();
+                    $ar = [];
+                    foreach($qr as $t){
+                    array_push($ar, $t->full_name);
+                    }
+                    if($qr->count() == 0) {
+                        return "Unknown";
+                    } else {
+                    return  current($ar);
+                    }
+        return;
+    }
 }

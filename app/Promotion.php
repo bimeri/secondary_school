@@ -22,4 +22,10 @@ class Promotion extends Model
     public function form(){
         return $this->belongsTo('App\Form');
     }
+
+    public static function getStudentcurrentClass($yearid, $studentId, $formid){
+        return Promotion::where('year_id', $yearid)
+                        ->where('student_id', $studentId)
+                        ->where('form_id', $formid)->first();
+    }
 }

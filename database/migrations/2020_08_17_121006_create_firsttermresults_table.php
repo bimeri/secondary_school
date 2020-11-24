@@ -21,11 +21,13 @@ class CreateFirsttermresultsTable extends Migration
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->integer('form_id')->unsigned();
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
+            $table->string('form_type')->nullable();
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->decimal('seq1', 6,2)->nullable();
             $table->decimal('seq2',6,2)->nullable();
             $table->decimal('ave_point',6,2)->nullable();
+            $table->integer('position')->unsigned()->nullable();
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

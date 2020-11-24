@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Firsttermresult;
 use App\Form;
 use App\Permission;
+use App\Promotion;
 use App\Secondtermresult;
 use App\Studentinfo;
 use App\Subclass;
@@ -119,10 +120,12 @@ class RecordController extends Controller
                 }
             }
         else {
+            $classType = Promotion::getStudentcurrentClass($yearid, $studentId, $formid);
             $firstseq = new Firsttermresult();
             $firstseq->year_id = $yearid;
             $firstseq->student_id = $studentId;
             $firstseq->form_id = $formid;
+            $firstseq->form_type = $classType? $classType->form_type:null;
             $firstseq->subject_id = $sub;
             $firstseq->seq1 = $seq;
             $firstseq->ave_point = ($seq/2)*$subject->coefficient;
@@ -181,10 +184,12 @@ class RecordController extends Controller
                 }
             }
         else {
+            $classType = Promotion::getStudentcurrentClass($yearid, $studentId, $formid);
             $second = new Firsttermresult();
             $second->year_id = $yearid;
             $second->student_id = $studentId;
             $second->form_id = $formid;
+            $second->form_type = $classType? $classType->form_type:null;
             $second->subject_id = $sub;
             $second->seq2 = $seq;
             $second->ave_point = ($seq/2)*$subject->coefficient;
@@ -241,10 +246,12 @@ class RecordController extends Controller
                 }
             }
         else {
+            $classType = Promotion::getStudentcurrentClass($yearid, $studentId, $formid);
             $third = new Secondtermresult();
             $third->year_id = $yearid;
             $third->student_id = $studentId;
             $third->form_id = $formid;
+            $third->form_type = $classType? $classType->form_type:null;
             $third->subject_id = $sub;
             $third->seq3 = $seq;
             $third->ave_point = ($seq/2)*$subject->coefficient;
@@ -300,10 +307,12 @@ class RecordController extends Controller
                 }
             }
         else {
+            $classType = Promotion::getStudentcurrentClass($yearid, $studentId, $formid);
             $fourth = new Secondtermresult();
             $fourth->year_id = $yearid;
             $fourth->student_id = $studentId;
             $fourth->form_id = $formid;
+            $fourth->form_type = $classType? $classType->form_type:null;
             $fourth->subject_id = $sub;
             $fourth->seq4 = $seq;
             $fourth->ave_point = ($seq/2)*$subject->coefficient;
@@ -359,10 +368,12 @@ class RecordController extends Controller
                 }
             }
         else {
+            $classType = Promotion::getStudentcurrentClass($yearid, $studentId, $formid);
             $firth = new Thirdtermresult();
             $firth->year_id = $yearid;
             $firth->student_id = $studentId;
             $firth->form_id = $formid;
+            $firth->form_type = $classType?$classType->form_type:null;
             $firth->subject_id = $sub;
             $firth->seq5 = $seq;
             $firth->ave_point = ($seq/2)*$subject->coefficient;
@@ -419,10 +430,12 @@ class RecordController extends Controller
                 }
             }
         else {
+            $classType = Promotion::getStudentcurrentClass($yearid, $studentId, $formid);
             $sith = new Thirdtermresult();
             $sith->year_id = $yearid;
             $sith->student_id = $studentId;
             $sith->form_id = $formid;
+            $sith->form_type = $classType?$classType->form_type:null;
             $sith->subject_id = $sub;
             $sith->seq6 = $seq;
             $sith->ave_point =($seq/2)*$subject->coefficient;

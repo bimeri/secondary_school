@@ -23,13 +23,16 @@ class Thirdtermresult extends Model
 
     public static function getStudentClassRecord($year, $class){
         $query = Thirdtermresult::select('student_id as stud_id',
-                                         'seq1', 'seq2', 'ave_point as points',
+                                         'seq1',
+                                         'seq2',
+                                         'form_type',
+                                         'ave_point as points',
                                          'students.school_id as stud_card',
                                          'subjects.coefficient as subject_coff')
-        ->where('firsttermresults.year_id', $year)
-        ->where('firsttermresults.form_id', $class)
-        ->join('students', 'firsttermresults.student_id', 'students.id')
-        ->join('subjects', 'firsttermresults.subject_id', 'subjects.id')
+        ->where('thirdtermresults.year_id', $year)
+        ->where('thirdtermresults.form_id', $class)
+        ->join('students', 'thirdtermresults.student_id', 'students.id')
+        ->join('subjects', 'thirdtermresults.subject_id', 'subjects.id')
         ->orderBy('students.id')
         ->get();
         return $query;
@@ -87,9 +90,7 @@ class Thirdtermresult extends Model
         } else {
             $secondResult = "NO_SECOND_RESULT";
         }
-
         $result = [[$firstResult, $seq1], [$secondResult, $seq2]];
-
         return $result;
     }
 }

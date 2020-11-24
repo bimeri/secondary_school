@@ -45,14 +45,4 @@ class pageController extends Controller
     public function boserLaygout(){
         return view('boser.layout');
     }
-
-    public function example(Request $req){
-        $name = $req['name'];
-        $notification = array(
-            'message' => 'my name is '.$name.'!',
-            'alert-type' => 'success'
-        );
-        return redirect()->back()->with($notification);
-    }
-
 }

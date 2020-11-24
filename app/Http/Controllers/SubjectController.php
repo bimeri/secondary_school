@@ -57,16 +57,16 @@ class SubjectController extends Controller
         $subject->code = $code;
         $subject->coefficient = $coff;
         $subject->form_id = $form_id;
-        $subject->save();
 
-        if($subject){
+        try {
+            $subject->save();
             $notify = array('message' => 'Subject titled '.$name.' has been Successfully created', 'alert-type' => 'success');
             return redirect()->back()->with($notify);
+        } catch (\Exception $th) {
+            $notify = array('message' => 'fail to create new Subject, It exist already. Add a different one', 'alert-type' => 'error');
+        return redirect()->back()->with($notify);
         }
-        else {
-            $notify = array('message' => 'fail to create new Subject, please try again', 'alert-type' => 'error');
-            return redirect()->back()->with($notify);
-        }
+
     }
 
     public function edit(Request $req){

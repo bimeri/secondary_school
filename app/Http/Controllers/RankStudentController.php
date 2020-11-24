@@ -7,6 +7,7 @@ use App\Firsttermresult;
 use App\Form;
 use App\Generateresult;
 use App\Permission;
+use App\Promotion;
 use App\Secondtermresult;
 use App\Studentinfo;
 use App\Studentresult;
@@ -248,9 +249,10 @@ class RankStudentController extends Controller
         $class_percentage = ($total_percent + $total_percent_second )/2;
         $class_average = ($total_ave + $total_ave_second )/ 2;
 
-
         $data['check'] = Generateresult::getStudentsResult($current_year->id, $current_term->id, $class_id);
-        $data['class_ranked'] = Classresult::where('year_id',  $current_year->id)->where('term_id', $current_term->id)->where('form_id', $class_id)->get();
+        $data['class_ranked'] = Studentresult::where('year_id',  $current_year->id)
+                                            ->where('term_id', $current_term->id)->where('form_id', $class_id)
+                                            ->where('class_position', '=', null)->count();
         $data['term_name'] = $current_term->name;
         $data['year_name'] = $current_year->name;
         $data['class_percentage'] = number_format((float)$class_percentage, 2, '.', '');
@@ -285,14 +287,13 @@ class RankStudentController extends Controller
         $class = $req['class_id'];
         $id = $req['term_id'];
         $year = $req['year_id'];
-
         $terms = Term::where('id', $id)->first();
 
         //first term
 
-        if(strcmp($terms->name, 'First Term') == 0){
+        if($id == 1){
             $data = Firsttermresult::getStudentClassRecord($year, $class);
-         return $data;
+         //return $data;
            $arr = array();
            foreach($data as $dat){
                if(in_array($dat->stud_id, $arr)){}
@@ -302,6 +303,7 @@ class RankStudentController extends Controller
                     $info = [
                         'stud_id' => $dat->stud_id,
                         'student_card' => $dat->stud_card,
+                        'form_type' => $dat->form_type,
                         'point' => $pnt,
                         'sum_coff' => $coff,
                         'average' => (float)$pnt/(float)$coff
@@ -317,6 +319,7 @@ class RankStudentController extends Controller
                 $studentresults->form_id = $class;
                 $studentresults->student_id = $new['stud_id'];
                 $studentresults->student_school_id = $new['student_card'];
+                $studentresults->form_type = $new['form_type'];
                 $studentresults->average_point = $new['point'];
                 $studentresults->sum_coff = $new['sum_coff'];
                 $studentresults->stud_ave = $new['average'];
@@ -371,8 +374,7 @@ class RankStudentController extends Controller
                 $general_result->rank_student = 1;
 
 
-                if(Generateresult::where('year_id', $year)
-                                ->where('form_id', $class)
+                if(Generateresult::where('year_id', $year)->where('form_id', $class)
                                 ->where('term_id', $terms->id)
                                 ->exists()){
                                     Generateresult::where('year_id', $year)
@@ -403,7 +405,7 @@ class RankStudentController extends Controller
 
 
         //second term result
-        elseif(strcmp($terms->name, 'Second Term') == 0){
+        elseif($id == 2){
             $data = Secondtermresult::getStudentClassRecord($year, $class);
                $arr = array();
                foreach($data as $dat){
@@ -414,6 +416,7 @@ class RankStudentController extends Controller
                         $info = [
                             'stud_id' => $dat->stud_id,
                             'student_card' =>$dat->stud_card,
+                            'form_type' => $dat->form_type,
                             'point' =>$pnt,
                             'sum_coff' =>$coff,
                             'average' =>(float)$pnt/(float)$coff
@@ -427,6 +430,7 @@ class RankStudentController extends Controller
                     $studentresults->year_id = $year;
                     $studentresults->term_id = $terms->id;
                     $studentresults->form_id = $class;
+                    $studentresults->form_type = $new['form_type'];
                     $studentresults->student_id = $new['stud_id'];
                     $studentresults->student_school_id = $new['student_card'];
                     $studentresults->average_point = $new['point'];
@@ -527,6 +531,7 @@ class RankStudentController extends Controller
                         $info = [
                             'stud_id' => $dat->stud_id,
                             'student_card' =>$dat->stud_card,
+                            'form_type' => $dat->form_type,
                             'point' =>$pnt,
                             'sum_coff' =>$coff,
                             'average' =>(float)$pnt/(float)$coff
@@ -539,6 +544,7 @@ class RankStudentController extends Controller
                     $studentresults = new Studentresult();
                     $studentresults->year_id = $year;
                     $studentresults->term_id = $terms->id;
+                    $studentresults->form_type = $new['form_type'];
                     $studentresults->form_id = $class;
                     $studentresults->student_id = $new['stud_id'];
                     $studentresults->student_school_id = $new['student_card'];
@@ -649,11 +655,11 @@ try {
         $data['year_name'] = Year::getYearName($dec_year);
 
         if($class_results->count() > 0){
-            $data['notify'] = 'Result avalaible for the Academic year '.$y;
+            $data['notify'] = 'Result available for the Academic year '.$y;
             return view('admin.student_marks.rank_students')->with($data);
         }
         else {
-            $data['notify'] = 'No Result avalaible for the Academic year '.$y;
+            $data['notify'] = 'No Result available for the Academic year '.$y;
             return view('admin.student_marks.rank_students')->with($data);
         }
     }

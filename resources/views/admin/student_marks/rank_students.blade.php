@@ -147,7 +147,7 @@
         </form>
         <hr style="margin-top: -20px">
 
-        <div class="row">
+        <div class="row w3-padding">
             <h5 class="center blue-text">Result for the Academic year: {{$year_name }} </h5>
             @if($class_results->count() == 0)
                 @if($notify != '')
@@ -171,9 +171,10 @@
                     <th>Highest Average</th>
                     <th>Lowest Average</th>
                     <th>Class Average</th>
-                    <th colspan="2">Action</th>
+                    <th>Action</th>
                 </tr>
                 @foreach ($class_results as $key => $result)
+                <tr>
                     <td>{{ $key+1 }}</td>
                     <td>{{ $result->form->name }}</td>
                     <td>{{ $result->term->name }}</td>
@@ -185,19 +186,19 @@
                     <td class="{{ (float)$result->lowest_avg >= 10 ? 'blue-text':'red-text'}}">{{ $result->lowest_avg }}</td>
                     <td class="{{ (float)$result->class_avg >= 10 ? 'blue-text':'red-text'}}">{{ $result->class_avg }}</td>
                     <td>
-                        @if(App\Classresult::where('year_id', $result->year_id)->where('term_id',$result->term_id)->where('form_id', $result->form_id)->exists())
-                            <button class="bn orange white-text lighten-2 w3-small waves-green waves-effect">View Result</button>
+                        @if(App\Studentresult::where('year_id', $result->year_id)->where('term_id',$result->term_id)->where('form_id', $result->form_id)->where('class_position', null)->doesntExist())
+                        <form action="{{ route('get.class_result') }}" method="get">
+                            @csrf
+                            <input type="hidden" value="{{ Crypt::encrypt($result->form_id) }}" name="formId" />
+                            <input type="hidden" value="{{ Crypt::encrypt($result->year_id) }}" name="yearId" />
+                            <input type="hidden" value="{{ Crypt::encrypt($result->term_id) }}" name="termId" />
+                            <button type="submit" class="btn orange orange-text lighten-4 waves-green waves-effect">View Result</button>
+                        </form>
                         @else
-                            <button class="bn white-text lighten-2 w3-small disabled" style="background-color: rgb(187, 175, 175); cursor:not-allowed">Result not generated</button>
+                            <button class="btn white-text lighten-2 w3-small disabled" style="background-color: rgb(187, 175, 175); cursor:not-allowed">Result not generated</button>
                         @endif
                     </td>
-                    <td>
-                        @if(App\Classresult::where('year_id', $result->year_id)->where('term_id',$result->term_id)->where('form_id', $result->form_id)->exists())
-                            <button class="bn blue waves-green white-text lighten-2 w3-small waves-effect">Publish Result</button>
-                            @else
-                            <button class="bn blue waves-green white-text lighten-3 w3-small" style="cursor: not-allowed">No Result</button>
-                        @endif
-                        </td>
+                </tr>
                 @endforeach
             </table>
             @endif

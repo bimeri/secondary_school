@@ -120,7 +120,7 @@
             <center>
                 <p id="dateField" style="color: white;">&nbsp;</p>
                 <p style="text-align: center; color: #fff">&copy;Powered by
-                    <a  target="_blank" href ="#" style="color:#00ccff"> Bimeri. Ltd</a>
+                    <a  target="_blank" href ="#" style="color:#00ccff"> Nishang. Ltd</a>
                 </p>
             </center>
         </div>

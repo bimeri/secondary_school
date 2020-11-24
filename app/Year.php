@@ -71,6 +71,14 @@ class Year extends Model
         return $this->hasMany('App\Assignment');
     }
 
+    public function studentresults(){
+        return $this->hasMany('App\Studentresult');
+    }
+
+    public function generateresults(){
+        return $this->hasMany('App\Generateresult');
+    }
+
     public static function getCurrentYear()
     {
         $query = Year::select('id')->where('active', 1)->first();
@@ -98,7 +106,6 @@ class Year extends Model
 
     public static function getYear($id)
     {
-        $qr = Year::where('id', $id)->first();
-        return $qr;
+        return Year::where('id', $id)->first();
     }
 }

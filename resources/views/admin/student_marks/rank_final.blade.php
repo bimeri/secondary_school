@@ -109,32 +109,7 @@
         @lang('messages.rank_student')
     </div>
 </div>
-{{-- <ul class="tooltip-wrapper">
-    <li><a href="#" class="tooltip tooltip-top" data-tooltip="Hey, I'm at the top!">Tooltip top</a></li>
-    <li><a href="#" class="tooltip tooltip-bottom" data-tooltip="And I'm at the bottom">Tooltip bottom</a></li>
-    <li><a href="#" class="tooltip tooltip-left" data-tooltip="I'm left all alone">Tooltip left</a></li>
-    <li><a href="#" class="tooltip tooltip-right" data-tooltip="You're wrong and I'm right">Tooltip right</a></li>
-</ul> --}}
 <div class="row">
-    {{-- <div class="col s12 m8 offset-m4">
-        <form method="get" action="{{ route('rank.result') }}">
-            @csrf
-            <div class="row">
-                <div class="input-field col m5 s12">
-                    <select name="class" id="class">
-                        <option value="{{\Crypt::encrypt( $form->id) }}" selected>{{ $form->name }}  / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
-                      @foreach (App\Form::where('id', '!=', $form->id)->get() as $fm)
-                        <option value="{{\Crypt::encrypt($fm->id) }}">{{ $fm->name }}  / {{ $fm->background->name }} / {{ $fm->background->sector->name }}</option>
-                      @endforeach
-                    </select>
-                    <label for="class">Select the class</label>
-                </div>
-                <div class="col m2 offset-s3 m3 input-field">
-                    <button class="w3-btn w3-teal waves-effect waves-light" onclick="load()">Generate {{ $current_term->name }} Result</button>
-                </div>
-            </div>
-        </form>
-    </div> --}}
     @if(Session::has('message'))
     <div class="row">
         <div class="col s12 m6 offset-m3 w3-center alert alert-info w3-padding" role="alert" style="height: 70px">
@@ -153,21 +128,27 @@
                 <button type="submit" class="btn blue waves-effect waves-light right"
                         onclick="load()">Generate General Result</button>
             </form>
+            @else
+            <button class="btn pink pink-text lighten-4 waves-effect waves-light right">general result generated</button>
         @endif
 
-        @if($class_ranked->count() == 0)
-            <form method="post" action="{{ route('generate.class.result') }}">
-                @csrf
-                <input type="hidden" name="year_id" value="{{ $year->id }}"/>
-                <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
-                <input type="hidden" name="class_id" value="{{ $class }}"/>
-                <button type="submit" class="btn green waves-effect waves-light col offset-m1"
-                        onclick="load()">Generate Result per class
-                </button>
-            </form>
+        @if($check->count() == 0)
+        @else
+            @if($class_ranked > 0)
+                <form method="post" action="{{ route('generate.class.result') }}">
+                    @csrf
+                    <input type="hidden" name="year_id" value="{{ $year->id }}"/>
+                    <input type="hidden" name="term_id" value="{{ $seq_term->id }}"/>
+                    <input type="hidden" name="class_id" value="{{ $class }}"/>
+                    <button type="submit" class="btn green waves-effect waves-light col offset-m1"
+                            onclick="load()">Generate Result per class
+                    </button>
+                </form>
+            @else
+                <button class="btn pink pink-text lighten-4 waves-effect waves-light left">class result generated</button>
+            @endif
         @endif
     </div>
-
 
     <div class="col s12 m10 offset-m1 w3-border-t radius white w3-margin-left">
         <div class="row">
@@ -180,7 +161,7 @@
 
                 @else
                 <div class="alert green-text waves-effect waves-green green lighten-4 center w3-padding w3-small" role="alert">
-                    <b>Student Result and Ranking has been Successfully Generated for {{ $term_name }} and the academic year {{ $year_name }}</b>
+                    <b>Student Result and Ranking has been Successfully Generated for <b>{{ $term_name }}</b> and the academic year {{ $year_name }}</b>
                 <i onclick="this.parentElement.style.display='none'" class="close right hover" style="color: green;">&times;</i>
                 </div>
                 @endif
@@ -286,5 +267,6 @@
     </div>
     @endif
 </div>
+<a href="{{ route('student.rank.result') }}" onclick="load()" class="btn black white-text lighten-4" style="position: fixed; bottom:10px; left: 10px; z-index:10"><i class="fa fa-arrow-alt-circle-left"></i> Go back</a>
 
 @endsection

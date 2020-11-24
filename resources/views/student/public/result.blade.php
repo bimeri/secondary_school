@@ -93,8 +93,8 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $value['code'] }}</td>
                                             <td>{{ $value['subject'] }}</td>
-                                            <td>{{ $value['mark'] }}</td>
-                                            <td>{{ $value['ave_point'] }}</td>
+                                            <td class="{{ $value['mark'] > 9 ? 'blue-text':'red-text' }}">{{ $value['mark'] == null? '0':$value['mark'] }}</td>
+                                            <td class="blue-text">{{ $value['ave_point'] }}</td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -116,21 +116,21 @@
                         </tr>
                         <tbody>
                             @if($result == null || $result[1][0] == 'NO_SECOND_RESULT')
-                            <tr class="red red-text lighten-4 center">
-                                <td colspan="5">
-                                    Result has not yet been Published
-                                </td>
-                            </tr>
+                                <tr class="red red-text lighten-4 center">
+                                    <td colspan="5">
+                                        Result has not yet been Published
+                                    </td>
+                                </tr>
                             @else
-                            @foreach ($result[1][0] as $key => $value)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $value['code'] }}</td>
-                                <td>{{ $value['subject'] }}</td>
-                                <td>{{ $value['mark'] }}</td>
-                                <td>{{ $value['ave_point'] }}</td>
-                            </tr>
-                            @endforeach
+                                @foreach ($result[1][0] as $key => $value)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $value['code'] }}</td>
+                                        <td>{{ $value['subject'] }}</td>
+                                        <td class="{{ $value['mark'] > 9? 'blue-text':'red-text' }}">{{ $value['mark'] == null? '0':$value['mark'] }}</td>
+                                        <td class="blue-text">{{ $value['ave_point'] }}</td>
+                                    </tr>
+                                @endforeach
                             @endif
                         </tbody>
                     </table>

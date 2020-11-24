@@ -193,6 +193,8 @@ Route::get('class/result', 'RankStudentController@classResult')->name('rank.resu
 Route::post('student/result/generate', 'RankStudentController@studentResult')->name('student.result.generate');
 Route::post('student/result', 'ClassResultController@getStudentResultPerclass')->name('generate.class.result');
 Route::get('class/student/result', 'RankStudentController@getResult')->name('student.class.result');
+Route::get('class/type/result', 'ClassResultController@getClassResult')->name('get.class_result');
+Route::get('student/report_card', 'ClassResultController@showStudentReportCardPage')->name('student.report_card');
 
 // income statement
 Route::get('admin/income_statetment', 'IncomeController@index')->name('admin.income.statement');

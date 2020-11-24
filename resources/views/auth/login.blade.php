@@ -15,19 +15,7 @@
         <link rel="stylesheet" href="{{ URL::asset('mycss.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('w3.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('toaster.css') }}" />
-
-        {{-- <script defer src="{{ URL::asset('fontawesome/js/all.js') }}"></script> --}}
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        {{-- online --}}
-        {{-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> --}}
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> --}}
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> --}}
-
-        {{-- font awesome online --}}
-    {{-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> --}}
-
-        <!-- Styles -->
-
     </head>
     <body>
         @if(Auth::guard('student')->check())

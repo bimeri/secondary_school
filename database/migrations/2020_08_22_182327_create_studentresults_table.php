@@ -21,6 +21,7 @@ class CreateStudentresultsTable extends Migration
             $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
             $table->integer('form_id')->unsigned();
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
+            $table->string('form_type')->nullable();
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->string('student_school_id')->nullable();
@@ -28,6 +29,7 @@ class CreateStudentresultsTable extends Migration
             $table->decimal('sum_coff', 6,2)->nullable();
             $table->decimal('stud_ave', 6,2)->nullable();
             $table->integer('position')->nullable();
+            $table->integer('class_position')->nullable();
             $table->string('remark')->nullable();
             $table->timestamps();
         });

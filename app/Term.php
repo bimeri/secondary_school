@@ -37,6 +37,9 @@ class Term extends Model
     {
         return $this->hasMany('App\Resultcontrol');
     }
+    public function studentresults(){
+        return $this->hasMany('App\Studentresult');
+    }
 
     public static function getCurrentTerm(){
         $query = Term::select('id')->where('active', 1)->first();

@@ -76,6 +76,7 @@ class AdminstudentController extends Controller
             'fullName' => 'required',
             'gender' => 'required',
             'class' => 'required',
+            'pob' => 'required',
             'school_id' => 'required|unique:App\Student,school_id',
         ]);
 
@@ -95,6 +96,7 @@ class AdminstudentController extends Controller
         $pemail = $req['parent_email'];
         $gender = $req['gender'];
         $dob = $req['date_of_birth'];
+        $place_of_birth = $req['pob'];
         $subclass = $req['subclass'];
 
         $form = Form::where('id', $form_id)->first();
@@ -124,6 +126,7 @@ class AdminstudentController extends Controller
         $student->email = $email;
         $student->password = $password;
         $student->date_enrolled = $date_enroll;
+        $student->place_of_birth = $place_of_birth;
 
         $student->save();
 

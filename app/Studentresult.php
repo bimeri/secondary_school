@@ -13,6 +13,18 @@ class Studentresult extends Model
         'year_id', 'term_id', 'class_id', 'student_id', 'student_school_id', 'average_point', 'sum_coff', 'stud_ave', 'remark'
     ];
 
+    public function student(){
+        return $this->belongsTo('App\Student');
+    }
+
+    public function year(){
+        return $this->belongsTo('App\Year');
+    }
+
+    public function term(){
+        return $this->belongsTo('App\Term');
+    }
+
     public function studentinfos(){
         return $this->hasMany('App\Studentinfo');
     }
@@ -58,4 +70,37 @@ class Studentresult extends Model
            ->get();
         return $qr;
        }
+     public static function getStudentPerClass($year, $term, $class, $type){
+        $qr = Studentresult::where('year_id', $year)
+           ->where('term_id', $term)
+           ->where('form_id', $class)
+           ->where('form_type', $type)
+           ->orderBy('stud_ave', 'DESC')
+           ->get();
+           foreach ($qr as $key => $value) {
+            Studentresult::where('year_id', $year)
+            ->where('term_id', $term)
+            ->where('form_id', $class)
+            ->where('student_id', $value->student_id)
+            ->update(['class_position' => ($key+1)]);
+           }
+
+        return "success";
+       }
+    public static function getStudentClassResult($year, $term, $class, $type){
+        return Studentresult::where('year_id', $year)
+        ->where('term_id', $term)
+        ->where('form_id', $class)
+        ->where('form_type', $type)
+        ->orderBy('stud_ave', 'DESC')
+        ->get();
+    }
+
+    public static function getStudentResult($year, $term, $class, $studentid){
+        return Studentresult::where('year_id', $year)
+        ->where('term_id', $term)
+        ->where('form_id', $class)
+        ->where('student_id', $studentid)
+        ->first();
+    }
 }

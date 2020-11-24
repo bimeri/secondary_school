@@ -21,6 +21,10 @@ class Generateresult extends Model
         return $this->belongsTo('App\Term');
     }
 
+    public function year(){
+        return $this->belongsTo('App\Year');
+    }
+
     public static function getStudentsResult($year, $term, $class){
         $query = Generateresult::where('year_id', $year)
                 ->where('form_id' , $class)
@@ -32,5 +36,12 @@ class Generateresult extends Model
 
     public static function getClassYearlyResult($year){
         return Generateresult::where('year_id', $year)->get();
+    }
+
+    public static function getClassTermResult($year, $term, $class){
+        return Generateresult::where('year_id', $year)
+                                ->where('term_id', $term)
+                                ->where('form_id', $class)
+                                ->first();
     }
 }

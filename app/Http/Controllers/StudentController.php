@@ -90,14 +90,10 @@ class StudentController extends Controller
         $term_id ='';
         $year_id = '';
         $form_id = '';
-        try {
-            $term_id = Crypt::decrypt( $req['term']);
-            $year_id = Crypt::decrypt($req['year']);
-            $form_id = Crypt::decrypt($req['class']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $notify = array('message' => 'fail to decrypt IDs please contact the administrator.', 'alert-tpye' => 'error');
-            return redirect()->back()->with($notify);
-        }
+        $term_id = $this->decryptValue($req['term']);
+        $year_id = $this->decryptValue($req['year']);
+        $form_id = $this->decryptValue($req['class']);
+
         $data['years'] = Year::getAllYear();
         $data['terms'] = Term::getAllTerm();
         $promotions = Promotion::where('student_id', auth()->user()->id)->get();
@@ -124,12 +120,7 @@ class StudentController extends Controller
     public function studentTeacherNote(Request $req){
         $subjectId = '';
         $yearId = Year::getCurrentYear();
-        try {
-            $subjectId = Crypt::decrypt($req['subjectId']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $notify = array('message' => 'fail to decrypt IDs please contact the administrator.', 'alert-tpye' => 'error');
-            return redirect()->back()->with($notify);
-        }
+        $subjectId = $this->decryptValue($req['subjectId']);
         $data['files'] = File::where('subject_id', $subjectId)->where('year_id', $yearId)->get();
 
         return view('student.public.viewNote')->with($data);
@@ -139,17 +130,22 @@ class StudentController extends Controller
         $fileId = '';
         $subId = '';
         $yearId = Year::getCurrentYear();
-        try {
-            $fileId = Crypt::decrypt($req['fileId']);
-            $subId = Crypt::decrypt($req['subjectId']);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $notify = array('message' => 'fail to decrypt IDs please contact the administrator.', 'alert-tpye' => 'error');
-            return redirect()->back()->with($notify);
-        }
+        $fileId = $this->decryptValue($req['fileId']);
+        $subId = $this->decryptValue($req['subjectId']);
         $data['subjectDetail'] = Subject::where('id', $subId)->first();
         $data['fileDetail'] = File::where('id', $fileId)->where('year_id', $yearId)->first();
 
         return view('student.public.note')->with($data);
+    }
+
+    function decryptValue($key){
+         try {
+            $decrypted = Crypt::decrypt($key);
+            return $decrypted;
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $notify = array('message' => 'fail to decrypt IDs please contact the administrator.', 'alert-tpye' => 'error');
+            return redirect()->back()->with($notify);
+        }
     }
 
 }

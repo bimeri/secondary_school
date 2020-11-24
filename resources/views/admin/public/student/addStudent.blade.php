@@ -54,6 +54,10 @@
                     <label for="address">Parent email (optional)</label>
                 </div>
                 <div class="input-field col s12 m3">
+                    <input type="text" name="pob" value="{{ old('pob') }}" class="validate" id="address" required/>
+                    <label for="address">Enter place of birth</label>
+                </div>
+                <div class="input-field col s12 m3">
                     <select name="gender" class="icons">
                       <option value="" disabled selected>Select Your Gender</option>
                       <option value="Male" data-icon="{{ URL::asset('image/man.png') }}">Male</option>

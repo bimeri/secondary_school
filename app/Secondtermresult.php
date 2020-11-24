@@ -22,13 +22,16 @@ class Secondtermresult extends Model
 
     public static function getStudentClassRecord($year, $class){
         $query = Secondtermresult::select('student_id as stud_id',
-                                         'seq3', 'seq4', 'ave_point as points',
+                                         'seq3',
+                                         'seq4',
+                                         'form_type',
+                                         'ave_point as points',
                                          'students.school_id as stud_card',
                                          'subjects.coefficient as subject_coff')
-        ->where('firsttermresults.year_id', $year)
-        ->where('firsttermresults.form_id', $class)
-        ->join('students', 'firsttermresults.student_id', 'students.id')
-        ->join('subjects', 'firsttermresults.subject_id', 'subjects.id')
+        ->where('secondtermresults.year_id', $year)
+        ->where('secondtermresults.form_id', $class)
+        ->join('students', 'secondtermresults.student_id', 'students.id')
+        ->join('subjects', 'secondtermresults.subject_id', 'subjects.id')
         ->orderBy('students.id')
         ->get();
         return $query;
@@ -86,9 +89,27 @@ class Secondtermresult extends Model
         } else {
             $secondResult = "NO_SECOND_RESULT";
         }
-
         $result = [[$firstResult, $seq1], [$secondResult, $seq2]];
-
         return $result;
+    }
+
+    public static function getStudentTest1($stud_id, $class, $year, $subjectId){
+        return Secondtermresult::where('student_id', $stud_id)
+                ->where('form_id', $class)
+                ->where('year_id', $year)
+                ->where('subject_id', $subjectId)
+                ->first();
+    }
+    public static function sumSequenceThree($stud_id, $class, $year){
+        return Secondtermresult::where('student_id', $stud_id)
+        ->where('form_id', $class)
+        ->where('year_id', $year)
+        ->sum('seq3');
+    }
+    public static function sumSequenceFour($stud_id, $class, $year){
+        return Secondtermresult::where('student_id', $stud_id)
+        ->where('form_id', $class)
+        ->where('year_id', $year)
+        ->sum('seq4');
     }
 }
