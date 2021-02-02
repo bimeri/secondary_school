@@ -23,24 +23,24 @@
         margin-top: 10px !important;
     }
     input[type='number'].sp{
-        position: absolute ;
+        position: relative;
         outline: none !important;
         border: 1px solid transparent !important;
         border-bottom: 1px solid white !important;
         width: 60px !important;
         height: 30px !important;
-        margin-top: -12px;
-        margin-left: -31px;
+        margin-top: 2px;
+        margin-left: -10px;
     }
     input[type='number'].ss{
-        position: absolute;
+        position: relative;
         outline: none !important;
         border: 1px solid transparent !important;
         border-bottom: 1px solid white !important;
         width: 60px !important;
         height: 30px !important;
-        margin-top: -12px;
-        margin-left: -31px ;
+        margin-top: 2px;
+        margin-left: -10px ;
     }
     input[type = 'number'].sp{
         color:#2196F3 !important;
@@ -105,9 +105,16 @@
         </form>
     </div>
     <div class="col s11 m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">
+        <h5 class="center teal-text">{{ __('messages.record_grading') }}. <b>(/20)</b></h5>
         <div class="col s12 m12 refl" style="overflow-x:scroll !important;">
-            <h5 class="center teal-text">{{ __('messages.record_grading') }}. <b>(/20)</b></h5>
             <table id="myTable" class="w3-table w3-border-t" style="font-size: 13px !important;">
+                @if($class)
+                <tr>
+                    <td colspan="11" class="orange orange-text lighten-5 center">
+                        All Students for Sector: <b>{{ $class->background->sector->name }}</b>, Background: <b>{{ $class->background->name }}</b>, Form: <b>{{ $class->name }}</b>
+                    </td>
+                </tr>
+                @endif
                 <tr class="teal">
                         <th rowspan="2" class="w3-xlarge blue">@if(!Empty($students))<div id="stud">Students</div>@else<div id="studs">Students</div>@endif</th>
                         @foreach ($subjects as $sub)

@@ -49,8 +49,18 @@ class Form extends Model
     public static function getClassDetail($class){
         return Form::where('id', $class)->first();
     }
+
     public function Promotions(){
         return $this->hasMany('App\Promotion');
+    }
+
+    public static function getAllForm($sectorId){
+        $query = Form::join('backgrounds', 'forms.background_id', 'backgrounds.id')
+                ->join('sectors', 'backgrounds.sector_id', 'sectors.id')
+                ->where('sectors.id', $sectorId)
+                ->select('forms.id as id', 'forms.name as name')
+                ->get();
+        return $query;
     }
 
     public static function getAllClasses(){

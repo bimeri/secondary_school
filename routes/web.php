@@ -133,13 +133,19 @@ Route::post('admin/subject', 'SubjectController@submit')->name('subject.create.s
 Route::get('admin/subject/all', 'SubjectController@view')->name('admin.subject.view');
 Route::post('admin/subject/edit', 'SubjectController@edit')->name('subject.edit');
 Route::get('admin/subject/get', 'SubjectController@select')->name('subject.create.select');
+Route::get('admin/class/subject', 'SubjectController@getClassSujects')->name('class.subject.get');
 // manage teacher
 Route::get('admin/create/teacher', 'AdminTeacherController@index')->name('admin.teacher.create');
+Route::post('admin/update/teacher', 'AdminTeacherController@update')->name('teacher.update');
 Route::post('admin/create/teacher', 'AdminTeacherController@submit')->name('teacher.create.submit');
 Route::get('admin/subject/add_subject', 'SubjectController@edit')->name('subject.subject.assign');
 Route::get('admin/teacher/view', 'AdminTeacherController@view')->name('admin.teacher.view');
 Route::get('admin/teacher/assign', 'AdminTeacherController@assign')->name('admin.subject.assign');
 Route::post('admin/teacher/assign', 'AdminTeacherController@saveSubject')->name('teacher.subject');
+Route::get('admin/teacher/subjects', 'AdminTeacherController@selectSubtect')->name('teacher.subject.select');
+Route::post('admin/subject/ajax', 'AdminTeacherController@getAjaxSubject')->name('subject.class.get');
+Route::get('admin/teacher/suspend', 'AdminTeacherController@suspendTeacher')->name('teacher.suspend');
+Route::get('admin/teacher/permit', 'AdminTeacherController@permitTeacher')->name('teacher.permit');
 //discipline
 Route::get('admin/create/discipline', 'DisciplineController@create')->name('admin.create.discipline');
 Route::get('admin/record/discipline', 'DisciplineController@record')->name('admin.record.discipline');
@@ -171,6 +177,7 @@ Route::get('admin/collect/fees', 'Fees_expensesController@getStudents')->name('s
 Route::get('admin/fees/statistics', 'Fees_expensesController@getSatistics')->name('fees.statistics.all');
 Route::post('admin/fees/statistics', 'Fees_expensesController@addExpenseType')->name('addExpense.type');
 Route::get('admin/fees/ajax/create', 'Fees_expensesController@getClasses')->name('student.get.classes');
+Route::get('fees/control', 'Fees_expensesController@showFeecontrolPage')->name('fees.control');
 
 // scholarship
 Route::get('scholarship/create', 'ScholarshipController@index')->name('scholarship.create');

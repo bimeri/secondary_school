@@ -54,7 +54,7 @@
                 <td>
                     <form action="{{ route('admin.delete.discipline') }}" method="post" id="form{{ $des->id }}">@csrf
                         <input type="hidden" name="id" value="{{ $des->id }}">
-                        <button type="submit" class="btn waves-effect waves-light my-red" id="btn-submit{{ $des->id }}" onclick="save{{ $des->id }}()">Delete <i class="fa fa-trash w3-small"></i></button>
+                        <button type="submit" class="btn waves-effect waves-light red red-text lighten-4" id="btn-submit{{ $des->id }}" onclick="save{{ $des->id }}()">Delete <i class="fa fa-trash w3-small"></i></button>
                     </form>
                 </td>
             </tr>
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button type="submit" class="btn orange white-text waves-effect waves-light col offset-m3 offset-s3" style="width: 40%">Updte</button>
+                                <button type="submit" class="btn orange white-text waves-effect waves-light col offset-m3 offset-s3" style="width: 40%">Update</button>
                             </div>
                         </form>
                     </div>

@@ -38,103 +38,11 @@
                             @endif
                         </td>
                         <td>
-                            <button class="btn green waves-light waves-effect modal-trigger"  href="#modal{{ $key + 1 }}">
+                            <a class="btn green waves-light waves-effect"  href="{{ route('teacher.subject.select', ['userId' => Crypt::encrypt($user->id)]) }}">
                                 Select Subjects <i class="fa fa-pen w3-small"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
-
-                    {{--  model to assign subjects  --}}
-                    <div id="modal{{ $key + 1 }}" class="modal modal-fixed-footer" style="width: 60%">
-                        <div class="modal-content">
-                        <h4 class="w3-center teal-text">Select the Subjects to be assign to <b class="upper">{{ $user->full_name }}.</b> </h4>
-                        <hr style="border-top: 1px solid orange">
-
-                        <form method="get" action="{{ route('student.get') }}" id="forms">
-                            @csrf
-                            <div class="row" style="font-size: 16px !important">
-                                <div class="col m4 s12">
-                                    <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
-                                        <option value="" disabled selected>select the Sector</option>
-                                      @foreach (App\Sector::all() as $sector)
-                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                                      @endforeach
-                                    </select>
-                                </div>
-                                <div class="col s12 m4" id="backgrounds">
-                                    <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
-                                        <option value="">select the Background</option>
-                                    </select>
-                                </div>
-
-                                <div class="col s12 m4" id="classes" onchange="bookes(event)">
-                                    <select class="browser-default" name="class" id="form" required>
-                                        <option value="">select the Class</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col m2 m3 right offset-m7" id="submit">
-                                    <button class="btn btn-primary waves-effect waves-light">Get subjects</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m6">
-                                    <h6>Select the Subject</h6><hr>
-                                    <input type="checkbox" class="right" name=""  value="" />
-                                </div>
-                            </div>
-                        </form>
-
-                            <form action="{{ route('teacher.subject') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="user_name" value="{{ $user->user_name }}">
-                                <div class="row">
-                                    <ul class="w3-ul">
-                                        <li class="w3-center blue-text">Subject Name/Code <i class="fa fa-arrow-right teal-text"></i>
-                                            Subject Class <i class="fa fa-arrow-right teal-text"></i>
-                                            Class Background <i class="fa fa-arrow-right teal-text"></i>
-                                            Class Sector
-                                        </li>
-                                        @foreach (App\Subject::all() as $keyy => $subject)
-                                        <li>{{ $keyy + 1 }}).
-                                            {{ $subject->name }}/{{ $subject->code }} <i class="fa fa-arrow-right teal-text w3-tiny"></i>
-                                            {{ $subject->form->name }} <i class="fa fa-arrow-right teal-text w3-tiny"></i>
-                                            {{ $subject->form->background->name }} <i class="fa fa-arrow-right teal-text w3-tiny"></i>
-                                            {{ $subject->form->background->sector->name }}
-
-                                                <label class="right">
-                                                <input type="checkbox"
-                                                class="right"
-                                                name="suject{{ $subject->id }}"
-                                                value="{{ $subject->id }}"
-                                                @if (DB::table('subject_teacher')->where('subject_id', $subject->id)->exists())
-                                                disabled checked
-                                                @endif
-                                                />
-                                                <span>
-                                                    @if (DB::table('subject_teacher')->where('subject_id', $subject->id)->exists())
-                                                    assigned
-                                                    @else
-                                                    <b class="green-text">select</b>
-                                                    @endif
-                                                </span>
-                                                </label>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <div class="col s6 m3 offset-m4 offset-s3 w3-center" style="margin-top: 4px !important">
-                                    <button class="btn teal waves-effect waves-light w3-small" type="submit">Save subjects</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="modal-close red lighten-3 waves-effect waves-green btn-flat right white-text">Cancel</button>
-                        </div>
-                    </div>
-                    {{--  end modal  --}}
-
                     {{--  all teacher subjects  --}}
                     <div id="modall{{ $key + 1 }}" class="modal modal-fixed-footer" >
                         <div class="modal-content">
@@ -142,7 +50,7 @@
                         <hr style="border-top: 1px solid teal">
                             <div class="row">
                                 <ul class="w3-ul">
-                                    <li class="w3-center blue-text">Subject Name/Code <i class="fa fa-arrow-right teal-text"></i>
+                                    <li class="w3-center blue-text">Subject Name <i class="fa fa-arrow-right teal-text"></i>
                                         Subject Class <i class="fa fa-arrow-right teal-text"></i>
                                         Class Background <i class="fa fa-arrow-right teal-text"></i>
                                         Class Sector
@@ -152,7 +60,7 @@
                                         <?php $subjects = App\Subject::where('id', $sub->subject_id)->get(); ?>
                                         @foreach ($subjects as $subject)
                                             <li>{{ $k + 1 }}).
-                                                {{ $subject->name }}/{{ $subject->code }} <i class="fa fa-arrow-right teal-text w3-tiny"></i>
+                                                {{ $subject->name }} <i class="fa fa-arrow-right teal-text w3-tiny"></i>
                                                 {{ $subject->form->name }} <i class="fa fa-arrow-right teal-text w3-tiny"></i>
                                                 {{ $subject->form->background->name }} <i class="fa fa-arrow-right teal-text w3-tiny"></i>
                                                 {{ $subject->form->background->sector->name }}

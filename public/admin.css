@@ -69,8 +69,7 @@ body{
   .cal{
     min-height: calc(84vh - 40px);
   }
-
-  .containeradmin {
+.containeradmin {
     position: relative;
     width: 100%;
     height: 30px;

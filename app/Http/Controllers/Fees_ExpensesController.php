@@ -10,6 +10,7 @@ use App\Feetype;
 use App\Form;
 use App\Permission;
 use App\Scholarship;
+use App\Sector;
 use App\Student;
 use App\Studentinfo;
 use App\Subclass;
@@ -38,6 +39,7 @@ class Fees_ExpensesController extends Controller
         $year = Year::getCurrentYear();
         $data['yr'] = Year::getYearName($year);
         $data['current'] = Expensetype::getCurrentYearInfo($year);
+        $data['expense_sum'] = Expensetype::getCurrentYearSum($year);
 
         return view('admin.public.fees_expenses.expense_type')->with($data);
     }
@@ -56,6 +58,7 @@ class Fees_ExpensesController extends Controller
         $year = $decrypted;
         $data['yr'] = Year::getYearName($year);
         $data['current'] = Expensetype::getCurrentYearInfo($year);
+        $data['expense_sum'] = Expensetype::getCurrentYearSum($year);
 
         return view('admin.public.fees_expenses.expense_type')->with($data);
     }
@@ -82,6 +85,11 @@ class Fees_ExpensesController extends Controller
         $data['all_year'] =  Year::getAllYear();
         $data['students'] = Studentinfo::getAllStudentPerYear($current_year->id);
         return view('admin.public.fees_expenses.collect_fee')->with($data);
+    }
+
+    public function showFeecontrolPage(){
+        $this->authorize('print_fee', Permission::class);
+        return view('admin.public.fees_expenses.fee-control');
     }
 
     public function getStudents(Request $req){
@@ -117,6 +125,8 @@ class Fees_ExpensesController extends Controller
         $this->authorize('report_fees', Permission::class);
         $current_year = Year::where('active', 1)->first();
         $data['years'] = Year::getAllYear();
+        $data['sectors'] = Sector::getAllType();
+        $data['sectorId'] = '';
         $year_id = $current_year->id;
         $data['years'] = Year::all();
         $data['year_name'] = $current_year->name;
@@ -129,10 +139,12 @@ class Fees_ExpensesController extends Controller
     public function getSatistics(Request $req){
         $this->authorize('report_fees', Permission::class);
         $yearId = $req['year'];
+        $data['sectorId'] = $req['sector'];
         $year_id = $yearId;
         $data['years'] = Year::all();
+        $data['sectors'] = Sector::getAllType();
         $year_name = Year::getYearName($yearId);;
-        $data['year_name'] = Year::getYearName($yearId);;
+        $data['year_name'] = Year::getYearName($yearId);
         $data['year_id'] = $year_id;
 
         $data['fees'] = Fee::getYearlyFeeStatistics($yearId);

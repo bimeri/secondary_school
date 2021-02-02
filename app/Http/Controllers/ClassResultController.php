@@ -220,7 +220,7 @@ class ClassResultController extends Controller
             $decrypted = Crypt::decrypt($key);
             return $decrypted;
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            $notification = array('message' => 'Fail to decrypt Id, please contwact the admin', 'alert-type' => 'error');
+            $notification = array('message' => 'Fail to decrypt Id, please contact the admin', 'alert-type' => 'error');
             return redirect()->back()->with($notification);
         }
     }

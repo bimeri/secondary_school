@@ -25,7 +25,7 @@
                     <th>email</th>
                     <th>gender</th>
                     <th>date of birth</th>
-                    <th colspan="2">Action</th>
+                    <th colspan="3">Action</th>
                 </tr>
                 @foreach ($teachers as $key => $user)
                 <tr>
@@ -45,7 +45,16 @@
                     </button>
                     </td>
                     <td>
-                    <button class="red btn waves-light waves-effect" disabled>Delete <i class="fa fa-trash w3-small"></i></button>
+                    <button class="btn orange waves-light waves-effect modal-trigger" href="#modal{{ $key+1 }}">
+                        Update <i class="fa fa-pen w3-small"></i>
+                    </button>
+                    </td>
+                    <td>
+                        @if(App\Teacher::where('id', $user->id)->where('suspend', 1)->exists())
+                        <a href="{{ route('teacher.permit', ['teacherId' => $user->id]) }}" type="submit" class="orange orange-text lighten-5 btn waves-light waves-effect">UnSuspend Teacher</a>
+                        @else
+                        <a href="{{ route('teacher.suspend', ['teacherId' => $user->id]) }}" type="submit" class="red btn waves-light waves-effect">Suspend Teacher <i class="fa fa-trash w3-small"></i></a>
+                        @endif
                     </td>
                 </tr>
 
@@ -119,6 +128,7 @@
                         </div>
                     </div>
                 </div>
+                @include('admin.public.includes.edit_teacher')
                 @endforeach
             </table>
         </div>

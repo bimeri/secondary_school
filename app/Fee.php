@@ -51,7 +51,6 @@ class Fee extends Model
 
     public static function getStudentClass($year_id, $student_id){
         $class = Fee::where('year_id', $year_id)->where('student_id', $student_id)->first();
-
         return $class;
     }
 

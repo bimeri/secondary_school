@@ -240,22 +240,22 @@
                         </tr>
                         @endforeach
 
-                        <tr class="teal-text center" style="background-color: rgb(169, 238, 238)">
+                        <tr class="teal-text center" style="background-color: #a9eeee">
                             <td>Total</td>
 
                             <td class="bold">{{ $term[$key]['total_student'] }}</td>
                             <td class="bold"></td>
                             <td class="bold"></td>
                             <td class="bold"></td>
-                            <td class="bold" @if($term[$key]['total_percent']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $term[$key]['total_percent'] }} &percnt;</td>
-                            <td class="bold" @if($term[$key]['total_average']  < 10) style="color:red" @else  style="color:blue"  @endif>{{ $term[$key]['total_average'] }}</td>
+                            <td class="bold" @if($term[$key]['total_percent']  < 50) style="color:#ff0000" @else  style="color:#0000ff"  @endif>{{ $term[$key]['total_percent'] }} &percnt;</td>
+                            <td class="bold" @if($term[$key]['total_average']  < 10) style="color:#ff0000" @else  style="color:#0000ff"  @endif>{{ $term[$key]['total_average'] }}</td>
 
                             <td class="bold">{{ $terms[$key]['total_student_two'] }}</td>
                             <td class="bold"></td>
                             <td class="bold"></td>
                             <td class="bold"></td>
-                            <td class="bold" @if($terms[$key]['total_percent_two']  < 50) style="color:red" @else  style="color:blue"  @endif>{{ $terms[$key]['total_percent_two'] }} &percnt;</td>
-                            <td class="bold" @if($terms[$key]['total_average_two']  < 10) style="color:red" @else  style="color:blue"  @endif>{{ $terms[$key]['total_average_two'] }}</td>
+                            <td class="bold" @if($terms[$key]['total_percent_two']  < 50) style="color:#ff0000" @else  style="color:#0000ff"  @endif>{{ $terms[$key]['total_percent_two'] }} &percnt;</td>
+                            <td class="bold" @if($terms[$key]['total_average_two']  < 10) style="color:#ff0000" @else  style="color:#0000ff"  @endif>{{ $terms[$key]['total_average_two'] }}</td>
                         </tr>
                     </table>
                 </div>

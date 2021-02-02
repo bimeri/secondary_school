@@ -44,7 +44,7 @@ class authController extends Controller
             return redirect()->route('student.home')->with($notification);
         }
         //all teachers
-        else if(Auth::guard('teacher')->attempt(['email' => $email, 'password' => $password], $remember)){
+        else if(Auth::guard('teacher')->attempt(['email' => $email, 'password' => $password, 'suspend' => 0], $remember)){
             $notification = array(
                 'message' => 'Hello, '.$email.' your login was Successfull!',
                 'alert-type' => 'success'

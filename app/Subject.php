@@ -10,7 +10,7 @@ class Subject extends Model
     //
     use Notifiable;
     protected $fillable = [
-        'name', 'code', 'coefficient', 'form_id'
+        'name', 'coefficient', 'form_id'
     ];
 
     public function form(){

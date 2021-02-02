@@ -51,18 +51,18 @@
 <div class="row">
     <form method="get" action="{{ route('expense.type.get') }}">
         @csrf
-        <div class="row">
-            <div class="input-field col m3 offset-m4 s12">
+        <div class="row" style="margin-top: -40px">
+            <div class="input-field col m3 offset-m4 s6">
                 <select name="year" id="year">
                     <option value="" selected>select year</option>
-                    @foreach (App\Year::all() as $year)
+                    @foreach (App\Year::getAllYear() as $year)
                     <option value="{{\Crypt::encrypt($year->id) }}">{{ $year->name }}</option>
                     @endforeach
                 </select>
                 <label for="class">Select the Year</label>
             </div>
-            <div class="col m2 offset-s3 m3 input-field">
-                <button class="w3-btn w3-teal waves-effect waves-light w3-small" onclick="load()">Get Result</button>
+            <div class="col m2 s6 m3 input-field">
+                <button class="w3-teal waves-effect waves-light w3-small btn-small input-field" onclick="load()">Get Expenses</button>
             </div>
         </div>
     </form>
@@ -70,12 +70,15 @@
 
 @if($current->count() > 0)
 <div class="row">
-    <div class="col s6 offset-s6 m2 offset-m9 topnav" style="margin-top:-20px !important">
+    <div class="col s6 offset-s6 m2 offset-m9 topnav" style="margin-top:-80px !important">
         <input type="text" placeholder="Search Type..." onkeyup="myFunction()"  id="myInput">
         <i class="fa fa-search right w3-large teal-text search"></i>
     </div>
-    <div class="col s12 m10 offset-m1" style="overflow-x:scroll !important;">
+    <div class="col s12 m10 offset-m1" style="overflow-x:scroll !important; margin-top:-30px !important">
         <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
+            <tr>
+                <td colspan="6" class="center blue blue-text lighten-4">Total Expense for the year {{ $expense_sum[1] }}:  <b>{{ $expense_sum[0] }} CFA</b></td>
+            </tr>
             <tr class="teal">
                 <th>S/N</th>
                 <th>Year</th>

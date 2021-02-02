@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title></title>
+	<title>Fee Report</title>
 	<style>
 	body{
 		font-family:Arial, Helvetica, sans-serif;

@@ -30,6 +30,13 @@ class Expensetype extends Model
         return $q;
     }
 
+    public static function getCurrentYearSum($year){
+        $q = Expensetype::where('year_id', $year)
+                        ->sum('amount');
+        $year = Year::getYear($year);
+        return [$q, $year->name];
+    }
+
     public static function getSumAmount($year){
         return Expensetype::where('year_id', $year)->sum('amount');
     }
@@ -37,6 +44,7 @@ class Expensetype extends Model
     public static function getYearlyAmountPerExpense($year, $expense){
        return Expensetype::where('year_id', $year)->where('expense_id', $expense)->sum('amount');
     }
+
     public static function getYearlyDetailPerExpense($year, $expense){
        return Expensetype::where('year_id', $year)->where('expense_id', $expense)->get();
     }

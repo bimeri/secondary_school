@@ -13,10 +13,6 @@
                     <input name="name" id="name" type="text" class="autocompleteSubject" value="{{ old('name') }}">
                     <label for="name">Subject Name</label>
                 </div>
-                <div class="input-field col s12 m3">
-                    <input id="code" name="code" type="text" value="{{ old('code') }}" class="validate">
-                    <label for="code">Subject Code</label>
-                </div>
                 <div class="input-field col s12 m2">
                     <input id="coff" name="coefficient" type="number" value="{{ old('coff') }}" class="validate">
                     <label for="coff">Subject Coefficient</label>
@@ -45,7 +41,6 @@
                 <th>S/N</th>
                 <th>class</th>
                 <th>Name</th>
-                <th>code</th>
                 <th>Coefficient</th>
                 <th colspan="2">Action</th>
             </tr>
@@ -54,7 +49,6 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $subject->form->name}} / {{ $subject->form->background->name}} / {{ $subject->form->background->sector->name}}</td>
                 <td>{{ $subject->name }}</td>
-                <td>{{ $subject->code }}</td>
                 <td>{{ $subject->coefficient }}</td>
                 <td><button class="btn my-orange waves-light waves-effect capitalize modal-trigger" href="#modal{{ $subject->id }}">Edit <i class="fa fa-pencil-alt"></i></button></td>
                 <td><button class="btn red waves-light waves-effect capitalize" disabled>Delete <i class="fa fa-trash"></i></button></td>
@@ -74,16 +68,12 @@
                                 <label for="name">Edit Subject Name</label>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input id="code" name="code" type="text" value="{{ $subject->code }}" class="validate">
-                                <label for="code">Edit Subject Code</label>
-                            </div>
-                            <div class="input-field col s12 m6">
                                 <input id="coff" name="coefficient" type="number" value="{{ $subject->coefficient }}" class="validate">
                                 <label for="coff">Edit Subject Coefficient</label>
                             </div>
                         <center>
                             <div class="row">
-                                <button type="submit" class="btn orange white-text col s12 m6 waves-effect waves-light" style="width: 40%">Update</button>
+                                <button type="submit" class="btn orange white-text col s12 m6 waves-effect waves-light offset-m3" style="width: 40%">Update</button>
                             </div>
                         </center>
                         </form>

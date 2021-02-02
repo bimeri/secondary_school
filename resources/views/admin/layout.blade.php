@@ -7,8 +7,6 @@
         <title>@yield('title')</title>
 {{-- done by tingiweh--}}
         <!-- Fonts -->
-        {{-- <script src="{{ URL::asset('toaster.js') }}"></script> --}}
-        {{-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet"> --}}
         <link rel="icon" href="{{URL::asset('/image/2.png')}}" type="image/x-icon">
         <link rel="stylesheet" href="{{ URL::asset('materialize/css/materialize.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('fontawesome/css/all.css') }}" />
@@ -112,7 +110,7 @@
             </li>
 
                 <li>
-            @canany(['create_income', 'create_expenses', 'record_expense','receive_fees','report_fees', 'give_scholarship', 'income_statement', 'print_reciept', 'print_fee'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="fees()" @if( Request::is('fees/create', 'expense/create', 'admin/collect_fees', 'scholarship/create', 'admin/fee_statistics', 'scholarship/student', 'expense/view', 'fees/report', 'admin/collect/fees', 'admin/fees/statistics', 'student/scholarship/report', 'student/scholarship/get', 'admin/income_statetment', 'admin/income_statetments', 'income/detail', 'expense/creates', 'admin/fees/ajax/create'))  style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-money-bill-wave-alt teal-text w3-small"></i> Fees and Expenses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="fee"></i></div>@endcanany
+            @canany(['create_income', 'create_expenses', 'record_expense','receive_fees','report_fees', 'give_scholarship', 'income_statement', 'print_reciept', 'print_fee'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="fees()" @if( Request::is('fees/create', 'expense/create', 'admin/collect_fees', 'scholarship/create', 'admin/fee_statistics', 'scholarship/student', 'expense/view', 'fees/report', 'admin/collect/fees', 'admin/fees/statistics', 'student/scholarship/report', 'student/scholarship/get', 'admin/income_statetment', 'admin/income_statetments', 'income/detail', 'expense/creates', 'admin/fees/ajax/create', 'fees/control'))  style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-money-bill-wave-alt teal-text w3-small"></i> Fees and Expenses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="fee"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                         @can('create_income', App\Permission::class)<li><a href="{{ route('admin.create.fees.type') }}" class="teal-text"  @if( Request::is('fees/create', 'admin/fees/ajax/create'))  style="background-color: #e5e9e8" @endif  onclick="load()">Create Fee Type</a></li>@endcan
@@ -122,7 +120,7 @@
                         @can('record_expense', App\Permission::class)<li><a href="{{ route('admin.view.expense') }}" class="teal-text" @if(Request::is('expense/view')) style="background-color: #e5e9e8" @endif  onclick="load()">view/Edit expense</a></li>@endcan
 
                         @can('report_fees', App\Permission::class)<li><a href="{{ route('fees.report') }}" class="teal-text"  @if(Request::is('fees/report', 'admin/fees/statistics')) style="background-color: #e5e9e8" @endif  onclick="load()">Fees Report</a></li>@endcan
-                        @can('print_fee', App\Permission::class)<li><a href="#!" class="teal-text">Fees Controlled</a></li>@endcan
+                        @can('print_fee', App\Permission::class)<li><a href="{{ route('fees.control') }}" class="teal-text" @if(Request::is('fees/control')) style="background-color: #e5e9e8" @endif onclick="load()">Fees Controlled</a></li>@endcan
                         @can('scholarship_report', App\Permission::class)<li><a href="{{ route('admin.scholarship.view') }}" class="teal-text" @if(Request::is('student/scholarship/report', 'student/scholarship/get')) style="background-color: #e5e9e8" @endif>Report Scholarship</a></li>@endcan
                         @can('income_statement', App\Permission::class)<li><a href="{{ route('admin.income.statement') }}" class="teal-text" @if(Request::is('admin/income_statetment', 'admin/income_statetments', 'income/detail')) style="background-color: #e5e9e8" @endif>Income Statement</a></li>@endcan
                         @can('print_reciept', App\Permission::class)<li><a href="#" class="teal-text">Print Receipts</a></li>@endcan
@@ -166,21 +164,21 @@
                 </li>
 
                 <li>
-            @canany(['create_subject', 'all_subject'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="subjects()" @if(Request::is('admin/subject', 'admin/subject/all')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-book teal-text w3-small"></i> Manage Subjects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="subject"></i></div>@endcanany
+            @canany(['create_subject', 'all_subject'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="subjects()" @if(Request::is('admin/subject', 'admin/subject/all', 'admin/class/subject')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-book teal-text w3-small"></i> Manage Subjects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="subject"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                        @can('create_subject', App\Permission::class) <li><a href="{{ route('admin.subject') }}" class="teal-text w3-small" @if(Request::is('admin/subject')) style="background-color: #e5e9e8" @endif  onclick="load()"> Create Subject per class</a></li>@endcan
-                       @can('all_subject', App\Permission::class)<li><a href="{{ route('admin.subject.view') }}" class="teal-text"  @if(Request::is('admin/subject/all')) style="background-color: #e5e9e8" @endif  onclick="load()">See all subjects</a></li>@endcan
+                       @can('all_subject', App\Permission::class)<li><a href="{{ route('admin.subject.view') }}" class="teal-text"  @if(Request::is('admin/subject/all', 'admin/class/subject')) style="background-color: #e5e9e8" @endif  onclick="load()">See all subjects</a></li>@endcan
                     </ul>
                 </div>
                 </li>
 
                 <li>
-            @canany(['add_teacher', 'assign_subjects', 'assign_subjects','teacher_subjects'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="change()" @if(Request::is('admin/create/teacher', 'admin/teacher/view', 'admin/teacher/assign')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-university teal-text w3-small"></i> Manage Teachers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="teacher"></i></div>@endcanany
+            @canany(['add_teacher', 'assign_subjects', 'assign_subjects','teacher_subjects'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="change()" @if(Request::is('admin/create/teacher', 'admin/teacher/view', 'admin/teacher/assign', 'admin/teacher/subjects')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-university teal-text w3-small"></i> Manage Teachers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="teacher"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                         @can('add_teacher', App\Permission::class)<li><a href="{{ route('admin.teacher.create') }}" class="teal-text" @if(Request::is('admin/create/teacher')) style="background-color: #e5e9e8" @endif  onclick="load()">Add Teacher</a></li>@endcan
-                        @can('assign_subjects', App\Permission::class)<li><a href="{{ route('admin.subject.assign') }}" class="teal-text" @if(Request::is('admin/teacher/assign')) style="background-color: #e5e9e8" @endif  onclick="load()">assign Subjects</a></li>@endcan
+                        @can('assign_subjects', App\Permission::class)<li><a href="{{ route('admin.subject.assign') }}" class="teal-text" @if(Request::is('admin/teacher/assign', 'admin/teacher/subjects')) style="background-color: #e5e9e8" @endif  onclick="load()">assign Subjects</a></li>@endcan
                         @can('teacher_subjects', App\Permission::class)<li><a href="{{ route('admin.teacher.view') }}" class="teal-text" @if(Request::is('admin/teacher/view')) style="background-color: #e5e9e8" @endif  onclick="load()">All Teacher</a></li>@endcan
                     </ul
                 </div>
@@ -318,7 +316,6 @@
                 } else {
                 $('#background').append("<option value=''>Sector have no Background</option>");
                 }
-                console.log('the response is', res);
                 $tablerow = ''
                 $('#clear').empty();
                 $('#clear').html = '';
@@ -367,7 +364,6 @@
                 info: formId
             },
             success: function(response){
-                console.log('class subjects', response);
                 if(response.length > 0) {
                 // $('#form').append(response);
                 } else {

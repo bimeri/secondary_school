@@ -101,8 +101,6 @@
         </div>
         <hr>
 
-
-
 {{-- other yearly fees statistics --}}
         <div class="row">
             <div class="col s12">

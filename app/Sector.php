@@ -18,6 +18,19 @@ class Sector extends Model
         return $this->hasMany('App\Background');
     }
 
+    public static function getAllType(){
+        return Sector::all();
+    }
+
+    public static function getName($sectorId){
+        $query = Sector::where('id', $sectorId)->first();
+        if($query){
+            return $query->name;
+        } else {
+            return '';
+        }
+    }
+
     // public function feetypes(){
     //     return $this->hasMany('App\Feetype');
     // }

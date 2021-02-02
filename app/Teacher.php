@@ -36,6 +36,10 @@ class Teacher extends Authenticatable
     public function assignments(){
         return $this->hasMany('App\Assignment');
     }
+
+    public static function getTeacherName($teacherId){
+        return Teacher::where('id', $teacherId)->first();
+    }
     // public function teachersubjects(){
     //     return $this->belongsToMany('App\Teachersubject');
     // }

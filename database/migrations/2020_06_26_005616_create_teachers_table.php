@@ -22,6 +22,7 @@ class CreateTeachersTable extends Migration
             $table->string('date_of_birth')->nullable();
             $table->string('gender')->nullable();
             $table->string('password');
+            $table->boolean('suspend')->default(0);
             $table->string('lang')->default('en');
             $table->rememberToken();
             $table->timestamps();

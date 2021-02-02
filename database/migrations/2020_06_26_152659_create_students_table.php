@@ -22,6 +22,8 @@ class CreateStudentsTable extends Migration
             $table->string('password');
             $table->string('date_enrolled');
             $table->string('lang')->default('en');
+            $table->boolean('suspend')->default(0);
+            $table->boolean('dismissed')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

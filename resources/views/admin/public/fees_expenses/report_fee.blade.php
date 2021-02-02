@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title') Report Fee @endsection
+@section('title') Report Fees @endsection
 @section('style')
 <style>
 
@@ -11,17 +11,25 @@
     <div class="col s12 m10 offset-m3">
         <form action="{{ route('fees.statistics.all') }}" method="get">
             @csrf
-            <div class="input-field col s12 m4">
-                <select name="year" class="validate" id="year">
+            <div class="input-field col s12 m3">
+                <select name="year" class="validate" id="year" required>
                     <option value="{{ $year_id }}" selected>{{ $year_name }}</option>
                     @foreach ($years as $year)
                         <option value="{{ $year->id }}">{{ $year->name }}</option>
                     @endforeach
                 </select>
             </div>
+            <div class="input-field col s12 m3">
+                <select name="sector" class="validate" id="year" required>
+                    <option value="" selected>Select the Sector</option>
+                    @foreach ($sectors as $sector)
+                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <!-- Crypt::encrypt(['id' => $user->id]) -->
             <div class="input-field col s12 m3 offset-m1">
-                <button type="submit" class="btn teal waves-effect waves-light lighten-3">Get Statistics</button>
+                <button type="submit" class="btn teal waves-effect waves-light">Get Statistics</button>
             </div>
         </form>
     </div>
@@ -29,7 +37,11 @@
         @if(Session::has('message'))
             <div class="col s12 m10 offset-m1 waves-effect waves-orange orange lighten-5 orange-text w3-margin-top" style="border-radius: 10px;">
             <span onclick="this.parentElement.style.display='none'" class="w3-close w3-padding right orange-text w3-hover">&times;</span>
-                <h5 class=" w3-center">{{Session::get('message')}}</h5>
+                <h5 class=" w3-center">{{Session::get('message')}}
+                    @if (count(App\Form::getAllForm($sectorId)) > 0)
+                    . Sector, <b>{{ App\Sector::getName($sectorId) }}</b>
+                    @endif
+                </h5>
             </div>
         @endif
         <div class="col s12 m12" style="overflow-x:scroll !important; margin-top:2px">
@@ -46,15 +58,21 @@
                     <th>Percentage of Studends Paid</th>
                     <th>Percentage Amount Paid</th>
                 </tr>
-                @foreach (App\Form::all() as $key => $form)
+                @if (count(App\Form::getAllForm($sectorId)) == 0)
+                    <tr>
+                        <td colspan="9" class="center red red-text lighten-4">
+                            No result Found for the Sector, <b>{{ App\Sector::getName($sectorId) }}</b> selected
+                        </td>
+                    </tr>
+                @endif
+                @foreach (App\Form::getAllForm($sectorId) as $key => $form)
                @php
                 $student = App\Studentinfo::where('form_id', $form->id)->where('year_id', $year_id)->count();
-                $all_student = App\Studentinfo::where('year_id', $year_id)->count();
+                $all_student = App\Studentinfo::where('year_id', $year_id)->where('form_id', $form->id)->count();
                 $total_class_fee = App\Feetype::where('year_id', $year_id)->where('form_id', $form->id)->sum('amount');
-                $all_total_class_fee = App\Feetype::where('year_id', $year_id)->sum('amount');
+                $all_total_class_fee = App\Feetype::where('year_id', $year_id)->where('form_id', $form->id)->sum('amount');
                 $total_paid_amount = App\Fee::where('year_id', $year_id)->where('form_id', $form->id)->sum('amount');
                 $all_total_paid_amount = App\Fee::where('year_id', $year_id)->sum('amount');
-                //$all_total_amount_tobepaid = $all_student * $all_total_class_fee;
                 $total_amount_tobepaid = $student * $total_class_fee;
                 $total_paid_student = App\Feecontrol::where('year_id', $year_id)->where('form_id', $form->id)->count();
                 $all_total_paid_student = App\Feecontrol::where('year_id', $year_id)->count();
@@ -96,13 +114,13 @@
                     <tr style="background-color: rgb(172, 241, 241); color:teal">
                         <td>#</td>
                         <td><b>total</b></td>
-                        <td>{{ $all_student }}</td>
-                        <td>{{ $all_total_class_fee }}</td>
+                        <td>{{ $all_student ?? '' }}</td>
+                        <td>{{ $all_total_class_fee ?? '' }}</td>
                         <td>#####</td>
-                        <td>{{ $all_total_paid_amount }}</td>
-                        <td>{{ $all_total_paid_student }}</td>
-                        <td>{{ number_format((float)$all_percent_student_paid, 2, '.', ' ') }}%</td>
-                        <td>{{ number_format((float)$all_percent_amount_paid, 2, '.', '') }}%</td>
+                        <td>{{ $all_total_paid_amount ?? '' }}</td>
+                        <td>{{ $all_total_paid_student ?? '' }}</td>
+                        <td>{{ number_format((float)($all_percent_student_paid ?? ''), 2, '.', ' ') }}%</td>
+                        <td>{{ number_format((float)($all_percent_amount_paid ?? ''), 2, '.', '') }}%</td>
                    </tr>
                    <tr>
                        <td colspan="10">
