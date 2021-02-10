@@ -13,6 +13,5 @@
 </style>
 @endsection
 @section('content')
-    <p class="w3-center">@lang('messages.view_all_students')</p>
     {!! $table !!}
 @endsection

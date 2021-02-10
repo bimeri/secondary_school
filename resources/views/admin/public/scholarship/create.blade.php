@@ -51,7 +51,7 @@
     </form>
 
     <div class="col s11 m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">
-        @if ($students->count() == 0)
+        @if ($studentinfos->count() == 0)
         <div class="red lighten-4 red-text w3-padding w3-border w3-center bold">No record found, please search again</div>
         @endif
         <div class="col s6 m2 right topnav">
@@ -78,132 +78,67 @@
                     <th>School ID Number</th>
                     <th>Scholarship Amount</th>
                     <th>Total Fees/ XCFA</th>
-                    <th>Action</th>
+                    <th colspan="2">Action</th>
                 </tr>
-                @foreach ($students as $key => $user)
-                <?php $uid = App\Student::where('school_id', $user->student_school_id)->first();?>
+                @foreach ($studentinfos as $key => $user)
                 <tr>
                     <td>{{ $key + 1 }}</td>
-                    <td>
-                        <?php $enroll = explode('/', trim($user->year->name)); ?>
+                    <td><?php $enroll = explode('/', trim($user->year->name)); ?>
                         <img src="{{ URL::asset('image/students/'.$enroll[0].'/'.$user->profile.'') }}" width="50" height="50" class="w3-circle w3-border-t">
                     </td>
+                    <td>{{ $user->student->full_name }}</td>
                     <td>
-                        @foreach (App\Student::where('school_id', $user->student_school_id)->get() as $info)
-                        {{ $info->full_name }}
-                        @endforeach
+                        <b class="green-text w3-tiny">{{ $user->form->name }}</b> {{ $user->subform_id ? ''.$user->subform->type.'':'A' }} <br><b class="blue-text w3-tiny">{{ $user->form->background->name }} </b> <br><b class="orange-text w3-tiny">{{ $user->form->background->sector->name }}</b>
                     </td>
                     <td>
-                        @foreach (App\Form::where('id', $user->form_id)->get() as $form)
-                            <b class="green-text w3-tiny">{{ $form->name }}</b> {{ $user->subform_id ? ''.$user->subform->type.'':'A' }} <br><b class="blue-text w3-tiny">{{ $form->background->name }} </b> <br><b class="orange-text w3-tiny">{{ $form->background->sector->name }}</b>
-                        @endforeach
-                    </td>
-                    <td>
-                        @foreach(App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->get() as $scholarship)
+                        @foreach(App\Scholarship::where('student_id', $user->student->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->get() as $scholarship)
                             {{$scholarship->year->name}}
                         @endforeach
                     </td>
-                    <td>
-                        @foreach (App\Student::where('school_id', $user->student_school_id)->get() as $info)
-                        {{ $info->email }}
-                        @endforeach
-                    </td>
+                    <td>{{ $user->student->email }}</td>
                     <td>{{ $user->student_school_id }}</td>
-                    <td>
-                        <?php $amm = App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->get();?>
-                       @foreach ($amm as $amt)
-                       {{ $amt->amount }}
-                       @endforeach
-                    </td>
+                    <td>{{ App\Scholarship::getStudentYearlyScholarship($current_year->id, $user->student->id, $current_term->id, $user->form_id)}}</td>
                     <td>
                         <?php $fees = App\Feetype::where('form_id', $user->form_id)->where('year_id', $current_year->id)->sum('amount');
                             echo $fees;
                         ?>
-                        @if (App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->exists())
-                                <?php $am = App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->first();
+                        @if (App\Scholarship::where('student_id', $user->student->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->exists())
+                                <?php $am = App\Scholarship::where('student_id', $user->student->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->first();
                                     echo '<br><b class="teal-text">Balance:</b> CFA '.($fees - $am->amount);
                                 ?>
                         @endif
                     </td>
-                    <td>
-                        @if (App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->exists())
+                        @if (App\Scholarship::where('student_id', $user->student->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->exists())
+                        <td>
                             <button class="w3-green w3-btn waves-light waves-effect w3-small">
                                 <?php
-                                $scholarship = App\Scholarship::where('student_id', $uid->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->first();
+                                $scholarship = App\Scholarship::where('student_id', $user->student->id)->where('year_id', $current_year->id)->where('term_id', $current_term->id)->where('form_id', $user->form_id)->first();
                                     echo 'Given: CFA '.$scholarship->amount.'';
                                  ?>
                             </button>
+                        </td>
+                        <td>
+                            <form action="{{ route('scholarship.cancel') }}" method="post" id="form{{ $key + 1 }}">
+                            @csrf
+                            <input type="hidden" name="class" value="{{ $user->form_id }}" />
+                            <input type="hidden" name="year" value="{{  $current_year->id }}" />
+                            <input type="hidden" name="student_id" value="{{ $user->student->id }}" />
+                            <input type="hidden" name="term" value="{{  $current_term->id }}" />
+                            <button class="red btn waves-light waves-effect w3-tiny" onclick="dismiss{{ $key + 1 }}()" id="btn-submit{{ $key + 1 }}"> cancil scholarship <i class="fa fa-times w3-small"></i></button>
+                         </form>
+                         @include('admin.public.includes.alert.cancel_scholarship')
+                        </td>
                         @else
+                        <td>
                             <button class="blue btn waves-light waves-effect w3-tiny modal-trigger" href="#modal{{ $key + 1 }}"> Scholarship <i class="fa fa-graduation-cap w3-small"></i></button>
+                        </td>
                         @endif
-                    </td>
                 </tr>
-
-                <div id="modal{{ $key + 1 }}" class="modal modal-fixed-footer" style="width: 80% !important">
-                    <div class="modal-content">
-                      <h4 class="w3-center teal-text">Fill the form to Give Student Scholarship award.<br>
-                        @foreach (App\Student::where('school_id', $user->student_school_id)->get() as $info)
-                       <b class="blue-text"> ({{ $info->full_name }} -- {{ $user->student_school_id }})</b>
-                        @endforeach
-
-                    </h4>
-                      <hr style="border-top: 1px solid orange">
-                        <div class="row">
-                            <form action="{{ route('scholarship.student.create') }}" method="post">
-                                @csrf
-                                <div class="row">
-                                    <?php $uid = App\Student::where('school_id', $user->student_school_id)->first(); ?>
-                                    <input type="hidden" name="student_id" value="{{ $uid->id }}">
-                                    <div class="col s12 m2 offset-m1">
-                                        <select name="year" class="browser-default">
-                                            <option value="{{ $current_year->id }}" selected>{{ $current_year->name }}</option>
-                                            @foreach (App\Year::where('active', '!=', 1)->get() as $year)
-                                                <option value="{{ $year->id }}">{{ $year->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col s12 m2">
-                                        <select name="term" class="browser-default">
-                                            <option value="{{ $current_term->id }}" selected>{{ $current_term->name }}</option>
-                                            @foreach (App\Term::where('active', '!=', 1)->get() as $term)
-                                                <option value="{{ $term->id }}">{{ $term->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                     <div class="col s12 m4">
-                                        <select name="class" class="browser-default">
-                                            <option value="{{ $user->form_id }}">
-                                                @foreach (App\Form::where('id', $user->form_id)->get() as $form)
-                                                    <option value="{{ $form->id }}" selected>{{ $form->name }} / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
-                                                @endforeach
-                                            </option>
-                                                @foreach (App\Form::all() as $form)
-                                                    <option value="{{ $form->id }}">{{ $form->name }} / {{ $form->background->name }} / {{ $form->background->sector->name }}</option>
-                                                @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col s12 m2">
-                                        <input type="number" name="amount" placeholder="enter amount">
-                                    </div>
-                                </div>
-                                <div class="col s12 m6 offset-m3 input-field">
-                                    <textarea id="reason" name="reason" class="materialize-textarea" placeholder="spend money on this because of ..."></textarea>
-                                    <label for="reason">Reason</label>
-                                </div>
-                                <div class="col s6 m3 offset-m4 offset-s3 w3-center" style="margin-top: 4px !important">
-                                    <button class="btn teal waves-effect waves-light w3-small" type="submit">Give Scholarship</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="modal-close red waves-effect waves-green btn-flat right white-text">Cancel</button>
-                    </div>
-                </div>
+                @include('admin.public.includes.modal.scholarship')
                 @endforeach
             </table>
         </div>
-            {{ $students->onEachSide(5)->links() }}
+            {{ $studentinfos->onEachSide(5)->links() }}
     </div>
 </div>
 

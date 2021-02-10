@@ -254,11 +254,9 @@
             </center>
         </div>
         <script src="{{ URL::asset('toaster.js') }}"></script>
-        {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
     <script src="{{ URL::asset('materialize/js/materialize.min.js') }}"></script>
     <script src="{{ URL::asset('myjs.js') }}"></script>
     <script src="{{ URL::asset('sweat_alert.js') }}"></script>
-    {{-- <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script> --}}
         <script>
             @if(Session::has('message'))
               var type = "{{ Session::get('alert-type', 'info') }}";

@@ -15,19 +15,7 @@
         <link rel="stylesheet" href="{{ URL::asset('mycss.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('w3.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('toaster.css') }}" />
-
-        {{-- <script defer src="{{ URL::asset('fontawesome/js/all.js') }}"></script> --}}
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        {{-- online --}}
-        {{-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> --}}
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> --}}
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> --}}
-
-        {{-- font awesome online --}}
-    {{-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> --}}
-
-        <!-- Styles -->
-
     </head>
     <body>
         @if(Auth::guard('student')->check())
@@ -98,13 +86,6 @@
                         </div>
                     </form>
               </div>
-
-              {{-- <form action="post" method="{{ route('try.me') }}">
-                {{ csrf_field() }}
-                <input type="text" name="name">
-                <button type="submit" class="btn btn-primary">try me</button>
-            </form> --}}
-
             <div id="menu" class="blue" style="height: 800px !important; width: 100% !important; position: fixed !important; top:0px; bottom: 0px; left: 0px; right: 0px; z-index: 1000; opacity:.5 !important">
                 <div class="w3-margin-top">
                     <center>
@@ -137,6 +118,7 @@
          <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{ URL::asset('materialize/js/materialize.min.js') }}"></script>
     <script src="{{ URL::asset('myjs.js') }}"></script>
+    <script src="{{ URL::asset('sweat_alert.js') }}"></script>
 
     <script>
         @if(Session::has('message'))

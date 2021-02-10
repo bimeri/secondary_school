@@ -4,7 +4,7 @@
 <h4 class="w3-center">School Fees Statistics for <b>{{ $studentinfo->student->full_name }} ({{ $studentinfo->student_school_id }})</b></h4>
 <div class="left" style="position: fixed">
     <?php $enroll = explode('/', trim($studentinfo->year->name)); ?>
-    <img src="{{ URL::asset('image/students/'.$enroll[1].'/'.$studentinfo->profile.'') }}" width="100" height="100" class="w3-circle w3-border-t" style="margin: 5px">
+    <img src="{{ URL::asset('image/students/'.$enroll[0].'/'.$studentinfo->profile.'') }}" width="100" height="100" class="w3-circle w3-border-t" style="margin: 5px">
 </div>
 <div class="row w3-margin-top">
     <div class="col s11 m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius w3-margin-left" style="margin-top: -13px">

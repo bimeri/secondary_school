@@ -51,7 +51,7 @@
                     <a href="{{ route('export.excel.student', ['yearId' => Crypt::encrypt($value['yearId']), 'subform_id' => Crypt::encrypt($value['subId']), 'formId' => Crypt::encrypt($value['formId']) ]) }}" class="btn green lighten-4 green-text waves-light waves-effect">class list <i class="fa fa-file-csv w3-small"></i></a>
                     </td>
                     <td>
-                    <a class="btn blue blue-text lighten-4 waves-light waves-effect">print <i class="fa fa-file-pdf w3-small"></i></a>
+                    <a href="{{ route('classlist.download', ['year' => $value['yearId'], 'subClass' => $value['subId'], 'form' => $value['formId'], 'type' => $value['classType']]) }}" class="btn blue blue-text lighten-4 waves-light waves-effect">print <i class="fa fa-file-pdf red-text w3-small"></i></a>
                     </td>
                 </tr>
                 @endforeach

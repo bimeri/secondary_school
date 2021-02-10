@@ -27,8 +27,10 @@ class ScholarshipController extends Controller
     {
         $this->authorize('give_scholarship', Permission::class);
         //$year = Year::where('active', 1)->first();
-        $students = Studentinfo::paginate(15);
-        return view('admin.public.scholarship.create', compact('students'));
+        $data['year'] = '';
+        $data['class'] = '';
+        $data['studentinfos'] = Studentinfo::paginate(15);
+        return view('admin.public.scholarship.create')->with($data);
     }
 
     public function getStudents(Request $req){
@@ -39,9 +41,8 @@ class ScholarshipController extends Controller
         $year_id = $req['year'];
         $form_id = $req['class'];
 
-        $students = DB::table('studentinfos')->where('year_id', $year_id)->where('form_id', $form_id)->paginate(4);
-        $path = '';
-        return view('admin.public.scholarship.create', compact('students'));
+        $data['studentinfos'] = Studentinfo::where('year_id', $year_id)->where('form_id', $form_id)->paginate(15);
+        return view('admin.public.scholarship.create')->with($data);
     }
 
     /**
@@ -86,14 +87,42 @@ class ScholarshipController extends Controller
         $scholarship->reason = $reason;
 
         try {
+            if (Scholarship::where('student_id', $studentId)->where('year_id', $year)->where('form_id', $class)-> where('term_id', $term)->exists()) {
+                $message = array('message' => 'Scholarship given already to student', 'alert-type' => 'warning');
+            return redirect()->back()->with($message);
+            }
             $scholarship->save();
             $message = array('message' => 'Student Successfully received Scholarship', 'alert-type' => 'success');
             return redirect()->back()->with($message);
         }
         catch(\Illuminate\Database\QueryException $e){
-            $message = array('message' => 'Fail to save, please contact gthe admin for any verification', 'alert-type' => 'error');
+            $message = array('message' => 'Fail to save, please contact the admin for any verification', 'alert-type' => 'error');
             return redirect()->back()->with($message);
         }
+    }
+
+    public function deleteScholarship(Request $req){
+        $this->authorize('give_scholarship', Permission::class);
+        $this->validate($req, [
+            'class' => 'required',
+            'year' => 'required',
+            'term' => 'required',
+            'student_id' => 'required',
+        ]);
+
+        $year = $req['year'];
+        $term = $req['term'];
+        $class = $req['class'];
+        $studentId = $req['student_id'];
+
+        Scholarship::where('student_id', $studentId)
+                    ->where('year_id', $year)
+                    ->where('form_id', $class)
+                    ->where('term_id', $term)
+                    ->delete();
+        $message = array('message' => 'Scholarship deleted successfully', 'alert-type' => 'info');
+        return redirect()->back()->with($message);
+
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Expensetype;
 use App\Exports\UsersExport;
 use App\Fee;
 use App\Feetype;
@@ -54,6 +55,44 @@ class DownloadController extends Controller
             $pdf = PDF::loadView('admin.public.download.fee');
             $pdf->getDomPDF()->set_option('enable_php', true);
             return $pdf->download(''.$studentInfo->student->full_name.'.pdf');
+    }
+
+    public function classListDownload(Request $req){
+        $year = $req['year'];
+        $subClass = $req['subClass'];
+        $form = $req['form'];
+        $type = $req['type'];
+
+        $classDetail = Form::getClassDetail($form);
+
+        $yr = Year::getYearName($year);
+        $studentInfo = Studentinfo::getAllStudentPerYearClassAndSubClass($year, $form, $subClass);
+
+        view()->share(['details' => $studentInfo,
+                       'className' => $classDetail->name,
+                       'class' => $classDetail,
+                       'type' => $type,
+                       'year' => $yr]);
+
+            $pdf = PDF::loadView('admin.public.download.classList');
+            $pdf->getDomPDF()->set_option('enable_php', true);
+            return $pdf->download(''.$classDetail->name.'.pdf');
+    }
+
+    public function incomeStatementDownload(Request $req){
+        $y = $req['year'];
+        $type = $req['type'];
+        $name = $req['name'];
+
+        $year = Year::getYearName($y);
+        $expenses = Expensetype::getYearlyDetailPerExpense($y, $type);
+        $sum = Expensetype::getYearlyAmountPerExpense($y, $type);
+        view()->share(['detail' => $expenses, 'year' => $year, 'expenseName' => $name, 'sum' => $sum]);
+
+    // return view('admin.public.download.expenses');
+            $pdf = PDF::loadView('admin.public.download.expenses');
+            $pdf->getDomPDF()->set_option('enable_php', true);
+            return $pdf->download(''.$name.'.pdf');
     }
 
     public function printFee(Request $req){
@@ -199,7 +238,7 @@ class DownloadController extends Controller
         }
         $students = Studentinfo::getAllStudentPerYearClassAndSubClass($year, $form, $subform);
         //$students = $data->toArray();
-        $newArray[] = [
+        $newArray = [
             "Full Name",
             "school ID",
             "email",
@@ -213,27 +252,27 @@ class DownloadController extends Controller
             "Parent contact",
             "Parent email",
         ];
-        foreach($students as $key => $student){
-            $newArray[] = [
-                 $student->student->full_name,
-                 $student->student->school_id,
-                 $student->student->email,
-                 $student->date_of_birth,
-                 $student->gender,
-                 $student->student->date_enrolled,
-                 $student->year->name,
-                 $student->form->name,
-                 $student->subform_id ? $student->subform->type:'A',
-                 $student->address,
-                 $student->parent_contact,
-                 $student->parent_email,
+        foreach($students as $stud){
+            $dat = [
+                 $stud->student->full_name,
+                 $stud->student->school_id,
+                 $stud->student->email,
+                 $stud->date_of_birth,
+                 $stud->gender,
+                 $stud->student->date_enrolled,
+                 $stud->year->name,
+                 $stud->form->name,
+                 $stud->subform_id ? $stud->subform->type:'A',
+                 $stud->address,
+                 $stud->parent_contact,
+                 $stud->parent_email,
             ];
+            array_push($newArray, $dat);
         }
     //    return $newArray;
 
         return
         Excel::download(function($excel) use ($newArray){
-            $excel->setTitle('Students Information');
             $excel->setTitle('Students Information');
             $excel->sheet('Students Information', function($sheet) use ($newArray){
                 $sheet->fromArray($newArray, null, 'A1', false, false);

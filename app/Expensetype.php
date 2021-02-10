@@ -37,6 +37,11 @@ class Expensetype extends Model
         return [$q, $year->name];
     }
 
+    public static function getExpenseName($id){
+        $qr = Expensetype::where('id', $id)->first();
+        return $qr->name;
+    }
+
     public static function getSumAmount($year){
         return Expensetype::where('year_id', $year)->sum('amount');
     }
@@ -48,4 +53,5 @@ class Expensetype extends Model
     public static function getYearlyDetailPerExpense($year, $expense){
        return Expensetype::where('year_id', $year)->where('expense_id', $expense)->get();
     }
+
 }

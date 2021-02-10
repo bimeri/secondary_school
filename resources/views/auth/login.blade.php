@@ -87,12 +87,7 @@
                     </form>
               </div>
 
-              {{-- <form action="post" method="{{ route('try.me') }}">
-                {{ csrf_field() }}
-                <input type="text" name="name">
-                <button type="submit" class="btn btn-primary">try me</button>
-            </form> --}}
-
+                @include('admin.public.includes.error')
             <div id="menu" class="blue" style="height: 800px !important; width: 100% !important; position: fixed !important; top:0px; bottom: 0px; left: 0px; right: 0px; z-index: 1000; opacity:0.5 !important">
                 <div class="w3-margin-top">
                     <center>
@@ -125,6 +120,7 @@
          <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{ URL::asset('materialize/js/materialize.min.js') }}"></script>
     <script src="{{ URL::asset('myjs.js') }}"></script>
+    <script src="{{ URL::asset('sweat_alert.js') }}"></script>
 
     <script>
         @if(Session::has('message'))

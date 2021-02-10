@@ -118,6 +118,7 @@ Route::post('student/ajax/getdetail', 'ClassController@getStudentclassDetails')-
 Route::get('admin/student/create', 'AdminstudentController@create')->name('amin.create.student');
 Route::get('admin/student/list', 'AdminstudentController@viewStudent')->name('amdin.view.student');
 Route::post('admin/student/create', 'AdminstudentController@submitInfo')->name('admin.submit.student.info');
+Route::post('admin/student/update', 'AdminstudentController@updateStudentInfo')->name('student_info.update');
 Route::get('admin/student', 'AdminstudentController@getStudent')->name('student.get');
 Route::post('admin/class_size', 'AdminstudentController@getSize')->name('class.getsize');
 Route::get('admin/student/subclasses', 'AdminstudentController@studentSubclasses')->name('view.student.class');
@@ -126,6 +127,9 @@ Route::post('student/ajax/background', 'AdminstudentController@ajaxGetBackground
 Route::post('student/ajax/class', 'AdminstudentController@ajaxGetClass')->name('classes.ajax.get');
 Route::post('class/ajax/subjects', 'AdminstudentController@ajaxGetClassSubjects')->name('classes.ajax.subjects');
 Route::get('student/excel/class', 'DownloadController@exportStudentRecord')->name('export.excel.student');
+
+Route::post('student/suspend', 'AdminstudentController@suspendStudent')->name('student.suspend');
+Route::post('student/dismiss', 'AdminstudentController@dismissStudent')->name('student.dismiss');
 
 // manage subjects
 Route::get('admin/subject', 'SubjectController@index')->name('admin.subject');
@@ -185,6 +189,7 @@ Route::get('scholarship/student', 'ScholarshipController@getStudents')->name('sc
 Route::post('student/scholarship', 'ScholarshipController@store')->name('scholarship.student.create');
 Route::get('student/scholarship/report', 'ScholarshipController@showReportView')->name('admin.scholarship.view');
 Route::get('student/scholarship/get', 'ScholarshipController@scholarshipPeryear')->name('report.scholarship.get');
+Route::post('student/scholarship/delete', 'ScholarshipController@deleteScholarship')->name('scholarship.cancel');
 
 // record marks for student
 Route::get('student/marks/record', 'RecordController@index')->name('admin.record.marks');
@@ -211,7 +216,7 @@ Route::get('income/detail', 'IncomeController@getDetail')->name('get.detail');
 Route::get('admin_logout', 'authController@adminLogout')->name('admin.logout');
 
 //student's route
-Route::get('student/home', 'StudentController@index')->name('student.home');
+Route::get('student_home', 'StudentController@index')->name('student.home');
 Route::get('student/subjects', 'StudentController@studentSubjectPage')->name('student.subjects');
 Route::get('student/test_result', 'StudentController@studentResultPage')->name('student.result');
 Route::get('student/test/result', 'StudentController@studentTestResult')->name('get_student.tes_result');
@@ -242,5 +247,7 @@ Route::get('teacher/preview_assignment', 'teacherAssignmentController@assignment
 
 //download controller
 Route::get('fee/download', 'Downloadcontroller@feeDownload')->name('fee.download');
+Route::get('classList/download', 'Downloadcontroller@classListDownload')->name('classlist.download');
 Route::get('fee/print', 'Downloadcontroller@printFee')->name('downoad.print');
 Route::get('admin/fees/excel', 'Downloadcontroller@downloadExcel')->name('report.fee.excel');
+Route::get('admin/income_statement', 'Downloadcontroller@incomeStatementDownload')->name('download.incomestatement');

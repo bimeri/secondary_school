@@ -2,7 +2,7 @@
 @section('title') create sector @endsection
 @section('content')
 <div class="row">
-    <div class="col s12 m10 offset-m1 my-orange" style="color: #ff9800 !important; background-color: rgb(243, 213, 158) !important;">
+    <div class="col s12 m10 offset-m1 yellow orange-text lighten-4">
     <span onclick="this.parentElement.style.display='none'" class="w3-close right red-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
         <h5 class="w3-center w3-medium w3-padding"><b>{{ __('messages.create_sector_header') }}</b><br>{{ __('messages.create_sector_header_two') }}</h5>
     </div>
@@ -12,7 +12,7 @@
         <form action="{{ route('sector.create') }}" method="post">
             @csrf
             <div class="row">
-                <div class="input-field col s12 m4">
+                <div class="input-field col s12 offset-m1 m4">
                     <input name="name" id="sector" type="text" class="validate" value="{{ old('name') }}">
                     <label for="sector">Sector Name</label>
                 </div>
@@ -21,7 +21,7 @@
                     <label for="describe">description of sector type</label>
                 </div>
             </div>
-            <button class="w3-center waves-light waves-effect col offset-m4 offset-s3 btn btn-primary" style="width: 50%" type="submit">Save Sector</button>
+            <button class="w3-center waves-light waves-effect col offset-m3 offset-s3 btn btn-primary" style="width: 50%" type="submit">Save Sector</button>
         </form><br><hr><br>
 
         @if(App\Sector::count() > 0)
@@ -40,13 +40,13 @@
                         <td><div class="teal-text">{{ $sector->description }}</div></td>
 
                         <td style="width: 10% !important">
-                            <button class="col btn my-orange white-text waves-effect waves-teal modal-trigger" href="#modal{{ $sector->id }}">Edit <i class="fa fa-pen w3-tiny"></i></button>
+                            <button class="col btn orange lighten-4 orange-text waves-effect waves-teal modal-trigger" href="#modal{{ $sector->id }}">Edit <i class="fa fa-pen w3-tiny"></i></button>
                         </td>
                         <td style="width: 12% !important">
                             <form action="{{ route('sector.delete') }}" method="post" id="form{{ $sector->id }}">
                                 @csrf
                                 <input type="hidden" name="sectorid" value="{{ $sector->id }}">
-                                <button class="col my-red btn waves-effect waves-teal" onclick="save{{ $sector->id }}()" id="btn-submit{{ $sector->id }}">Delete <span class="fa fa-trash w3-tiny"></span></button>
+                                <button class="col red red-text lighten-4 btn waves-effect waves-teal" onclick="save{{ $sector->id }}()" id="btn-submit{{ $sector->id }}">Delete <span class="fa fa-trash w3-tiny"></span></button>
                             </form>
                         </td>
                     </tr>
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="w3-center" style="margin-top: 4px !important">
-                                    <button class="btn my-orange waves-effect waves-light w3-small" type="submit" style="width: 40%">Saved update</button>
+                                    <button class="btn orange-text orange lighten-4 waves-effect waves-light w3-small" type="submit" style="width: 40%">Saved update</button>
                                 </div>
                             </form>
                         </div>

@@ -79,7 +79,7 @@
                             <a href="{{ route('get.detail', ['year' => Crypt::encrypt( $year->id), 'type' => Crypt::encrypt($type->id)]) }}" class="teal-text w3-border w3-medium waves-effect waves-light w3-padding-small tt">More detail</a>
                             @endif
                         </td>
-                        <td><button class="blue st waves-effect waves-light">download <i class="fa fa-download w3-small"></i></button></td>
+                        <td><a href="{{ route('download.incomestatement', ['year' => $year->id, 'type' => $type->id, 'name' => $type->name])}}" class="blue btn waves-effect waves-light">download <i class="fa fa-download w3-small"></i></a></td>
                     </tr>
                 @endforeach
             </table>

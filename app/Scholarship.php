@@ -33,6 +33,15 @@ class Scholarship extends Model
         return $total;
     }
 
+    public static function getStudentYearlyScholarship($year_id, $student_id, $termId, $formId){
+        $total = Scholarship::where('year_id', $year_id)
+                            ->where('student_id', $student_id)
+                            ->where('term_id', $termId)
+                            ->where('form_id', $formId)
+                            ->sum('amount');
+        return $total;
+    }
+
     public static function getAllScholarship($year){
         return Scholarship::where('year_id', $year)->get();
     }
@@ -42,10 +51,11 @@ class Scholarship extends Model
     }
 
     public static function getStudentAcademicScholarship($student, $year, $term, $form){
-        return Scholarship::where('student_id', $student)
+        $query = Scholarship::where('student_id', $student)
                             ->where('year_id', $year)
                             ->where('term_id', $term)
                             ->where('form_id', $form)
                             ->first();
+        return $query;
     }
 }

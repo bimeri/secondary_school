@@ -65,7 +65,6 @@ class Form extends Model
 
     public static function getAllClasses(){
         $classes = Form::all();
-        $classes = Form::all();
 
         $table = "";
         $table .= "<div class='row'>

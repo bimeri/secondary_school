@@ -186,6 +186,62 @@ class AdminstudentController extends Controller
             return redirect()->back()->with($notify);
         }
     }
+    public function updateStudentInfo(Request $req){
+        $sId = $req['studentId'];
+        $fname = $req['fullName'];
+        $email = $req['email'];
+        $pob = $req['pob'];
+
+        //for the secode form
+        $pcontact = $req['parent_contact'];
+        $addre = $req['paddress'];
+        $pemail = $req['parent_email'];
+        $gender = $req['gender'];
+        $dob = $req['date_of_birth'];
+
+        // update student table
+        Student::where('id', $sId)->update(['full_name' => $fname, 'email' => $email, 'place_of_birth' => $pob]);
+        // update student info
+        Studentinfo::where('student_id', $sId)->update([
+                            'parent_contact' => $pcontact,
+                            'address' => $addre,
+                            'parent_email' => $pemail,
+                            'gender' => $gender,
+                            'date_of_birth' => $dob
+                        ]);
+        $mess = array('message' => 'Student information has updated successfully', 'alert-type' => 'success');
+        return redirect()->back()->with($mess);
+
+
+    }
+
+    public function suspendStudent(Request $req){
+        $stuentId = $req['studentId'];
+        $student = Student::where('id', $stuentId)->first();
+        if($student->suspend == 1){
+            Student::where('id', $stuentId)->update(['suspend' => 0]);
+            $notify = array('message' => 'Student unsuspended successfully', 'alert-type' => 'success');
+            return redirect()->back()->with($notify);
+        } else {
+            Student::where('id', $stuentId)->update(['suspend' => 1]);
+            $notify = array('message' => 'Student suspended', 'alert-type' => 'warning');
+        return redirect()->back()->with($notify);
+        }
+    }
+
+    public function dismissStudent(Request $req){
+        $stuentId = $req['studentId'];
+        $student = Student::where('id', $stuentId)->first();
+        if($student->dismissed == 1){
+            Student::where('id', $stuentId)->update(['dismissed' => 0]);
+            $notify = array('message' => 'Student undismissed, student is now live', 'alert-type' => 'success');
+            return redirect()->back()->with($notify);
+        } else {
+            Student::where('id', $stuentId)->update(['dismissed' => 1]);
+            $notify = array('message' => 'Student dismissed successfully', 'alert-type' => 'warning');
+        return redirect()->back()->with($notify);
+        }
+    }
 
     public function viewStudent(){
         $this->authorize('class_list', Permission::class);
