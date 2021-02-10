@@ -372,6 +372,20 @@ class Fees_ExpensesController extends Controller
 
         $fees->save();
 
+        // check complete
+        (float)$getStudentLatestPaymentSum = Fee::getStudentTotalFeePaid($year, $formId, $student_id);
+        (float)$getTotalClassFee = Feetype::SumClassFeePerYear($formId, $year);
+        if ($getStudentLatestPaymentSum >= $getTotalClassFee) {
+            // save student in fee control
+            $date = date("D, d M Y H:ia");
+            $feecontrol = new Feecontrol();
+            $feecontrol->student_id = $student_id;
+            $feecontrol->student_school_id = $studentschool_id;
+            $feecontrol->form_id = $formId;
+            $feecontrol->year_id = $year;
+            $feecontrol->clearance_date = $date;
+            $feecontrol->save();
+        }
         if($fees){
             $notification = array('message' => 'Fees Saves Successfully', 'alert-type' => 'success');
             return redirect()->back()->with($notification);
@@ -439,5 +453,58 @@ class Fees_ExpensesController extends Controller
         $data['form'] = Form::getClassDetail($form);
         $data['count'] = Feetype::getclasssFeePerYear($year,  $form)->count();
         return view('admin.public.fees_expenses.create_class_fee')->with($data);
+    }
+
+    public function feeControl(Request $req){
+        $class = $req['class'];
+        $year = $req['year'];
+        $token = $req['_token'];
+        (float)$getTotalClassFee = Feetype::SumClassFeePerYear($class, $year);
+
+
+        $completed = Feecontrol::completedStudent($year, $class);
+        $notCompleted = Feecontrol::notcompletedStudent($year, $class);
+
+        if(count($completed) > 0) {
+            $arr = array('message' => 'Some result found', 'type' => 'success');
+        } else {
+        $arr = array('message' => 'No result found', 'type' => 'warning');
+        }
+
+        $table = '
+                    <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
+                        <tr class="teal">
+                            <th>S/N</th>
+                            <th>year</th>
+                            <th>Student Name</th>
+                            <th>Student Matricule</th>
+                            <th>Amount</th>
+                        </tr>';
+                            foreach ($completed as $key => $complete) {
+        $table .= '
+                                            <tr>
+                                                <td>'.($key+1).'</td>
+                                                <td>'.$complete->year->name.'</td>
+                                                <td>'.$complete->student->full_name.'</td>
+                                                <td>'.$complete->student_school_id.'</td>
+                                                <td>'.$getTotalClassFee.'</td>
+                                            </tr>
+                                          ';
+                            };
+                            if(count($completed) == 0) {
+                                $table .= '<tr><td colspan="5" class="center red red-text lighten-4">No result found. No student has completed fees</td></tr>';
+                            }
+        $table .= '
+                    </table>
+                ';
+                if(count($completed) > 0) {
+                    $table .= '
+                    <div class="right w3-padding">
+                    <a href="../admin/complete_fee?_token='.$token.'&year='.$year.'&class='.$class.'" class="btn w3-small blue">Download
+                        <i class="fa fa-download w3-tiny"></i>
+                    </a>
+                    </div>
+                ';                }
+        return [$arr, $table, $notCompleted];
     }
 }

@@ -21,4 +21,18 @@ class Feecontrol extends Model
     public function year(){
         return $this->belongsTo('App\Year');
     }
+
+    public static function completedStudent($year, $class){
+        $query = Feecontrol::where('year_id', $year)->where('form_id', $class)->get();
+        return $query;
+    }
+
+    public static function notcompletedStudent($year, $class){
+        $allStudentPerclass[] = Promotion::getStudentPerClassAndYear($year, $class);
+        $completedStudent = Self::completedStudent($year, $class);
+        foreach($completedStudent as $complete){
+
+        }
+        return $allStudentPerclass;
+    }
 }

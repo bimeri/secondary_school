@@ -74,12 +74,12 @@
 
                         <td>
                             @if (App\Expensetype::getYearlyAmountPerExpense($year->id, $type->id) == 0)
-                            <button disabled class="teal-text w3-border w3-medium w3-padding-small">More detail</button>
+                            <button disabled class="w3-border red red-text lighten-5 w3-medium w3-padding-small">No detail</button>
                             @else
-                            <a href="{{ route('get.detail', ['year' => Crypt::encrypt( $year->id), 'type' => Crypt::encrypt($type->id)]) }}" class="teal-text w3-border w3-medium waves-effect waves-light w3-padding-small tt">More detail</a>
+                            <a href="{{ route('get.detail', ['year' => Crypt::encrypt( $year->id), 'type' => Crypt::encrypt($type->id)]) }}" class="teal-text w3-border w3-medium waves-effect waves-light w3-padding-small w3-small tt">More detail</a>
                             @endif
                         </td>
-                        <td><a href="{{ route('download.incomestatement', ['year' => $year->id, 'type' => $type->id, 'name' => $type->name])}}" class="blue btn waves-effect waves-light">download <i class="fa fa-download w3-small"></i></a></td>
+                        <td><a href="{{ route('download.incomestatement', ['year' => $year->id, 'type' => $type->id, 'name' => $type->name])}}" class="blue blue-text lighten-5 w3-small btn waves-effect waves-light">download <i class="fa fa-download w3-tiny"></i></a></td>
                     </tr>
                 @endforeach
             </table>

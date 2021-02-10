@@ -33,7 +33,10 @@ class Fee extends Model
         return $total;
     }
     public static function getStudentYearlyFee($year_id, $form_id, $student_id){
-        $feetype = Fee::where('year_id', $year_id)->where('form_id', $form_id)->where('student_id', $student_id)->get();
+        $feetype = Fee::where('year_id', $year_id)
+                        ->where('form_id', $form_id)
+                        ->where('student_id', $student_id)
+                        ->get();
         return $feetype;
     }
 
@@ -44,6 +47,16 @@ class Fee extends Model
                         ->sum('amount');
 
     }
+
+    public static function getStudentTotalFeePaid($year, $form, $student_id){
+        $query = Fee::where('year_id', $year)
+            ->where('form_id', $form)
+            ->where('student_id', $student_id)
+            ->sum('amount');
+        $scolarship = Scholarship::getStudentClassScholaship($year, $form, $student_id);
+        $sum = (double)$scolarship + (double)$query;
+        return $sum;
+        }
 
     public static function getFeeById($id){
         return Fee::where('id', $id)->first();
@@ -78,10 +91,4 @@ class Fee extends Model
                 ->sum('amount');
     }
 
-    public static function getStudentTotalFeePaid($year,$form, $student_id){
-    return Fee::where('year_id', $year)
-        ->where('form_id', $form)
-        ->where('student_id', $student_id)
-        ->sum('amount');
-    }
 }

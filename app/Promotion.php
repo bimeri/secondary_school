@@ -28,4 +28,8 @@ class Promotion extends Model
                         ->where('student_id', $studentId)
                         ->where('form_id', $formid)->first();
     }
+
+    public static function getStudentPerClassAndYear($year, $class){
+        return Promotion::where('year_id', $year)->where('form_id', $class)->get();
+    }
 }

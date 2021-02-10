@@ -52,11 +52,11 @@
                 <td>{{ $fee->fee_type }}</td>
                 <td>{{ $fee->amount }}</td>
 
-                <td><button class="btn my-orange waves-effect waves-light w3-small modal-trigger" href="#modal{{ $key+1 }}">Edit</button></td>
+                <td><button class="btn orange-text orange lighten-4 waves-effect waves-light w3-small modal-trigger" href="#modal{{ $key+1 }}">Edit <i class="fa fa-pen w3-tiny"></i></button></td>
                 <td>
                     <form action="{{ route('fee_type.delete') }}" method="POST" id="form{{ $key + 1 }}">@csrf
                         <input type="hidden" name="id" value="{{ $fee->id }}"/>
-                    <button type="submit" class="btn waves-light waves-effect my-red w3-small" id="btn_submit{{ $key + 1 }}" onclick="save{{ $key + 1 }}()">Delete</button>
+                    <button type="submit" class="btn waves-light waves-effect red red-text lighten-4 w3-small" id="btn_submit{{ $key + 1 }}" onclick="save{{ $key + 1 }}()">Delete <i class="fa fa-trash w3-tiny"></i></button>
                     </form>
                 </td>
             </tr>

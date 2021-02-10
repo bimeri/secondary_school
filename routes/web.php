@@ -182,6 +182,7 @@ Route::get('admin/fees/statistics', 'Fees_expensesController@getSatistics')->nam
 Route::post('admin/fees/statistics', 'Fees_expensesController@addExpenseType')->name('addExpense.type');
 Route::get('admin/fees/ajax/create', 'Fees_expensesController@getClasses')->name('student.get.classes');
 Route::get('fees/control', 'Fees_expensesController@showFeecontrolPage')->name('fees.control');
+Route::post('fees/control', 'Fees_expensesController@feeControl')->name('fees.control.post');
 
 // scholarship
 Route::get('scholarship/create', 'ScholarshipController@index')->name('scholarship.create');
@@ -251,3 +252,4 @@ Route::get('classList/download', 'Downloadcontroller@classListDownload')->name('
 Route::get('fee/print', 'Downloadcontroller@printFee')->name('downoad.print');
 Route::get('admin/fees/excel', 'Downloadcontroller@downloadExcel')->name('report.fee.excel');
 Route::get('admin/income_statement', 'Downloadcontroller@incomeStatementDownload')->name('download.incomestatement');
+Route::get('admin/complete_fee', 'Downloadcontroller@completeFee')->name('student.completeFee.download');

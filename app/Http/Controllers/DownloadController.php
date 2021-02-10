@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Expensetype;
 use App\Exports\UsersExport;
 use App\Fee;
+use App\Feecontrol;
 use App\Feetype;
 use App\Form;
 use App\Setting;
@@ -75,6 +76,23 @@ class DownloadController extends Controller
                        'year' => $yr]);
 
             $pdf = PDF::loadView('admin.public.download.classList');
+            $pdf->getDomPDF()->set_option('enable_php', true);
+            return $pdf->download(''.$classDetail->name.'.pdf');
+    }
+
+    public function completeFee(Request $req){
+        $year = $req['year'];
+        $class = $req['class'];
+        $completed = Feecontrol::completedStudent($year, $class);
+        $classDetail = Form::getClassDetail($class);
+        $yr = Year::getYearName($year);
+
+        view()->share(['details' => $completed,
+                       'className' => $classDetail->name,
+                       'class' => $classDetail,
+                       'year' => $yr]);
+
+            $pdf = PDF::loadView('admin.public.download.fee_completed');
             $pdf->getDomPDF()->set_option('enable_php', true);
             return $pdf->download(''.$classDetail->name.'.pdf');
     }
