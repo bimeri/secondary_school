@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2020 at 11:28 AM
+-- Generation Time: Feb 10, 2021 at 08:36 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -53,7 +53,7 @@ INSERT INTO `admins` (`id`, `first_name`, `last_name`, `is_super`, `email`, `use
 (2, 'Second', 'Admin', 0, 'example@gmail.com', 'second', 'default.png', 'Male', '01/02/1992', '$2y$10$6GGZg9mPlbwYvPNCVCMv2.1nhoRSFjz.MLtsSCQVexj/.PjMLbmv6', NULL, '2020-06-26 00:00:53', '2020-06-26 00:00:53'),
 (8, 'Valeri', 'Ndelayang', 0, 'valeri@gmail.com', 'valery', '8.jpg', 'Male', 'Jul 28, 1999', '$2y$10$9cOhqX3yhO41g2l0shTQxO1baRlqWR23DQi.UmJOsIcUXcjmjIJrO', NULL, '2020-06-30 23:36:29', '2020-06-30 23:36:29'),
 (14, 'test', 'user', 0, 'test@gmail.com', 'test', '14.jpg', 'Female', 'Jul 01, 2020', '$2y$10$wii8mxAbQPMZ0aayuANmleEysIrGgm7ZSlSfV2KrIviTzNcLJP1/G', NULL, '2020-07-03 03:12:42', '2020-07-03 03:12:42'),
-(15, 'MBAH', 'ISAAC', 0, 'daf@me', 'NISHANG', '15.png', 'Male', 'Jul 13, 2020', '$2y$10$a16Q9o9Xf4KOefCMjPjoXO5FKS5KlCzKZ8vqijhATuyYttT3ET8WC', NULL, '2020-07-05 18:10:20', '2020-07-05 18:10:20');
+(15, 'MBAH', 'ISAAC', 0, 'daf@me.com', 'NISHANG', '15.png', 'Male', 'Jul 13, 2020', '$2y$10$DGrTBYFN2eTDbYHDTjY9EeXyi6y5UrxtGH6qY5j4swMlTloeGg5R.', NULL, '2020-07-05 18:10:20', '2020-07-05 18:10:20');
 
 -- --------------------------------------------------------
 
@@ -69,24 +69,6 @@ CREATE TABLE `admin_permission` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `admin_permission`
---
-
-INSERT INTO `admin_permission` (`id`, `admin_id`, `permission_id`, `created_at`, `updated_at`) VALUES
-(111, 15, 18, NULL, NULL),
-(112, 15, 21, NULL, NULL),
-(125, 15, 1, NULL, NULL),
-(126, 15, 2, NULL, NULL),
-(127, 15, 3, NULL, NULL),
-(128, 15, 4, NULL, NULL),
-(129, 15, 5, NULL, NULL),
-(130, 15, 13, NULL, NULL),
-(131, 15, 36, NULL, NULL),
-(132, 15, 27, NULL, NULL),
-(133, 15, 24, NULL, NULL),
-(134, 15, 30, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -100,13 +82,6 @@ CREATE TABLE `admin_role` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `admin_role`
---
-
-INSERT INTO `admin_role` (`id`, `admin_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(84, 15, 12, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -132,8 +107,7 @@ CREATE TABLE `assignments` (
 --
 
 INSERT INTO `assignments` (`id`, `year_id`, `teacher_id`, `subject_id`, `name`, `text`, `create_date`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 18, 'Noelinoe assignments', '<p>write your well formated <strong>assigments here</strong>!</p>\r\n<p>you really need to rtake <span style=\"text-decoration: underline;\">things </span>very <em>serious </em>my <em><strong>boy</strong></em></p>', 'Fri, 13 Nov 2020', 0, '2020-11-13 01:04:39', '2020-11-13 01:04:39'),
-(2, 2, 3, 18, 'Research on eruption', '<div class=\"pdf-viewer-page\" style=\"position: relative; transform: translateZ(0px); display: flex; min-height: 300px; color: #111111; font-family: Roboto, Arial, sans-serif; font-size: 12px; background-color: #ffffff;\">\r\n<div id=\"pf1\" class=\"pf w0 h0\" style=\"position: relative; overflow: hidden; margin: 0px; border: 0px; width: 980px; height: 1385.95px;\" data-page-no=\"1\">\r\n<div class=\"pc pc1 w0 h0\" style=\"overflow: hidden; margin: 0px; border: 0px; position: absolute; padding: 0px; top: 0px; left: 0px; width: 980px; height: 1385.95px; transform-origin: 0px 0px; transform: scale(0.77);\">\r\n<div class=\"t m0 x2 h3 y3 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1215.04px; height: 54.9609px; left: 322.024px;\">Chapter 11 Questionnaires and Surveys</div>\r\n<div class=\"t m0 x3 h3 y4 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1164.47px; height: 54.9609px; left: 392.398px;\">Tony Johnstone Young</div>\r\n<div class=\"t m0 x4 h3 y5 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1113.9px; height: 54.9609px; left: 384.102px;\">Newcastle University UK</div>\r\n<div class=\"t m0 x5 h3 y6 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1063.33px; height: 54.9609px; left: 444.549px;\">Reference:</div>\r\n<div class=\"t m0 x6 h4 y7 ff2 fs0 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 44.16px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1014.73px; height: 48.99px; left: 175.647px;\">Young T.J. (2016). Questionnaires and Surveys. <span class=\"ls1 ws0\" style=\"letter-spacing: -0.784px; word-spacing: -10.256px; unicode-bidi: bidi-override; position: relative;\">In</span> Zhu Hua, Ed. <span class=\"ff4\" style=\"font-family: ff4; line-height: 1.45606; visibility: visible; unicode-bidi: bidi-override; position: relative;\">Research Methods in </span></div>\r\n<div class=\"t m0 x7 h3 y8 ff4 fs0 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 44.16px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff4; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 983.523px; height: 54.9609px; left: 206.661px;\">Intercultural Communication: A Practical Guide<span class=\"ff2\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; unicode-bidi: bidi-override; position: relative;\">. Oxford: Wiley, pp.165-180.<span class=\"ff3 fs1\" style=\"font-family: ff3; line-height: 1.53418; visibility: visible; font-size: 48px; unicode-bidi: bidi-override; position: relative;\"> </span></span></div>\r\n<div class=\"t m0 x1 h3 y9 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 933.94px; height: 54.9609px; left: 148.195px;\">Abstract</div>\r\n<div class=\"t m0 x1 h2 ya ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 883.715px; height: 53.25px; left: 148.195px;\">Survey methodologies, usually using questionnaires, are among the most popular in</div>\r\n<div class=\"t m0 x1 h2 yb ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 849.541px; height: 53.25px; left: 148.195px;\">the social sciences, but they are also among the most mis-used. The<span class=\"ls2 ws1\" style=\"letter-spacing: 0.096px; word-spacing: -12.096px; unicode-bidi: bidi-override; position: relative;\">ir</span> popularity in</div>\r\n<div class=\"t m0 x1 h2 yc ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 815.564px; height: 53.25px; left: 148.195px;\">small-scale intercultural research is associated with perceived ease of use, and the</div>\r\n<div class=\"t m0 x1 h2 yd ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 781.389px; height: 53.25px; left: 148.195px;\">access they <span class=\"ls3 ws2\" style=\"letter-spacing: -0.192px; word-spacing: -11.808px; unicode-bidi: bidi-override; position: relative;\">can</span> give to large amounts of data which are analysable by even very</div>\r\n<div class=\"t m0 x1 h2 ye ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 747.412px; height: 53.25px; left: 148.195px;\">inexperienced researchers. Problems can derive from mismatches between paradigms,</div>\r\n<div class=\"t m0 x1 h2 yf ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 713.238px; height: 53.25px; left: 148.195px;\">research questions and instruments. They can also arise for more microcosmic</div>\r\n<div class=\"t m0 x1 h2 y10 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 679.261px; height: 53.25px; left: 148.195px;\">reasons, relating to sampling, instrument design, low response rates, and over-claims</div>\r\n<div class=\"t m0 x1 h2 y11 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 645.086px; height: 53.25px; left: 148.195px;\">for what data from a small sample can really say about a population. This chapter</div>\r\n<div class=\"t m0 x1 h2 y12 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 611.109px; height: 53.25px; left: 148.195px;\">details these potential pitfalls but also shows how the application of relatively simple,</div>\r\n<div class=\"t m0 x1 h2 y13 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 576.901px; height: 53.25px; left: 148.195px;\">tried-and-trusted considerations and techniques can mitigate against them. It also</div>\r\n<div class=\"t m0 x1 h2 y14 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 542.924px; height: 53.25px; left: 148.195px;\">gives a brief overview of approaches to analysis, and discusses the purposes that</div>\r\n<div class=\"t m0 x1 h3 y15 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 508.947px; height: 54.9609px; left: 148.195px;\">questionnaire-based research can serve as part of a mixed-methods design. <span class=\"ff3\" style=\"font-family: ff3; line-height: 1.53418; visibility: visible; unicode-bidi: bidi-override; position: relative;\"> </span></div>\r\n<div class=\"t m0 x1 h3 y16 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 464.501px; height: 54.9609px; left: 148.195px;\">&nbsp;</div>\r\n<div class=\"t m0 x1 h3 y17 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 420.647px; height: 54.9609px; left: 148.195px;\">Keywords</div>\r\n<div class=\"t m0 x1 h3 y18 ff5 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff5; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 376.99px; height: 54.9609px; left: 148.195px;\">Population - <span class=\"ff2\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; unicode-bidi: bidi-override; position: relative;\">the group of people or objects that the survey is investigating </span></div>\r\n<div class=\"t m0 x1 h3 y19 ff5 fs1 fc0 sc0 ls0 ws3\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff5; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; word-spacing: -12px; color: #000000; bottom: 333.136px; height: 54.9609px; left: 148.195px;\">Sample<span class=\"ff2 ws4\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; word-spacing: 0px; unicode-bidi: bidi-override; position: relative;\"> </span><span class=\"ff6\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; unicode-bidi: bidi-override; position: relative;\">&ndash;<span class=\"ff2 ws4\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; word-spacing: 0px; unicode-bidi: bidi-override; position: relative;\"> a representative sub-group of the population that can be surveyed to draw </span></span></div>\r\n<div class=\"t m0 x1 h2 y1a ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 298.912px; height: 53.25px; left: 148.195px;\">appropriate about the population as a whole</div>\r\n<div class=\"t m0 x1 h3 y1b ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 255.058px; height: 54.9609px; left: 148.195px;\">Generalisability <span class=\"ff6 ws3\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; word-spacing: -12px; unicode-bidi: bidi-override; position: relative;\">&ndash;</span><span class=\"ff2\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; unicode-bidi: bidi-override; position: relative;\"> whether data from a sample is really representative of the </span></div>\r\n<div class=\"t m0 x1 h2 y1c ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 220.884px; height: 53.25px; left: 148.195px;\">population</div>\r\n<div class=\"t m0 x1 h3 y1d ff5 fs1 fc0 sc0 ls0 ws3\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff5; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; word-spacing: -12px; color: #000000; bottom: 177.029px; height: 54.9609px; left: 148.195px;\">Validity<span class=\"ff2 ws4\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; word-spacing: 0px; unicode-bidi: bidi-override; position: relative;\"> </span><span class=\"ff6\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; unicode-bidi: bidi-override; position: relative;\">&ndash;<span class=\"ff2 ws4\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; word-spacing: 0px; unicode-bidi: bidi-override; position: relative;\"> whether data is what a researcher says it is, measures what the researcher </span></span></div>\r\n<div class=\"t m0 x1 h2 y1e ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 142.862px; height: 53.25px; left: 148.195px;\">says it measures, or shows what the researcher says it shows</div>\r\n<div class=\"d m1\" style=\"position: absolute; transform-origin: 0px 100%; transform: matrix(1.64617, 0, 0, 1.64617, 0, 0); border-style: none; left: 314.798px; bottom: 999.985px; width: 127.31px; height: 18.97px; background-color: rgba(255, 255, 255, 0);\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"rg-wayPoint\" style=\"color: #111111; font-family: Roboto, Arial, sans-serif; font-size: 12px; background-color: #ffffff;\" data-track-url=\"https://www.researchgate.net/publication/track/consume-asset?pid=316228107&amp;lid=5c77da5f92851c695047df8f&amp;fp=be6c6b407c5b887c6461bb6399ec183251f1f9dc\">&nbsp;</div>\r\n<div class=\"pdf-page-separator\" style=\"position: relative; margin: 10px auto; color: #888888; font-family: Roboto, Arial, sans-serif; font-size: 12px; line-height: 1em; text-transform: capitalize; border-top: 1px solid #dddddd; width: 816.047px; background-color: #ffffff;\">&nbsp;</div>\r\n<div class=\"pdf-viewer-page js-lazy-load-page display-page\" style=\"position: relative; transform: translateZ(0px); display: flex; min-height: 300px; color: #111111; font-family: Roboto, Arial, sans-serif; font-size: 12px; background-color: #ffffff;\" data-lazy-batch=\"1\">\r\n<div class=\"pdf-lazy-load\" style=\"display: flex; transform: translateZ(0px); width: 859px;\">\r\n<div id=\"pf2\" class=\"pf w0 h0\" style=\"position: relative; overflow: hidden; margin: 0px; border: 0px; width: 980px; height: 1385.95px;\" data-page-no=\"2\">\r\n<div class=\"pc pc2 w0 h0\" style=\"overflow: hidden; margin: 0px; border: 0px; position: absolute; padding: 0px; top: 0px; left: 0px; width: 980px; height: 1385.95px; transform-origin: 0px 0px; transform: scale(0.77);\">\r\n<div class=\"t m0 x0 h1 y0 ff1 fs0 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 44.16px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff1; line-height: 0.691406; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 85.3771px; height: 30.1228px; left: 485.44px;\">2</div>\r\n<div class=\"t m0 x1 h1 y1 ff1 fs0 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 44.16px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff1; line-height: 0.691406; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 63.2526px; height: 30.1228px; left: 148.195px;\">&nbsp;</div>\r\n<div class=\"t m0 x1 h3 y2 ff5 fs1 fc0 sc0 ls0 ws3\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff5; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; word-spacing: -12px; color: #000000; bottom: 1249.45px; height: 54.9609px; left: 148.195px;\">Reliability<span class=\"ff2 ws4\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; word-spacing: 0px; unicode-bidi: bidi-override; position: relative;\"> </span><span class=\"ff6\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; unicode-bidi: bidi-override; position: relative;\">&ndash;<span class=\"ff2 ws4\" style=\"font-family: ff2; line-height: 1.45606; visibility: visible; word-spacing: 0px; unicode-bidi: bidi-override; position: relative;\"> whether data derived from one sample of a population would also be </span></span></div>\r\n<div class=\"t m0 x1 h2 y1f ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1215.44px; height: 53.25px; left: 148.195px;\">derived from another sample of the same population, if the same techniques and</div>\r\n<div class=\"t m0 x1 h2 y20 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1181.26px; height: 53.25px; left: 148.195px;\">instruments were employed again.</div>\r\n<div class=\"t m0 x1 h3 y21 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1137.01px; height: 54.9609px; left: 148.195px;\">&nbsp;</div>\r\n<div class=\"t m0 x1 h3 y22 ff3 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff3; line-height: 1.53418; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1092.96px; height: 54.9609px; left: 148.195px;\">Keywords for online search optimisation</div>\r\n<div class=\"t m0 x1 h2 y23 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1049.5px; height: 53.25px; left: 148.195px;\">Surveys <span class=\"ff6 ws3\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; word-spacing: -12px; unicode-bidi: bidi-override; position: relative;\">&ndash;</span> Questionnaires <span class=\"ff6 ws3\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; word-spacing: -12px; unicode-bidi: bidi-override; position: relative;\">&ndash;</span> Sample - Sampling <span class=\"ff6 ws3\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; word-spacing: -12px; unicode-bidi: bidi-override; position: relative;\">&ndash;</span> Objectivism - Constructivism</div>\r\n<div class=\"t m0 x1 h2 y24 ff2 fs1 fc0 sc0 ls0 ws4\" style=\"position: absolute; white-space: pre; font-size: 48px; transform-origin: 0px 100%; unicode-bidi: bidi-override; font-family: ff2; line-height: 1.45606; visibility: visible; transform: matrix(0.411543, 0, 0, 0.411543, 0, 0); letter-spacing: 0px; text-shadow: none; -webkit-text-stroke: 0.015em transparent; color: #000000; bottom: 1005.45px; height: 53.25px; left: 148.195px;\">Population <span class=\"ff6 ws3\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; word-spacing: -12px; unicode-bidi: bidi-override; position: relative;\">&ndash;</span> Generalisability <span class=\"ff6 ws3\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; word-spacing: -12px; unicode-bidi: bidi-override; position: relative;\">&ndash;</span> Validity <span class=\"ff6 ws3\" style=\"font-family: ff6; line-height: 0.910645; visibility: visible; word-spacing: -12px; unicode-bidi: bidi-override; position: relative;\">&ndash;</span> Reliability.</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', 'Fri, 13 Nov 2020', 0, '2020-11-13 09:42:38', '2020-11-13 09:42:38');
+(1, 1, 1, 28, 'Research on the new Philosopher', 'write your well formated <b>assigments here</b>!', 'Mon, 01 Feb 2121', 0, '2021-02-01 18:53:42', '2021-02-01 18:53:42');
 
 -- --------------------------------------------------------
 
@@ -158,28 +132,6 @@ INSERT INTO `backgrounds` (`id`, `name`, `sector_id`, `created_at`, `updated_at`
 (3, 'Second Cycle', 1, '2020-07-06 20:42:27', '2020-07-06 20:42:27'),
 (4, 'First Cycle', 4, '2020-08-10 02:35:28', '2020-08-10 02:35:28'),
 (5, 'Second Cycle', 4, '2020-10-24 20:06:14', '2020-10-24 20:06:14');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `classresults`
---
-
-CREATE TABLE `classresults` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `year_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `form_id` int(10) UNSIGNED NOT NULL,
-  `form_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `student_id` int(10) UNSIGNED NOT NULL,
-  `student_school_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `average_point` decimal(6,2) DEFAULT NULL,
-  `sum_coff` decimal(6,2) DEFAULT NULL,
-  `stud_ave` decimal(6,2) DEFAULT NULL,
-  `position` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -255,7 +207,8 @@ INSERT INTO `expensetypes` (`id`, `year_id`, `term_id`, `expense_id`, `amount`, 
 (3, 1, 1, 1, '3090.0', 'unknown reason', '2020-09-17 21:42:35', '2020-09-17 21:42:35'),
 (4, 1, 1, 3, '1000.0', 'new teachers came entered', '2020-09-19 08:33:41', '2020-09-19 08:33:41'),
 (5, 1, 1, 4, '2000.0', 'nothing much', '2020-09-19 10:39:46', '2020-09-19 10:39:46'),
-(6, 1, 1, 7, '10000.0', 'spend money of sport', '2020-10-03 17:34:28', '2020-10-03 17:34:28');
+(6, 1, 1, 7, '10000.0', 'spend money of sport', '2020-10-03 17:34:28', '2020-10-03 17:34:28'),
+(7, 1, 2, 1, '2000.0', 'best students award', '2020-11-14 08:31:08', '2020-11-14 08:31:08');
 
 -- --------------------------------------------------------
 
@@ -294,7 +247,8 @@ CREATE TABLE `feecontrols` (
 --
 
 INSERT INTO `feecontrols` (`id`, `student_id`, `student_school_id`, `form_id`, `year_id`, `clearance_date`, `created_at`, `updated_at`) VALUES
-(11, 48, 'BG19A007', 11, 1, 'Mon, 02 Nov 2020 09:00am', '2020-11-02 08:00:10', '2020-11-02 08:00:10');
+(11, 48, 'BG19A007', 11, 1, 'Mon, 02 Nov 2020 09:00am', '2020-11-02 08:00:10', '2020-11-02 08:00:10'),
+(12, 43, 'BG19A002', 11, 1, 'Tue, 09 Feb 2021 19:47pm', '2021-02-09 18:47:48', '2021-02-09 18:47:48');
 
 -- --------------------------------------------------------
 
@@ -325,7 +279,22 @@ CREATE TABLE `fees` (
 
 INSERT INTO `fees` (`id`, `year_id`, `feetype_id`, `student_id`, `student_school_id`, `form_id`, `scholarship`, `amount`, `payment_method`, `balance`, `status`, `payment_date`, `created_at`, `updated_at`) VALUES
 (47, 1, 13, 48, 'BG19A007', 11, NULL, 30000, 'mtn money', 4000, 0, 'Nov 02, 2020 - 08:50am', '2020-11-02 07:50:36', '2020-11-02 07:50:36'),
-(48, 1, 13, 48, 'BG19A007', 11, NULL, 4000, 'Cash Payment', 0, 1, 'Nov 02, 2020 - 08:59am', '2020-11-02 07:59:30', '2020-11-02 07:59:30');
+(48, 1, 13, 48, 'BG19A007', 11, NULL, 4000, 'Cash Payment', 0, 1, 'Nov 02, 2020 - 08:59am', '2020-11-02 07:59:30', '2020-11-02 07:59:30'),
+(49, 2, 15, 51, 'BG19A010', 11, NULL, 10000, 'mtn money', 20000, 0, 'Feb 09, 2021 - 12:27am', '2021-02-08 23:27:20', '2021-02-08 23:27:20'),
+(50, 1, 13, 51, 'BG19A010', 11, NULL, 10000, 'cash collect', 24000, 0, 'Feb 09, 2021 - 12:29am', '2021-02-08 23:29:22', '2021-02-08 23:29:22'),
+(51, 1, 13, 51, 'BG19A010', 11, NULL, 10000, NULL, 14000, 0, 'Feb 09, 2021 - 12:30am', '2021-02-08 23:30:57', '2021-02-08 23:30:57'),
+(52, 1, 13, 51, 'BG19A010', 11, NULL, 10001, NULL, 3999, 0, 'Feb 09, 2021 - 12:31am', '2021-02-08 23:31:44', '2021-02-08 23:31:44'),
+(53, 1, 14, 51, 'BG19A010', 11, NULL, 4000, NULL, 1000, 0, 'Feb 09, 2021 - 12:32am', '2021-02-08 23:32:30', '2021-02-08 23:32:30'),
+(54, 1, 14, 51, 'BG19A010', 11, NULL, 999, NULL, 1, 0, 'Feb 09, 2021 - 12:34am', '2021-02-08 23:34:26', '2021-02-08 23:34:26'),
+(55, 1, 13, 51, 'BG19A010', 11, NULL, 3999, NULL, 0, 1, 'Feb 09, 2021 - 12:34am', '2021-02-08 23:34:55', '2021-02-08 23:34:55'),
+(56, 1, 13, 43, 'BG19A002', 11, NULL, 34000, 'Orange Money', 0, 1, 'Feb 09, 2021 - 07:43pm', '2021-02-09 18:43:47', '2021-02-09 18:43:47'),
+(57, 1, 14, 43, 'BG19A002', 11, NULL, 4000, NULL, 1000, 0, 'Feb 09, 2021 - 07:44pm', '2021-02-09 18:44:14', '2021-02-09 18:44:14'),
+(58, 1, 14, 42, 'BG19A001', 11, 2000, 1000, NULL, 4000, 0, 'Feb 09, 2021 - 07:46pm', '2021-02-09 18:46:10', '2021-02-09 18:46:10'),
+(59, 1, 14, 43, 'BG19A002', 11, NULL, 1000, NULL, 0, 1, 'Feb 09, 2021 - 07:46pm', '2021-02-09 18:46:54', '2021-02-09 18:46:54'),
+(60, 1, 14, 48, 'BG19A007', 11, NULL, 3000, NULL, 2000, 0, 'Feb 09, 2021 - 09:48pm', '2021-02-09 20:48:53', '2021-02-09 20:48:53'),
+(61, 1, 14, 48, 'BG19A007', 11, NULL, 2000, NULL, 0, 1, 'Feb 09, 2021 - 09:49pm', '2021-02-09 20:49:10', '2021-02-09 20:49:10'),
+(62, 1, 14, 51, 'BG19A010', 11, NULL, 1, 'mtn money', 0, 1, 'Feb 09, 2021 - 09:49pm', '2021-02-09 20:49:35', '2021-02-09 20:49:35'),
+(63, 1, 14, 45, 'BG19A004', 11, 7000, 5000, 'Orange Money', 0, 1, 'Feb 09, 2021 - 09:50pm', '2021-02-09 20:50:19', '2021-02-09 20:50:19');
 
 -- --------------------------------------------------------
 
@@ -350,7 +319,8 @@ CREATE TABLE `feetypes` (
 INSERT INTO `feetypes` (`id`, `year_id`, `form_id`, `fee_type`, `amount`, `created_at`, `updated_at`) VALUES
 (13, 1, 11, 'Tuition', 34000, '2020-11-02 07:48:38', '2020-11-02 07:48:38'),
 (14, 1, 11, 'Computer', 5000, '2020-11-02 18:55:23', '2020-11-02 18:55:23'),
-(15, 2, 11, 'Tuition', 30000, '2020-11-02 18:56:37', '2020-11-02 18:56:37');
+(15, 2, 11, 'Tuition', 30000, '2020-11-02 18:56:37', '2020-11-02 18:56:37'),
+(16, 1, 22, 'Computer', 5000, '2020-11-15 13:11:52', '2020-11-15 13:11:52');
 
 -- --------------------------------------------------------
 
@@ -379,7 +349,8 @@ INSERT INTO `files` (`id`, `year_id`, `subject_id`, `teacher_id`, `file_name`, `
 (9, 1, 19, 3, 'noel_3_1.pdf', '/image/files/2019', 'PDF', 1, '2020-11-03 14:32:00', '2020-11-08 18:58:31'),
 (10, 1, 19, 3, 'Recept_3_2.pdf', '/image/files/2019', 'PDF', 0, '2020-11-03 14:57:03', '2020-11-03 14:57:03'),
 (11, 1, 19, 3, 'Curriculum Victae_3_3.pdf', '/image/files/2019', 'PDF', 0, '2020-11-08 17:05:20', '2020-11-08 17:05:20'),
-(12, 2, 17, 3, 'example_3_1.pdf', '/image/files/2020', 'PDF', 1, '2020-11-12 22:49:07', '2020-11-13 10:05:01');
+(12, 2, 17, 3, 'example_3_1.pdf', '/image/files/2020', 'PDF', 1, '2020-11-12 22:49:07', '2020-11-13 10:05:01'),
+(13, 1, 28, 1, 'monetbil-payment-api-v1-en_1_1.pdf', '/image/files/2019', 'PDF', 0, '2021-02-01 18:55:49', '2021-02-01 18:55:49');
 
 -- --------------------------------------------------------
 
@@ -392,10 +363,12 @@ CREATE TABLE `firsttermresults` (
   `year_id` int(10) UNSIGNED NOT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
   `form_id` int(10) UNSIGNED NOT NULL,
+  `form_type` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
-  `seq1` decimal(6,1) DEFAULT NULL,
-  `seq2` decimal(6,1) DEFAULT NULL,
+  `seq1` decimal(6,2) DEFAULT NULL,
+  `seq2` decimal(6,2) DEFAULT NULL,
   `ave_point` decimal(6,2) DEFAULT NULL,
+  `position` int(10) UNSIGNED DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -405,21 +378,44 @@ CREATE TABLE `firsttermresults` (
 -- Dumping data for table `firsttermresults`
 --
 
-INSERT INTO `firsttermresults` (`id`, `year_id`, `student_id`, `form_id`, `subject_id`, `seq1`, `seq2`, `ave_point`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 44, 11, 18, '16.0', '16.0', '64.00', 1, '2020-11-07 12:30:41', '2020-11-08 10:16:12'),
-(2, 1, 42, 11, 18, '17.0', '19.0', '72.00', 1, '2020-11-08 10:15:38', '2020-11-08 10:15:57'),
-(3, 1, 42, 11, 19, '20.0', '18.5', '57.75', 1, '2020-11-08 10:16:02', '2020-11-08 10:16:06'),
-(4, 1, 46, 11, 18, '8.5', '0.8', '18.60', 1, '2020-11-08 10:16:18', '2020-11-08 10:16:33'),
-(5, 1, 46, 11, 19, '12.0', '14.5', '39.75', 1, '2020-11-08 10:16:42', '2020-11-08 10:16:50'),
-(6, 1, 44, 11, 19, NULL, '16.0', '24.00', 1, '2020-11-08 10:17:01', '2020-11-08 10:17:01'),
-(7, 1, 43, 11, 18, '14.0', '12.5', '53.00', 1, '2020-11-08 10:17:14', '2020-11-08 10:17:46'),
-(8, 1, 45, 11, 18, '11.0', NULL, '22.00', 1, '2020-11-08 10:17:17', '2020-11-08 10:18:36'),
-(9, 1, 48, 11, 18, '7.0', '11.0', '36.00', 1, '2020-11-08 10:17:21', '2020-11-08 10:17:33'),
-(10, 1, 51, 11, 18, '14.0', '16.0', '60.00', 1, '2020-11-08 10:17:25', '2020-11-08 10:17:28'),
-(11, 1, 43, 11, 19, '16.7', '9.0', '38.55', 1, '2020-11-08 10:17:56', '2020-11-08 10:18:11'),
-(12, 1, 48, 11, 19, NULL, '14.0', '21.00', 1, '2020-11-08 10:18:24', '2020-11-08 10:18:24'),
-(13, 1, 51, 11, 19, '16.0', '14.0', '45.00', 1, '2020-11-08 10:18:30', '2020-11-08 11:12:11'),
-(14, 1, 45, 11, 19, '13.0', NULL, '19.50', 1, '2020-11-08 10:18:45', '2020-11-08 10:18:45');
+INSERT INTO `firsttermresults` (`id`, `year_id`, `student_id`, `form_id`, `form_type`, `subject_id`, `seq1`, `seq2`, `ave_point`, `position`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 44, 11, 'A', 18, '13.70', '15.80', '59.00', NULL, 1, '2020-11-07 12:30:41', '2020-11-23 09:03:14'),
+(2, 1, 42, 11, 'A', 18, '16.00', '18.00', '68.00', NULL, 1, '2020-11-08 10:15:38', '2020-11-23 09:00:28'),
+(3, 1, 42, 11, 'A', 19, '15.60', '18.50', '51.15', NULL, 1, '2020-11-08 10:16:02', '2020-11-23 09:00:54'),
+(4, 1, 46, 11, 'A', 18, '8.50', '0.80', '18.60', NULL, 1, '2020-11-08 10:16:18', '2020-11-08 10:16:33'),
+(5, 1, 46, 11, 'A', 19, '12.00', '14.50', '39.75', NULL, 1, '2020-11-08 10:16:42', '2020-11-08 10:16:50'),
+(6, 1, 44, 11, 'A', 19, NULL, '18.00', '27.00', NULL, 1, '2020-11-08 10:17:01', '2020-11-23 09:01:05'),
+(7, 1, 43, 11, 'B', 18, '15.00', '16.50', '63.00', NULL, 1, '2020-11-08 10:17:14', '2020-11-23 09:01:42'),
+(8, 1, 45, 11, 'B', 18, '14.00', NULL, '28.00', NULL, 1, '2020-11-08 10:17:17', '2020-11-23 09:03:22'),
+(9, 1, 48, 11, 'B', 18, '5.50', '11.00', '33.00', NULL, 1, '2020-11-08 10:17:21', '2020-11-23 09:03:30'),
+(10, 1, 51, 11, 'B', 18, '13.00', '16.00', '58.00', NULL, 1, '2020-11-08 10:17:25', '2020-11-23 09:01:49'),
+(11, 1, 43, 11, 'B', 19, '14.70', '9.00', '35.55', NULL, 1, '2020-11-08 10:17:56', '2020-11-23 09:01:33'),
+(12, 1, 48, 11, 'B', 19, NULL, '11.00', '16.50', NULL, 1, '2020-11-08 10:18:24', '2020-11-23 09:01:20'),
+(13, 1, 51, 11, 'B', 19, '17.00', '15.00', '48.00', NULL, 1, '2020-11-08 10:18:30', '2020-11-23 09:01:27'),
+(14, 1, 45, 11, 'B', 19, '14.00', '11.00', '37.50', NULL, 1, '2020-11-08 10:18:45', '2020-11-23 09:01:29'),
+(15, 1, 42, 11, 'A', 20, '12.00', '10.00', '22.00', NULL, 1, '2020-11-22 18:34:16', '2020-11-22 18:34:19'),
+(16, 1, 44, 11, 'A', 20, '9.00', '11.00', '20.00', NULL, 1, '2020-11-22 18:34:26', '2020-11-22 18:34:29'),
+(17, 1, 46, 11, 'A', 20, '8.00', '7.00', '15.00', NULL, 1, '2020-11-22 18:34:33', '2020-11-22 18:34:36'),
+(18, 1, 42, 11, 'A', 21, '14.00', '11.50', '25.50', NULL, 1, '2020-11-22 18:34:39', '2020-11-22 18:35:22'),
+(19, 1, 45, 11, 'B', 21, '14.00', '14.00', '28.00', NULL, 1, '2020-11-22 18:34:41', '2020-11-23 09:02:56'),
+(20, 1, 48, 11, 'B', 21, NULL, '15.50', '15.50', NULL, 1, '2020-11-22 18:34:46', '2020-11-23 09:02:42'),
+(21, 1, 43, 11, 'B', 21, '15.50', '13.00', '28.50', NULL, 1, '2020-11-22 18:34:49', '2020-11-23 09:02:52'),
+(22, 1, 46, 11, 'A', 21, '13.20', '2.30', '15.50', NULL, 1, '2020-11-22 18:35:01', '2020-11-22 18:35:16'),
+(23, 1, 44, 11, 'A', 21, NULL, '9.00', '9.00', NULL, 1, '2020-11-22 18:35:06', '2020-11-22 18:35:06'),
+(24, 1, 51, 11, 'B', 21, '16.50', '17.50', '34.00', NULL, 1, '2020-11-22 18:35:31', '2020-11-23 09:02:36'),
+(25, 1, 45, 11, 'B', 20, '16.00', NULL, '16.00', NULL, 1, '2020-11-22 18:35:48', '2020-11-22 18:35:48'),
+(26, 1, 51, 11, 'B', 20, '15.00', NULL, '15.00', NULL, 1, '2020-11-22 18:35:54', '2020-11-22 18:35:54'),
+(27, 1, 48, 11, 'B', 20, NULL, '7.00', '7.00', NULL, 1, '2020-11-22 18:36:10', '2020-11-23 09:02:59'),
+(28, 1, 52, 9, 'A', 22, '12.00', '14.00', '52.00', NULL, 1, '2020-11-22 20:37:05', '2020-11-22 20:37:12'),
+(29, 1, 52, 9, 'A', 23, '13.00', '11.00', '48.00', NULL, 1, '2020-11-22 20:37:17', '2020-11-22 20:37:20'),
+(30, 1, 52, 9, 'A', 26, '17.00', '9.00', '39.00', NULL, 1, '2020-11-22 20:37:22', '2020-11-22 20:37:25'),
+(31, 1, 53, 9, 'A', 26, '5.50', '10.00', '23.25', NULL, 1, '2020-11-22 20:37:29', '2020-11-22 20:37:39'),
+(32, 1, 54, 9, 'A', 26, '0.00', '10.00', '15.00', NULL, 1, '2020-11-22 20:37:31', '2020-11-22 20:37:32'),
+(33, 1, 53, 9, 'A', 23, '12.00', '2.50', '29.00', NULL, 1, '2020-11-22 20:37:43', '2020-11-22 20:37:58'),
+(34, 1, 54, 9, 'A', 23, '15.00', '10.00', '50.00', NULL, 1, '2020-11-22 20:37:45', '2020-11-22 20:37:48'),
+(35, 1, 54, 9, 'A', 22, '11.50', '11.00', '45.00', NULL, 1, '2020-11-22 20:37:51', '2020-11-22 20:38:13'),
+(36, 1, 53, 9, 'A', 22, '6.50', '10.50', '34.00', NULL, 1, '2020-11-22 20:37:55', '2020-11-22 20:38:04'),
+(37, 1, 43, 11, 'B', 20, NULL, '9.00', '9.00', NULL, 1, '2020-11-23 08:54:24', '2020-11-23 09:24:41');
 
 -- --------------------------------------------------------
 
@@ -486,6 +482,15 @@ CREATE TABLE `generateresults` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `generateresults`
+--
+
+INSERT INTO `generateresults` (`id`, `year_id`, `term_id`, `form_id`, `number_of_student`, `number_passed`, `class_avg`, `highest_avg`, `lowest_avg`, `rank_student`, `created_at`, `updated_at`) VALUES
+(10, 1, 1, 11, 7, 4, '10.95', '15.15', '6.55', 1, '2020-11-23 12:27:34', '2020-11-23 12:27:34'),
+(11, 1, 1, 9, 3, 2, '10.16', '12.64', '7.84', 1, '2020-11-23 17:26:55', '2020-11-23 17:26:55'),
+(15, 1, 2, 11, 7, 5, '12.28', '18.73', '8.77', 1, '2020-11-24 21:07:57', '2020-11-24 21:07:57');
 
 -- --------------------------------------------------------
 
@@ -566,7 +571,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (62, '2020_10_30_210446_create_resultcontrols_table', 34),
 (63, '2020_11_02_224142_create_files_table', 35),
 (65, '2020_11_04_215614_create_promotions_table', 36),
-(69, '2020_11_12_235619_create_assignments_table', 37);
+(70, '2020_11_12_235619_create_assignments_table', 37);
 
 -- --------------------------------------------------------
 
@@ -723,14 +728,17 @@ CREATE TABLE `promotions` (
 INSERT INTO `promotions` (`id`, `year_id`, `student_id`, `form_id`, `form_type`, `remark`, `created_at`, `updated_at`) VALUES
 (1, 1, 50, 31, 'A', 'New', '2020-11-04 21:39:58', '2020-11-04 21:39:58'),
 (2, 1, 51, 11, 'B', 'New', '2020-11-04 21:42:52', '2020-11-04 21:42:52'),
-(3, 1, 42, 11, NULL, 'new', NULL, NULL),
+(3, 1, 42, 11, 'A', 'new', NULL, NULL),
 (4, 1, 43, 11, 'B', 'new', NULL, NULL),
-(5, 1, 44, 11, NULL, 'new', NULL, NULL),
+(5, 1, 44, 11, 'A', 'new', NULL, NULL),
 (6, 1, 45, 11, 'B', 'new', NULL, NULL),
-(7, 1, 46, 11, NULL, 'new', NULL, NULL),
-(8, 1, 47, 11, '', 'new', NULL, NULL),
+(7, 1, 46, 11, 'A', 'new', NULL, NULL),
+(8, 1, 47, 11, 'A', 'new', NULL, NULL),
 (9, 1, 48, 11, 'B', 'new', NULL, NULL),
-(10, 1, 49, 11, 'B', 'new', NULL, NULL);
+(10, 1, 49, 11, 'B', 'new', NULL, NULL),
+(11, 1, 52, 9, 'A', 'New', '2020-11-22 20:21:24', '2020-11-22 20:21:24'),
+(12, 1, 53, 9, 'A', 'New', '2020-11-22 20:22:17', '2020-11-22 20:22:17'),
+(13, 1, 54, 9, 'A', 'New', '2020-11-22 20:23:31', '2020-11-22 20:23:31');
 
 -- --------------------------------------------------------
 
@@ -749,6 +757,13 @@ CREATE TABLE `resultcontrols` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `resultcontrols`
+--
+
+INSERT INTO `resultcontrols` (`id`, `year_id`, `term_id`, `seq1_id`, `seq2_id`, `generateresult_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 2, NULL, NULL, '2020-11-14 13:58:51', '2020-11-22 18:31:12');
 
 -- --------------------------------------------------------
 
@@ -791,6 +806,14 @@ CREATE TABLE `scholarships` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `scholarships`
+--
+
+INSERT INTO `scholarships` (`id`, `year_id`, `term_id`, `form_id`, `student_id`, `amount`, `reason`, `created_at`, `updated_at`) VALUES
+(8, 1, 1, 11, 42, 2000, 'best student', '2021-02-08 16:50:52', '2021-02-08 16:50:52'),
+(13, 1, 1, 11, 45, 7000, 'i am very good boy', '2021-02-08 23:15:40', '2021-02-08 23:15:40');
+
 -- --------------------------------------------------------
 
 --
@@ -802,14 +825,50 @@ CREATE TABLE `secondtermresults` (
   `year_id` int(10) UNSIGNED NOT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
   `form_id` int(10) UNSIGNED NOT NULL,
+  `form_type` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
-  `seq3` decimal(6,1) DEFAULT NULL,
-  `seq4` decimal(6,1) DEFAULT NULL,
+  `seq3` decimal(6,2) DEFAULT NULL,
+  `seq4` decimal(6,2) DEFAULT NULL,
   `ave_point` decimal(6,2) DEFAULT NULL,
+  `position` int(10) UNSIGNED DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `secondtermresults`
+--
+
+INSERT INTO `secondtermresults` (`id`, `year_id`, `student_id`, `form_id`, `form_type`, `subject_id`, `seq3`, `seq4`, `ave_point`, `position`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 42, 11, 'A', 18, '19.00', '20.00', '78.00', NULL, 1, '2020-11-24 18:32:40', '2020-11-24 18:32:46'),
+(2, 1, 42, 11, 'A', 19, '17.00', '19.00', '54.00', NULL, 1, '2020-11-24 18:32:50', '2020-11-24 18:32:52'),
+(3, 1, 42, 11, 'A', 21, '19.00', '17.00', '36.00', NULL, 1, '2020-11-24 18:33:35', '2020-11-24 18:34:05'),
+(4, 1, 42, 11, 'A', 20, '18.00', '20.00', '38.00', NULL, 1, '2020-11-24 18:33:57', '2020-11-24 18:34:02'),
+(5, 1, 44, 11, 'A', 18, '12.00', '15.00', '54.00', NULL, 1, '2020-11-24 18:34:08', '2020-11-24 18:34:10'),
+(6, 1, 46, 11, 'A', 19, '9.00', '12.00', '31.50', NULL, 1, '2020-11-24 18:34:13', '2020-11-24 18:34:15'),
+(7, 1, 44, 11, 'A', 19, '10.00', '13.50', '35.25', NULL, 1, '2020-11-24 18:34:19', '2020-11-24 18:35:13'),
+(8, 1, 43, 11, 'B', 19, '14.00', '16.50', '45.75', NULL, 1, '2020-11-24 18:34:24', '2020-11-24 18:34:26'),
+(9, 1, 43, 11, 'B', 18, '13.00', '6.00', '38.00', NULL, 1, '2020-11-24 18:34:31', '2020-11-24 18:36:36'),
+(10, 1, 46, 11, 'A', 18, '16.00', '14.00', '60.00', NULL, 1, '2020-11-24 18:34:40', '2020-11-24 18:35:09'),
+(11, 1, 46, 11, 'A', 20, '20.00', '17.00', '37.00', NULL, 1, '2020-11-24 18:34:46', '2020-11-24 18:34:51'),
+(12, 1, 46, 11, 'A', 21, '16.00', '15.00', '31.00', NULL, 1, '2020-11-24 18:34:54', '2020-11-24 18:34:57'),
+(13, 1, 44, 11, 'A', 20, '12.00', '9.00', '21.00', NULL, 1, '2020-11-24 18:35:03', '2020-11-24 18:35:16'),
+(14, 1, 44, 11, 'A', 21, '8.50', '6.30', '14.80', NULL, 1, '2020-11-24 18:35:19', '2020-11-24 18:35:23'),
+(15, 1, 43, 11, 'B', 21, '6.00', '12.20', '18.20', NULL, 1, '2020-11-24 18:35:27', '2020-11-24 18:35:50'),
+(16, 1, 45, 11, 'B', 21, '7.00', '9.80', '16.80', NULL, 1, '2020-11-24 18:35:34', '2020-11-24 18:35:48'),
+(17, 1, 48, 11, 'B', 21, '14.00', '11.00', '25.00', NULL, 1, '2020-11-24 18:35:36', '2020-11-24 18:35:53'),
+(18, 1, 51, 11, 'B', 21, '14.00', '7.00', '21.00', NULL, 1, '2020-11-24 18:35:38', '2020-11-24 18:35:41'),
+(19, 1, 45, 11, 'B', 20, '3.00', '12.00', '15.00', NULL, 1, '2020-11-24 18:35:43', '2020-11-24 18:36:02'),
+(20, 1, 48, 11, 'B', 20, '7.00', '12.00', '19.00', NULL, 1, '2020-11-24 18:35:45', '2020-11-24 18:36:04'),
+(21, 1, 51, 11, 'B', 20, '11.00', '2.00', '13.00', NULL, 1, '2020-11-24 18:35:55', '2020-11-24 18:36:06'),
+(22, 1, 43, 11, 'B', 20, '0.00', '1.00', '1.00', NULL, 1, '2020-11-24 18:35:57', '2020-11-24 18:35:58'),
+(23, 1, 45, 11, 'B', 19, '19.00', '18.00', '55.50', NULL, 1, '2020-11-24 18:36:08', '2020-11-24 18:36:18'),
+(24, 1, 48, 11, 'B', 19, '9.00', '14.00', '34.50', NULL, 1, '2020-11-24 18:36:21', '2020-11-24 18:36:33'),
+(25, 1, 51, 11, 'B', 19, '12.00', '1.00', '19.50', NULL, 1, '2020-11-24 18:36:25', '2020-11-24 18:36:28'),
+(26, 1, 45, 11, 'B', 18, '9.50', '12.50', '44.00', NULL, 1, '2020-11-24 18:36:43', '2020-11-24 18:36:55'),
+(27, 1, 51, 11, 'B', 18, '11.00', '10.50', '43.00', NULL, 1, '2020-11-24 18:36:49', '2020-11-24 18:37:04'),
+(28, 1, 48, 11, 'B', 18, '14.50', '8.50', '46.00', NULL, 1, '2020-11-24 18:36:52', '2020-11-24 18:36:59');
 
 -- --------------------------------------------------------
 
@@ -890,7 +949,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `year_id`, `school_name`, `school_id`, `motto`, `logo`, `test_session`, `exam_session`, `start_time`, `break_time`, `stop_time`, `hours_per_period`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Bilingual Grammar School Molyko', 'BG', 'Knowledge with Wisdom', 'logo.png', 0, 0, '07:30 AM', '12:00 PM', '04:30 PM', '2 hrs', '2020-06-24 20:28:34', '2020-06-24 20:28:34');
+(1, 1, 'Bilingual Grammar School Molyko', 'BG', 'Knowledge with Wisdom', 'logo.png', 0, 0, '07:30 AM', '12:00 PM', '04:30 PM', '2 hrs', '2020-06-24 20:28:34', '2020-06-24 20:28:34');
 
 -- --------------------------------------------------------
 
@@ -937,8 +996,8 @@ CREATE TABLE `studentinfos` (
 --
 
 INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, `form_id`, `subform_id`, `parent_contact`, `parent_email`, `address`, `profile`, `date_of_birth`, `gender`, `created_at`, `updated_at`) VALUES
-(1, 42, 'BG19A001', 1, 11, NULL, NULL, NULL, NULL, 'default.png', '2020-10-21', 'Male', '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
-(2, 43, 'BG19A002', 1, 11, 9, '123456789', 'example@gmail.com', 'student@gmail.com', 'BG19A002.jpg', '2020-10-15', 'Female', '2020-10-26 20:59:57', '2020-10-26 20:59:57'),
+(1, 42, 'BG19A001', 1, 11, NULL, '123456789', NULL, NULL, 'default.png', '2020-10-21', 'Male', '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
+(2, 43, 'BG19A002', 1, 11, 9, '678657959', 'example@gmail.com', 'lonstreet', 'BG19A002.jpg', '2020-10-15', 'Female', '2020-10-26 20:59:57', '2021-02-08 02:55:31'),
 (3, 44, 'BG19A003', 1, 11, NULL, '678657952', 'efange@gmail.com', 'new town akwa', 'BG19A003.jpg', '1995-07-20', 'Male', '2020-10-30 06:52:31', '2020-10-30 06:52:31'),
 (4, 45, 'BG19A004', 1, 11, 9, '123456789', 'fombu@gmail.com', 'tole', 'BG19A004.jpg', '2020-07-15', 'Male', '2020-10-30 19:59:41', '2020-10-30 19:59:41'),
 (5, 46, 'BG19A005', 1, 11, NULL, '435678769', 'bimerinoel@gmail.com', 'molyko', 'default.png', '2020-10-07', 'Female', '2020-10-30 20:27:44', '2020-10-30 20:27:44'),
@@ -946,7 +1005,10 @@ INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, 
 (7, 48, 'BG19A007', 1, 11, 9, '567898987', 'etim@gmail.com', 'Muyuka Motto Park', 'default.png', '2020-10-02', 'Female', '2020-11-01 19:44:32', '2020-11-01 19:44:32'),
 (8, 49, 'BG19A008', 1, 31, NULL, '67567879', 'admitted@gmail.com', 'wonganga', 'BG19A008.jpg', '2020-10-07', 'Male', '2020-11-04 21:32:14', '2020-11-04 21:32:14'),
 (9, 50, 'BG19A009', 1, 31, NULL, '675467890', NULL, 'longstreet', 'default.png', NULL, 'Male', '2020-11-04 21:39:58', '2020-11-04 21:39:58'),
-(10, 51, 'BG19A010', 1, 11, 9, '546789765', 'exab@gmai.com', 'molyko', 'BG19A010.jpeg', '2020-07-09', 'Male', '2020-11-04 21:42:52', '2020-11-04 21:42:52');
+(10, 51, 'BG19A010', 1, 11, 9, '546789765', 'exab@gmai.com', 'molyko', 'BG19A010.jpeg', '2020-07-09', 'Male', '2020-11-04 21:42:52', '2020-11-04 21:42:52'),
+(11, 52, 'BG19A011', 1, 9, NULL, '654678978', 'enamgs@gmail.com', 'small soppo buea cameroon', 'BG19A011.jpg', '2020-11-19', 'Female', '2020-11-22 20:21:23', '2020-11-22 20:21:23'),
+(12, 53, 'BG19A012', 1, 9, NULL, '678980987', NULL, NULL, 'default.png', '2020-11-06', 'Male', '2020-11-22 20:22:17', '2020-11-22 20:22:17'),
+(13, 54, 'BG19A013', 1, 9, NULL, NULL, NULL, NULL, 'BG19A013.jpg', '2020-10-01', 'Male', '2020-11-22 20:23:31', '2020-11-22 20:23:31');
 
 -- --------------------------------------------------------
 
@@ -959,16 +1021,41 @@ CREATE TABLE `studentresults` (
   `year_id` int(10) UNSIGNED NOT NULL,
   `term_id` int(10) UNSIGNED NOT NULL,
   `form_id` int(10) UNSIGNED NOT NULL,
+  `form_type` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
   `student_school_id` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `average_point` decimal(6,2) DEFAULT NULL,
   `sum_coff` decimal(6,2) DEFAULT NULL,
   `stud_ave` decimal(6,2) DEFAULT NULL,
   `position` int(5) DEFAULT NULL,
+  `class_position` int(5) DEFAULT NULL,
   `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `studentresults`
+--
+
+INSERT INTO `studentresults` (`id`, `year_id`, `term_id`, `form_id`, `form_type`, `student_id`, `student_school_id`, `average_point`, `sum_coff`, `stud_ave`, `position`, `class_position`, `remark`, `created_at`, `updated_at`) VALUES
+(18, 1, 1, 11, 'A', 42, 'BG19A001', '166.65', '11.00', '15.15', 1, 1, NULL, '2020-11-23 12:27:32', '2020-11-23 13:19:37'),
+(19, 1, 1, 11, 'B', 43, 'BG19A002', '136.05', '11.00', '12.37', 3, 2, NULL, '2020-11-23 12:27:32', '2020-11-23 13:19:38'),
+(20, 1, 1, 11, 'A', 44, 'BG19A003', '115.00', '11.00', '10.45', 4, 2, NULL, '2020-11-23 12:27:33', '2020-11-23 13:19:37'),
+(21, 1, 1, 11, 'B', 45, 'BG19A004', '109.50', '11.00', '9.95', 5, 3, NULL, '2020-11-23 12:27:34', '2020-11-23 13:19:38'),
+(22, 1, 1, 11, 'A', 46, 'BG19A005', '88.85', '11.00', '8.08', 6, 3, NULL, '2020-11-23 12:27:34', '2020-11-23 13:19:37'),
+(23, 1, 1, 11, 'B', 48, 'BG19A007', '72.00', '11.00', '6.55', 7, 4, NULL, '2020-11-23 12:27:34', '2020-11-23 13:19:38'),
+(24, 1, 1, 11, 'B', 51, 'BG19A010', '155.00', '11.00', '14.09', 2, 1, NULL, '2020-11-23 12:27:34', '2020-11-23 13:19:37'),
+(25, 1, 1, 9, 'A', 52, 'BG19A011', '139.00', '11.00', '12.64', 1, 1, NULL, '2020-11-23 17:26:53', '2020-11-23 17:27:42'),
+(26, 1, 1, 9, 'A', 53, 'BG19A012', '86.25', '11.00', '7.84', 3, 3, NULL, '2020-11-23 17:26:54', '2020-11-23 17:27:42'),
+(27, 1, 1, 9, 'A', 54, 'BG19A013', '110.00', '11.00', '10.00', 2, 2, NULL, '2020-11-23 17:26:55', '2020-11-23 17:27:42'),
+(42, 1, 2, 11, 'A', 42, 'BG19A001', '206.00', '11.00', '18.73', 1, 1, NULL, '2020-11-24 21:07:56', '2020-11-24 21:11:39'),
+(43, 1, 2, 11, 'B', 43, 'BG19A002', '102.95', '11.00', '9.36', 6, 3, NULL, '2020-11-24 21:07:56', '2020-11-24 21:11:40'),
+(44, 1, 2, 11, 'A', 44, 'BG19A003', '125.05', '11.00', '11.37', 4, 3, NULL, '2020-11-24 21:07:56', '2020-11-24 21:11:39'),
+(45, 1, 2, 11, 'B', 45, 'BG19A004', '131.30', '11.00', '11.94', 3, 1, NULL, '2020-11-24 21:07:56', '2020-11-24 21:11:40'),
+(46, 1, 2, 11, 'A', 46, 'BG19A005', '159.50', '11.00', '14.50', 2, 2, NULL, '2020-11-24 21:07:56', '2020-11-24 21:11:39'),
+(47, 1, 2, 11, 'B', 48, 'BG19A007', '124.50', '11.00', '11.32', 5, 2, NULL, '2020-11-24 21:07:56', '2020-11-24 21:11:40'),
+(48, 1, 2, 11, 'B', 51, 'BG19A010', '96.50', '11.00', '8.77', 7, 4, NULL, '2020-11-24 21:07:56', '2020-11-24 21:11:40');
 
 -- --------------------------------------------------------
 
@@ -981,8 +1068,11 @@ CREATE TABLE `students` (
   `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `school_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `place_of_birth` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'place_of_birth',
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_enrolled` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `suspend` tinyint(1) NOT NULL DEFAULT 0,
+  `dismissed` tinyint(1) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -992,17 +1082,20 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `full_name`, `school_id`, `email`, `password`, `date_enrolled`, `remember_token`, `created_at`, `updated_at`) VALUES
-(42, 'Bimeri Noel', 'BG19A001', 'bimerinoel@gmail.com', '$2y$10$xkuLk/X2.W24rXdx9yPzO.SczBbVWhyc/vxNZU1cfL8N4z/Qx7e..', 'Sat, 24 Oct 2020 21:22pm', NULL, '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
-(43, 'Example two', 'BG19A002', 'example@gmail.com', '$2y$10$81YsV93qy8BrkCc5vC9DrOHdiNcip3M44QD/fpMZPjtxzd4ZKgJLi', 'Mon, 26 Oct 2020 21:59pm', NULL, '2020-10-26 20:59:57', '2020-10-26 20:59:57'),
-(44, 'Lydia Efange', 'BG19A003', 'lydia@gmail.com', '$2y$10$UpJAP.IpAvep2orWzqESDO0VO9ZZ6PUr/nsBOGQu1X0LMcN/ObMqu', 'Fri, 30 Oct 2020 07:52am', NULL, '2020-10-30 06:52:31', '2020-10-30 06:52:31'),
-(45, 'example three', 'BG19A004', 'exam@fgmail.com', '$2y$10$vXCiR2iY69UXC8D6/lkY2u9eDbLAhRRPDteHf4i1/dgCkinwVbS2u', 'Fri, 30 Oct 2020 20:59pm', NULL, '2020-10-30 19:59:41', '2020-10-30 19:59:41'),
-(46, 'Enow Florence', 'BG19A005', 'wang@fgmail.com', '$2y$10$BaRnL9h/U4stNRwbbXVak.6ER3h0hpRq1yXSJTHz4oGGD.7pyc9Pm', 'Fri, 30 Oct 2020 21:27pm', NULL, '2020-10-30 20:27:44', '2020-10-30 20:27:44'),
-(47, 'Eugine xyz', 'BG19A006', 'eu@gmail.com', '$2y$10$ywcqEo5L/kOw6T5HgQK55uZ72y1qVcHysoOfgeeujoyS4dnZ5i8Ae', 'Sat, 31 Oct 2020 21:10pm', NULL, '2020-10-31 20:10:02', '2020-10-31 20:10:02'),
-(48, 'Etima Joshua', 'BG19A007', 'uek@gmail.com', '$2y$10$jfIdR5MPPL5hkMZi83S33ufpRV0N8ZcUSLFkfr32QsEuZYbROLj6W', 'Sun, 01 Nov 2020 20:44pm', NULL, '2020-11-01 19:44:31', '2020-11-01 19:44:31'),
-(49, 'Newly Admitted', 'BG19A008', 'new@gmail.com', '$2y$10$7M/Bb/lPs.1kL3uOyMGKiumMreNpqSMygW8nNVkTtyseAWb.d3MVy', 'Wed, 04 Nov 2020 22:32pm', NULL, '2020-11-04 21:32:14', '2020-11-04 21:32:14'),
-(50, 'Emile Magaza', 'BG19A009', 'email@gmail.com', '$2y$10$hAbxWbnR8UNIesaSoulff.lZ8FfUiAsv8rzRScy2uNPJBLqHUMBRm', 'Wed, 04 Nov 2020 22:39pm', NULL, '2020-11-04 21:39:57', '2020-11-04 21:39:57'),
-(51, 'Last Test', 'BG19A010', 'testlast@gmail.com', '$2y$10$Wuoyw32EJnQNEIgvJBbJZuvhGi5bNhVQ.0Js6xvnxXejegYlNI3E2', 'Wed, 04 Nov 2020 22:42pm', NULL, '2020-11-04 21:42:52', '2020-11-04 21:42:52');
+INSERT INTO `students` (`id`, `full_name`, `school_id`, `email`, `place_of_birth`, `password`, `date_enrolled`, `suspend`, `dismissed`, `remember_token`, `created_at`, `updated_at`) VALUES
+(42, 'Bimeri Noel', 'BG19A001', 'bimerinoel@gmail.com', 'buea Hospital', '$2y$10$xkuLk/X2.W24rXdx9yPzO.SczBbVWhyc/vxNZU1cfL8N4z/Qx7e..', 'Sat, 24 Oct 2020 21:22pm', 1, 0, NULL, '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
+(43, 'Mari Saquare', 'BG19A002', 'example@gmail.com', 'buea Hospital', '$2y$10$81YsV93qy8BrkCc5vC9DrOHdiNcip3M44QD/fpMZPjtxzd4ZKgJLi', 'Mon, 26 Oct 2020 21:59pm', 1, 0, NULL, '2020-10-26 20:59:57', '2021-02-08 02:55:30'),
+(44, 'Lydia Efange', 'BG19A003', 'lydia@gmail.com', 'buea Hospital', '$2y$10$UpJAP.IpAvep2orWzqESDO0VO9ZZ6PUr/nsBOGQu1X0LMcN/ObMqu', 'Fri, 30 Oct 2020 07:52am', 0, 0, NULL, '2020-10-30 06:52:31', '2020-10-30 06:52:31'),
+(45, 'example three', 'BG19A004', 'exam@fgmail.com', 'buea Hospital', '$2y$10$vXCiR2iY69UXC8D6/lkY2u9eDbLAhRRPDteHf4i1/dgCkinwVbS2u', 'Fri, 30 Oct 2020 20:59pm', 0, 0, NULL, '2020-10-30 19:59:41', '2021-02-08 01:12:45'),
+(46, 'Enow Florence', 'BG19A005', 'wang@fgmail.com', 'buea Hospital', '$2y$10$BaRnL9h/U4stNRwbbXVak.6ER3h0hpRq1yXSJTHz4oGGD.7pyc9Pm', 'Fri, 30 Oct 2020 21:27pm', 0, 0, NULL, '2020-10-30 20:27:44', '2020-10-30 20:27:44'),
+(47, 'Eugine xyz', 'BG19A006', 'eu@gmail.com', 'buea Hospital', '$2y$10$ywcqEo5L/kOw6T5HgQK55uZ72y1qVcHysoOfgeeujoyS4dnZ5i8Ae', 'Sat, 31 Oct 2020 21:10pm', 0, 0, NULL, '2020-10-31 20:10:02', '2020-10-31 20:10:02'),
+(48, 'Etima Joshua', 'BG19A007', 'uek@gmail.com', 'buea Hospital', '$2y$10$jfIdR5MPPL5hkMZi83S33ufpRV0N8ZcUSLFkfr32QsEuZYbROLj6W', 'Sun, 01 Nov 2020 20:44pm', 0, 0, NULL, '2020-11-01 19:44:31', '2021-02-08 00:52:07'),
+(49, 'Newly Admitted', 'BG19A008', 'new@gmail.com', 'buea Hospital', '$2y$10$7M/Bb/lPs.1kL3uOyMGKiumMreNpqSMygW8nNVkTtyseAWb.d3MVy', 'Wed, 04 Nov 2020 22:32pm', 0, 0, NULL, '2020-11-04 21:32:14', '2020-11-04 21:32:14'),
+(50, 'Emile Magaza', 'BG19A009', 'email@gmail.com', 'buea Hospital', '$2y$10$hAbxWbnR8UNIesaSoulff.lZ8FfUiAsv8rzRScy2uNPJBLqHUMBRm', 'Wed, 04 Nov 2020 22:39pm', 0, 0, NULL, '2020-11-04 21:39:57', '2020-11-04 21:39:57'),
+(51, 'Last Test', 'BG19A010', 'testlast@gmail.com', 'buea Hospital', '$2y$10$Wuoyw32EJnQNEIgvJBbJZuvhGi5bNhVQ.0Js6xvnxXejegYlNI3E2', 'Wed, 04 Nov 2020 22:42pm', 0, 0, NULL, '2020-11-04 21:42:52', '2021-02-08 01:13:11'),
+(52, 'enanga Rolse', 'BG19A011', 'enags@gmail.com', 'buea Hospital', '$2y$10$p/JGI2SDHADu6Slinzu4U.98ZuLgs30aF/WxMR1EZnj/fAVgohVd2', 'Sun, 22 Nov 2020 21:21pm', 0, 0, NULL, '2020-11-22 20:21:23', '2020-11-22 20:21:23'),
+(53, 'Joel Motombi', 'BG19A012', NULL, 'buea Hospital', '$2y$10$Smc1FN4eIPMoutgG33kenuZAdRlsRh8kHJoTv4GuqIZYBj7J9IbeS', 'Sun, 22 Nov 2020 21:22pm', 0, 0, NULL, '2020-11-22 20:22:17', '2020-11-22 20:22:17'),
+(54, 'lucien Moyal', 'BG19A013', NULL, 'buea Hospital', '$2y$10$Ktky4wwneEAiJy.YNxo4o.QsDzrw3B5ny9gd3WGbnR977uZS3eNQS', 'Sun, 22 Nov 2020 21:23pm', 0, 0, NULL, '2020-11-22 20:23:30', '2020-11-22 20:23:30');
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1117,8 @@ CREATE TABLE `subclasses` (
 --
 
 INSERT INTO `subclasses` (`id`, `form_id`, `type`, `max_number`, `created_at`, `updated_at`) VALUES
-(9, 11, 'B', 20, '2020-10-26 19:46:22', '2020-10-26 19:46:22');
+(9, 11, 'B', 20, '2020-10-26 19:46:22', '2020-10-26 19:46:22'),
+(10, 31, 'B', 20, '2020-11-14 08:06:07', '2020-11-14 08:06:07');
 
 -- --------------------------------------------------------
 
@@ -1051,7 +1145,11 @@ INSERT INTO `subjects` (`id`, `name`, `code`, `form_id`, `coefficient`, `created
 (18, 'Business Mathematics', 'BMS', 11, 4, '2020-10-27 21:55:33', '2020-10-27 21:55:33'),
 (19, 'French', 'FR1', 11, 3, '2020-10-27 21:57:51', '2020-10-27 21:57:51'),
 (20, 'Chemistry', 'CHM101', 11, 2, '2020-10-30 20:29:19', '2020-10-30 20:29:19'),
-(21, 'Economics', 'ECO', 11, 2, '2020-11-01 19:45:46', '2020-11-01 19:45:46');
+(21, 'Economics', 'ECO', 11, 2, '2020-11-01 19:45:46', '2020-11-01 19:45:46'),
+(22, 'Mathematics', 'mat01', 9, 4, '2020-11-22 20:25:02', '2020-11-22 20:25:02'),
+(23, 'English', 'eng1', 9, 4, '2020-11-22 20:25:25', '2020-11-22 20:25:25'),
+(26, 'French', 'fre1', 9, 3, '2020-11-22 20:36:29', '2020-11-22 20:36:29'),
+(28, 'English Literature', '', 11, 4, '2021-02-01 08:56:33', '2021-02-01 08:56:33');
 
 -- --------------------------------------------------------
 
@@ -1074,9 +1172,10 @@ CREATE TABLE `subject_teacher` (
 --
 
 INSERT INTO `subject_teacher` (`id`, `subject_id`, `teacher_id`, `year_id`, `status`, `created_at`, `updated_at`) VALUES
-(16, 17, 3, 1, 1, NULL, NULL),
-(17, 18, 3, 1, 1, NULL, NULL),
-(18, 19, 3, 1, 1, NULL, NULL);
+(16, 17, 3, 1, 0, NULL, NULL),
+(17, 18, 3, 1, 0, NULL, NULL),
+(18, 19, 3, 1, 0, NULL, NULL),
+(20, 28, 1, 1, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1093,6 +1192,7 @@ CREATE TABLE `teachers` (
   `gender` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `suspend` tinyint(1) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1102,13 +1202,13 @@ CREATE TABLE `teachers` (
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`id`, `full_name`, `user_name`, `profile`, `date_of_birth`, `gender`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'John Calvin', 'paul', 'default.png', NULL, 'Male', 'paul@gmail.com', '$2y$10$AkEnPO60.B4QCm20u5.A1uAS8QWIpcHReIxRVyDN319/4VmIC24fm', NULL, '2020-06-26 22:44:54', '2020-06-26 22:44:54'),
-(2, 'Lucien Magaza', 'lucien', 'lucien.jpg', '5555-02-05', 'Male', 'lucien@gmail.com', '$2y$10$ET2HJ4wUtBsK0YQXY2ty3uuMSlB1dHGqdjIujwDeVuydq7nIkMEq2', NULL, '2020-07-16 22:53:07', '2020-07-16 22:53:07'),
-(3, 'Claris Busi', 'Busi', 'Busi.jpg', '2002-02-23', 'Female', 'busi@gmail.com', '$2y$10$aNRSB8RgIZNXph1HN9HMtuOUGwfKszNsKUlAU/5aV6CuDUrsbG6rG', NULL, '2020-07-17 01:04:40', '2020-07-17 01:04:40'),
-(4, 'Muyal Magaza', 'Muyal', 'Muyal.jpg', '2003-12-13', 'Male', 'muyal@gmail.com', '$2y$10$G73FUJPmJ40zr0AaUwm4OuXhPh5tuDsx9SDtC6mq2YRrq2RB/wR/i', NULL, '2020-07-17 01:06:18', '2020-07-17 01:06:18'),
-(5, 'Tawa Peggy', 'peggy', 'peggy.jpg', '2000-02-22', 'Female', 'tawa@peggy.com', '$2y$10$WgBow6KdY4Ye/DEplrJF4uYelGaCs7iFSS1ddy3kUNn2yTOC.b1Xu', NULL, '2020-08-01 18:16:11', '2020-08-01 18:16:11'),
-(6, 'noelino', 'noel', 'noel.jpg', '2020-10-01', 'Male', 'noel@email.com', '$2y$10$y0pFtxYbBylK1QHZ3A658.GHsbffBpRgCW2zIel7ZDZoZgmQ67/z6', NULL, '2020-10-03 17:42:54', '2020-10-03 17:42:54');
+INSERT INTO `teachers` (`id`, `full_name`, `user_name`, `profile`, `date_of_birth`, `gender`, `email`, `password`, `suspend`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'John Calvine', 'paul', 'default.png', '2014-11-12', 'Male', 'paul@gmail.com', '$2y$10$AkEnPO60.B4QCm20u5.A1uAS8QWIpcHReIxRVyDN319/4VmIC24fm', 0, NULL, '2020-06-26 22:44:54', '2021-02-01 20:01:16'),
+(2, 'Lucien Magaza', 'lucien', 'lucien.jpg', '5555-02-05', 'Male', 'lucien@gmail.com', '$2y$10$ET2HJ4wUtBsK0YQXY2ty3uuMSlB1dHGqdjIujwDeVuydq7nIkMEq2', 0, NULL, '2020-07-16 22:53:07', '2020-07-16 22:53:07'),
+(3, 'Claris Busi', 'Busi', 'Busi.jpg', '2002-02-23', 'Female', 'busi@gmail.com', '$2y$10$aNRSB8RgIZNXph1HN9HMtuOUGwfKszNsKUlAU/5aV6CuDUrsbG6rG', 0, NULL, '2020-07-17 01:04:40', '2021-02-01 20:01:02'),
+(4, 'Muyal Magaza', 'Muyal', 'Muyal.jpg', '2003-12-13', 'Male', 'muyal@gmail.com', '$2y$10$G73FUJPmJ40zr0AaUwm4OuXhPh5tuDsx9SDtC6mq2YRrq2RB/wR/i', 0, NULL, '2020-07-17 01:06:18', '2020-07-17 01:06:18'),
+(5, 'Tawa Peggy', 'peggy', 'peggy.jpg', '2000-02-22', 'Female', 'tawa@peggy.com', '$2y$10$WgBow6KdY4Ye/DEplrJF4uYelGaCs7iFSS1ddy3kUNn2yTOC.b1Xu', 0, NULL, '2020-08-01 18:16:11', '2020-08-01 18:16:11'),
+(6, 'noelino', 'noel', 'noel.jpg', '2020-10-01', 'Male', 'noel@email.com', '$2y$10$y0pFtxYbBylK1QHZ3A658.GHsbffBpRgCW2zIel7ZDZoZgmQ67/z6', 0, NULL, '2020-10-03 17:42:54', '2020-10-03 17:42:54');
 
 -- --------------------------------------------------------
 
@@ -1144,14 +1244,54 @@ CREATE TABLE `thirdtermresults` (
   `year_id` int(10) UNSIGNED NOT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
   `form_id` int(10) UNSIGNED NOT NULL,
+  `form_type` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
   `seq5` decimal(6,1) DEFAULT NULL,
   `seq6` decimal(6,1) DEFAULT NULL,
   `ave_point` decimal(6,2) DEFAULT NULL,
+  `position` int(10) UNSIGNED DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `thirdtermresults`
+--
+
+INSERT INTO `thirdtermresults` (`id`, `year_id`, `student_id`, `form_id`, `form_type`, `subject_id`, `seq5`, `seq6`, `ave_point`, `position`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 42, 11, 'A', 18, '20.0', '19.0', '78.00', NULL, 1, '2021-02-01 07:43:22', '2021-02-01 08:13:00'),
+(2, 1, 42, 11, 'A', 20, '18.5', '17.6', '36.10', NULL, 1, '2021-02-01 07:43:35', '2021-02-01 08:12:47'),
+(3, 1, 42, 11, 'A', 21, '18.0', '17.0', '35.00', NULL, 1, '2021-02-01 07:43:52', '2021-02-01 08:01:54'),
+(4, 1, 44, 11, 'A', 19, '13.0', '9.0', '33.00', NULL, 1, '2021-02-01 07:51:29', '2021-02-01 08:02:14'),
+(5, 1, 46, 11, 'A', 19, '17.5', '12.0', '44.25', NULL, 1, '2021-02-01 07:51:41', '2021-02-01 07:59:58'),
+(6, 1, 43, 11, 'B', 19, '11.0', '12.0', '34.50', NULL, 1, '2021-02-01 07:55:48', '2021-02-01 07:57:38'),
+(7, 1, 45, 11, 'B', 19, '14.3', '17.0', '46.95', NULL, 1, '2021-02-01 07:55:51', '2021-02-01 07:57:30'),
+(8, 1, 45, 11, 'B', 20, '13.0', '12.0', '25.00', NULL, 1, '2021-02-01 07:56:00', '2021-02-01 08:12:16'),
+(9, 1, 43, 11, 'B', 20, '9.0', '11.0', '20.00', NULL, 1, '2021-02-01 07:56:05', '2021-02-01 07:56:46'),
+(10, 1, 43, 11, 'B', 21, '8.5', '11.0', '19.50', NULL, 1, '2021-02-01 07:56:08', '2021-02-01 07:56:10'),
+(11, 1, 45, 11, 'B', 21, '12.7', '9.5', '22.20', NULL, 1, '2021-02-01 07:56:14', '2021-02-01 07:56:20'),
+(12, 1, 48, 11, 'B', 21, '14.0', '10.0', '24.00', NULL, 1, '2021-02-01 07:56:23', '2021-02-01 07:56:29'),
+(13, 1, 51, 11, 'B', 21, '11.0', '7.0', '18.00', NULL, 1, '2021-02-01 07:56:34', '2021-02-01 07:56:40'),
+(14, 1, 48, 11, 'B', 20, '6.8', '7.9', '14.70', NULL, 1, '2021-02-01 07:56:51', '2021-02-01 07:56:57'),
+(15, 1, 51, 11, 'B', 20, '14.0', '14.0', '28.00', NULL, 1, '2021-02-01 07:57:00', '2021-02-01 07:57:03'),
+(16, 1, 51, 11, 'B', 19, '9.9', '17.0', '40.35', NULL, 1, '2021-02-01 07:57:06', '2021-02-01 07:57:19'),
+(17, 1, 48, 11, 'B', 19, '12.6', '16.0', '42.90', NULL, 1, '2021-02-01 07:57:09', '2021-02-01 07:57:24'),
+(18, 1, 43, 11, 'B', 18, '18.5', '6.8', '50.60', NULL, 1, '2021-02-01 07:57:35', '2021-02-01 07:58:00'),
+(19, 1, 45, 11, 'B', 18, '12.0', '16.0', '56.00', NULL, 1, '2021-02-01 07:57:44', '2021-02-01 07:57:54'),
+(20, 1, 48, 11, 'B', 18, '3.0', '5.5', '17.00', NULL, 1, '2021-02-01 07:57:48', '2021-02-01 07:57:52'),
+(21, 1, 51, 11, 'B', 18, '12.0', '7.0', '38.00', NULL, 1, '2021-02-01 07:57:49', '2021-02-01 07:58:03'),
+(22, 1, 46, 11, 'A', 20, '13.0', '18.0', '31.00', NULL, 1, '2021-02-01 07:59:59', '2021-02-01 08:00:01'),
+(23, 1, 46, 11, 'A', 21, '9.0', '6.5', '15.50', NULL, 1, '2021-02-01 08:00:04', '2021-02-01 08:00:14'),
+(24, 1, 44, 11, 'A', 21, '12.0', '11.0', '23.00', NULL, 1, '2021-02-01 08:00:17', '2021-02-01 08:00:19'),
+(25, 1, 44, 11, 'A', 20, '14.0', '13.0', '27.00', NULL, 1, '2021-02-01 08:00:29', '2021-02-01 08:00:53'),
+(26, 1, 42, 11, 'A', 19, '19.5', '20.0', '59.25', NULL, 1, '2021-02-01 08:00:37', '2021-02-01 08:01:23'),
+(27, 1, 44, 11, 'A', 18, '9.5', '15.0', '49.00', NULL, 1, '2021-02-01 08:02:17', '2021-02-01 08:03:08'),
+(28, 1, 46, 11, 'A', 18, '13.0', '5.5', '37.00', NULL, 1, '2021-02-01 08:03:14', '2021-02-01 08:03:17'),
+(29, 1, 42, 11, NULL, 28, '19.5', '20.0', '79.00', NULL, 1, '2021-02-01 18:49:43', '2021-02-01 18:49:46'),
+(30, 1, 44, 11, NULL, 28, '10.0', '9.0', '38.00', NULL, 1, '2021-02-01 18:49:49', '2021-02-01 18:49:50'),
+(31, 1, 46, 11, NULL, 28, '8.5', '11.0', '39.00', NULL, 1, '2021-02-01 18:49:54', '2021-02-01 18:49:56'),
+(32, 1, 48, 11, NULL, 28, NULL, '12.0', '24.00', NULL, 1, '2021-02-01 18:50:07', '2021-02-01 18:50:07');
 
 -- --------------------------------------------------------
 
@@ -1196,8 +1336,8 @@ CREATE TABLE `years` (
 --
 
 INSERT INTO `years` (`id`, `name`, `active`, `created_at`, `updated_at`) VALUES
-(1, '2019/2020', 0, '2020-06-24 20:04:28', '2020-06-24 20:04:28'),
-(2, '2020/2021', 1, '2020-06-24 20:04:28', '2020-06-24 20:04:28'),
+(1, '2019/2020', 1, '2020-06-24 20:04:28', '2020-06-24 20:04:28'),
+(2, '2020/2021', 0, '2020-06-24 20:04:28', '2020-06-24 20:04:28'),
 (3, '2021/2022', 0, '2020-06-24 20:04:28', '2020-06-24 20:04:28'),
 (4, '2015/2016', 0, '2020-08-08 08:16:01', '2020-08-08 08:16:01');
 
@@ -1243,16 +1383,6 @@ ALTER TABLE `assignments`
 ALTER TABLE `backgrounds`
   ADD PRIMARY KEY (`id`),
   ADD KEY `backgrounds_sector_id_foreign` (`sector_id`);
-
---
--- Indexes for table `classresults`
---
-ALTER TABLE `classresults`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `classresults_year_id_foreign` (`year_id`),
-  ADD KEY `classresults_term_id_foreign` (`term_id`),
-  ADD KEY `classresults_form_id_foreign` (`form_id`),
-  ADD KEY `classresults_student_id_foreign` (`student_id`);
 
 --
 -- Indexes for table `disciplines`
@@ -1568,19 +1698,13 @@ ALTER TABLE `admin_role`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `backgrounds`
 --
 ALTER TABLE `backgrounds`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `classresults`
---
-ALTER TABLE `classresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `disciplines`
@@ -1598,7 +1722,7 @@ ALTER TABLE `expenses`
 -- AUTO_INCREMENT for table `expensetypes`
 --
 ALTER TABLE `expensetypes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1610,31 +1734,31 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `feecontrols`
 --
 ALTER TABLE `feecontrols`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `fees`
 --
 ALTER TABLE `fees`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `feetypes`
 --
 ALTER TABLE `feetypes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `firsttermresults`
 --
 ALTER TABLE `firsttermresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `forms`
@@ -1646,7 +1770,7 @@ ALTER TABLE `forms`
 -- AUTO_INCREMENT for table `generateresults`
 --
 ALTER TABLE `generateresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -1658,7 +1782,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1676,13 +1800,13 @@ ALTER TABLE `permission_role`
 -- AUTO_INCREMENT for table `promotions`
 --
 ALTER TABLE `promotions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `resultcontrols`
 --
 ALTER TABLE `resultcontrols`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1694,13 +1818,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `scholarships`
 --
 ALTER TABLE `scholarships`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `secondtermresults`
 --
 ALTER TABLE `secondtermresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `sectors`
@@ -1730,37 +1854,37 @@ ALTER TABLE `studentdisciplines`
 -- AUTO_INCREMENT for table `studentinfos`
 --
 ALTER TABLE `studentinfos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `studentresults`
 --
 ALTER TABLE `studentresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `subclasses`
 --
 ALTER TABLE `subclasses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `subject_teacher`
 --
 ALTER TABLE `subject_teacher`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -1778,7 +1902,7 @@ ALTER TABLE `terms`
 -- AUTO_INCREMENT for table `thirdtermresults`
 --
 ALTER TABLE `thirdtermresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1790,7 +1914,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `years`
 --
 ALTER TABLE `years`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -1823,15 +1947,6 @@ ALTER TABLE `assignments`
 --
 ALTER TABLE `backgrounds`
   ADD CONSTRAINT `backgrounds_sector_id_foreign` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `classresults`
---
-ALTER TABLE `classresults`
-  ADD CONSTRAINT `classresults_form_id_foreign` FOREIGN KEY (`form_id`) REFERENCES `forms` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `classresults_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `classresults_term_id_foreign` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `classresults_year_id_foreign` FOREIGN KEY (`year_id`) REFERENCES `years` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `expensetypes`
