@@ -28,9 +28,10 @@ class Fee extends Model
         return $this->belongsTo('App\Student');
     }
 
-    public static function getTotalFeePaid($year_id, $student_School_id){
+    public static function getTotalFeePaid($year_id, $student_School_id, $studentId, $formid){
         $total = Fee::where('year_id', $year_id)->where('student_school_id', $student_School_id)->sum('amount');
-        return $total;
+        $scholarship = Scholarship::getStudentClassScholaship($year_id, $formid, $studentId);
+        return (double)$total + (double)$scholarship;
     }
     public static function getStudentYearlyFee($year_id, $form_id, $student_id){
         $feetype = Fee::where('year_id', $year_id)

@@ -36,15 +36,14 @@
             </div>
         </form>
         <div id="hide"><hr>
-            <div id="hideContent">
-
-            </div>
+            <div id="hideContent"></div>
         </div>
     </div>
 </div>
 <script>
     $('#hide').hide();
     function submtMethod(ev){
+    document.getElementById('menu').style.display = 'block';
         $('#hide').hide();
         $('#hideContent').empty();
         var val = ev.target.value;
@@ -58,7 +57,7 @@
                                     method: 'post',
                                     data: $('#forms').serialize(),
                                     success: function(response){
-                                        console.log('the result', response);
+                                        document.getElementById('menu').style.display = 'none';
                                         $('#hide').show();
                                         $('#hideContent').append(response[1]);
                                         toastr.options = {
@@ -85,9 +84,9 @@
                                         //setTimeout(function(){window.location.reload();},7000);
                                     },
                                     error: function(error){
+                                        document.getElementById('menu').style.display = 'none';
                                         $('#hide').hide();
                                         $('#hideContent').empty();
-                                        console.log('the error', response);
                                         toastr.info(error);
                                     }
                                 });

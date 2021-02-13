@@ -225,9 +225,13 @@ class ClassController extends Controller
 
     public function showClassLiss(){
 
-        $data['table'] = Form::getAllClasses();
+        return view('admin.public.student.viewAllStudent');
+    }
 
-        return view('admin.public.student.viewAllStudent')->with($data);
+    public function getStudent(Request $req){
+        $class = $req['class'];
+        $year = $req['year'];
+        return view('admin.public.student.viewAllStudent');
     }
 
     public function changeClass(){
@@ -298,7 +302,52 @@ class ClassController extends Controller
                             return redirect()->back()->with($message);
 
         }
-
         return redirect()->back();
+    }
+
+    public function studentParent(Request $req){
+        $class = $req['class'];
+        $year = $req['year'];
+        $students = Studentinfo::getAllStudentPerYearAndClass($year, $class);
+        if(count($students) > 0) {
+            $arr = array('message' => 'Some students are in this class', 'type' => 'success');
+        } else {
+            $arr = array('message' => 'Class has no student', 'type' => 'info');
+        }
+
+        $table = '
+                    <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
+                        <tr class="teal">
+                            <th>S/N</th>
+                            <th>Student name</th>
+                            <th>Student matricule</th>
+                            <th>Gender</th>
+                            <th>parent name</th>
+                            <th>parent address</th>
+                            <th>parent contact</th>
+                            <th>parent email</th>
+                            <th class="center" colspan="2">Actiion</th>
+                        </tr>';
+                    foreach ($students as $key => $student) {
+        $table .= '
+                        <tr>
+                            <td>'.($key+1).'</td>
+                            <td>'.$student->student->full_name.'</td>
+                            <td>'.$student->student_school_id.'</td>
+                            <td>'.$student->gender.'</td>
+                            <td>#######</td>
+                            <td>'.$student->address.'</td>
+                            <td>'.$student->parent_contact.'</td>
+                            <td>'.$student->parent_email.'</td>
+                            <td><button class="btn orange orange-text lighten-4 w3-tiny">send Message <i class="fa fa-envelope w3-tiny"></i></button></td>
+                            <td><button class="btn blue blue-text lighten-4 w3-tiny">Call <i class="fa fa-phone w3-tiny"></i></button></td>
+                        </tr>
+                    ';
+                };
+                    if(count($students) == 0) {
+                        $table .= '<tr><td colspan="10" class="center red red-text lighten-4">No result found. No student is in this class</td></tr>';
+                    }
+        $table .= '</table>';
+        return [$arr, $table];
     }
 }

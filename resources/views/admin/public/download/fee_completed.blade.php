@@ -191,16 +191,16 @@
         <em style="font-size: 25px; font-weight: bold;">Student who completed fees for the academic year: {{ $year }}</em>
         </center><br><hr class="divide">
 
-        <p class="w3-medium right w3-margin" style="margin-top:-30px !important">
+        <p class="w3-medium right w3-margin">
         <b class="w3-margin">printed date:</b> <small> {{ date('M j, Y h:i a', strtotime( Carbon\Carbon::now())) }}</small>
         </p>
-    <br><br>
+    <br>
 
     <p class="left w3-margin" style="font-size: 17px">
         Sector: <b style="text-transform: uppercase;">{{ $class->background->sector->name }}</b><br>
-        Background: <b style="text-transform: uppercase;">{{ $class->background->name }}</b>
-        Class: <b style="text-transform: uppercase;">{{ $className }}</b>
-    </p> <p><br><br></p>
+        Background: <b style="text-transform: uppercase;">{{ $class->background->name }}</b><br>
+        Class: <b style="text-transform: uppercase;">{{ $className }} <br></b>
+    </p> <p><br><br><br></p>
 
     <table class="w3-table w3-striped" style="font-size: 16px !important;">
         <tr class="teal">

@@ -1,5 +1,12 @@
 @extends('admin.layout')
 @section('title') Fee statistics @endsection
+@section('style')
+    <style>
+        .tabs .indicator{
+            background-color:#ff9800;/*your color*/
+            }
+    </style>
+@endsection
 @section('content')
 <h4 class="w3-center">School Fees Statistics for <b>{{ $studentinfo->student->full_name }} ({{ $studentinfo->student_school_id }})</b></h4>
 <div class="left" style="position: fixed">
@@ -58,7 +65,7 @@
                                 <div class="col 12 m8">
                                     Total fees for {{ $current_year->name }}:
                                     <b class="blue-text">{{ $total_fees }},</b>
-                                    Student Paid: <b>{{ $total_paid }} XCFA {{ $scholarsh ? ' + Scholarship of: '.$scholarsh.' XCFA':'' }} <br><u class="w3-medium blue-text"> {{$scholarsh ?'Total: '.($total_paid + $scholarsh).' XCFA':''}}</u></b><br>
+                                    Student Paid: <b>{{ $total_paid }} XCFA {{ $scholarsh ? ' + Scholarship of: '.$scholarsh.' FCFA':'' }} <br><u class="w3-medium blue-text"> {{$scholarsh ?'Total: '.($total_paid + $scholarsh).' FCFA':''}}</u></b><br>
                                     <b>Status:
                                         @if($total_fees == 0)
                                             <b class="orange-text">Unavailable</b>
@@ -78,7 +85,7 @@
                                                         </form>
                                                     @endif
                                             @else
-                                                <b class="red-text w3-medium">Not Completed, Oweing: {{ $total_fees - $total_paid }}</b>
+                                                <b class="red-text w3-medium">Not Completed, Oweing: {{ $total_fees - $total_paid -  $yearly_scholarship}} FCFA</b>
                                             @endif
                                         @endif
                                     </b>
@@ -184,7 +191,7 @@
                                 <div class="col s12 m8">
                                     Total fees for {{ $year->name}}:
                                     @if($year->id == $current_year->id) <b class="blue-text">{{ $total_fees }}</b> @else <b class="blue-text">{{ $total }}</b>@endif
-                                    Student Paid: <b class="blue-text">{{ $paid }}</b><br>
+                                    Student Paid: <b class="blue-text">{{ $paid }} FCFA</b><br>
                                     <b>Status:
                                         @if($year->id == $current_year->id)
                                             @if($total_fees == 0)
@@ -216,7 +223,7 @@
                                                 @if($paid + $scholarship >= $total)
                                                 <b class="green-text w3-medium">Completed</b>
                                                 @else
-                                                <b class="red-text w3-medium">Not Completed, Oweing: {{ $total - $paid }}</b>
+                                                <b class="red-text w3-medium">Not Completed, Oweing: {{ $total - $paid -  $scholarship }} FCFA</b>
                                                 @endif
                                             @endif
                                         @endif

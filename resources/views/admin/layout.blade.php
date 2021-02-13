@@ -110,7 +110,7 @@
             </li>
 
                 <li>
-            @canany(['create_income', 'create_expenses', 'record_expense','receive_fees','report_fees', 'give_scholarship', 'income_statement', 'print_reciept', 'print_fee'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="fees()" @if( Request::is('fees/create', 'expense/create', 'admin/collect_fees', 'scholarship/create', 'admin/fee_statistics', 'scholarship/student', 'expense/view', 'fees/report', 'admin/collect/fees', 'admin/fees/statistics', 'student/scholarship/report', 'student/scholarship/get', 'admin/income_statetment', 'admin/income_statetments', 'income/detail', 'expense/creates', 'admin/fees/ajax/create', 'fees/control'))  style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-money-bill-wave-alt teal-text w3-small"></i> Fees and Expenses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="fee"></i></div>@endcanany
+            @canany(['create_income', 'create_expenses', 'record_expense','receive_fees','report_fees', 'give_scholarship', 'income_statement', 'print_reciept', 'print_fee'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="fees()" @if( Request::is('fees/create', 'expense/create', 'admin/collect_fees', 'scholarship/create', 'admin/fee_statistics', 'scholarship/student', 'expense/view', 'fees/report', 'admin/collect/fees', 'admin/fees/statistics', 'student/scholarship/report', 'student/scholarship/get', 'admin/income_statetment', 'admin/income_statetments', 'income/detail', 'expense/creates', 'admin/fees/ajax/create', 'fees/control'))  style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-money-bill-wave-alt cyan-text w3-small"></i> Fees and Expenses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="fee"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                         @can('create_income', App\Permission::class)<li><a href="{{ route('admin.create.fees.type') }}" class="teal-text"  @if( Request::is('fees/create', 'admin/fees/ajax/create'))  style="background-color: #e5e9e8" @endif  onclick="load()">Create Fee Type</a></li>@endcan
@@ -129,7 +129,7 @@
                 </li>
 
                 <li>
-            @canany(['create_sector', 'create_backgorund', 'see_sector', 'see_background'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="sectors()"  @if( Request::is('admin/sector', 'admin/background', 'admin/view/background', 'admin/view/sector'))  style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-list teal-text w3-small"></i> {{ __('messages.sector_background') }}&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="sector"></i></div>@endcanany
+            @canany(['create_sector', 'create_backgorund', 'see_sector', 'see_background'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="sectors()"  @if( Request::is('admin/sector', 'admin/background', 'admin/view/background', 'admin/view/sector'))  style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-list red-text w3-small"></i> {{ __('messages.sector_background') }}&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="sector"></i></div>@endcanany
                     <div class="collapsible-body">
                         <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                             @can('create_sector', App\Permission::class) <li><a href="{{ route('admin.add.sector') }}" class="teal-text"  @if( Request::is('admin/sector'))  style="background-color: #e5e9e8" @endif  onclick="load()">{{ __('messages.create_sector') }}</a></li>@endcan
@@ -141,7 +141,7 @@
                 </li>
 
                 <li>
-            @canany(['create_class', 'edit_delete_class', 'sub_class', 'see_class'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="classes()" @if(Request::is('admin/create/class', 'admin/create/subclass', 'admin/view/class', 'admin/getclass')) style="background-color: #ade7d9" @endif><i class="fa fa-asterisk teal-text w3-small"></i> {{ __('messages.manage_class') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>@endcanany
+            @canany(['create_class', 'edit_delete_class', 'sub_class', 'see_class'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="classes()" @if(Request::is('admin/create/class', 'admin/create/subclass', 'admin/view/class', 'admin/getclass')) style="background-color: #ade7d9" @endif><i class="fa fa-asterisk orange-text w3-small"></i> {{ __('messages.manage_class') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="class"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                         @can('create_class', App\Permission::class)<li><a href="{{ route('admin.create.class') }}" class="teal-text"  @if( Request::is('admin/create/class','admin/getclass'))  style="background-color: #e5e9e8" @endif  onclick="load()">{{ __('messages.create_class') }}</a></li>@endcan
@@ -152,7 +152,7 @@
                 </li>
 
                 <li>
-            @canany(['add_student', 'class_list', 'promote_student', 'change_class'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="students()"  @if(Request::is('admin/student/create', 'student/class/change', 'admin/student/list', 'admin/student', 'student/class_list', 'admin/student/subclasses')) style="background-color: #ade7d9" @endif><i class="fa fa-graduation-cap teal-text w3-small"></i> Manage Students &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="student"></i></div>@endcanany
+            @canany(['add_student', 'class_list', 'promote_student', 'change_class'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="students()"  @if(Request::is('admin/student/create', 'student/class/change', 'admin/student/list', 'admin/student', 'student/class_list', 'admin/student/subclasses')) style="background-color: #ade7d9" @endif><i class="fa fa-graduation-cap blue-text w3-small"></i> Manage Students &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="student"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                        @can('add_student', App\Permission::class) <li><a href="{{ route('amin.create.student') }}" class="teal-text"  @if(Request::is('admin/student/create')) style="background-color: #e5e9e8" @endif onclick="load()">Enroll Student</a></li>@endcan
@@ -164,7 +164,7 @@
                 </li>
 
                 <li>
-            @canany(['create_subject', 'all_subject'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="subjects()" @if(Request::is('admin/subject', 'admin/subject/all', 'admin/class/subject')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-book teal-text w3-small"></i> Manage Subjects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="subject"></i></div>@endcanany
+            @canany(['create_subject', 'all_subject'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="subjects()" @if(Request::is('admin/subject', 'admin/subject/all', 'admin/class/subject')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-book pink-text w3-small"></i> Manage Subjects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="subject"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                        @can('create_subject', App\Permission::class) <li><a href="{{ route('admin.subject') }}" class="teal-text w3-small" @if(Request::is('admin/subject')) style="background-color: #e5e9e8" @endif  onclick="load()"> Create Subject per class</a></li>@endcan
@@ -174,7 +174,7 @@
                 </li>
 
                 <li>
-            @canany(['add_teacher', 'assign_subjects', 'assign_subjects','teacher_subjects'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="change()" @if(Request::is('admin/create/teacher', 'admin/teacher/view', 'admin/teacher/assign', 'admin/teacher/subjects')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-university teal-text w3-small"></i> Manage Teachers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="teacher"></i></div>@endcanany
+            @canany(['add_teacher', 'assign_subjects', 'assign_subjects','teacher_subjects'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="change()" @if(Request::is('admin/create/teacher', 'admin/teacher/view', 'admin/teacher/assign', 'admin/teacher/subjects')) style="background-color: #ade7d9" @endif> &nbsp;<i class="fa fa-university lime-text w3-small"></i> Manage Teachers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="teacher"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                         @can('add_teacher', App\Permission::class)<li><a href="{{ route('admin.teacher.create') }}" class="teal-text" @if(Request::is('admin/create/teacher')) style="background-color: #e5e9e8" @endif  onclick="load()">Add Teacher</a></li>@endcan
@@ -185,7 +185,7 @@
                 </li>
 
                 <li>
-            @canany(['add_type', 'record_student', 'view_record_student'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="expenses()" @if(Request::is('admin/create/discipline', 'admin/record/discipline', 'admin/view/discipline')) style="background-color: #ade7d9" @endif><i class="fa fa-pencil-ruler teal-text w3-small"></i> Discipline &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="expense"></i></div>@endcanany
+            @canany(['add_type', 'record_student', 'view_record_student'], App\Permission::class)<div class="collapsible-header waves-effect waves-teal" onclick="expenses()" @if(Request::is('admin/create/discipline', 'admin/record/discipline', 'admin/view/discipline')) style="background-color: #ade7d9" @endif><i class="fa fa-pencil-ruler purple-text w3-small"></i> Discipline &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="expense"></i></div>@endcanany
                 <div class="collapsible-body">
                     <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                         @can('add_type', App\Permission::class)<li><a href="{{ route('admin.create.discipline') }}" class="teal-text" @if(Request::is('admin/create/discipline')) style="background-color: #e5e9e8" @endif  onclick="load()">Create type</a></li>@endcan
@@ -196,7 +196,7 @@
                 </li>
 
                 <li>
-            @canany(['record_mark', 'rank_student', 'print_result', 'print_rank'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="results()" @if(Request::is('student/marks/record', 'student/rank', 'class/result', 'class/student/result', 'get/student/record', 'class/type/result')) style="background-color: #ade7d9" @endif><i class="fa fa-pencil-alt teal-text w3-small"></i> Results &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="result"></i></div>@endcanany
+            @canany(['record_mark', 'rank_student', 'print_result', 'print_rank'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="results()" @if(Request::is('student/marks/record', 'student/rank', 'class/result', 'class/student/result', 'get/student/record', 'class/type/result')) style="background-color: #ade7d9" @endif><i class="fa fa-file green-text w3-small"></i> Results &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="result"></i></div>@endcanany
                     <div class="collapsible-body">
                         <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                             @can('record_mark', App\Permission::class)<li><a href="{{ route('admin.record.marks') }}" class="teal-text" @if(Request::is('student/marks/record', 'get/student/record'))style="background-color: #e5e9e8"@endif  onclick="load()">Record Mark</a></li>@endcan
@@ -208,7 +208,7 @@
                     </div>
                 </li>
                 <li>
-            @canany(['school_theme', 'school_profile'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="settings()" @if( Request::is('admin/school_theme', 'admin/school_profile', 'admin/more_setting', 'admin/all_setting'))   style="background-color: #ade7d9"  @endif><i class="fa fa-wrench w3-medium teal-text"></i> Setting/Configuration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="setting"></i></div>@endcanany
+            @canany(['school_theme', 'school_profile'], App\Permission::class) <div class="collapsible-header waves-effect waves-teal" onclick="settings()" @if( Request::is('admin/school_theme', 'admin/school_profile', 'admin/more_setting', 'admin/all_setting'))   style="background-color: #ade7d9"  @endif><i class="fa fa-wrench w3-medium black-text"></i> Setting/Configuration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down right w3-small" id="setting"></i></div>@endcanany
                     <div class="collapsible-body">
                         <ul class="w3-border w3-padding" style="background-color: #d1fbfc">
                             @can('school_theme', App\Permission::class)<li><a href="{{ route('view.admin.theme') }}" class="teal-text" @if( Request::is('admin/school_theme', 'admin/more_setting', 'admin/all_setting'))  style="background-color:#e5e9e8" @endif onclick="load()">School theme</a></li>@endcan <!-- year, term, sequesnces -->
@@ -298,6 +298,7 @@
 
             $('#submit').hide();
     function getBackground(e) {
+        document.getElementById('menu').style.display = 'block';
         $('#background').empty();
         var valu = e.target.value;
         $.ajax({
@@ -309,6 +310,7 @@
                 info: valu
             },
             success: function(res){
+                document.getElementById('menu').style.display = 'none';
                 if(res.length > 0) {
                 $('#background').append(res);
                 } else {
@@ -319,12 +321,14 @@
                 $('#clear').html = '';
             },
             error: function(error){
+                document.getElementById('menu').style.display = 'mone';
                 console.log("some error occur", error);
             }
         });
     }
 
     function getclasses(e) {
+        document.getElementById('menu').style.display = 'block';
         $('#form').empty();
         $('#submit').show();
         var bgId = e.target.value;
@@ -337,6 +341,7 @@
                 info: bgId
             },
             success: function(response){
+                document.getElementById('menu').style.display = 'none';
                 if(response.length > 0) {
                 $('#form').append(response);
                 } else {
@@ -344,12 +349,14 @@
                 }
             },
             error: function(error){
+                document.getElementById('menu').style.display = 'none';
                 console.log("some error occur", error);
             }
         });
     }
 
     function bookes(e) {
+        document.getElementById('menu').style.display = 'block';
         // $('#form').empty();
         // $('#submit').show();
         var formId = e.target.value;
@@ -362,6 +369,7 @@
                 info: formId
             },
             success: function(response){
+                document.getElementById('menu').style.display = 'none';
                 if(response.length > 0) {
                 // $('#form').append(response);
                 } else {
@@ -369,12 +377,14 @@
                 }
             },
             error: function(error){
+                document.getElementById('menu').style.display = 'none';
                 console.log("some error occur", error);
             }
         });
     }
 
     function myFunctionn() {
+        document.getElementById('menu').style.display = 'block';
         var item = $('#myInputt').val();
         $.ajax({
             type: "post",
@@ -385,12 +395,14 @@
                 info: item
             },
             success: function(res){
+                document.getElementById('menu').style.display = 'none';
                 //console.log('the response is', res);
                 $tablerow = ''
                 $('#clear').empty();
                 $('#clear').html = '';
             },
             error: function(error){
+                document.getElementById('menu').style.display = 'none';
                 console.log("some error occur", error);
             }
         });

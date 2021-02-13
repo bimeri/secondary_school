@@ -114,6 +114,7 @@ Route::get('student/class_list', 'ClassController@showClassLiss')->name('school.
 Route::get('student/class/change', 'ClassController@changeClass')->name('change.student.class');
 Route::post('student/class/change', 'ClassController@changeClassFunction')->name('change.student_class');
 Route::post('student/ajax/getdetail', 'ClassController@getStudentclassDetails')->name('student.getDetail');
+Route::post('student/parent/getdetail', 'ClassController@studentParent')->name('studnet.parent');
 //manage student
 Route::get('admin/student/create', 'AdminstudentController@create')->name('amin.create.student');
 Route::get('admin/student/list', 'AdminstudentController@viewStudent')->name('amdin.view.student');

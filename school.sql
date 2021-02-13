@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2021 at 08:36 AM
+-- Generation Time: Feb 11, 2021 at 03:10 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -248,7 +248,9 @@ CREATE TABLE `feecontrols` (
 
 INSERT INTO `feecontrols` (`id`, `student_id`, `student_school_id`, `form_id`, `year_id`, `clearance_date`, `created_at`, `updated_at`) VALUES
 (11, 48, 'BG19A007', 11, 1, 'Mon, 02 Nov 2020 09:00am', '2020-11-02 08:00:10', '2020-11-02 08:00:10'),
-(12, 43, 'BG19A002', 11, 1, 'Tue, 09 Feb 2021 19:47pm', '2021-02-09 18:47:48', '2021-02-09 18:47:48');
+(12, 43, 'BG19A002', 11, 1, 'Tue, 09 Feb 2021 19:47pm', '2021-02-09 18:47:48', '2021-02-09 18:47:48'),
+(13, 51, 'BG19A010', 11, 1, 'Wed, 10 Feb 2021 10:44am', '2021-02-10 09:44:40', '2021-02-10 09:44:40'),
+(14, 54, 'BG19A013', 9, 1, 'Wed, 10 Feb 2021 11:39am', '2021-02-10 10:39:18', '2021-02-10 10:39:18');
 
 -- --------------------------------------------------------
 
@@ -294,7 +296,14 @@ INSERT INTO `fees` (`id`, `year_id`, `feetype_id`, `student_id`, `student_school
 (60, 1, 14, 48, 'BG19A007', 11, NULL, 3000, NULL, 2000, 0, 'Feb 09, 2021 - 09:48pm', '2021-02-09 20:48:53', '2021-02-09 20:48:53'),
 (61, 1, 14, 48, 'BG19A007', 11, NULL, 2000, NULL, 0, 1, 'Feb 09, 2021 - 09:49pm', '2021-02-09 20:49:10', '2021-02-09 20:49:10'),
 (62, 1, 14, 51, 'BG19A010', 11, NULL, 1, 'mtn money', 0, 1, 'Feb 09, 2021 - 09:49pm', '2021-02-09 20:49:35', '2021-02-09 20:49:35'),
-(63, 1, 14, 45, 'BG19A004', 11, 7000, 5000, 'Orange Money', 0, 1, 'Feb 09, 2021 - 09:50pm', '2021-02-09 20:50:19', '2021-02-09 20:50:19');
+(63, 1, 14, 45, 'BG19A004', 11, 7000, 5000, 'Orange Money', 0, 1, 'Feb 09, 2021 - 09:50pm', '2021-02-09 20:50:19', '2021-02-09 20:50:19'),
+(64, 1, 19, 54, 'BG19A013', 9, 2000, 8000, 'mtn money', 2000, 0, 'Feb 10, 2021 - 11:34am', '2021-02-10 10:34:32', '2021-02-10 10:34:32'),
+(65, 1, 19, 54, 'BG19A013', 9, NULL, 1000, NULL, 1000, 0, 'Feb 10, 2021 - 11:35am', '2021-02-10 10:35:13', '2021-02-10 10:35:13'),
+(66, 1, 20, 54, 'BG19A013', 9, NULL, 9000, NULL, 1000, 0, 'Feb 10, 2021 - 11:35am', '2021-02-10 10:35:32', '2021-02-10 10:35:32'),
+(67, 1, 20, 54, 'BG19A013', 9, NULL, 1000, NULL, 0, 1, 'Feb 10, 2021 - 11:37am', '2021-02-10 10:37:15', '2021-02-10 10:37:15'),
+(68, 1, 19, 54, 'BG19A013', 9, NULL, 1000, NULL, 0, 1, 'Feb 10, 2021 - 11:38am', '2021-02-10 10:38:01', '2021-02-10 10:38:01'),
+(69, 1, 21, 54, 'BG19A013', 9, NULL, 5000, 'Orange Money', 5000, 0, 'Feb 10, 2021 - 11:38am', '2021-02-10 10:38:45', '2021-02-10 10:38:45'),
+(70, 1, 21, 54, 'BG19A013', 9, NULL, 5000, 'mtn money', 0, 1, 'Feb 10, 2021 - 11:39am', '2021-02-10 10:39:18', '2021-02-10 10:39:18');
 
 -- --------------------------------------------------------
 
@@ -320,7 +329,12 @@ INSERT INTO `feetypes` (`id`, `year_id`, `form_id`, `fee_type`, `amount`, `creat
 (13, 1, 11, 'Tuition', 34000, '2020-11-02 07:48:38', '2020-11-02 07:48:38'),
 (14, 1, 11, 'Computer', 5000, '2020-11-02 18:55:23', '2020-11-02 18:55:23'),
 (15, 2, 11, 'Tuition', 30000, '2020-11-02 18:56:37', '2020-11-02 18:56:37'),
-(16, 1, 22, 'Computer', 5000, '2020-11-15 13:11:52', '2020-11-15 13:11:52');
+(16, 1, 22, 'Computer', 5000, '2020-11-15 13:11:52', '2020-11-15 13:11:52'),
+(17, 1, 10, 'Tuition', 30000, '2021-02-10 09:53:26', '2021-02-10 09:53:26'),
+(18, 1, 10, 'Computer', 5000, '2021-02-10 09:53:43', '2021-02-10 09:53:43'),
+(19, 1, 9, 'Tuition', 10000, '2021-02-10 09:56:51', '2021-02-10 09:56:51'),
+(20, 1, 9, 'Caution', 10000, '2021-02-10 09:57:04', '2021-02-10 09:57:04'),
+(21, 1, 9, 'Practical', 10000, '2021-02-10 09:57:16', '2021-02-10 09:57:16');
 
 -- --------------------------------------------------------
 
@@ -812,7 +826,8 @@ CREATE TABLE `scholarships` (
 
 INSERT INTO `scholarships` (`id`, `year_id`, `term_id`, `form_id`, `student_id`, `amount`, `reason`, `created_at`, `updated_at`) VALUES
 (8, 1, 1, 11, 42, 2000, 'best student', '2021-02-08 16:50:52', '2021-02-08 16:50:52'),
-(13, 1, 1, 11, 45, 7000, 'i am very good boy', '2021-02-08 23:15:40', '2021-02-08 23:15:40');
+(13, 1, 1, 11, 45, 7000, 'i am very good boy', '2021-02-08 23:15:40', '2021-02-08 23:15:40'),
+(14, 1, 1, 9, 54, 2000, 'good student', '2021-02-10 10:01:11', '2021-02-10 10:01:11');
 
 -- --------------------------------------------------------
 
@@ -1084,7 +1099,7 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `full_name`, `school_id`, `email`, `place_of_birth`, `password`, `date_enrolled`, `suspend`, `dismissed`, `remember_token`, `created_at`, `updated_at`) VALUES
 (42, 'Bimeri Noel', 'BG19A001', 'bimerinoel@gmail.com', 'buea Hospital', '$2y$10$xkuLk/X2.W24rXdx9yPzO.SczBbVWhyc/vxNZU1cfL8N4z/Qx7e..', 'Sat, 24 Oct 2020 21:22pm', 1, 0, NULL, '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
-(43, 'Mari Saquare', 'BG19A002', 'example@gmail.com', 'buea Hospital', '$2y$10$81YsV93qy8BrkCc5vC9DrOHdiNcip3M44QD/fpMZPjtxzd4ZKgJLi', 'Mon, 26 Oct 2020 21:59pm', 1, 0, NULL, '2020-10-26 20:59:57', '2021-02-08 02:55:30'),
+(43, 'Mari Saquare', 'BG19A002', 'example@gmail.com', 'buea Hospital', '$2y$10$81YsV93qy8BrkCc5vC9DrOHdiNcip3M44QD/fpMZPjtxzd4ZKgJLi', 'Mon, 26 Oct 2020 21:59pm', 0, 1, NULL, '2020-10-26 20:59:57', '2021-02-10 21:09:35'),
 (44, 'Lydia Efange', 'BG19A003', 'lydia@gmail.com', 'buea Hospital', '$2y$10$UpJAP.IpAvep2orWzqESDO0VO9ZZ6PUr/nsBOGQu1X0LMcN/ObMqu', 'Fri, 30 Oct 2020 07:52am', 0, 0, NULL, '2020-10-30 06:52:31', '2020-10-30 06:52:31'),
 (45, 'example three', 'BG19A004', 'exam@fgmail.com', 'buea Hospital', '$2y$10$vXCiR2iY69UXC8D6/lkY2u9eDbLAhRRPDteHf4i1/dgCkinwVbS2u', 'Fri, 30 Oct 2020 20:59pm', 0, 0, NULL, '2020-10-30 19:59:41', '2021-02-08 01:12:45'),
 (46, 'Enow Florence', 'BG19A005', 'wang@fgmail.com', 'buea Hospital', '$2y$10$BaRnL9h/U4stNRwbbXVak.6ER3h0hpRq1yXSJTHz4oGGD.7pyc9Pm', 'Fri, 30 Oct 2020 21:27pm', 0, 0, NULL, '2020-10-30 20:27:44', '2020-10-30 20:27:44'),
@@ -1734,19 +1749,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `feecontrols`
 --
 ALTER TABLE `feecontrols`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `fees`
 --
 ALTER TABLE `fees`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `feetypes`
 --
 ALTER TABLE `feetypes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -1818,7 +1833,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `scholarships`
 --
 ALTER TABLE `scholarships`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `secondtermresults`

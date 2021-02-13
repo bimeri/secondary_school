@@ -29,13 +29,15 @@ class StudentController extends Controller
         $sum = null;
         $paid = null;
         $studentId = auth()->user()->id;
+        $current_year = Year::getCurrentYear();
+        $form = Promotion::where('year_id', $current_year)->where('student_id', $studentId)->first();
         $yearId = Year::getCurrentYear();
         $data['year'] = Year::getYearName($yearId);
         $currentClass = Promotion::where('student_id', $studentId)->where('year_id', $yearId)->first();
         if($currentClass){
         $sum = Feetype::SumClassFeePerYear($currentClass->form_id,$yearId);
         }
-        $paid = Fee::getTotalFeePaid($yearId, auth()->user()->school_id);
+        $paid = Fee::getTotalFeePaid($yearId, auth()->user()->school_id, $studentId, $form->form_id);
         $data['setting'] = Setting::first();
         $data['sumFee'] = $sum;
         $data['paidFee'] = $paid;

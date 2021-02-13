@@ -17,7 +17,7 @@ a.link{
 @section('content')
 <div class="row">
     @if ($paidFee == $sumFee && $paidFee != 0)
-        <div class="w3-padding green col s12 m10 offset-m1 white-text center w3-margin-bottom">
+        <div class="w3-padding green col s12 m10 offset-m1 white-text center w3-margin-bottom" style="border-radius: 20px">
             <b>You have completed School fees for the academic year: {{ $year }}</b>
         </div>
     @else
@@ -52,17 +52,16 @@ a.link{
             </div>
             <div class="col s12 m8 w3-padding w3-border">
                 <p class="blue-text w3-large w3-center">Personal Information</p><hr class="divide">
-                <div class="w3-left" style="margin-left: 25%">
+                <div class="w3-left" style="margin-left: 10%">
                     <p><i class="blue-text w3-medium">First Name:</i>
                         <?php $fname = explode(' ',trim($studentinfo->student->full_name));
-                            echo    '<b>
-                                        <i class="black-text">'.$fname[0].'</i>
-                                    </b> ,&nbsp; <i class="blue-text w3-large">Last Name:
-                                    <b class="black-text">'.$fname[1].'
-                                    </b></i> ' ?>
+                            echo    '<b><i class="black-text">'.$fname[0].'</i></b><br>
+                                    <i class="blue-text w3-large">Last Name:
+                                    <b class="black-text">'.$fname[1].'</b></i> '
+                        ?>
                     </p>
 
-                    <i class="blue-text w3-medium">Full Name:</i> &nbsp;&nbsp;{{ $studentinfo->student->full_name }}<br>
+                    <i class="blue-text w3-medium left">Full Name:</i> &nbsp;&nbsp;{{ $studentinfo->student->full_name }}<br>
                     <i class="blue-text w3-medium">School ID:&nbsp;&nbsp;</i> {{ $studentinfo->student_school_id }}<br>
                     <i class="blue-text w3-medium">Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> {{ $studentinfo->student->email }}<br>
                     <i class="blue-text w3-medium">Gender:&nbsp;&nbsp;&nbsp;&nbsp;</i> {{ $studentinfo->gender }}<br>

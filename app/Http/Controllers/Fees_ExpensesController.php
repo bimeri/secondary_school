@@ -160,7 +160,7 @@ class Fees_ExpensesController extends Controller
         $studentInfo = Studentinfo::where('student_school_id', $student_id)->first();
         $student = Student::where('school_id', $student_id)->first();
         $data['total_fees'] = Feetype::getAllFeesPerClassAndYear($year_id, $form_id);
-        $data['total_paid'] = Fee::getTotalFeePaid($year_id, $student_id);
+        $data['total_paid'] = Fee::getTotalFeePaid($year_id, $student_id, $student_id, $form_id);
         $data['yearly_scholarship'] = Scholarship::getYearlyScholarship($year_id, $student->id);
         $data['student_fees'] = Fee::getStudentYearlyFee($year_id, $form_id, $student->id);
         $data['school_id'] = $student_id;
@@ -505,6 +505,6 @@ class Fees_ExpensesController extends Controller
                     </a>
                     </div>
                 ';                }
-        return [$arr, $table, $notCompleted];
+        return [$arr, $table, ''];
     }
 }
