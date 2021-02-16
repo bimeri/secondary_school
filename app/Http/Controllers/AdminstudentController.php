@@ -27,41 +27,7 @@ class AdminstudentController extends Controller
     public function create(){
         $this->authorize('add_student', Permission::class);
         $id = Setting::find(1);
-        $first = $id->school_id;
-        $data['students'] = Studentinfo::getTenStudents();
-        $current_year = Year::getCurrentAcademicYear();
-        $countStudentPerYear = Studentinfo::countAllSchoolStudentPerYear($current_year->id);
-        //return $year;
-        $yearLastDigits = explode('/', trim($current_year->name));
-        $year = substr($yearLastDigits[0], -2);
-        $count = $countStudentPerYear + 1;
-        $letter = 'A';
-        $trans_count = sprintf('%03d', $count);
-
-        if($count > 4995){
-            $letter = 'F';
-            $trans_count = sprintf('%03d', $count - 4995);
-        } elseif($count > 3996){
-            $letter = 'E';
-            $trans_count = sprintf('%03d', $count - 3996);
-        }
-        elseif($count > 2997){
-            $letter = 'D';
-            $trans_count = sprintf('%03d', $count - 2997);
-        } elseif($count > 1998){
-            $letter = 'C';
-            $trans_count = sprintf('%03d', $count - 1998);
-        } elseif($count > 999){
-            $letter = 'B';
-            $trans_count = sprintf('%03d', $count - 999);
-        } else {
-            $letter = 'A';
-            $trans_count = sprintf('%03d', $count);
-        }
-        $matricule = $first.$year.$letter.$trans_count;
-        $data['matricule'] = $matricule;
-
-
+        $data = $this->generateMatricule();
         if($id->school_id == null){
             $notify = array('message' => 'Please go to Setting and set the School Unique Identifier. You can\'t register any student without the Identifier','alert-type' => 'info');
             return redirect()->back()->with($notify);
@@ -387,7 +353,7 @@ class AdminstudentController extends Controller
         $textColr = $this->getColor($diff, $size);
 
         $table = "
-        <table>
+        <table style='width: 100%'>
             <tr class='blue lighten-1 center w3-small'>
                 <th>Type</th>
                 <th>Max size</th>
@@ -428,6 +394,11 @@ class AdminstudentController extends Controller
         return response()->json([$arr, $subclassArray, $table]);
     }
 
+    public function importStudentExcel(){
+
+        return view('admin.public.student.import_csv');
+    }
+
     public function getColor($diff, $size){
         $color = "";
         $message = "";
@@ -447,5 +418,44 @@ class AdminstudentController extends Controller
         }
 
         return [$color, $message];
+    }
+
+    private function generateMatricule() {
+        $id = Setting::find(1);
+        $first = $id->school_id;
+        $data['students'] = Studentinfo::getTenStudents();
+        $current_year = Year::getCurrentAcademicYear();
+        $countStudentPerYear = Studentinfo::countAllSchoolStudentPerYear($current_year->id);
+        //return $year;
+        $yearLastDigits = explode('/', trim($current_year->name));
+        $year = substr($yearLastDigits[0], -2);
+        $count = $countStudentPerYear + 1;
+        $letter = 'A';
+        $trans_count = sprintf('%03d', $count);
+
+        if($count > 4995){
+            $letter = 'F';
+            $trans_count = sprintf('%03d', $count - 4995);
+        } elseif($count > 3996){
+            $letter = 'E';
+            $trans_count = sprintf('%03d', $count - 3996);
+        }
+        elseif($count > 2997){
+            $letter = 'D';
+            $trans_count = sprintf('%03d', $count - 2997);
+        } elseif($count > 1998){
+            $letter = 'C';
+            $trans_count = sprintf('%03d', $count - 1998);
+        } elseif($count > 999){
+            $letter = 'B';
+            $trans_count = sprintf('%03d', $count - 999);
+        } else {
+            $letter = 'A';
+            $trans_count = sprintf('%03d', $count);
+        }
+        $matricule = $first.$year.$letter.$trans_count;
+        $data['matricule'] = $matricule;
+
+        return $data;
     }
 }

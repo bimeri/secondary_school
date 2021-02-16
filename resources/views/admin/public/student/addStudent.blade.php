@@ -15,6 +15,7 @@
 @section('content')
 <p class="w3-center">@lang('messages.add_student')</p>
 <div class="row">
+    <a href="{{ route('student.import.excel') }}" class="w3-btn w3-border w3-round white-text blue padding" style="position: absolute; top: 100px; right: 20px">Import CSV <i class="fa fa-file-excel"></i></a>
     <div class="col s11 m10 w3-border-t offset-m1 radius white w3-margin-left">
         <form action="{{ route('admin.submit.student.info') }}" method="post" enctype="multipart/form-data" id="fm">
             {{ csrf_field() }}
@@ -57,6 +58,8 @@
                     <input type="text" name="pob" value="{{ old('pob') }}" class="validate" id="address" required/>
                     <label for="address">Enter place of birth</label>
                 </div>
+            </div>
+            <div class="row">
                 <div class="input-field col s12 m3">
                     <select name="gender" class="icons">
                       <option value="" disabled selected>Select Your Gender</option>
@@ -65,12 +68,11 @@
                     </select>
                     <label>Select Gender</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12 m2">
+                    <div class="input-field col s12 m3">
                         <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" id="dates" placeholder="dd/mm/yy">
                         <label for="dates">Enter Date of birth</label>
                     </div>
-                    <div class="file-field input-field col s12 m2">
+                    <div class="file-field input-field col s12 m3">
                         <div class="btn">
                           <input type="file" name="profile_image" id="imgInp">
                         </div>
@@ -79,18 +81,17 @@
                           <input class="file-path validate" name="profile_image" type="text" placeholder="upload profile">
                         </div>
                     </div>
-                    <div class="input-field col s12 m2">
+                    <div class="input-field col s12 m3">
                         <input type="text" name="school_id" class="validate" value="{{ $matricule }}" id="school_id" readonly>
                         <label for="school_id">Student School Id</label>
                     </div>
                     <div class="input-field col s12 m4">
-                        {{--  end dynamic  --}}
                         <input type="hidden" name="year" value="{{ $current_year->id }}">
                     </div>
                 </div>
                 {{--  dynamic selecrt start  --}}
-                <div class="row container" style="font-size: 16px !important">
-                    <div class="col m4 s12">
+                <div class="row" style="font-size: 16px !important">
+                    <div class="col m3 s12">
                         <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
                             <option value="" disabled selected>select the Sector</option>
                           @foreach (App\Sector::all() as $sector)
@@ -98,31 +99,31 @@
                           @endforeach
                         </select>
                     </div>
-                    <div class="col s12 m4" id="backgrounds">
+                    <div class="col s12 m3" id="backgrounds">
                         <select class="browser-default" name="background" id="background" required onchange="getclasses(event)">
                             <option value="">select the Background</option>
                         </select>
                     </div>
 
-                    <div class="col s12 m4" id="classes">
+                    <div class="col s12 m3" id="classes">
                         <select class="browser-default" name="class" id="form" required>
                             <option value="">select the Class</option>
                         </select>
                     </div>
+                    <div class="col s12 m3" id="subclass"></div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12 m4" id="subclass"></div>
-                    <div class="col m4 s12" id="type"></div>
+                    <div class="col s12 m12" id="type">
+                    </div>
                 </div>
+                <center>
+                    <div id="submit_hidden" class="w3-padding" style="margin-top: -10px !important" style="width: 50%;">
+                        <button class="btn teal waves-effect waves-light w3-medium" type="submit" style="width: 40%">Register Student</button>
+                    </div>
+                </center>
             </div>
-            <center>
-                <div class="w3-padding" style="margin-top: -50px !important" style="width: 50%;">
-                    <button class="btn teal waves-effect waves-light w3-medium" type="submit" style="width: 40%">Register Student</button>
-                </div>
-            </center>
         </form>
     </div>
-  </div>
   <div class="row container">
       <h5 class="center green-text">Newly Admitted Students</h5>
     <div class="col s12 m10 offset-m1" style="overflow-x:auto !important;">
@@ -163,6 +164,7 @@
     </div>
 </div>
   <script>
+        $("#submit_hidden").hide();
       $(document).ready(function(){
           createCookie("class", document.getElementById('form').value);
       });
@@ -170,7 +172,9 @@
         document.cookie = escape(name) + "=" + escape(valu);
      }
     $('#form').on('change', function(){
+        document.getElementById('menu').style.display = 'block';
         $("#subclass").empty();
+        $("#submit_hidden").hide();
         $("#type").empty();
         $.ajaxSetup({
             headers: {
@@ -185,26 +189,28 @@
            url:"{{route('class.getsize')}}",
            data: $('#fm').serialize(),
            success:function(res){
-               console.log('the response is: ',res);
+            $("#submit_hidden").show();
             if(res){
                 $("#type").empty();
-                 console.log('result', res);
                     document.getElementById('subclass').style.display = 'block';
-                    $("#type").append("<div class='w3-border w3-padding w3-margin-right green black-text lighten-5'>"+res[2] +"</br> </div> ");
-                    $('#subclass').append("<div class='form-control'><label for='sub'>Select the class Type</label>"+
+                    $("#type").append("<div class='green black-text lighten-5'>"+res[2] +" </div> ");
+                    $('#subclass').append("<div style='width:100%'>"+
                     "<select class='browser-default' name='subclass' id='sub' required>"+
                     "<option value=''>select sub class</option>"+
                     " "+ res[1]+" "+
                     "</div></select> ");
             }else{
                $("#type").empty();
+        document.getElementById('menu').style.display = 'none';
             }
+        document.getElementById('menu').style.display = 'none';
            },
            error: function(error){
            }
         });
     }else{
         $("#type").empty();
+        document.getElementById('menu').style.display = 'none';
     }
 
    });

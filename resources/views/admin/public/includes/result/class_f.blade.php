@@ -1,4 +1,4 @@
-<tr class="orange orange-text lighten-4 center">
+<tr class="orange orange-text lighten-5 center">
     <td colspan="8" style="font-size: 16px !important">
         Result for Class F students
     </td>

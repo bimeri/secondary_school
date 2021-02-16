@@ -128,6 +128,7 @@ Route::post('student/ajax/background', 'AdminstudentController@ajaxGetBackground
 Route::post('student/ajax/class', 'AdminstudentController@ajaxGetClass')->name('classes.ajax.get');
 Route::post('class/ajax/subjects', 'AdminstudentController@ajaxGetClassSubjects')->name('classes.ajax.subjects');
 Route::get('student/excel/class', 'DownloadController@exportStudentRecord')->name('export.excel.student');
+Route::get('student/excel/import', 'AdminstudentController@importStudentExcel')->name('student.import.excel');
 
 Route::post('student/suspend', 'AdminstudentController@suspendStudent')->name('student.suspend');
 Route::post('student/dismiss', 'AdminstudentController@dismissStudent')->name('student.dismiss');

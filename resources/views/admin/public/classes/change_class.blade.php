@@ -68,6 +68,7 @@
 <script>
     $('#hides').hide();
   function dofunc(e){
+    document.getElementById('menu').style.display = 'block';
         var user = e.target.value;
         $.ajaxSetup({
             headers: {
@@ -79,6 +80,7 @@
            url:"{{route('student.getDetail')}}",
            data: {'user': user},
            success:function(res){
+
             $('#hides').show();
             $("#cla").empty();
             $("#sub").empty();
@@ -89,8 +91,10 @@
             }else{
                $("#type").empty();
             }
+            document.getElementById('menu').style.display = 'none';
            },
            error: function(error){
+                document.getElementById('menu').style.display = 'none';
                console.log('some error occur');
                $("#cla").empty();
                $("#sub").empty();

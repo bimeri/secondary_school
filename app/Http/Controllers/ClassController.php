@@ -236,7 +236,7 @@ class ClassController extends Controller
 
     public function changeClass(){
         $this->authorize('change_class', Permission::class);
-        $data['table'] = Form::getAllClasses();
+       // $data['table'] = Form::getAllClasses();
         $data['studentinfo'] = Studentinfo::all();
 
         return view('admin.public.classes.change_class')->with($data);
