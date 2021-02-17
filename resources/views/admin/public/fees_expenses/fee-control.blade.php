@@ -59,7 +59,6 @@
                                     method: 'post',
                                     data: $('#forms').serialize(),
                                     success: function(response){
-                                        console.log('result', response[2]);
                                         document.getElementById('menu').style.display = 'none';
                                         $('#hide').show();
                                         $('#hideContent').append(response[1]);
