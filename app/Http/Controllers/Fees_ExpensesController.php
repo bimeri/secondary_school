@@ -501,7 +501,7 @@ class Fees_ExpensesController extends Controller
                                           ';
                             };
                             if(count($completed) == 0) {
-                                $table .= '<tr><td colspan="5" class="center red red-text lighten-4">No result found. No student has completed fees</td></tr>';
+                                $table .= '<tr><td colspan="5" class="center orange-text orange lighten-4">No result found. No student has completed fees</td></tr>';
                             }
         $table .= '
                     </table>

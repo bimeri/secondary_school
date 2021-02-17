@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2021 at 03:10 PM
+-- Generation Time: Feb 17, 2021 at 09:36 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -250,7 +250,8 @@ INSERT INTO `feecontrols` (`id`, `student_id`, `student_school_id`, `form_id`, `
 (11, 48, 'BG19A007', 11, 1, 'Mon, 02 Nov 2020 09:00am', '2020-11-02 08:00:10', '2020-11-02 08:00:10'),
 (12, 43, 'BG19A002', 11, 1, 'Tue, 09 Feb 2021 19:47pm', '2021-02-09 18:47:48', '2021-02-09 18:47:48'),
 (13, 51, 'BG19A010', 11, 1, 'Wed, 10 Feb 2021 10:44am', '2021-02-10 09:44:40', '2021-02-10 09:44:40'),
-(14, 54, 'BG19A013', 9, 1, 'Wed, 10 Feb 2021 11:39am', '2021-02-10 10:39:18', '2021-02-10 10:39:18');
+(14, 54, 'BG19A013', 9, 1, 'Wed, 10 Feb 2021 11:39am', '2021-02-10 10:39:18', '2021-02-10 10:39:18'),
+(15, 42, 'BG19A001', 11, 1, 'Fri, 12 Feb 2021 21:41pm', '2021-02-12 20:41:25', '2021-02-12 20:41:25');
 
 -- --------------------------------------------------------
 
@@ -303,7 +304,13 @@ INSERT INTO `fees` (`id`, `year_id`, `feetype_id`, `student_id`, `student_school
 (67, 1, 20, 54, 'BG19A013', 9, NULL, 1000, NULL, 0, 1, 'Feb 10, 2021 - 11:37am', '2021-02-10 10:37:15', '2021-02-10 10:37:15'),
 (68, 1, 19, 54, 'BG19A013', 9, NULL, 1000, NULL, 0, 1, 'Feb 10, 2021 - 11:38am', '2021-02-10 10:38:01', '2021-02-10 10:38:01'),
 (69, 1, 21, 54, 'BG19A013', 9, NULL, 5000, 'Orange Money', 5000, 0, 'Feb 10, 2021 - 11:38am', '2021-02-10 10:38:45', '2021-02-10 10:38:45'),
-(70, 1, 21, 54, 'BG19A013', 9, NULL, 5000, 'mtn money', 0, 1, 'Feb 10, 2021 - 11:39am', '2021-02-10 10:39:18', '2021-02-10 10:39:18');
+(70, 1, 21, 54, 'BG19A013', 9, NULL, 5000, 'mtn money', 0, 1, 'Feb 10, 2021 - 11:39am', '2021-02-10 10:39:18', '2021-02-10 10:39:18'),
+(71, 1, 13, 46, 'BG19A005', 11, NULL, 20000, 'cash collect', 14000, 0, 'Feb 11, 2021 - 04:10pm', '2021-02-11 15:10:39', '2021-02-11 15:10:39'),
+(72, 1, 13, 45, 'BG19A004', 11, NULL, 20000, 'Cash Payment', 14000, 0, 'Feb 11, 2021 - 04:11pm', '2021-02-11 15:11:20', '2021-02-11 15:11:20'),
+(73, 1, 13, 42, 'BG19A001', 11, NULL, 30000, 'mtn money', 4000, 0, 'Feb 12, 2021 - 09:16pm', '2021-02-12 20:16:02', '2021-02-12 20:16:02'),
+(74, 1, 13, 42, 'BG19A001', 11, NULL, 2000, 'Orange Money', 2000, 0, 'Feb 12, 2021 - 09:17pm', '2021-02-12 20:17:37', '2021-02-12 20:17:37'),
+(75, 1, 13, 42, 'BG19A001', 11, NULL, 2000, 'mtn money', 0, 1, 'Feb 12, 2021 - 09:40pm', '2021-02-12 20:40:41', '2021-02-12 20:40:41'),
+(76, 1, 14, 42, 'BG19A001', 11, NULL, 2000, 'cash payment', 2000, 0, 'Feb 12, 2021 - 09:41pm', '2021-02-12 20:41:25', '2021-02-12 20:41:25');
 
 -- --------------------------------------------------------
 
@@ -334,7 +341,8 @@ INSERT INTO `feetypes` (`id`, `year_id`, `form_id`, `fee_type`, `amount`, `creat
 (18, 1, 10, 'Computer', 5000, '2021-02-10 09:53:43', '2021-02-10 09:53:43'),
 (19, 1, 9, 'Tuition', 10000, '2021-02-10 09:56:51', '2021-02-10 09:56:51'),
 (20, 1, 9, 'Caution', 10000, '2021-02-10 09:57:04', '2021-02-10 09:57:04'),
-(21, 1, 9, 'Practical', 10000, '2021-02-10 09:57:16', '2021-02-10 09:57:16');
+(21, 1, 9, 'Practical', 10000, '2021-02-10 09:57:16', '2021-02-10 09:57:16'),
+(22, 1, 31, 'Tuition', 60000, '2021-02-17 17:27:18', '2021-02-17 17:27:18');
 
 -- --------------------------------------------------------
 
@@ -429,7 +437,9 @@ INSERT INTO `firsttermresults` (`id`, `year_id`, `student_id`, `form_id`, `form_
 (34, 1, 54, 9, 'A', 23, '15.00', '10.00', '50.00', NULL, 1, '2020-11-22 20:37:45', '2020-11-22 20:37:48'),
 (35, 1, 54, 9, 'A', 22, '11.50', '11.00', '45.00', NULL, 1, '2020-11-22 20:37:51', '2020-11-22 20:38:13'),
 (36, 1, 53, 9, 'A', 22, '6.50', '10.50', '34.00', NULL, 1, '2020-11-22 20:37:55', '2020-11-22 20:38:04'),
-(37, 1, 43, 11, 'B', 20, NULL, '9.00', '9.00', NULL, 1, '2020-11-23 08:54:24', '2020-11-23 09:24:41');
+(37, 1, 43, 11, 'B', 20, NULL, '9.00', '9.00', NULL, 1, '2020-11-23 08:54:24', '2020-11-23 09:24:41'),
+(38, 1, 42, 11, 'A', 28, '18.00', '19.50', '75.00', NULL, 1, '2021-02-11 14:34:58', '2021-02-11 14:35:18'),
+(39, 1, 45, 11, 'B', 28, '15.00', NULL, '30.00', NULL, 1, '2021-02-11 14:36:07', '2021-02-11 14:36:07');
 
 -- --------------------------------------------------------
 
@@ -752,7 +762,8 @@ INSERT INTO `promotions` (`id`, `year_id`, `student_id`, `form_id`, `form_type`,
 (10, 1, 49, 11, 'B', 'new', NULL, NULL),
 (11, 1, 52, 9, 'A', 'New', '2020-11-22 20:21:24', '2020-11-22 20:21:24'),
 (12, 1, 53, 9, 'A', 'New', '2020-11-22 20:22:17', '2020-11-22 20:22:17'),
-(13, 1, 54, 9, 'A', 'New', '2020-11-22 20:23:31', '2020-11-22 20:23:31');
+(13, 1, 54, 9, 'A', 'New', '2020-11-22 20:23:31', '2020-11-22 20:23:31'),
+(14, 1, 55, 31, 'A', 'New', '2021-02-14 16:28:04', '2021-02-14 16:28:04');
 
 -- --------------------------------------------------------
 
@@ -1011,8 +1022,8 @@ CREATE TABLE `studentinfos` (
 --
 
 INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, `form_id`, `subform_id`, `parent_contact`, `parent_email`, `address`, `profile`, `date_of_birth`, `gender`, `created_at`, `updated_at`) VALUES
-(1, 42, 'BG19A001', 1, 11, NULL, '123456789', NULL, NULL, 'default.png', '2020-10-21', 'Male', '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
-(2, 43, 'BG19A002', 1, 11, 9, '678657959', 'example@gmail.com', 'lonstreet', 'BG19A002.jpg', '2020-10-15', 'Female', '2020-10-26 20:59:57', '2021-02-08 02:55:31'),
+(1, 42, 'BG19A001', 1, 11, 9, '123456789', NULL, NULL, 'default.png', '2020-10-21', 'Male', '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
+(2, 43, 'BG19A002', 1, 11, NULL, '678657959', 'example@gmail.com', 'lonstreet', 'BG19A002.jpg', '2020-10-15', 'Female', '2020-10-26 20:59:57', '2021-02-08 02:55:31'),
 (3, 44, 'BG19A003', 1, 11, NULL, '678657952', 'efange@gmail.com', 'new town akwa', 'BG19A003.jpg', '1995-07-20', 'Male', '2020-10-30 06:52:31', '2020-10-30 06:52:31'),
 (4, 45, 'BG19A004', 1, 11, 9, '123456789', 'fombu@gmail.com', 'tole', 'BG19A004.jpg', '2020-07-15', 'Male', '2020-10-30 19:59:41', '2020-10-30 19:59:41'),
 (5, 46, 'BG19A005', 1, 11, NULL, '435678769', 'bimerinoel@gmail.com', 'molyko', 'default.png', '2020-10-07', 'Female', '2020-10-30 20:27:44', '2020-10-30 20:27:44'),
@@ -1023,7 +1034,8 @@ INSERT INTO `studentinfos` (`id`, `student_id`, `student_school_id`, `year_id`, 
 (10, 51, 'BG19A010', 1, 11, 9, '546789765', 'exab@gmai.com', 'molyko', 'BG19A010.jpeg', '2020-07-09', 'Male', '2020-11-04 21:42:52', '2020-11-04 21:42:52'),
 (11, 52, 'BG19A011', 1, 9, NULL, '654678978', 'enamgs@gmail.com', 'small soppo buea cameroon', 'BG19A011.jpg', '2020-11-19', 'Female', '2020-11-22 20:21:23', '2020-11-22 20:21:23'),
 (12, 53, 'BG19A012', 1, 9, NULL, '678980987', NULL, NULL, 'default.png', '2020-11-06', 'Male', '2020-11-22 20:22:17', '2020-11-22 20:22:17'),
-(13, 54, 'BG19A013', 1, 9, NULL, NULL, NULL, NULL, 'BG19A013.jpg', '2020-10-01', 'Male', '2020-11-22 20:23:31', '2020-11-22 20:23:31');
+(13, 54, 'BG19A013', 1, 9, NULL, NULL, NULL, NULL, 'BG19A013.jpg', '2020-10-01', 'Male', '2020-11-22 20:23:31', '2020-11-22 20:23:31'),
+(14, 55, 'BG19A014', 1, 31, NULL, '657678909', 'limbe@yahoo.fr', 'limber mile 2', 'BG19A014.jpg', '2001-08-12', 'Male', '2021-02-14 16:28:04', '2021-02-14 16:28:04');
 
 -- --------------------------------------------------------
 
@@ -1083,7 +1095,7 @@ CREATE TABLE `students` (
   `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `school_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `place_of_birth` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'place_of_birth',
+  `place_of_birth` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_enrolled` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `suspend` tinyint(1) NOT NULL DEFAULT 0,
@@ -1098,19 +1110,20 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `full_name`, `school_id`, `email`, `place_of_birth`, `password`, `date_enrolled`, `suspend`, `dismissed`, `remember_token`, `created_at`, `updated_at`) VALUES
-(42, 'Bimeri Noel', 'BG19A001', 'bimerinoel@gmail.com', 'buea Hospital', '$2y$10$xkuLk/X2.W24rXdx9yPzO.SczBbVWhyc/vxNZU1cfL8N4z/Qx7e..', 'Sat, 24 Oct 2020 21:22pm', 1, 0, NULL, '2020-10-24 20:22:58', '2020-10-24 20:22:58'),
-(43, 'Mari Saquare', 'BG19A002', 'example@gmail.com', 'buea Hospital', '$2y$10$81YsV93qy8BrkCc5vC9DrOHdiNcip3M44QD/fpMZPjtxzd4ZKgJLi', 'Mon, 26 Oct 2020 21:59pm', 0, 1, NULL, '2020-10-26 20:59:57', '2021-02-10 21:09:35'),
+(42, 'Bimeri Noel', 'BG19A001', 'bimerinoel@gmail.com', 'buea Hospital', '$2y$10$xkuLk/X2.W24rXdx9yPzO.SczBbVWhyc/vxNZU1cfL8N4z/Qx7e..', 'Sat, 24 Oct 2020 21:22pm', 0, 0, NULL, '2020-10-24 20:22:58', '2021-02-11 21:11:35'),
+(43, 'Mari Saquare', 'BG19A002', 'example@gmail.com', 'buea Hospital', '$2y$10$81YsV93qy8BrkCc5vC9DrOHdiNcip3M44QD/fpMZPjtxzd4ZKgJLi', 'Mon, 26 Oct 2020 21:59pm', 0, 0, NULL, '2020-10-26 20:59:57', '2021-02-11 21:11:03'),
 (44, 'Lydia Efange', 'BG19A003', 'lydia@gmail.com', 'buea Hospital', '$2y$10$UpJAP.IpAvep2orWzqESDO0VO9ZZ6PUr/nsBOGQu1X0LMcN/ObMqu', 'Fri, 30 Oct 2020 07:52am', 0, 0, NULL, '2020-10-30 06:52:31', '2020-10-30 06:52:31'),
 (45, 'example three', 'BG19A004', 'exam@fgmail.com', 'buea Hospital', '$2y$10$vXCiR2iY69UXC8D6/lkY2u9eDbLAhRRPDteHf4i1/dgCkinwVbS2u', 'Fri, 30 Oct 2020 20:59pm', 0, 0, NULL, '2020-10-30 19:59:41', '2021-02-08 01:12:45'),
-(46, 'Enow Florence', 'BG19A005', 'wang@fgmail.com', 'buea Hospital', '$2y$10$BaRnL9h/U4stNRwbbXVak.6ER3h0hpRq1yXSJTHz4oGGD.7pyc9Pm', 'Fri, 30 Oct 2020 21:27pm', 0, 0, NULL, '2020-10-30 20:27:44', '2020-10-30 20:27:44'),
+(46, 'Enow Florence', 'BG19A005', 'wang@fgmail.com', 'buea Hospital', '$2y$10$BaRnL9h/U4stNRwbbXVak.6ER3h0hpRq1yXSJTHz4oGGD.7pyc9Pm', 'Fri, 30 Oct 2020 21:27pm', 0, 0, NULL, '2020-10-30 20:27:44', '2021-02-11 21:11:32'),
 (47, 'Eugine xyz', 'BG19A006', 'eu@gmail.com', 'buea Hospital', '$2y$10$ywcqEo5L/kOw6T5HgQK55uZ72y1qVcHysoOfgeeujoyS4dnZ5i8Ae', 'Sat, 31 Oct 2020 21:10pm', 0, 0, NULL, '2020-10-31 20:10:02', '2020-10-31 20:10:02'),
 (48, 'Etima Joshua', 'BG19A007', 'uek@gmail.com', 'buea Hospital', '$2y$10$jfIdR5MPPL5hkMZi83S33ufpRV0N8ZcUSLFkfr32QsEuZYbROLj6W', 'Sun, 01 Nov 2020 20:44pm', 0, 0, NULL, '2020-11-01 19:44:31', '2021-02-08 00:52:07'),
 (49, 'Newly Admitted', 'BG19A008', 'new@gmail.com', 'buea Hospital', '$2y$10$7M/Bb/lPs.1kL3uOyMGKiumMreNpqSMygW8nNVkTtyseAWb.d3MVy', 'Wed, 04 Nov 2020 22:32pm', 0, 0, NULL, '2020-11-04 21:32:14', '2020-11-04 21:32:14'),
 (50, 'Emile Magaza', 'BG19A009', 'email@gmail.com', 'buea Hospital', '$2y$10$hAbxWbnR8UNIesaSoulff.lZ8FfUiAsv8rzRScy2uNPJBLqHUMBRm', 'Wed, 04 Nov 2020 22:39pm', 0, 0, NULL, '2020-11-04 21:39:57', '2020-11-04 21:39:57'),
-(51, 'Last Test', 'BG19A010', 'testlast@gmail.com', 'buea Hospital', '$2y$10$Wuoyw32EJnQNEIgvJBbJZuvhGi5bNhVQ.0Js6xvnxXejegYlNI3E2', 'Wed, 04 Nov 2020 22:42pm', 0, 0, NULL, '2020-11-04 21:42:52', '2021-02-08 01:13:11'),
+(51, 'Sylvester Etoh', 'BG19A010', 'testlast@gmail.com', 'buea Hospital', '$2y$10$Wuoyw32EJnQNEIgvJBbJZuvhGi5bNhVQ.0Js6xvnxXejegYlNI3E2', 'Wed, 04 Nov 2020 22:42pm', 0, 0, NULL, '2020-11-04 21:42:52', '2021-02-08 01:13:11'),
 (52, 'enanga Rolse', 'BG19A011', 'enags@gmail.com', 'buea Hospital', '$2y$10$p/JGI2SDHADu6Slinzu4U.98ZuLgs30aF/WxMR1EZnj/fAVgohVd2', 'Sun, 22 Nov 2020 21:21pm', 0, 0, NULL, '2020-11-22 20:21:23', '2020-11-22 20:21:23'),
 (53, 'Joel Motombi', 'BG19A012', NULL, 'buea Hospital', '$2y$10$Smc1FN4eIPMoutgG33kenuZAdRlsRh8kHJoTv4GuqIZYBj7J9IbeS', 'Sun, 22 Nov 2020 21:22pm', 0, 0, NULL, '2020-11-22 20:22:17', '2020-11-22 20:22:17'),
-(54, 'lucien Moyal', 'BG19A013', NULL, 'buea Hospital', '$2y$10$Ktky4wwneEAiJy.YNxo4o.QsDzrw3B5ny9gd3WGbnR977uZS3eNQS', 'Sun, 22 Nov 2020 21:23pm', 0, 0, NULL, '2020-11-22 20:23:30', '2020-11-22 20:23:30');
+(54, 'lucien Moyal', 'BG19A013', NULL, 'buea Hospital', '$2y$10$Ktky4wwneEAiJy.YNxo4o.QsDzrw3B5ny9gd3WGbnR977uZS3eNQS', 'Sun, 22 Nov 2020 21:23pm', 0, 0, NULL, '2020-11-22 20:23:30', '2020-11-22 20:23:30'),
+(55, 'Erick Junior', 'BG19A014', 'erick@gmail.com', 'Clarksquater', '$2y$10$YreoWd1nl/YkwS0ZpGC.DO3khkesJOVsBJIbPKED2r15V1106BAN2', 'Sun, 14 Feb 2021 17:28pm', 0, 0, NULL, '2021-02-14 16:28:03', '2021-02-14 16:28:03');
 
 -- --------------------------------------------------------
 
@@ -1190,7 +1203,9 @@ INSERT INTO `subject_teacher` (`id`, `subject_id`, `teacher_id`, `year_id`, `sta
 (16, 17, 3, 1, 0, NULL, NULL),
 (17, 18, 3, 1, 0, NULL, NULL),
 (18, 19, 3, 1, 0, NULL, NULL),
-(20, 28, 1, 1, 0, NULL, NULL);
+(20, 28, 1, 1, 0, NULL, NULL),
+(21, 22, 2, 1, 0, NULL, NULL),
+(22, 23, 2, 1, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1218,7 +1233,7 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `full_name`, `user_name`, `profile`, `date_of_birth`, `gender`, `email`, `password`, `suspend`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'John Calvine', 'paul', 'default.png', '2014-11-12', 'Male', 'paul@gmail.com', '$2y$10$AkEnPO60.B4QCm20u5.A1uAS8QWIpcHReIxRVyDN319/4VmIC24fm', 0, NULL, '2020-06-26 22:44:54', '2021-02-01 20:01:16'),
+(1, 'John Calvine', 'paul', 'default.png', '2014-11-12', 'Male', 'paul@gmail.com', '$2y$10$AkEnPO60.B4QCm20u5.A1uAS8QWIpcHReIxRVyDN319/4VmIC24fm', 0, NULL, '2020-06-26 22:44:54', '2021-02-11 14:46:15'),
 (2, 'Lucien Magaza', 'lucien', 'lucien.jpg', '5555-02-05', 'Male', 'lucien@gmail.com', '$2y$10$ET2HJ4wUtBsK0YQXY2ty3uuMSlB1dHGqdjIujwDeVuydq7nIkMEq2', 0, NULL, '2020-07-16 22:53:07', '2020-07-16 22:53:07'),
 (3, 'Claris Busi', 'Busi', 'Busi.jpg', '2002-02-23', 'Female', 'busi@gmail.com', '$2y$10$aNRSB8RgIZNXph1HN9HMtuOUGwfKszNsKUlAU/5aV6CuDUrsbG6rG', 0, NULL, '2020-07-17 01:04:40', '2021-02-01 20:01:02'),
 (4, 'Muyal Magaza', 'Muyal', 'Muyal.jpg', '2003-12-13', 'Male', 'muyal@gmail.com', '$2y$10$G73FUJPmJ40zr0AaUwm4OuXhPh5tuDsx9SDtC6mq2YRrq2RB/wR/i', 0, NULL, '2020-07-17 01:06:18', '2020-07-17 01:06:18'),
@@ -1749,19 +1764,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `feecontrols`
 --
 ALTER TABLE `feecontrols`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `fees`
 --
 ALTER TABLE `fees`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `feetypes`
 --
 ALTER TABLE `feetypes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -1773,7 +1788,7 @@ ALTER TABLE `files`
 -- AUTO_INCREMENT for table `firsttermresults`
 --
 ALTER TABLE `firsttermresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `forms`
@@ -1815,7 +1830,7 @@ ALTER TABLE `permission_role`
 -- AUTO_INCREMENT for table `promotions`
 --
 ALTER TABLE `promotions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `resultcontrols`
@@ -1869,7 +1884,7 @@ ALTER TABLE `studentdisciplines`
 -- AUTO_INCREMENT for table `studentinfos`
 --
 ALTER TABLE `studentinfos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `studentresults`
@@ -1881,7 +1896,7 @@ ALTER TABLE `studentresults`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `subclasses`
@@ -1899,7 +1914,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `subject_teacher`
 --
 ALTER TABLE `subject_teacher`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `teachers`

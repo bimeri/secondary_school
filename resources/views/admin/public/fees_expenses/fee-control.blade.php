@@ -62,11 +62,6 @@
                                         document.getElementById('menu').style.display = 'none';
                                         $('#hide').show();
                                         $('#hideContent').append(response[1]);
-                                        if(response[2].length > 0) {
-                                        $('#notPaid').append(response[2]);
-                                        } else {
-                                        $('#notPaid').append('');
-                                        }
                                         toastr.options = {
                                         "closeButton": false,
                                         "debug": false,
@@ -87,6 +82,11 @@
                                         if(response[0].type == 'error'){ toastr.info(response[0].message);}
                                         if(response[0].type == 'success'){ toastr.success(response[0].message);}
                                         if(response[0].type == 'warning'){ toastr.warning(response[0].message);}
+                                        if(response[2].length > 0) {
+                                        $('#notPaid').append(response[2]);
+                                        } else {
+                                        $('#notPaid').append('');
+                                        }
 
                                         //setTimeout(function(){window.location.reload();},7000);
                                     },
