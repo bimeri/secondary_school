@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('full_name');
             $table->string('school_id')->unique();
             $table->string('email')->unique()->nullable();
-            $table->string('place_of_birth');
+            $table->string('place_of_birth')->nullable();
             $table->string('password');
             $table->string('date_enrolled');
             $table->string('lang')->default('en');

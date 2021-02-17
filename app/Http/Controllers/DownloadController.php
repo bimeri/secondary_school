@@ -97,6 +97,26 @@ class DownloadController extends Controller
             return $pdf->download(''.$classDetail->name.'.pdf');
     }
 
+    public function uncompleteFee(Request $req){
+        $year = $req['year'];
+        $class = $req['class'];
+        $completed = Feecontrol::notcompletedStudent($year, $class);
+        $classDetail = Form::getClassDetail($class);
+        $yr = Year::getYearName($year);
+        (float)$getTotalClassFee = Feetype::SumClassFeePerYear($class, $year);
+
+        view()->share(['details' => $completed,
+                       'className' => $classDetail->name,
+                       'class' => $classDetail,
+                       'classFees' => $getTotalClassFee,
+                       'year' => $yr,
+                       'yearId' => $year]);
+    //return view('admin.public.download.fee_uncompleted');
+            $pdf = PDF::loadView('admin.public.download.fee_uncompleted');
+            $pdf->getDomPDF()->set_option('enable_php', true);
+            return $pdf->download(''.$classDetail->name.'.pdf');
+    }
+
     public function incomeStatementDownload(Request $req){
         $y = $req['year'];
         $type = $req['type'];

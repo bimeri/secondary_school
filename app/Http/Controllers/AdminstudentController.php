@@ -42,7 +42,6 @@ class AdminstudentController extends Controller
             'fullName' => 'required',
             'gender' => 'required',
             'class' => 'required',
-            'pob' => 'required',
             'school_id' => 'required|unique:App\Student,school_id',
         ]);
 

@@ -124,9 +124,8 @@ class ClassResultController extends Controller
             <td>".$subject->coefficient."</td>
             <td></td>
             <td></td>
-            <td>Leonard</td>
-            <tr>
-            <td>Average </td>";
+            <td>".Subject::getTeacher($subject->id)."</td>
+            <tr>";
             }
             if($term_id == 2) {
             $term2 = Secondtermresult::getStudentTest1($student_id, $form_id, $year_id, $subject->id);

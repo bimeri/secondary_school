@@ -36,7 +36,8 @@
             </div>
         </form>
         <div id="hide"><hr>
-            <div id="hideContent"></div>
+            <div id="hideContent" style="overflow-x: auto"></div><hr>
+            <div id="notPaid" style="overflow-x: auto"></div>
         </div>
     </div>
 </div>
@@ -46,6 +47,7 @@
     document.getElementById('menu').style.display = 'block';
         $('#hide').hide();
         $('#hideContent').empty();
+        $('#notPaid').empty();
         var val = ev.target.value;
         $(document).ready(function(){
                                     $.ajaxSetup({
@@ -57,9 +59,15 @@
                                     method: 'post',
                                     data: $('#forms').serialize(),
                                     success: function(response){
+                                        console.log('result', response[2]);
                                         document.getElementById('menu').style.display = 'none';
                                         $('#hide').show();
                                         $('#hideContent').append(response[1]);
+                                        if(response[2].length > 0) {
+                                        $('#notPaid').append(response[2]);
+                                        } else {
+                                        $('#notPaid').append('');
+                                        }
                                         toastr.options = {
                                         "closeButton": false,
                                         "debug": false,
@@ -87,6 +95,7 @@
                                         document.getElementById('menu').style.display = 'none';
                                         $('#hide').hide();
                                         $('#hideContent').empty();
+                                        $('#notPaid').empty();
                                         toastr.info(error);
                                     }
                                 });

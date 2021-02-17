@@ -255,3 +255,4 @@ Route::get('fee/print', 'Downloadcontroller@printFee')->name('downoad.print');
 Route::get('admin/fees/excel', 'Downloadcontroller@downloadExcel')->name('report.fee.excel');
 Route::get('admin/income_statement', 'Downloadcontroller@incomeStatementDownload')->name('download.incomestatement');
 Route::get('admin/complete_fee', 'Downloadcontroller@completeFee')->name('student.completeFee.download');
+Route::get('admin/uncomplete_fee', 'Downloadcontroller@uncompleteFee')->name('student.uncompleteFee.download');

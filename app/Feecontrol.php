@@ -28,11 +28,21 @@ class Feecontrol extends Model
     }
 
     public static function notcompletedStudent($year, $class){
-        $allStudentPerclass[] = Promotion::getStudentPerClassAndYear($year, $class);
+        $allStudentPerclass = Promotion::getStudentPerClassAndYear($year, $class);
+        $completedArray = [];
+        $allStudentArray = [];
+        $noPaidArray = [];
         $completedStudent = Self::completedStudent($year, $class);
         foreach($completedStudent as $complete){
-
+            array_push($completedArray, $complete->student_id);
         }
-        return $allStudentPerclass;
+        foreach($allStudentPerclass as $all){
+            array_push($allStudentArray, $all->student_id);
+            if(in_array($all->student_id, $completedArray)){}
+            else {
+            array_push($noPaidArray, $all);
+            }
+        }
+        return $noPaidArray;
     }
 }

@@ -189,6 +189,11 @@ class Fees_ExpensesController extends Controller
         $class = $req['class'];
         $amount = $req['amount'];
 
+        if(Feetype::where('year_id', $year)->where('form_id', $class)->exists()) {
+            $message = array('message' => 'Sorry fee amount has been set alreadt for this class', 'alert-type' => 'info');
+            return redirect()->back()->with($message);
+        }
+
         $fees_type = new Feetype();
 
         $fees_type->year_id = $year;
@@ -459,11 +464,14 @@ class Fees_ExpensesController extends Controller
         $class = $req['class'];
         $year = $req['year'];
         $token = $req['_token'];
+        $table = null;
+        $table2 = null;
         (float)$getTotalClassFee = Feetype::SumClassFeePerYear($class, $year);
 
 
         $completed = Feecontrol::completedStudent($year, $class);
         $notCompleted = Feecontrol::notcompletedStudent($year, $class);
+        $yearName = Year::getYearName($year);
 
         if(count($completed) > 0) {
             $arr = array('message' => 'Some result found', 'type' => 'success');
@@ -473,12 +481,13 @@ class Fees_ExpensesController extends Controller
 
         $table = '
                     <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
+                        <tr><td colspan="5" class="center green green-text lighten-4">Student who completed fee for academic year: <b>'.$yearName.'</b></td></tr>
                         <tr class="teal">
                             <th>S/N</th>
                             <th>year</th>
                             <th>Student Name</th>
                             <th>Student Matricule</th>
-                            <th>Amount</th>
+                            <th>Amount/FCFA</th>
                         </tr>';
                             foreach ($completed as $key => $complete) {
         $table .= '
@@ -504,7 +513,48 @@ class Fees_ExpensesController extends Controller
                         <i class="fa fa-download w3-tiny"></i>
                     </a>
                     </div>
-                ';                }
-        return [$arr, $table, ''];
+                ';
+            }
+            // not completed students
+
+            if(count($notCompleted) > 0) {
+                $table2 = '
+                    <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
+                        <tr><td colspan="6" class="center red red-text lighten-4">Student who did not completed fee for academic year: <b>'.$yearName.'</b></td></tr>
+                        <tr class="teal">
+                            <th>S/N</th>
+                            <th>year</th>
+                            <th>Student Name</th>
+                            <th>Student Matricule</th>
+                            <th>Amount Paid/FCFA</th>
+                            <th>Amount Oweing/FCFA</th>
+                        </tr>';
+                            foreach ($notCompleted as $key => $notcomplete) {
+        $table2 .= '
+                                            <tr>
+                                                <td>'.($key+1).'</td>
+                                                <td>'.$notcomplete->year->name.'</td>
+                                                <td>'.$notcomplete->student->full_name.'</td>
+                                                <td>'.$notcomplete->student->school_id.'</td>
+                                                <td>'.Fee::getStudentTotalFeePaid($year, $class, $notcomplete->student_id).'</td>
+                                                <td>'.($getTotalClassFee - Fee::getStudentTotalFeePaid($year, $class, $notcomplete->student_id)).'</td>
+                                            </tr>
+                                          ';
+                            };
+        $table2 .= '
+                    </table>
+                ';
+                if(count($notCompleted) > 0) {
+                    $table2 .= '
+                    <div class="right w3-padding">
+                    <a href="../admin/uncomplete_fee?_token='.$token.'&year='.$year.'&class='.$class.'" class="btn w3-small red">Download
+                        <i class="fa fa-download w3-tiny"></i>
+                    </a>
+                    </div>
+                ';
+            } else {$table2 = null;}
+            }
+
+        return [$arr, $table, $table2];
     }
 }

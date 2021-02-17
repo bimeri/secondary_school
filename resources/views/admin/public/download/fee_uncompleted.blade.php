@@ -188,7 +188,7 @@
             </center>
         </div>
         <center>
-        <em style="font-size: 18px; font-weight: bold;" class="green-text">Student who completed fees for the academic year: {{ $year }}</em>
+        <em style="font-size: 18px; font-weight: bold;" class="red-text">Student who have not completed fees for the academic year: {{ $year }}</em>
         </center><br><hr class="divide">
 
         <p class="w3-medium right w3-margin">
@@ -207,12 +207,16 @@
             <th>S/N</th>
             <th>Student Name</th>
             <th>Student matricule</th>
+            <th>Amount paid</th>
+            <th>Amount Oweing</th>
         </tr>
         @foreach ($details as $key => $detail)
         <tr>
             <td>{{ $key + 1 }}</td>
             <td>{{ $detail->student->full_name }}</td>
-            <td>{{ $detail->student_school_id }}</td>
+            <td>{{ $detail->student->school_id }}</td>
+            <td>{{ App\Fee::getStudentTotalFeePaid($yearId, $class->id, $detail->student_id) }}</td>
+            <td>{{ ($classFees - App\Fee::getStudentTotalFeePaid($yearId, $class->id, $detail->student_id)) }}</td>
         </tr>
         @endforeach
     </table>

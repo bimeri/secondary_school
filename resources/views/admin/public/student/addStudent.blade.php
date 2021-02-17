@@ -33,7 +33,7 @@
                     </select>
                 </div>
                  <div class="input-field col s12 m3">
-                    <input name="fullName" id="first_name" type="text" class="validate" value="{{ old('fullName') }}">
+                    <input name="fullName" id="first_name" type="text" class="validate" value="{{ old('fullName') }}" required>
                     <label for="first_name">Full Name</label>
                 </div>
                 <div class="input-field col s12 m2">
@@ -55,13 +55,13 @@
                     <label for="address">Parent email (optional)</label>
                 </div>
                 <div class="input-field col s12 m3">
-                    <input type="text" name="pob" value="{{ old('pob') }}" class="validate" id="address" required/>
+                    <input type="text" name="pob" value="{{ old('pob') }}" class="validate" id="address"/>
                     <label for="address">Enter place of birth</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 m3">
-                    <select name="gender" class="icons">
+                    <select name="gender" class="icons" required>
                       <option value="" disabled selected>Select Your Gender</option>
                       <option value="Male" data-icon="{{ URL::asset('image/man.png') }}">Male</option>
                       <option value="Female" data-icon="{{ URL::asset('image/female.png') }}">Female</option>
@@ -70,7 +70,7 @@
                 </div>
                     <div class="input-field col s12 m3">
                         <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" id="dates" placeholder="dd/mm/yy">
-                        <label for="dates">Enter Date of birth</label>
+                        <label for="dates">Enter Date of birth (optional)</label>
                     </div>
                     <div class="file-field input-field col s12 m3">
                         <div class="btn">

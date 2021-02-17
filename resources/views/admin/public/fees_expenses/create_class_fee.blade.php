@@ -143,7 +143,7 @@
         </table>
     </div>
 </div>
-<a href="{{ route('admin.create.fees.type') }}" class="btn black white-text" style="position: fixed; bottom: 100px; left: 10px; width: 10%; z-index:9999"> <i class="fa fa-arrow-alt-circle-left"></i> Go back</a>
+<a href="{{ route('admin.create.fees.type') }}" class="btn black white-text" style="position: fixed; bottom: 100px; left: 10px; width: 10%; z-index:10"> <i class="fa fa-arrow-alt-circle-left"></i> Go back</a>
 <script>
     function myFunction() {
       // Declare variables
