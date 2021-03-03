@@ -3,11 +3,11 @@
 @section('content')
 <p class="w3-center">@lang('messages.welcome')</p>
 <div class="row">
-    <div class="col s12 m10 offset-m1 orange lighten-5 orange-text">
-        <span onclick="this.parentElement.style.display='none'" class="w3-close right red-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
-            <h5 class="w3-center w3-medium w3-padding bold">{{ __('messages.student_discipine_header') }}
+    <div class="col s12 m10 offset-m1 blue lighten-4 blue-text">
+        <span onclick="this.parentElement.style.display='none'" class="w3-close right blue-text w3-hover w3-medium" style="cursor: pointer; margin-top: 5px">&times;</span>
+            <h5 class="w3-center w3-medium bold">{{ __('messages.student_discipine_header') }}
             </h5>
-        </div>
+    </div>
     <div class="col s11 w3-margin-left m10 w3-border-t offset-m1 w3-padding white w3-margin-bottom radius" style="margin-top: 5px">
         <form action="{{ route('save.student.discipline') }}" method="post">
             @csrf
@@ -48,13 +48,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col m5 s12 offset-m3 input-field">
+                <div class="col m5 s12">
                     <label for="textarea1">Enter the Consequences (optional)</label>
-                    <textarea class="materialize-textarea" name="consequences" id="textarea1" length="10"></textarea>
+                    <textarea class="materialize-textarea" name="consequences" id="textarea1" maxlength="120"></textarea>
                 </div>
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-primary waves-effect waves-light col offset-m3 offset-s3" style="width: 40%">Add Type</button>
+
+                <button type="submit" class="btn btn-primary waves-effect waves-light col m5 offset-m2" style="width: 40%; margin-top:20px !important">Add Type</button>
             </div>
         </form>
     </div>
@@ -82,12 +81,12 @@
                 <td>{{ $record->student->school_id }}</td>
                 <td>{{ $record->discipline->type }}</td>
                 <td>{{ $record->consequences }}</td>
-                <td><button class="btn my-orange waves-light waves-effect capitalize modal-trigger"  href="#modal{{  $key + 1 }}">Edit <i class="fa fa-pencil-alt w3-small"></i></button></td>
+                <td><button class="btn orange orange-text lighten-4 waves-light waves-effect capitalize modal-trigger"  href="#modal{{  $key + 1 }}">Edit <i class="fa fa-pen w3-small"></i></button></td>
                 <td>
                     <form action="{{ route('delete.student.discipline') }}" method="post" id="form{{ $record->id }}">
                         @csrf
                         <input type="hidden" name="id" value="{{ $record->id }}">
-                        <button class="btn my-red waves-light waves-effect capitalize" onclick="save{{ $record->id }}()" id="btn-submit{{ $record->id }}">Delete <i class="fa fa-trash w3-small"></i></button>
+                        <button class="btn red red-text lighten-4 waves-light waves-effect capitalize" onclick="save{{ $record->id }}()" id="btn-submit{{ $record->id }}">Delete <i class="fa fa-trash w3-small"></i></button>
                     </form>
                 </td>
             </tr>

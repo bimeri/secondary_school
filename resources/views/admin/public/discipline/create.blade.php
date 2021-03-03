@@ -50,7 +50,7 @@
                 <td>{{ $des->type }}</td>
                 <td>{{ $des->description }}</td>
 
-                <td><button class="btn waves-effect waves-green my-orange modal-trigger" href="#modall{{ $key + 1 }}">Edit</button></td>
+                <td><button class="btn waves-effect waves-green orange lighten-4 orange-text modal-trigger" href="#modall{{ $key + 1 }}">Edit</button></td>
                 <td>
                     <form action="{{ route('admin.delete.discipline') }}" method="post" id="form{{ $des->id }}">@csrf
                         <input type="hidden" name="id" value="{{ $des->id }}">
