@@ -125,15 +125,15 @@
         method: 'get',
         data: '',
         success: function(response){
-            //console.log('the students are', response);
+            console.log('the students are', response);
             $('input.autocompletey').autocomplete({
       data: {
           'noel':null,
           'coffe':null,
           'magaza':null,
         for (let i = 0; i <= response.length; i++) {
-                ''+response[i].stud_name+'':null,
-                }
+                ''+response[i].stud_name+'': null,
+            }
       },
     });
         }

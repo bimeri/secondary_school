@@ -118,7 +118,6 @@ class SectorController extends Controller
         $sector = new Sector();
         $sector->name = $sector_name;
         $sector->description = $sector_describe;
-
         $sector->save();
 
         if($sector){
@@ -170,7 +169,6 @@ class SectorController extends Controller
         }
         return redirect()->back()->withInput();
     }
-
 
     public function deleteSector(Request $req){
         $id = $req['sectorid'];
