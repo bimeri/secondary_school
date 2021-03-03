@@ -2,9 +2,9 @@
 @section('title') Sub-Class @endsection
 @section('content')
 <div class="row">
-    <div class="col s12 m10 offset-m1 teal lighten-4 teal-text">
-    <span onclick="this.parentElement.style.display='none'" class="w3-close right teal-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
-        <h5 class="w3-center w3-medium w3-padding bold">{{ __('messages.create_subclass') }}
+    <div class="col s12 m10 offset-m1 blue lighten-4 blue-text">
+    <span onclick="this.parentElement.style.display='none'" class="w3-close right blue-text w3-hover w3-medium w3-padding" style="cursor: pointer">&times;</span>
+        <h5 class="w3-center w3-medium bold">{{ __('messages.create_subclass') }}
         </h5>
     </div>
 </div>

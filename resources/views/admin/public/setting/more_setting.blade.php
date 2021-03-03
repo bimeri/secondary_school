@@ -97,7 +97,7 @@
                                     </div>
                             </div>
                             <div class="w3-center" style="margin-top: 4px !important">
-                                <button class="btn teal waves-effect waves-light w3-small" type="submit" style="width: 40%">Save Configured Time</button>
+                                <button class="btn blue waves-effect waves-light w3-small" type="submit" style="width: 40%">Save Configured Time</button>
                             </div>
                         </form>
                     </div>
@@ -159,7 +159,7 @@
                                         </select>
                                     </div>
                                     <div class="input-field col s12 m2">
-                                        <button type="button" class="btn teal" onclick="getDetail()">get detail</button>
+                                        <button type="button" class="btn blue" onclick="getDetail()">get detail</button>
                                     </div>
                                 </form>
                             </div>
@@ -208,6 +208,7 @@
     }
 
      function getDetail(){
+        document.getElementById('menu').style.display = 'block';
         $("#hide").empty();
         $.ajaxSetup({
             headers: {
@@ -224,8 +225,10 @@
             if(res){
                 $("#hide").show(500);
                     $('#hide').append(res);
+                    document.getElementById('menu').style.display = 'none';
             }else{
                $("#hide").append("<h5 class='red w3-padding red-text lighten-4'>There is no record for the information entered</h5>");
+               document.getElementById('menu').style.display = 'none';
             }
            },
            error: function(error){
@@ -234,6 +237,7 @@
            }
         });
     }else{
+        document.getElementById('menu').style.display = 'none';
         $("#type").fadeOut(1000);
         $("#type").empty();
     }
@@ -259,12 +263,12 @@ function publishfirstResult(){
             if(res){
                 $('#rest').append("<div class='w3-green w3-padding center'>"+res+" Result has been published successfully</div>");
                 document.getElementById('button1').innerHTML = "<button type='button' class='w3-btn w3-green'>published <i class='fa fa-check white-text'></i></button>";
+                document.getElementById('menu').style.display = 'none';
             }
             $('#menu').hide();
            },
            error: function(error){
-            $("#hide").hide();
-               console.log('some error occured');
+                $("#hide").hide();
                $('#menu').hide();
            }
         });

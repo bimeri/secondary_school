@@ -66,7 +66,7 @@
                 });
                 /* Submit form data using ajax*/
             $.ajax({
-                url: "{{ route('studnet.parent') }}",
+                url: "{{ route('student.parent') }}",
                 method: 'post',
                 data: $('#forms').serialize(),
                 success: function(response){

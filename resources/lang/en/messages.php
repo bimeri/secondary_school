@@ -51,5 +51,6 @@ return [
     'teacher_uplaodFile' => 'Upload File',
     'teacher_preview' => 'Preview file',
     'student_viewNote' => 'Preview file',
-    'import_csv' => 'Import file in excel, make sure the columns are of the same format asshown bellow',
+    'import_csv' => 'Import file in excel, make sure the columns are of the same format as shown bellow',
+    'view_background_header' => 'All Background creared for the school',
 ];

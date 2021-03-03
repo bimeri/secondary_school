@@ -4,7 +4,7 @@
 <p class="w3-center">@lang('messages.create_subject')</p>
 <div class="row">
     <div class="col s11 m10 w3-border-t offset-m1 radius white w3-margin-left">
-        <h6 class="center w3-padding green-text green lighten-4">Create All Subjects for Subject: <b>{{ $formsDetail->name }},</b> subject code: <b>{{ $formsDetail->code }}</b></h6>
+        <h6 class="center w3-padding blue-text blue lighten-4">Create All Subjects for Subject: <b>{{ $formsDetail->name }},</b> subject code: <b>{{ $formsDetail->code }}</b></h6>
         <form action="{{ route('subject.create.submit') }}" method="post" role="form">
             {{ csrf_field() }}
             <div class="row">
@@ -50,8 +50,8 @@
                 <td>{{ $subject->form->name}} / {{ $subject->form->background->name}} / {{ $subject->form->background->sector->name}}</td>
                 <td>{{ $subject->name }}</td>
                 <td>{{ $subject->coefficient }}</td>
-                <td><button class="btn my-orange waves-light waves-effect capitalize modal-trigger" href="#modal{{ $subject->id }}">Edit <i class="fa fa-pencil-alt"></i></button></td>
-                <td><button class="btn red waves-light waves-effect capitalize" disabled>Delete <i class="fa fa-trash"></i></button></td>
+                <td><button class="btn orange-text orange lighten-4 waves-light waves-effect capitalize modal-trigger w3-small" href="#modal{{ $subject->id }}">Edit <i class="fa fa-pencil-alt w3-small"></i></button></td>
+                <td><button class="btn red red-text lighten-4 waves-light waves-effect capitalize w3-small" disabled>Delete <i class="fa fa-trash w3-small"></i></button></td>
             </tr>
 
             <div id="modal{{ $subject->id }}" class="modal modal-fixed-footer" style="width: 40% !important">
@@ -73,7 +73,7 @@
                             </div>
                         <center>
                             <div class="row">
-                                <button type="submit" class="btn orange white-text col s12 m6 waves-effect waves-light offset-m3" style="width: 40%">Update</button>
+                                <button type="submit" class="btn orange orange-text lighten-4 w3-small col s12 m6 waves-effect waves-light offset-m3" style="width: 40%">Update</button>
                             </div>
                         </center>
                         </form>

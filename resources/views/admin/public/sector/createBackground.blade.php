@@ -2,9 +2,9 @@
 @section('title') background @endsection
 @section('content')
 <div class="row">
-    <div class="col s12 m10 offset-m1 my-orange" style="color: #ff9800 !important; background-color: rgb(243, 213, 158) !important;">
-    <span onclick="this.parentElement.style.display='none'" class="w3-close right red-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
-        <h5 class="w3-center w3-medium w3-padding"><b>{{ __('messages.create_bachground_header') }}</b><br>
+    <div class="col s12 m10 offset-m1 blue blue-text lighten-4">
+    <span onclick="this.parentElement.style.display='none'" class="w3-close right blue-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
+        <h5 class="w3-center w3-medium"><b>{{ __('messages.create_bachground_header') }}</b><br>
             {{ __('messages.create_background_header_two') }}
         </h5>
     </div>
@@ -50,13 +50,13 @@
                         <td><div class="teal-text">{{ $background->name }}</div></td>
 
                         <td style="width: 10% !important">
-                            <button class="col btn my-orange white-text waves-effect waves-teal modal-trigger" href="#modal{{ $background->id }}">Edit <i class="fa fa-pen w3-tiny"></i></button>
+                            <button class="col btn orange orange-text lighten-4 waves-effect waves-teal modal-trigger" href="#modal{{ $background->id }}">Edit <i class="fa fa-pen w3-tiny"></i></button>
                         </td>
                         <td style="width: 12% !important">
                             <form action="{{ route('background.delete') }}" method="post" id="form{{ $background->id }}">
                                 @csrf
                                 <input type="hidden" name="backgroundName" value="{{ $background->id }}">
-                                <button class="col my-red btn waves-effect waves-teal" onclick="save{{ $background->id }}()" id="btn-submit{{ $background->id }}">Delete <span class="fa fa-trash w3-tiny"></span></button>
+                                <button class="col red red-text lighten-4 btn waves-effect waves-teal" onclick="save{{ $background->id }}()" id="btn-submit{{ $background->id }}">Delete <span class="fa fa-trash w3-tiny"></span></button>
                             </form>
                         </td>
                     </tr>
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                                 <div class="w3-center" style="margin-top: 4px !important">
-                                    <button class="btn my-orange waves-effect waves-light w3-small" type="submit" style="width: 40%">Saved update</button>
+                                    <button class="btn orange orange-text lighten-4 waves-effect waves-light w3-small" type="submit" style="width: 40%">Saved update</button>
                                 </div>
                             </form>
                         </div>

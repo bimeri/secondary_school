@@ -339,8 +339,8 @@ class ClassController extends Controller
                             <td>'.$student->address.'</td>
                             <td>'.$student->parent_contact.'</td>
                             <td>'.$student->parent_email.'</td>
-                            <td><button class="btn orange orange-text lighten-4 w3-tiny">send Message <i class="fa fa-envelope w3-tiny"></i></button></td>
-                            <td><button class="btn blue blue-text lighten-4 w3-tiny">Call <i class="fa fa-phone w3-tiny"></i></button></td>
+                            <td><a href="mailto:'.$student->parent_email.'" class="btn orange orange-text lighten-4 w3-tiny">send Message <i class="fa fa-envelope w3-tiny"></i></a></td>
+                            <td><a href="tel:+237'.$student->parent_contact.'" target="_blank" data-value="(+237) '.$student->parent_contact.'" class="btn blue blue-text lighten-4 w3-tiny">Call <i class="fa fa-phone w3-tiny"></i></a></td>
                         </tr>
                     ';
                 };

@@ -3,9 +3,9 @@
 
 @section('content')
 <div class="row">
-    <div class="col s12 m10 offset-m1 my-orange" style="color: #ff9800 !important; background-color: rgb(243, 213, 158) !important;">
-    <span onclick="this.parentElement.style.display='none'" class="w3-close right red-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
-        <h5 class="w3-center w3-medium w3-padding"><b>{{ __('messages.create_bachground_header') }}</b><br>
+    <div class="col s12 m10 offset-m1 blue blue-text lighten-4">
+    <span onclick="this.parentElement.style.display='none'" class="w3-close right blue-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
+        <h5 class="w3-center w3-medium"><b>{{ __('messages.view_background_header') }}</b><br>
             {{ __('messages.create_background_header_two') }}
         </h5>
     </div>
@@ -35,7 +35,7 @@
                 </table>
             </div>
         @else
-        <div class="col s12 m6 offset-m3 orange w3-center white-text w3-padding">No Background Created yet</div>
+        <div class="col s12 m6 offset-m3 orange orange-text w3-center orange-text w3-padding">No Background Created yet</div>
         @endif
     </div>
 </div>

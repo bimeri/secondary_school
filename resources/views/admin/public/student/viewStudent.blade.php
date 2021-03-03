@@ -25,10 +25,13 @@
         @if ($count == 0)
         <div class="red lighten-4 red-text w3-padding w3-border w3-center bold w3-margin-bottom">No record found, please search again</div>
         @else
-        <div class="green lighten-4 green-text w3-padding w3-border w3-center w3-margin-bottom">All <b>{{ $form->name }}</b> Students from <b>{{ $form->background->name }}/{{ $form->background->sector->name }}</b> for the academic year: <b>{{ $years->name }}</b></div>
-
         <div class="col s12 m12" style="overflow-x:auto !important;">
             <table id="myTable" class="w3-table w3-striped w3-border-t" style="font-size: 13px !important;">
+                <tr>
+                    <td colspan="7" class="blue lighten-4 blue-text w3-padding w3-border w3-center">
+                        All <b>{{ $form->name }}</b> Students from <b>{{ $form->background->name }}/{{ $form->background->sector->name }}</b> for the academic year: <b>{{ $years->name }}</b>
+                    </td>
+                </tr>
                 <tr class="teal">
                     <th>S/N</th>
                     <th>Class Name</th>

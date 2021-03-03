@@ -110,7 +110,7 @@
             <table id="myTable" class="w3-table w3-border-t" style="font-size: 13px !important;">
                 @if($class)
                 <tr>
-                    <td colspan="11" class="orange orange-text lighten-5 center">
+                    <td colspan="11" class="blue blue-text lighten-4 center">
                         All Students for Sector: <b>{{ $class->background->sector->name }}</b>, Background: <b>{{ $class->background->name }}</b>, Form: <b>{{ $class->name }}</b>
                     </td>
                 </tr>

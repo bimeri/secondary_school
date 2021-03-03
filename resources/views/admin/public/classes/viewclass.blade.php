@@ -9,9 +9,9 @@
 @endsection
 @section('content')
 <div class="row">
-    <div class="col s11 w3-margin-left m10 offset-m1  orange orange-text lighten-4">
-    <span onclick="this.parentElement.style.display='none'" class="w3-close right red-text w3-hover w3-medium w3-padding-16" style="cursor: pointer">&times;</span>
-        <h5 class="w3-center w3-medium w3-padding bold">{{ __('messages.create_view_class') }}
+    <div class="col s11 w3-margin-left m10 offset-m1  blue blue-text lighten-4">
+    <span onclick="this.parentElement.style.display='none'" class="w3-close right blue-text w3-hover w3-medium w3-padding" style="cursor: pointer">&times;</span>
+        <h5 class="w3-center w3-medium bold">{{ __('messages.create_view_class') }}
         </h5>
     </div>
 </div>
