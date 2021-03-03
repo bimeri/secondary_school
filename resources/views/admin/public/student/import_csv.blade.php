@@ -4,7 +4,7 @@
 <p class="w3-center">@lang('messages.import_csv')</p>
 <div class="row w3-margin-top">
     <div class="col s11 m10 w3-border-t offset-m1 radius white w3-margin-left">
-        <form action="" method="post" enctype="multipart/form-data" id="fm">
+        <form action="" method="" enctype="multipart/form-data" id="fm">
             <div class="row w3-margin-top" style="font-size: 16px !important">
                 <div class="col m3 s12">
                     <select name="sector" class="browser-default" id="sector" onchange="getBackground(event)">
