@@ -34,7 +34,7 @@
             </div>
             <center>
                 <div id="submit_hidden" class="w3-padding" style="margin-top: -10px !important" style="width: 50%;">
-                    <button class="btn teal waves-effect waves-light w3-medium" type="submit" style="width: 40%">Import Excel file</button>
+                    <button class="btn teal waves-effect waves-light w3-medium" type="button" style="width: 40%">Import Excel file</button>
                 </div>
             </center>
         </form>
