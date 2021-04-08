@@ -10,7 +10,7 @@ class Secondtermresult extends Model
     //
     use Notifiable;
     protected $fillable = [
-        'year_id', 'subject_id', 'form_id', 'student_id', 'seq3', 'seq4',
+        'year_id', 'subject_id', 'form_id', 'form_type', 'student_id', 'seq3', 'seq4',
     ];
 
     public function students(){

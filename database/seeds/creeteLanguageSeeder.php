@@ -16,7 +16,7 @@ class creeteLanguageSeeder extends Seeder
         $languages = [
             [
                 'locale' => 'en',
-                'active' => '0'
+                'active' => '1'
             ],
             [
                 'locale' => 'fr',

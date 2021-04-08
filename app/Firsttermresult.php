@@ -11,7 +11,7 @@ class Firsttermresult extends Model
     use Notifiable;
 
     protected $fillable = [
-        'year_id', 'subject_id', 'form_id', 'student_id', 'seq1', 'seq2', 'ave_point'
+        'year_id', 'subject_id', 'form_id', 'form_type', 'student_id', 'seq1', 'seq2', 'ave_point'
     ];
 
     public function subject(){

@@ -11,7 +11,7 @@ class Thirdtermresult extends Model
     use Notifiable;
 
     protected $fillable = [
-        'year_id', 'subject_id', 'form_id', 'student_id', 'seq5', 'seq6',
+        'year_id', 'subject_id', 'form_id', 'form_type', 'student_id', 'seq5', 'seq6',
     ];
 
     public function student(){
